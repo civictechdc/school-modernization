@@ -14,3 +14,9 @@ TIMELINE: Site to go live by February in time for public hearings in March. With
 Potential Features
 -heat map of what has been spent
 -stream graph
+
+
+NEXT STEPS:
+-brain storm specific features and specific data to be used
+-after determining features, group will communicate to volunteer members at 21st Century Schools for approval
+-after approval, group will determine tech issues for Code for DC volunteers to execute
