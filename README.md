@@ -17,6 +17,7 @@ Potential Features
 
 
 NEXT STEPS:
--brain storm specific features and specific data to be used
--after determining features, group will communicate to volunteer members at 21st Century Schools for approval
--after approval, group will determine tech issues for Code for DC volunteers to execute
+- Collect GIS DC map information from Sheldon
+- Collect and publish Facilities spending data from DCPS
+- Discover if Mary Figaro has other interesting data sets.
+- Investigate LearnDC.org's data sets.
