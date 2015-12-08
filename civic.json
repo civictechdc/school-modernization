@@ -1,0 +1,43 @@
+{
+    "conformsTo": "http://codefordc.org/resources/specification.html",
+    "status": "Ideation",
+    "thumbnailUrl": "https://github.com/codefordc/school-modernization",
+    "contact": {
+        "name": "DC Public School Modernization Spending",
+        "email": "",
+        "twitter": ""
+    },
+    "bornAt": "The halls of power",
+    "geography": "Washington D.C.",
+    "politicalEntity": {},
+    "governmentPartner": {},
+    "communityPartner": {},
+    "type": "Web App",
+    "data": {},
+    "needs": [
+        {
+            "need": "Designers"
+        },
+        {
+            "need": "Smiles"
+        },
+        {
+            "need": "Patience"
+        }
+    ],
+    "categories": [
+        {
+            "category": "Cartography"
+        },
+        {
+            "category": "Data Viz"
+        },
+        {
+            "category": "DC Schools"
+        },
+        {
+            "category": "Public Service"
+        }
+    ],
+    "moreInfo": ""
+}
