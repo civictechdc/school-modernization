@@ -1,9 +1,8 @@
-# school-modernization
-Looking at fifteen years of school modernization funds
+School Modernization Spending in the DCPS
+=========================================
+Lets look at the distribution of modernization funds for the last fifteen years.
 
-In this thread, we are looking to determine vision and scope of the project which was brought to us from 21st Century Schools.
-
-CONTEXT: DCPS has been executing a roughly 15 year, facilities modernization project for DCPS schools (not charter schools) and has spent roughly $9B on upgrades.
+CONTEXT: DCPS has been executing a roughly 15 year, facilities modernization project for DCPS schools (not charter schools) and has spent roughly $5B on upgrades.
 
 PROBLEM: While data on how funds have been spent is available (please see spreadsheet below), it's unclear how the money has been spent and there are questions as to how funds and upgrades have been equitably distributed.
 
@@ -17,7 +16,7 @@ Potential Features
 
 Resources
 =========
-- [Team Slack](https://codefordc.slack.com/messages/education/) -- just request access via the code for dc site
+- [Team Slack](https://codefordc.slack.com/messages/education/) -- Come hang out. just request access via the code for dc site
 - [At Risk Funds Distrbutions Visualization](http://atriskfunds.ourdcschools.org/) -- A look at how DCPS distributes funding for the support of at risk students by schools in the district by @cmgiven.
 
 - [Per Student Funding Changes Visualiztion](http://fy16budget.ourdcschools.org/) -- A look at how funding is changing for schools between FY 2015 and FY 2016 by @cmgiven.
@@ -30,3 +29,5 @@ Data
 - [DCPS Facility Conditions Assement xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
 - [Charter School Facility Data Sheet xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
 - [DCPS Capital Expenditures rough xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
+- [Funding Changes FY2016 cmgiven csv](https://github.com/codefordc/dcps-budget/blob/master/app/data/data.csv) -- This is the cleaned and parsed version of data put together for the funding changes project by @cmgiven.
+- [At risk data FY2016 cmgiven csv](https://github.com/cmgiven/at-risk/blob/master/app/data/data.csv) -- This is the cleaned version of the data put together for the at risk data-viz put together by @cmgiven.
