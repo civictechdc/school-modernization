@@ -15,9 +15,18 @@ Potential Features
 -heat map of what has been spent
 -stream graph
 
+Resources
+=========
+- [Team Slack](https://codefordc.slack.com/messages/education/) -- just request access via the code for dc site
+- [At Risk Funds Distrbutions Visualization](http://atriskfunds.ourdcschools.org/) -- A look at how DCPS distributes funding for the support of at risk students by schools in the district by @cmgiven.
 
-NEXT STEPS:
-- Collect GIS DC map information from Sheldon
-- Collect and publish Facilities spending data from DCPS
-- Discover if Mary Figaro has other interesting data sets.
-- Investigate LearnDC.org's data sets.
+- [Per Student Funding Changes Visualiztion](http://fy16budget.ourdcschools.org/) -- A look at how funding is changing for schools between FY 2015 and FY 2016 by @cmgiven.
+- [Public Education Master Facilities Plan](http://dme.dc.gov/sites/default/files/dc/sites/dme/publication/attachments/Final_2013_DC_Public_Education_Plan_Main_Part_1.pdf) -- contains several map based visualizations of 'apolitical' needs based facilities gaps.
+- [Student Assignment Policies and DCPS School boundaries](http://dme.dc.gov/sites/default/files/dc/sites/dme/publication/attachments/Final%20Recommendations%20on%20Student%20Assignment%208-18-14%20with%20links%20%28rev8-22-14%29.pdf_) -- contains breakdown of feeder patterns for current districts in the DCPS system.
+
+
+Data
+====
+- [DCPS Facility Conditions Assement xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
+- [Charter School Facility Data Sheet xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
+- [DCPS Capital Expenditures rough xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
