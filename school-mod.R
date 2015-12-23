@@ -24,10 +24,10 @@ budgetDCPS<-read.csv("https://raw.githubusercontent.com/codefordc/dcps-budget/ma
                      stringsAsFactors=FALSE, strip.white=TRUE)[c(1:8,11)]
 budgetDCPSunq<-budgetDCPS[!duplicated(budgetDCPS[,1:2]),]
 
-CharterPop<-read.csv("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/InputData/PCS_Student_Enrollment_by_School__2014-15_.csv",
+CharterPop<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/PCS_Student_Enrollment_by_School__2014-15_.csv",
                      stringsAsFactors=FALSE, strip.white=TRUE)[c(1,3,28)]
 
-CharterLoc<-read.csv("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/InputData/schools.csv",
+CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/schools.csv",
                      stringsAsFactors=FALSE, strip.white=TRUE)[c(2:5,8,12:14)]
 
 ### Create DCPS dataset ###
@@ -41,8 +41,8 @@ DCPSenrolled$SCHOOLCODE<-ifelse(DCPSenrolled$Program=="452/462", "452",
                                 
 DCPSfactors<-join(DCPSenrolled, budgetDCPSunq, by="SCHOOLCODE",type="left")
 DCPS<-DCPSfactors[c(1:3,6:7,12:13,15,16,20,21)]
-colnames(DCPS)<-c("Agency","School","totalSQFT","Address","Enrolled","SqFtperStudent","SchoolCode","Long",
-                  "Lat","Ward","AtRiskPct")
+colnames(DCPS)<-c("Agency","School","totalSQFT","Address","Enrolled","SqFtperStudent","SchoolCode","Longitude",
+                  "Latitude","Ward","AtRiskPct")
 
 ###Create Charter dataset###
 PCSfactors<-join(appC.Charter, CharterPop, by="School.Code",type="inner")[c(1:10,12)]
