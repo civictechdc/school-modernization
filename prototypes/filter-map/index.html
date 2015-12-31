@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+	  <!-- ======= ======= ======= styles ======= ======= ======= -->
+		<title>DCPS test map</title>
+		<meta name="description" content="">
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<link rel="stylesheet" href="style.css" type="text/css">
+
+	</head>
+	<body>
+
+		<!-- ======= ======= ======= header ======= ======= ======= -->
+		<div class="row header">
+			<div class="column column-1">&nbsp;</div>
+			<div class="column column-10 intro">
+				<h1>DCPS school modernization</h1>
+				<h5> functionality test </h5>
+			</div>
+			<div class="column column-1">&nbsp;</div>
+		</div>
+
+		<!-- ======= ======= ======= content ======= ======= ======= -->
+		<div class="row content">
+			<!-- ======= displays ======= -->
+			<div class="column displayCol">
+				<h4 class="title">Display</h4>
+				<div class="displayDivs">
+					<div id="wards">wards</div>
+					<div id="feeders">feeders</div>
+					<div id="public">public</div>
+					<div id="charter">charter</div>
+				</div>
+				<!-- <nav id="mainNav"></nav> -->
+			</div>
+
+			<!-- ======= map ======= -->
+			<div class="column mapCol">
+				<div id="map"></div>
+			</div>
+
+			<!-- ======= profile ======= -->
+			<div class="column profileCol">
+				<h4 class="title">Filters</h4>
+				<nav id="filterNav"></nav>
+				<h4 class="title">Selected Data</h4>
+				<div id="profileData"></div>
+				<div id="chartData"></div>
+			</div>
+		</div>
+
+		<!-- ======= ======= ======= footer ======= ======= ======= -->
+		<div class="row footer">
+			<div class="column column-12">&nbsp;</div>
+		</div>
+
+		<!-- ======= ======= ======= scripts ======= ======= ======= -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&callback=initMap"></script> -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE"></script>
+		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript" src="d3graphs.js"></script>
+
+	</body>
+</html>
+
+
+<!-- ======= ======= ======= ARCHIVE ======= ======= =======
+
+<div class="displayDivs">
+	<div id="wards">wards</div>
+	<div id="feeders">feeders</div>
+	<div id="public">public</div>
+	<div id="charter">charter</div>
+</div>
+
+
+school attendence zone (high school)
+http://opendata.dc.gov/datasets/3f5263d0534a42bd84d245102c8578a9_8.geojson
+
+-->
