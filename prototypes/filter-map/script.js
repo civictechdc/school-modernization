@@ -1,27 +1,281 @@
-$(document).ready(function() {
-    console.log("initObjects");
-    console.log("  this: " + this);
+$(document).ready(function(){
+    console.log('jQuery loaded');
+    console.log('document ready');
+    initApp();
+});
 
-    var self;
-    var map, infoWindow;
-    var schoolFilters = [];
-    var studentFilters = [];
-    var geographyFilters = [];
+function initApp() {
+    console.log('initApp');
 
-    var filterFunctions = {};
+    // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
 
-    // ======= ======= ======= Y1998_2013_yea ======= ======= =======
-    function Y1998_2013_yea() {
-        console.log("Y1998_2013_yea");
+    var chart1;
+    var filterMenu;
+    var displayObject;
+
+    // ======= ======= ======= initFilterObjects ======= ======= =======
+    function initFilterObjects() {
+        console.log("initFilterObjects");
+
+        // == filter object properties: id, category, text, callback
+        filterMenu = new Filter("filterMenu");
+        filterMenu.Yprev = { id:"Yprev", category:"years", text:"1998-2013", callback:"setYears" };
+        filterMenu.Y2014 = { id:"Y2014", category:"years", text:"2014", callback:"setYears" };
+        filterMenu.Y2015 = { id:"Y2015", category:"years", text:"2015", callback:"setYears" };
+        filterMenu.Y2016 = { id:"Y2016", category:"years", text:"2016", callback:"setYears" };
+        filterMenu.Ynext = { id:"Ynext", category:"years", text:"2016-2021", callback:"setYears" };
+        filterMenu.Public = { id:"Public", category:"schools", text:"Public Schools", callback:"setSchools" };
+        filterMenu.Charter = { id:"Charter", category:"schools", text:"Charter Schools", callback:"setSchools" };
+        filterMenu.Elem = { id:"Elem", category:"schools", text:"Elementary Schools", callback:"setSchools" };
+        filterMenu.Middle = { id:"Middle", category:"schools", text:"Middle Schools", callback:"setSchools" };
+        filterMenu.High = { id:"High", category:"schools", text:"High Schools", callback:"setSchools" };
+        filterMenu.Youth = { id:"Youth", category:"schools", text:"Youth Engagement", callback:"setSchools" };
+        filterMenu.All = { id:"All", category:"students", text:"All Students", callback:"setStudents" };
+        filterMenu.AtRisk = { id:"AtRisk", category:"students", text:"At-Risk Students", callback:"setStudents" };
+        filterMenu.SpecEd = { id:"SpecEd", category:"students", text:"Spec Ed Students", callback:"setStudents" };
+        filterMenu.Grad = { id:"Grad", category:"students", text:"Graduated Students", callback:"setStudents" };
+        filterMenu.Sqft = { id:"Sqft", category:"buildings", text:"Square Footage", callback:"setBuilding" };
+        filterMenu.Capacity = { id:"Capacity", category:"buildings", text:"Capacity", callback:"setBuilding" };
+        filterMenu.PopNow = { id:"PopNow", category:"buildings", text:"Current Population", callback:"setBuilding" };
+        filterMenu.PopFuture = { id:"PopFuture", category:"buildings", text:"Future Population", callback:"setBuilding" };
+        filterMenu.Ward = { id:"Ward", category:"geography", text:"Ward", callback:"setGeography" };
+        filterMenu.Feeder = { id:"Feeder", category:"geography", text:"Feeder", callback:"setGeography" };
+        filterMenu.Quadrant = { id:"Quadrant", category:"geography", text:"Quadrant", callback:"setGeography" };
+    }
+
+    // ======= ======= ======= initDisplayObjects ======= ======= =======
+    function initDisplayObjects() {
+        console.log("initDisplayObjects");
+
+        // == display object properties: name, yearsMenu, schoolsMenu, studentsMenu, buildingsMenu, geographyMenu
+        displayObject = new Display("display1");
+    }
+
+    // ======= ======= ======= initChartObjects ======= ======= =======
+    function initChartObjects() {
+        console.log("initChartObjects");
+
+        // == display object properties: name, yearsMenu, schoolsMenu, studentsMenu, buildingsMenu, geographyMenu
+        chart1 = new Chart("chart1");
+    }
+
+    // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
+
+    function Chart(whichChart) {
+        console.log("Chart");
+        this.name = whichChart;
+    }
+    function Filter(whichFilter) {
+        console.log("Filter");
+        this.name = whichFilter;
+    }
+    function Display(whichDisplay) {
+        console.log("Display");
+        this.name = whichDisplay;
+        this.yearsMenu = ["years", filterMenu.Yprev, filterMenu.Y2014, filterMenu.Y2015, filterMenu.Y2016, filterMenu.Ynext];
+        this.schoolsMenu = ["schools", filterMenu.Public, filterMenu.Charter, filterMenu.Elem, filterMenu.Middle, filterMenu.High, filterMenu.Youth];
+        this.studentsMenu = ["students", filterMenu.All, filterMenu.AtRisk, filterMenu.SpecEd, filterMenu.Grad];
+        this.buildingsMenu = ["buildings", filterMenu.Sqft, filterMenu.Capacity, filterMenu.PopNow, filterMenu.PopFuture];
+        this.geographyMenu = ["geography", filterMenu.Ward, filterMenu.Feeder, filterMenu.Quadrant];
+    }
+
+    // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
+
+    // ======= ======= ======= initFilterMenus ======= ======= =======
+    Display.prototype.initFilterMenus = function() {
+        console.log("initFilterMenus");
+
+        var filtersArray = [this.yearsMenu, this.schoolsMenu, this.studentsMenu, this.buildingsMenu, this.geographyMenu];
+        var filterContainer = $("#filterNav");
+        var menuHtml = "";
+
+        // == clear previous filter category html
+        $(filterContainer).empty();
+
+        // == build next filter category html
+        for (var i = 0; i < filtersArray.length; i++) {
+            nextMenu = filtersArray[i];
+            nextCategory = nextMenu[0];
+            menuHtml += "<div class='category " + nextCategory + "'><span class='label'>" + nextCategory + "</span>";
+            menuHtml += this.makeFilterMenu(nextMenu);
+            menuHtml += "</div>";
+            $(filterContainer).append(menuHtml);
+            menuHtml = "";
+            this.activateFilterMenu(nextMenu);
+            this.activateClearItem(nextMenu);
+        }
+    }
+
+    // ======= ======= ======= makeFilterMenu ======= ======= =======
+    Display.prototype.makeFilterMenu = function(whichMenu) {
+        // console.log("makeFilterMenu");
+
+        // == category list for making reset buttons
+        var whichCategory = whichMenu[0];
+
+        // == build html string for filter lists
+        filterHtml = "";
+        filterHtml += "<ul class='filterList'>";
+
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            nextId = nextItem.id;
+            nextText = nextItem.text;
+            filterHtml += "<li id='" + nextId + "' class='filter'><p class='filterText'>" + nextText + "</p></li>";
+        }
+        filterHtml += "<li id='reset" + whichCategory + "' class='reset'><p class='filterText'>clear</p></li>";
+        filterHtml +=  "</ul>";
+        return filterHtml;
+    }
+
+    // ======= ======= ======= activateClearItem ======= ======= =======
+    Display.prototype.activateClearItem = function(whichMenu) {
+        // console.log("activateClearItem");
+
+        var menuCategory = whichMenu[0];
+        var clearItem = $("#reset" + menuCategory);
+
+        $(clearItem).off("click").on("click", function(){
+            console.log("-- clear " + menuCategory + " -- ");
+            resetMenuItems(clearItem);
+        });
+
+
+    }
+
+    // ======= ======= ======= activateFilterMenu ======= ======= =======
+    Display.prototype.activateFilterMenu = function(whichMenu) {
+        // console.log("activateFilterMenu");
+
+        // == activate filter events and callbacks
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            this.activateFilterItem(nextItem);
+        }
+    }
+
+    // ======= ======= ======= activateFilterItem ======= ======= =======
+    Display.prototype.activateFilterItem = function(whichItem) {
+        console.log("activateFilterItem");
+
+        var self = this;
+
+        // == get menu item parameters
+        nextId = whichItem.id;
+        nextCategory = whichItem.category;
+        nextCallback = whichItem.callback;
+        nextItemElement = $("#" + nextId);
+        console.log("  nextId: " + nextId);
+
+        // ======= hover states =======
+        $(nextItemElement).off("mouseenter").on("mouseenter", function(event){
+            console.log("-- mouseenter --");
+            indexElement = event.currentTarget;
+            indexElementId = event.currentTarget.id;
+            console.log("  indexElementId: " + indexElementId);
+        });
+        $(nextItemElement).off("mouseout").on("mouseout", function(event){
+            // console.log("-- mouseout --");
+            indexElement = event.currentTarget;
+        });
+
+        // ======= general =======
+        switch(nextCallback) {
+            case "setYears":
+                $(nextItemElement).off("click").on("click", function(){
+                    console.log("-- setYears -- ");
+                    indexElement = event.currentTarget;
+                    chart1.setYearsFilter(indexElement);
+                });
+                break;
+            case "setSchools":
+                $(nextItemElement).off("click").on("click", function(){
+                    console.log("-- setSchools -- ");
+                    indexElement = event.currentTarget;
+                    chart1.setSchoolsFilter(indexElement);
+                });
+                break;
+            case "setStudents":
+                $(nextItemElement).off("click").on("click", function(){
+                    console.log("-- setStudents -- ");
+                    indexElement = event.currentTarget;
+                    chart1.setStudentsFilter(indexElement);
+                });
+                break;
+            case "setBuilding":
+                $(nextItemElement).off("click").on("click", function(){
+                    console.log("-- setBuilding -- ");
+                    indexElement = event.currentTarget;
+                    chart1.setBldgFilter(indexElement);
+                });
+                break;
+            case "setGeography":
+                $(nextItemElement).off("click").on("click", function(){
+                    console.log("-- setYears -- ");
+                    indexElement = event.currentTarget;
+                    chart1.setGeoFilter(indexElement);
+                });
+                break;
+        }
+    }
+
+    // ======= ======= ======= setYearsFilter ======= ======= =======
+    Chart.prototype.setYearsFilter = function(whichYears) {
+        console.log("setYearsFilter");
+        resetMenuItems(whichYears);
+        $(whichYears).css("background-color", "yellow");
+        $(whichYears).children("p").css("color", "black");
+    }
+
+    // ======= ======= ======= setSchoolsFilter ======= ======= =======
+    Chart.prototype.setSchoolsFilter = function(whichSchools) {
+        console.log("setSchoolsFilter");
+        resetMenuItems(whichSchools);
+        $(whichSchools).css("background-color", "green");
+        $(whichSchools).children("p").css("color", "white");
+    }
+
+    // ======= ======= ======= setStudentsFilter ======= ======= =======
+    Chart.prototype.setStudentsFilter = function(whichStudents) {
+        console.log("setStudentsFilter");
+        resetMenuItems(whichStudents);
+        $(whichStudents).css("background-color", "purple");
+        $(whichStudents).children("p").css("color", "white");
+    }
+
+    // ======= ======= ======= setBldgFilter ======= ======= =======
+    Chart.prototype.setBldgFilter = function(whichBldg) {
+        console.log("setBldgFilter");
+        resetMenuItems(whichBldg);
+        $(whichBldg).css("background-color", "red");
+        $(whichBldg).children("p").css("color", "white");
+    }
+
+    // ======= ======= ======= setGeoFilter ======= ======= =======
+    Chart.prototype.setGeoFilter = function(whichGeo) {
+        console.log("setGeoFilter");
+        resetMenuItems(whichGeo);
+        $(whichGeo).css("background-color", "blue");
+        $(whichGeo).children("p").css("color", "white");
+        getZoneData($(whichGeo).attr('id'));
+    }
+
+    // ======= ======= ======= resetMenuItems ======= ======= =======
+    function resetMenuItems(whichItem) {
+        console.log('resetMenuItems');
+        $(whichItem).siblings("li:not(:last-child)").css("background-color", "#ddd");
+        $(whichItem).siblings("li:not(:last-child)").children("p").css("color", "black");
     }
 
     // ======= ======= ======= initMap ======= ======= =======
     function initMap() {
         console.log('initMap');
-        console.log("  this: " + this);
-
-        self = this;
-        console.log("  self: " + self);
 
         // ======= map styles =======
         var styleArray = [
@@ -53,44 +307,6 @@ $(document).ready(function() {
             zoom: 10
         });
 
-        // ======= Info Window =======
-        infoWindow = new google.maps.InfoWindow({
-          content: ""
-        });
-    }
-
-    // ======= ======= ======= activateDisplayDivs ======= ======= =======
-    function activateDisplayDivs() {
-        console.log('activateDisplayDivs');
-
-        // == activate display menu div click functions
-        var displayDivs = $(".displayDivs");
-        for (i = 0; i < $(displayDivs).children().length; i++) {
-            nextDiv = $(displayDivs).children()[i];
-
-            $(nextDiv).on('click', function() {
-                console.log("clickDisplay");
-                console.log("  this.id: " + this.id);
-                getZoneData(this.id);
-            });
-        }
-    }
-
-    // ======= ======= ======= activateFilterDivs ======= ======= =======
-    function activateFilterDivs() {
-        console.log('activateFilterDivs');
-
-        // == activate filter menu div click functions
-        var filterDivs = $(".filterDivs");
-        for (i = 0; i < $(filterDivs).children().length; i++) {
-            nextDiv = $(filterDivs).children()[i];
-
-            $(nextDiv).on('click', function() {
-                console.log("clickFilter");
-                console.log("  this.id: " + this.id);
-                getZoneData(this.id);
-            });
-        }
     }
 
     // ======= ======= ======= getZoneData ======= ======= =======
@@ -103,10 +319,10 @@ $(document).ready(function() {
         var fillColors = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
 
         switch(zoneType) {
-            case "wards":
+            case "Ward":
                 url = "GeoData/Ward__2012.geojson";
                 break;
-            case "feeders":
+            case "Feeder":
                 url = "GeoData/School_Attendance_Zones_Senior_High.geojson";
                 break;
         }
@@ -192,249 +408,13 @@ $(document).ready(function() {
         });
     }
 
-
-    // ======= ======= ======= initFilterDivs ======= ======= =======
-    function initFilterDivs(zoneType) {
-        console.log("initFilterDivs");
-
-        var nextCategory, nextStudentFilter, nextSchoolFilter, nextGeoFilter, filterHtml;
-
-        // ======= filter menu contents =======
-        var categories = ["years", "schools", "students", "buildings", "geography"];
-        var timeFilters = ["Y1998-2013", "Y2014", "Y2015", "Y2016", "Y2016-2021"];
-        var schoolFilters = ["Public", "Charter", "Elementary", "Middle School", "High School", "Youth Engagement"];
-        var studentFilters = ["All Students", "At Risk", "Spec Ed", "Graduated"];
-        var buildingFilters = ["Square Footage", "Capacity", "Population Now", "Population Future"];
-        var geographyFilters = ["Ward", "Feeder", "Quadrant"];
-        var filters = [timeFilters, schoolFilters, studentFilters, buildingFilters, geographyFilters];
-
-        // ======= filter menu actions =======
-
-
-        // ======= menus by category =======
-        var menuHtml = "";
-        var getDataHtml = "<div><input type='button' id='getDataButton' value='get data'></div>";
-        for (var i = 0; i < categories.length; i++) {
-            nextCategory = categories[i];
-            nextFilters = filters[i];
-            nextFilterCat = nextCategory.substring(0, 3);
-            menuHtml += "<div id='" + nextCategory + "' class='category'><span class='label'>" + nextCategory + "</span>";
-            menuHtml += makeFilterMenu(nextFilterCat, nextFilters);
-            menuHtml +=  "</div>";
-        }
-
-        // ======= makeFilterMenu =======
-        function makeFilterMenu(whichFilterCat, whichFilters) {
-            console.log("makeFilterMenu");
-            var spaceCheck;
-            filterHtml = "";
-            filterHtml += "<ul class='filterList'>";
-            for (var j = 0; j < whichFilters.length; j++) {
-                nextFilter = whichFilters[j];
-                nextFilterId = replaceChar(nextFilter);
-                filterHtml += "<li id='" + nextFilterId + "_" + whichFilterCat + "' class='activeFilter'><a href='#'>" + nextFilter + "</a></li>";
-            }
-            filterHtml += "</ul>";
-            return filterHtml;
-        }
-
-        // ======= append menus to DOM =======
-        $("#filterNav").empty;
-        $("#filterNav").append(menuHtml);
-        activateFilterMenu();
-        $("#filterNav").append(getDataHtml);
-
-        $("#getDataButton").off("click").on("click", function(){
-            console.log("-- -- -- getData -- -- -- ");
-        });
-
-        // ======= activateFilterMenu =======
-        function activateFilterMenu() {
-            console.log("activateFilterMenu");
-
-            for (var i = 0; i < categories.length; i++) {
-                nextCategory = categories[i];
-                nextFilterList = filters[i];
-                nextFilterCat = nextCategory.substring(0, 3);
-                for (var j = 0; j < nextFilterList.length; j++) {
-                    nextFilter = nextFilterList[j];
-                    nextFilter = replaceChar(nextFilter);
-                    nextFilterId = nextFilter + "_" + nextFilterCat;
-                    activateFilter(nextFilterId);
-                    activateCallbacks(nextFilterId, nextFilterCat);
-                }
-            }
-        }
-
-        // ======= activateCallbacks =======
-        function activateCallbacks(filterId, nextFilterCat) {
-            // console.log("activateCallbacks");
-            // console.log("  filterId: " + filterId);
-            // console.log("  nextFilterCat: " + nextFilterCat);
-
-            var textInput;
-            var parentElementId = "#" + filterId;
-            var filterType = getFilterType(filterId);
-            console.log("  filterType: " + filterType);
-
-            // ======= getFilterType =======
-            function getFilterType(filterId) {
-                console.log("getFilterType");
-                var spaceCheck = filterId.indexOf("_");
-                if (spaceCheck > -1) {
-                    var substr1 = filterId.substr(0, spaceCheck);
-                    return substr1;
-                }
-            }
-
-            switch(nextFilterCat) {
-                case "stu":
-                    $(parentElementId).off("click").on("click", function(){
-                        console.log("-- " + filterId + " --");
-                        console.log("  $(this).attr('id'): " + $(this).attr('id'));
-                        $(this).css("background-color", "red");
-                        $(this).children().css("color", "white");
-                    });
-                    break;
-                case "geo":
-                    $(parentElementId).off("click").on("click", function(){
-                        console.log("-- " + filterId + " --");
-                        console.log("  nextFilterCat: " + nextFilterCat);
-                        console.log("  filterType: " + filterType);
-                        $(this).css("background-color", "blue");
-                        $(this).children().css("color", "white");
-                    });
-                    break;
-                case "sch":
-                    $(parentElementId).off("click").on("click", function(){
-                        console.log("-- " + filterId + " --");
-                        console.log("  nextFilterCat: " + nextFilterCat);
-                        console.log("  filterType: " + filterType);
-                        $(this).css("background-color", "gray");
-                        $(this).children().css("color", "white");
-                        getSchoolData(filterType);
-                    });
-                    break;
-                case "yea":
-                    $(parentElementId).off("click").on("click", function(){
-                        console.log("-- " + filterId + " --");
-                        console.log("  nextFilterCat: " + nextFilterCat);
-                        console.log("  filterType: " + filterType);
-                        $(this).css("background-color", "yellow");
-                        $(this).children().css("color", "black");
-                    });
-                    break;
-                case "bui":
-                    $(parentElementId).off("click").on("click", function(){
-                        console.log("-- " + filterId + " --");
-                        console.log("  nextFilterCat: " + nextFilterCat);
-                        console.log("  filterType: " + filterType);
-                        $(this).css("background-color", "purple");
-                        $(this).children().css("color", "white");
-                    });
-                    break;
-            }
-
-        }
-
-        // ======= activateFilter =======
-        function activateFilter(filterId) {
-            // console.log("activateFilter");
-            // console.log("  filterId: " + filterId);
-
-            var textInput;
-            var parentElementId = "#" + filterId;
-
-            // ======= hover =======
-            $(parentElementId).off("mouseenter").on("mouseenter", function(event) {
-                // console.log("-- mouseenter --");
-                indexElement = event.target;
-                indexElementId = event.target.id;
-                // console.log("  indexElementId: " + indexElementId);
-            });
-
-            $(parentElementId).off("mouseout").on("mouseout", function(event){
-                // console.log("-- mouseout --");
-                indexElement = event.target;
-            });
-        }
-
-        // ======= replaceChar =======
-        function replaceChar(nextFilter) {
-            // console.log("replaceChar");
-            spaceCheck = nextFilter.indexOf(" ");
-            if (spaceCheck > -1) {
-                var substr1 = nextFilter.substr(0, spaceCheck);
-                var substr2 = nextFilter.substr(spaceCheck + 1, nextFilter.length);
-                var newFilter = substr1 + substr2;
-                return newFilter;
-            } else {
-                return nextFilter;
-            }
-        }
-
-        // ======= makeTextInput =======
-        function makeTextInput(whichInput, whichValue) {
-            console.log("makeTextInput");
-            var entryString = "";
-            entryString += "<div class='filterEntry'>" + whichInput +
-                " - <input type='text' name='" + whichInput + "' value=" + whichValue + "></div>";
-            return entryString;
-        }
-    }
-
-    // ======= ======= ======= getSchoolData ======= ======= =======
-    function getSchoolData(zoneType) {
-        console.log("getSchoolData");
-        console.log("  map: " + map);
-        console.log("  zoneType: " + zoneType);
-
-        var fillColors = ["green", "red", "orange", "purple", "blue", "yellow", "tomato", "salmon"];
-        var url;
-
-        switch(zoneType) {
-            case "Public":
-                color = fillColors[2];
-                url = "GeoData/Public_Schools.geojson";
-                break;
-            case "charter":
-                color = fillColors[7];
-                url = "GeoData/Charter_Schools.geojson";
-                break;
-        }
-    }
-
-    // ======= ======= ======= getAllSchoolData ======= ======= =======
-    function getAllSchoolData(whichDistrict) {
-        console.log("getAllSchoolData");
-
-        // == get school profile data from file
-        $.ajax({
-            dataType: "text",
-            url: "Public_Schools_dev.csv",
-        }).done(function(textData){
-            console.log("*** ajax success ***");
-
-            // == parse csv text to js object
-            var jsonData = CSV2JSON(textData);
-            console.dir(jsonData);
-
-            // == get data for selected school
-            schoolData = getSchoolData(jsonData, whichDistrict)
-            makeDataPanel(schoolData);
-            makeDataGraph(schoolData);
-
-            // == errors/fails
-            }).fail(function(){
-                console.log("*** ajax fail ***");
-            }).error(function() {
-                console.log("*** ajax error ***");
-        });
-    }
+    // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
 
     initMap();
-    initFilterDivs();
-    activateDisplayDivs();
-    activateFilterDivs();
-
-})
+    initChartObjects();
+    initFilterObjects();
+    initDisplayObjects();
+    displayObject.initFilterMenus();
+}
