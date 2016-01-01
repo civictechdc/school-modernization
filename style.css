@@ -169,7 +169,11 @@ h5 {
 }
 #filterNav ul li:hover {
     background-color: #999;
-    border-color: #333;
+    border: 2px solid #333;
+}
+#filterNav ul li:last-of-type {
+    background-color: #aaa;
+    border: 2px solid gray;
 }
 
 /*#filterNav ul li a {
@@ -249,139 +253,3 @@ h5 {
     margin-right: 8px;
     opacity: 0.7;
 }
-
-/* ======= mainNav ======= */
-#mainNav {
-    width: 100%;
-    z-index: 9;
-}
-#mainNav > div {
-    float: left;
-    width: 100%;
-}
-#mainNav ul {
-	list-style: none;
-	position: relative;
-	float: left;
-    width: 100%;
-	margin: 0;
-	padding: 0;
-}
-#mainNav ul a {
-	text-decoration: none;
-    font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-weight: 700;
-	font-size: 12px;
-    color: white;
-}
-#mainNav ul li {
-    position: relative;
-    display: block;
-    height: 20px;
-    width: 100%;
-    margin: 1px;
-    padding: 2px 0;
-    font-size: 12px;
-    background-color: gray;
-}
-#mainNav ul ul {
-	display: none;
-	position: absolute;
-	top: 0px;
-	left: 110px;
-	background: #fff;
-	padding: 0;
-}
-.over {
-	background: #f6f6f6;
-    color: red;
-}
-/*#mainNav ul li:hover {
-	background: #f6f6f6;
-}
-#mainNav ul li:hover > a {
-    color: red;
-}
-#mainNav ul li:hover > ul {
-	display: block;
-}*/
-
-#mainNav ul ul li {
-	float: none;
-	width: 160px;
-}
-#mainNav ul ul a {
-	line-height: 120%;
-	padding: 10px 15px;
-}
-#mainNav ul ul ul {
-	top: 0;
-	left: 100%;
-}
-
-/* ======= filter selections ======= */
-.filterEntry {
-    position: relative;
-    display: block;
-    top: -16px;
-	left: 110px;
-    height: 14px;
-    width: 200px;
-}
-#getDataButton {
-    position: relative;
-    display: block;
-    margin-top: 10px;
-    height: 20px;
-    width: 100px;
-}
-input[type=text] {
-    padding: 5px;
-    border: 2px solid #ccc;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-input[type=text]:hover {
-    border-color: #999;
-}
-input[type=button] {
-    padding: 2px 15px;
-    height: 20px;
-    font: 14px Arial, Helvetica, sans-serif;
-    cursor: pointer;
-    background: #aaa;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-
-
-
-/*#mainNav ul li.current-menu-item {
-	background: #ddd;
-}*/
-
-/*width: 100px;
-left: 100px;
-top: 200px;
-
-.filterDivs > div,
-
-#schoolsMenu {
-    left: 120px;
-    top: 200px;
-}
-#studentsMenu {
-    left: 420px;
-    top: 200px;
-}
-#geographyMenu {
-    left: 260px;
-    top: 300px;
-}*/
-
-/*display: -webkit-box | -webkit-inline-box;
-display: -moz-box | -moz-inline-box;
-display: -ms-flexbox | -ms-inline-flexbox;
-display: -webkit-inline-flex;
-display: -webkit-flex;
-display: inline-flex;*/
