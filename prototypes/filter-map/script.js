@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     console.log('jQuery loaded');
     console.log('document ready');
@@ -10,6 +11,17 @@ function initApp() {
     // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= initialize ======= ======= ======= ======= =======
+
+    // Charter School Data:
+    // OBJECTID, NAME, ADDRESS, DIRECTOR, PHONE, AUTHORIZER, GRADES, ENROLLMENT, GIS_ID, WEB_URL, ADDRID, X, Y, AUTHORIZAT, MYSCHOOL
+    // Charter Capacity Data:
+    // LEA ID, School ID(s), School Name(s), School Address(es), Former DCPS Facility Name, Maximum Occupancy, Total Square Footage, Number of Students Enrolled, Square Footage per Student, LEA Enrollment Ceiling, Percentage of LEA Enrollment Ceiling Filled, FACILITY NOTES
+    // At Risk Enrollment
+    // Sector, LEA or School Name, % At-Risk for FY15 Projections, # FY15 Total Enrollment Projection
+    // Spending Plan
+    // Owner Agency, Project ID, School, Description, Agency, FY-2009, FY-2010, FY-2011, FY-2012, FY-2013, FY-2014
+    // Spending Plan 2
+    //Project No, Project Title, Lifetime Budget, LTD Allotments, Exp 2013, Allotments  in FY 2014, Exp  2014, Allotments  in FY 2015, Exp 2015, Allotments  in FY 2016, Exp 2016, LTD Expenditures, Unspent Allotments, Encumbrances, Pre Encumbrances, ID Advances, LifeTime Balance, FY 2017, FY 2018, FY 2019, FY 2020, FY 2021, FY 2022, 6-yr Total
 
     var chartObject;
     var displayObject;
@@ -85,366 +97,109 @@ function initApp() {
         this.name = whichChart;
         this.geoJson = null;
         this.whichYears = null;
-        this.whichSchools = null;
+        this.whichSchools = [null, null];
         this.whichStudents = null;
         this.whichBuildings = null;
         this.whichGeography = null;
+        this.selectedSchoolData = null;
     }
+
+
 
     // ======= ======= ======= ======= ======= CHARTS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= CHARTS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= CHARTS ======= ======= ======= ======= =======
+
+
 
     // ======= ======= ======= getFilteredData ======= ======= =======
     Chart.prototype.getFilteredData = function(whichMenu) {
         console.log("getFilteredData");
 
+        // Agency, School, totalSQFT, Address, Enrolled, SqFtperStudent, SchoolCode, Longitude, Latitude, Ward, AtRiskPct, SQFTgroup, Enrollgroup, SQFTpergroup, FakeExpend, Level
+
         console.log("  whichYears: " + chartObject.whichYears);
-        console.log("  whichSchools: " + chartObject.whichSchools.length);
+        console.log("  whichSchools: " + chartObject.whichSchools);
         console.log("  whichStudents: " + chartObject.whichStudents);
         console.log("  whichBuildings: " + chartObject.whichBuildings);
         console.log("  whichGeography: " + chartObject.whichGeography);
 
-        var polygon, nextFeature, nextGeo;
+        this.getSchoolData();
 
-        if (chartObject.whichGeography) {
-            var geoType = chartObject.whichGeography[0];
-            var geoValue = chartObject.whichGeography[1];
-            var geoJsonData = chartObject.geoJson;
-            console.dir(geoJsonData);
-            console.log("  geoJsonData.features.length: " + geoJsonData.features.length);
+    }
 
-            for (var i = 0; i < geoJsonData.features.length; i++ ) {
-                nextFeature = geoJsonData.features[i];
-                if (geoType == "ward") {
-                    nextGeo = nextFeature.properties.WARD;
-                } else if (geoType == "feeder") {
-                    nextGeo = nextFeature.properties.GIS_ID;
-                }
-                console.log("  nextGeo: " + nextGeo);
-                if (nextGeo == geoValue) {
-                    console.log("  geoValue: " + geoValue);
-                    console.log("  nextFeature.geometry.coordinates[0].length: " + nextFeature.geometry.coordinates[0].length);
-                    polygon = geoJsonToPolygon(nextFeature.geometry.coordinates[0]);
-                    console.log("  polygon: " + polygon);
-                    console.dir(polygon);
-                }
-            }
+    // ======= ======= ======= setSelectedFilter ======= ======= =======
+    Chart.prototype.setSelectedFilter = function(filterElement) {
+        console.log("setSelectedFilter");
+        whichFilter = $(filterElement).attr('id');
+        whichCategory = $(filterElement).attr('class').split(/\s+/)[1];
+        console.log("  whichFilter1: ", whichFilter);
+        console.log("  this.whichSchools1: ", this.whichSchools);
+        if (whichCategory != "schools") {
+            $(filterElement).siblings("li:not(:last-child)").css("background-color", "#ddd");
+            $(filterElement).siblings("li:not(:last-child)").children("p").css("color", "black");
         }
 
-        // == get map feature geo data if geography filter selected
-        for (var i = 0; i < chartObject.whichSchools.length; i++) {
-            nextSchool = chartObject.whichSchools[i];
-            schoolName = nextSchool[0];
-            totalExp = nextSchool[1];
-            schoolLong = nextSchool[2];
-            schoolLat = nextSchool[3];
-            schoolType = nextSchool[4];
-            console.log("  schoolName: " + schoolName);
-
-            if (chartObject.whichGeography) {
-                var schoolLatLng = new google.maps.LatLng(parseFloat(schoolLat), parseFloat(schoolLong));
-                console.log("  schoolLatLng: " + schoolLatLng);
-                console.log(google.maps.geometry.poly.containsLocation(schoolLatLng, polygon));
-                // google.maps.geometry.poly.containsLocation(schoolLatLng, geometry);
-            }
-        }
-    }
-
-    // ======= ======= ======= geoJsonToPolygon ======= ======= =======
-    function geoJsonToPolygon(geoCoordinates) {
-        console.log("geoJsonToPolygon");
-        console.log("  geoCoordinates.length: " + geoCoordinates.length);
-
-        var opts = {};
-        var _ccw = function(path) {
-            var isCCW;
-            var a = 0;
-            for (var i = 0; i < path.length-2; i++) {
-                a += ((path[i+1].lat() - path[i].lat()) * (path[i+2].lng() - path[i].lng()) - (path[i+2].lat() - path[i].lat()) * (path[i+1].lng() - path[i].lng()));
-            }
-            if (a > 0) {
-                isCCW = true;
-            } else {
-                isCCW = false;
-            }
-            return isCCW;
-        };
-
-        var paths = [];
-        var exteriorDirection;
-        var interiorDirection;
-        for (var i = 0; i < geoCoordinates.length; i++){
-            var path = [];
-            for (var j = 0; j < geoCoordinates[i].length; j++) {
-                // console.log("  geoCoordinates[i][j]: " + geoCoordinates[i][j]);
-                // console.log("  geoCoordinates[i][j]: " + geoCoordinates[i][j]);
-                // var ll = new google.maps.LatLng(geoCoordinates[i][j][1], geoCoordinates[i][j][0]);
-                var ll = new google.maps.LatLng(geoCoordinates[i][j], geoCoordinates[i][j]);
-                // console.log("  ll: " + ll);
-                path.push(ll);
-            }
-            if (!i) {
-                exteriorDirection = _ccw(path);
-                paths.push(path);
-            } else if (i == 1) {
-                interiorDirection = _ccw(path);
-                if (exteriorDirection == interiorDirection) {
-                    paths.push(path.reverse());
-                } else {
-                    paths.push(path);
-                }
-            } else {
-                if (exteriorDirection == interiorDirection) {
-                    paths.push(path.reverse());
-                } else {
-                    paths.push(path);
-                }
-            }
-        }
-        opts.paths = paths;
-        googleObj = new google.maps.Polygon(opts);
-        return googleObj;
-        // if (geojsonProperties) {
-        //     googleObj.set("geojsonProperties", geojsonProperties);
-        // }
-    }
-
-    // ======= ======= ======= setYearsFilter ======= ======= =======
-    Chart.prototype.setYearsFilter = function(whichYears) {
-        console.log("setYearsFilter");
-        displayObject.resetMenuItems(whichYears);
-        $(whichYears).css("background-color", "yellow");
-        $(whichYears).children("p").css("color", "black");
-    }
-
-    // ======= ======= ======= setSchoolsFilter ======= ======= =======
-    Chart.prototype.setSchoolsFilter = function(whichSchools) {
-        console.log("setSchoolsFilter");
-        displayObject.resetMenuItems(whichSchools);
-        $(whichSchools).css("background-color", "green");
-        $(whichSchools).children("p").css("color", "white");
-        this.getSchoolData(whichSchools.id);
-    }
-
-    // ======= ======= ======= setStudentsFilter ======= ======= =======
-    Chart.prototype.setStudentsFilter = function(whichStudents) {
-        console.log("setStudentsFilter");
-        displayObject.resetMenuItems(whichStudents);
-        $(whichStudents).css("background-color", "purple");
-        $(whichStudents).children("p").css("color", "white");
-    }
-
-    // ======= ======= ======= setBldgFilter ======= ======= =======
-    Chart.prototype.setBldgFilter = function(whichBldg) {
-        console.log("setBldgFilter");
-        displayObject.resetMenuItems(whichBldg);
-        $(whichBldg).css("background-color", "red");
-        $(whichBldg).children("p").css("color", "white");
-    }
-
-    // ======= ======= ======= setGeoFilter ======= ======= =======
-    Chart.prototype.setGeoFilter = function(whichGeo) {
-        console.log("setGeoFilter");
-        displayObject.resetMenuItems(whichGeo);
-        $(whichGeo).css("background-color", "blue");
-        $(whichGeo).children("p").css("color", "white");
-        this.getZoneData($(whichGeo).attr('id'));
-    }
-
-    // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
-    // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
-    // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
-
-    // ======= ======= ======= initFilterMenus ======= ======= =======
-    Display.prototype.initFilterMenus = function() {
-        console.log("initFilterMenus");
-
-        var filtersArray = [this.yearsMenu, this.schoolsMenu, this.studentsMenu, this.buildingsMenu, this.geographyMenu];
-        var filterContainer = $("#filterNav");
-        var menuHtml = "";
-
-        // == clear previous filter category html
-        $(filterContainer).empty();
-
-        // == build next filter category html
-        for (var i = 0; i < filtersArray.length; i++) {
-            nextMenu = filtersArray[i];
-            nextCategory = nextMenu[0];
-            menuHtml += "<div class='category " + nextCategory + "'><span class='label'>" + nextCategory + "</span>";
-            menuHtml += this.makeFilterMenu(nextMenu);
-            menuHtml += "</div>";
-            $(filterContainer).append(menuHtml);
-            menuHtml = "";
-            this.activateClearItem(nextMenu);
-            this.activateFilterMenu(nextMenu);
-        }
-        this.activateGetData(nextMenu);
-    }
-
-    // ======= ======= ======= makeFilterMenu ======= ======= =======
-    Display.prototype.makeFilterMenu = function(whichMenu) {
-        // console.log("makeFilterMenu");
-
-        // == category list for making reset buttons
-        var whichCategory = whichMenu[0];
-
-        // == build html string for filter lists
-        filterHtml = "";
-        filterHtml += "<ul class='filterList'>";
-
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            nextId = nextItem.id;
-            nextText = nextItem.text;
-            filterHtml += "<li id='" + nextId + "' class='filter'><p class='filterText'>" + nextText + "</p></li>";
-        }
-        filterHtml += "<li id='reset" + whichCategory + "' class='reset'><p class='filterText'>clear</p></li>";
-        filterHtml +=  "</ul>";
-
-        if (whichCategory == "geography") {
-            filterHtml += "<ul class='filterList'>";
-            filterHtml += "<li id='getData' class='filter'><p class='filterText'>Get Data</p></li>";
-            filterHtml +=  "</ul>";
-        }
-
-        return filterHtml;
-    }
-
-    // ======= ======= ======= activateClearItem ======= ======= =======
-    Display.prototype.activateClearItem = function(whichMenu) {
-        // console.log("activateClearItem");
-
-        var menuCategory = whichMenu[0];
-        var clearItem = $("#reset" + menuCategory);
-
-        $(clearItem).off("click").on("click", function(){
-            console.log("-- clear " + menuCategory + " -- ");
-            displayObject.resetMenuItems(clearItem, menuCategory);
-        });
-    }
-
-    // ======= ======= ======= activateFilterMenu ======= ======= =======
-    Display.prototype.activateFilterMenu = function(whichMenu) {
-        // console.log("activateFilterMenu");
-
-        // == activate filter events and callbacks
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            this.activateFilterItem(nextItem);
-        }
-    }
-
-    // ======= ======= ======= activateGetData ======= ======= =======
-    Display.prototype.activateGetData = function(whichMenu) {
-        // console.log("activateGetData");
-        var self = this;
-        var getData = $("#getData");
-
-        $(getData).off("click").on("click", function(){
-            console.log("-- getData -- ");
-            chartObject.getFilteredData();
-        });
-    }
-
-    // ======= ======= ======= activateFilterItem ======= ======= =======
-    Display.prototype.activateFilterItem = function(whichItem) {
-        // console.log("activateFilterItem");
-
-        var self = this;
-
-        // == get menu item parameters
-        nextId = whichItem.id;
-        nextCategory = whichItem.category;
-        nextCallback = whichItem.callback;
-        nextItemElement = $("#" + nextId);
-
-        // ======= hover states =======
-        $(nextItemElement).off("mouseenter").on("mouseenter", function(event){
-            // console.log("-- mouseenter --");
-            indexElement = event.currentTarget;
-            indexElementId = event.currentTarget.id;
-        });
-        $(nextItemElement).off("mouseout").on("mouseout", function(event){
-            // console.log("-- mouseout --");
-            indexElement = event.currentTarget;
-        });
-
-        // ======= general =======
-        switch(nextCallback) {
-            case "setYears":
-                $(nextItemElement).off("click").on("click", function(){
-                    console.log("-- setYears -- ");
-                    clickedItem = event.currentTarget;
-                    chartObject.setYearsFilter(clickedItem);
-                });
-                break;
-            case "setSchools":
-                $(nextItemElement).off("click").on("click", function(){
-                    console.log("-- setSchools -- ");
-                    clickedItem = event.currentTarget;
-                    chartObject.setSchoolsFilter(clickedItem);
-                });
-                break;
-            case "setStudents":
-                $(nextItemElement).off("click").on("click", function(){
-                    console.log("-- setStudents -- ");
-                    clickedItem = event.currentTarget;
-                    chartObject.setStudentsFilter(clickedItem);
-                });
-                break;
-            case "setBuilding":
-                $(nextItemElement).off("click").on("click", function(){
-                    console.log("-- setBuilding -- ");
-                    clickedItem = event.currentTarget;
-                    chartObject.setBldgFilter(clickedItem);
-                });
-                break;
-            case "setGeography":
-                $(nextItemElement).off("click").on("click", function(){
-                    console.log("-- setYears -- ");
-                    clickedItem = event.currentTarget;
-                    chartObject.setGeoFilter(clickedItem);
-                });
-                break;
-        }
-    }
-
-    // ======= ======= ======= resetMenuItems ======= ======= =======
-    Display.prototype.resetMenuItems = function(whichItem, menuCategory) {
-        console.log("resetMenuItems");
-        console.log("  menuCategory: " + menuCategory);
-        $(whichItem).siblings("li:not(:last-child)").css("background-color", "#ddd");
-        $(whichItem).siblings("li:not(:last-child)").children("p").css("color", "black");
-
-        switch(menuCategory) {
+        switch(whichCategory) {
             case "years":
-                chartObject.whichYears = null;
-                break;
-            case "schools":
-                chartObject.whichSchools = null;
+                $(filterElement).css("background-color", "yellow");
+                $(filterElement).children("p").css("color", "black");
+                this.whichYears = whichFilter;
                 break;
             case "students":
-                chartObject.whichStudents = null;
+                $(filterElement).css("background-color", "purple");
+                $(filterElement).children("p").css("color", "white");
+                this.whichStudents = whichFilter;
                 break;
             case "buildings":
-                chartObject.whichBuildings = null;
+                $(filterElement).css("background-color", "red");
+                $(filterElement).children("p").css("color", "white");
+                this.whichBuildings = whichFilter;
                 break;
             case "geography":
-                chartObject.whichGeography = null;
+                $(filterElement).css("background-color", "blue");
+                $(filterElement).children("p").css("color", "white");
+                this.whichGeography = whichFilter;
+                this.getZoneData(whichFilter);
+                break;
+            case "schools":
+                if (whichFilter == "Public") {
+                    $("#Charter").css("background-color", "#ddd");
+                    $("#Charter").children("p").css("color", "black");
+                    this.whichSchools[0] = "Public";
+                } else if (whichFilter == "Charter") {
+                    $("#Public").css("background-color", "#ddd");
+                    $("#Public").children("p").css("color", "black");
+                    this.whichSchools[0] = "Charter";
+                } else if (!(whichFilter == "Public") || (whichFilter == "Charter")) {
+                    console.log("  whichFilter2: ", whichFilter);
+                    this.whichSchools[1] = whichFilter;
+                    $(filterElement).siblings("li:not(:last-child, #Public, #Charter)").css("background-color", "#ddd");
+                    $(filterElement).siblings("li:not(:last-child, #Public, #Charter)").children("p").css("color", "black");
+                }
+                $(filterElement).css("background-color", "green");
+                $(filterElement).children("p").css("color", "white");
                 break;
         }
+        console.log("  this.whichGeography: ", this.whichGeography);
+        console.log("  this.whichSchools2: ", this.whichSchools);
     }
 
-    // ======= ======= ======= getSchoolData ======= ======= =======
-    Chart.prototype.getSchoolData = function(whichSchools) {
-        console.log("getSchoolData");
-        console.log("  whichSchools: " + whichSchools);
 
-        // Agency, School, totalSQFT, Address, Enrolled, SqFtperStudent, SchoolCode, Longitude, Latitude, Ward, AtRiskPct, SQFTgroup, Enrollgroup, SQFTpergroup, FakeExpend, Unknown
-        // School, SchoolCode, Address, Ward, Longitude, Latitude, Enrolled, totalSQFT, AtRiskPct, FakeExpend, Level
 
-        url = "SchoolData/DCPS_schools_dev.csv";
+    // ======= ======= ======= ======= ======= DATA ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= DATA ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= DATA ======= ======= ======= ======= =======
+
+
+
+    // ======= ======= ======= getYearsData ======= ======= =======
+    Chart.prototype.getYearsData = function(whichYears) {
+        console.log("getYearsData");
+        console.log("  whichYears: " + whichYears);
+
+        // url = "Data_Schools/DCPS_schools_dev.csv";
+        url = "Data_Schools/Public_Charter_data.csv";
 
         // ======= get selected data =======
         $.ajax({
@@ -456,48 +211,203 @@ function initApp() {
             jsonData = CSV2JSON(textData);
             console.dir(jsonData);
 
-            switch(whichSchools) {
-                case "Public":
-                    checkType = null;
-                    break;
-                case "Charter":
-                    checkType = "charter";
-                    break;
-                case "Elem":
-                    checkType = "ES";
-                    break;
-                case "Middle":
-                    checkType = "MS";
-                    break;
-                case "High":
-                    checkType = "HS";
-                    break;
-                case "Youth":
-                    checkType = "YE";
-                    break;
+            // switch(whichYears) {
+            //
+            // }
+
+        // == errors/fails
+        }).fail(function(){
+            console.log("*** ajax fail ***");
+        }).error(function() {
+            console.log("*** ajax error ***");
+        });
+    }
+
+    // ======= ======= ======= getSchoolData ======= ======= =======
+    Chart.prototype.getSchoolData = function() {
+        console.log("getSchoolData");
+
+        var self = this;
+        var whichType, whichLevel, checkType, checkLevel;
+
+        // url = "Data_Schools/DCPS_schools_dev.csv";
+        url = "Data_Schools/Public_Charter_data.csv";
+
+        // ======= get selected data =======
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "text"
+        }).done(function(textData){
+            console.log("*** ajax success ***");
+            jsonData = CSV2JSON(textData);
+            console.dir(jsonData);
+
+            if (self.whichGeography) {
+                whichGeoType = self.whichGeography[0];
+                whichGeoValue = self.whichGeography[1];
+
+                switch(whichGeoType) {
+                    case "Ward":
+                        checkGeo = whichGeoValue;
+                        break;
+                    case "Feeder":
+                        checkGeo = null;
+                        break;
+                    case "Quadrant":
+                        checkGeo = null;
+                        break;
+                    default:
+                        checkGeo = null;
+                }
+            } else {
+                whichGeoType = null;
             }
 
-            var expendArray = [];
+            if (self.whichSchools) {
+                whichType = self.whichSchools[0];
+                whichLevel = self.whichSchools[1];
+                switch(whichType) {
+                    case "Public":
+                        checkType = "DCPS";
+                        break;
+                    case "Charter":
+                        checkType = "PCS";
+                        break;
+                    default:
+                        checkType = null;
+                }
 
+                switch(whichLevel) {
+                    case "Elem":
+                        checkLevel = "ES";
+                        break;
+                    case "Middle":
+                        checkLevel = "MS";
+                        break;
+                    case "High":
+                        checkLevel = "HS";
+                        break;
+                    case "Youth":
+                        checkLevel = "YE";
+                        break;
+                    default:
+                        checkLevel = null;
+                }
+            } else {
+                checkType = null;
+                checkLevel = null;
+            }
+
+            var selectedTypeArray = [];
+            var selectedLevelArray = [];
+            var selectedDataArray = [];
+            var checkDataArray = [];
+
+            // == get school codes for selected level and type
             for (var i = 0; i < jsonData.length; i++) {
                 nextSchool = jsonData[i];
-                nextName = nextSchool.School;
-                nextTotal = nextSchool.FakeExpend;
-                schoolLong = nextSchool.Longitude;
-                schoolLat = nextSchool.Latitude;
-                schoolType = nextSchool.Level;
-                nextData = [nextName, nextTotal, schoolLong, schoolLat, schoolType];
+                schoolCode = nextSchool.SchoolCode;
+                schoolType = nextSchool.Agency;
+                schoolLevel = nextSchool.Level;
+                schoolWard = nextSchool.Ward;
+
+                // == check if public or charter type selected
                 if (checkType) {
                     if (schoolType == checkType) {
-                        expendArray.push(nextData);
+                        selectedTypeArray.push(schoolCode);
                     }
                 } else {
-                    expendArray.push(nextData);
+                    selectedTypeArray.push(schoolCode);
+                }
+
+                // == check ES, MS, HS, YE school type
+                if (checkLevel) {
+                    if (schoolLevel == checkLevel) {
+
+                        // == check if ward selected
+                        if (whichGeoType) {
+                            if (whichGeoType == "Ward") {
+                                if (schoolWard == checkGeo) {
+                                    selectedLevelArray.push(schoolCode);
+                                }
+                            // } else if (whichGeoType == "Feeder") {
+                            //     if (schoolFeeder == checkGeo) {
+                            //         selectedLevelArray.push(schoolCode);
+                            //     }
+                            // } else if (whichGeoType == "Quadrant") {
+                            //     if (schoolQuadrant == checkGeo) {
+                            //         selectedLevelArray.push(schoolCode);
+                            //     }
+                            }
+                        } else {
+                            selectedLevelArray.push(schoolCode);
+                        }
+                    }
+                } else {
+                    selectedLevelArray.push(schoolCode);
                 }
             }
-            chartObject.whichSchools = null;
-            chartObject.whichSchools = expendArray;
-            console.log("  chartObject.whichSchools.length: " + chartObject.whichSchools.length);
+
+            var selectedSchoolcodesArray = getArrayIntersect(selectedTypeArray, selectedLevelArray);
+
+            // == iterate through all json school data
+            for (var i = 0; i < jsonData.length; i++) {
+                nextSchool = jsonData[i];
+                checkSchoolCode = nextSchool.SchoolCode;
+
+                // == check each school for match to selected schools via school code
+                for (var j = 0; j < selectedSchoolcodesArray.length; j++) {
+                    nextSchoolCode = selectedSchoolcodesArray[j];
+                    if (nextSchoolCode == checkSchoolCode) {
+                        console.log("  nextSchool.School: ", nextSchool.School);
+                        nextData = getDataDetails(nextSchool);
+                        console.log("  nextData.schoolName: ", nextData.schoolName);
+                        selectedDataArray.push(nextData);
+                        checkDataArray.push(nextSchoolCode);
+                    }
+                }
+            }
+
+            console.log("  selectedSchoolcodesArray.length: ", selectedSchoolcodesArray.length);
+            console.log("  selectedDataArray.length: ", selectedDataArray.length);
+            console.log("  checkDataArray.length: ", checkDataArray.length);
+            console.log("  checkDataArray: ", checkDataArray);
+            console.log("  selectedDataArray: ", selectedDataArray);
+
+            // == store school data on chart object
+            this.selectedSchoolData = selectedDataArray;
+            makeSchoolsChart(this.selectedSchoolData);
+
+
+            // ======= ======= ======= getDataDetails ======= ======= =======
+            function getDataDetails(nextSchool) {
+                console.log("getDataDetails");
+
+                var schoolName = nextSchool.School;
+                var schoolCode = nextSchool.SchoolCode;
+                var schoolType = nextSchool.Agency;
+                var schoolLevel = nextSchool.Level;
+                var schoolExpenditure = nextSchool.FakeExpend;
+                var schoolSqft = nextSchool.totalSQFT;
+                var schoolEnroll = nextSchool.Enrolled;
+                var schoolLng = nextSchool.Longitude;
+                var schoolLat = nextSchool.Latitude;
+                var schoolLat = nextSchool.Latitude;
+                var schoolWard = nextSchool.Ward;
+                var schoolData = { "schoolName": schoolName, "schoolCode": schoolCode, "schoolType": schoolType, "schoolLevel": schoolLevel, "schoolExpenditure": schoolExpenditure, "schoolSqft": schoolSqft, "schoolLng": schoolLng, "schoolLat": schoolLat, "schoolWard": schoolWard };
+                return schoolData;
+            }
+
+            // ======= ======= ======= getArrayIntersect ======= ======= =======
+            function getArrayIntersect(arrayA, arrayB) {
+                console.log("getArrayIntersect");
+
+                return $.grep(arrayA, function(i) {
+                    return $.inArray(i, arrayB) > -1;
+                });
+
+            }
 
         // == errors/fails
         }).fail(function(){
@@ -516,10 +426,10 @@ function initApp() {
 
         switch(zoneType) {
             case "Ward":
-                url = "GeoData/Ward__2012.geojson";
+                url = "Data_Geo/Ward__2012.geojson";
                 break;
             case "Feeder":
-                url = "GeoData/School_Attendance_Zones_Senior_High.geojson";
+                url = "Data_Geo/School_Attendance_Zones_Senior_High.geojson";
                 break;
         }
 
@@ -598,7 +508,7 @@ function initApp() {
                         console.log("--- click wards ---");
                         var whichWard = event.feature.getProperty('WARD');
                         var wardName = event.feature.getProperty('NAME');
-                        chartObject.whichGeography = ["ward", whichWard];
+                        chartObject.whichGeography = ["Ward", whichWard];
                         console.log("  wardName: " + wardName);
                     });
                     break;
@@ -608,7 +518,7 @@ function initApp() {
                         var gis_id = event.feature.getProperty('GIS_ID');
                         var bldg = event.feature.getProperty('BLDG_NUM');
                         var schoolName = event.feature.getProperty('SCHOOLNAME');
-                        chartObject.whichGeography = ["feeder", gis_id];
+                        chartObject.whichGeography = ["Feeder", gis_id];
                         console.log("  gis_id: " + gis_id);
                         console.log("  schoolName: " + schoolName);
                     });
@@ -659,9 +569,234 @@ function initApp() {
 
     }
 
+
+
+    // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
+    // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
+
+
+
+    // ======= ======= ======= initFilterMenus ======= ======= =======
+    Display.prototype.initFilterMenus = function() {
+        console.log("initFilterMenus");
+
+        var filtersArray = [this.yearsMenu, this.schoolsMenu, this.studentsMenu, this.buildingsMenu, this.geographyMenu];
+        var filterContainer = $("#filterNav");
+        var menuHtml = "";
+
+        // == clear previous filter category html
+        $(filterContainer).empty();
+
+        // == build next filter category html
+        for (var i = 0; i < filtersArray.length; i++) {
+            nextMenu = filtersArray[i];
+            nextCategory = nextMenu[0];
+            menuHtml += "<div class='category " + nextCategory + "'><span class='label'>" + nextCategory + "</span>";
+            menuHtml += this.makeFilterMenu(nextMenu);
+            menuHtml += "</div>";
+            $(filterContainer).append(menuHtml);
+            menuHtml = "";
+            this.activateClearItem(nextMenu);
+            this.activateFilterMenu(nextMenu);
+        }
+        this.activateGetData(nextMenu);
+    }
+
+    // ======= ======= ======= makeFilterMenu ======= ======= =======
+    Display.prototype.makeFilterMenu = function(whichMenu) {
+        console.log("makeFilterMenu");
+
+        // == category list for making reset buttons
+        var whichCategory = whichMenu[0];
+        var whichClass = whichCategory;
+
+        // == build html string for filter lists
+        filterHtml = "";
+        filterHtml += "<ul class='filterList'>";
+
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            nextId = nextItem.id;
+            nextText = nextItem.text;
+            filterHtml += "<li id='" + nextId + "' class='filter " + whichClass + "'><p class='filterText'>" + nextText + "</p></li>";
+
+            // == separate school type (Charter/Public) from school level (E/M/S/Y)
+            // if ((whichCategory == "schools") && (nextId == "Charter")) {
+            //     filterHtml +=  "</ul>";
+            //     filterHtml += "<ul class='filterList'>";
+            //     whichClass = "level";
+            // }
+        }
+
+        // == add clear button to end of filter buttons
+        filterHtml += "<li id='reset" + whichCategory + "' class='reset'><p class='filterText'>clear</p></li>";
+        filterHtml +=  "</ul>";
+
+        // == ad master getData button to end of menu
+        if (whichCategory == "geography") {
+            filterHtml += "<ul class='filterList'>";
+            filterHtml += "<li id='getData' class='filter'><p class='filterText'>Get Data</p></li>";
+            filterHtml +=  "</ul>";
+        }
+
+        return filterHtml;
+    }
+
+    // ======= ======= ======= activateClearItem ======= ======= =======
+    Display.prototype.activateClearItem = function(whichMenu) {
+        // console.log("activateClearItem");
+
+        var menuCategory = whichMenu[0];
+        var clearItem = $("#reset" + menuCategory);
+
+        $(clearItem).off("click").on("click", function(){
+            console.log("-- clear " + menuCategory + " -- ");
+            displayObject.resetMenuItems(clearItem, menuCategory);
+        });
+    }
+
+    // ======= ======= ======= activateFilterMenu ======= ======= =======
+    Display.prototype.activateFilterMenu = function(whichMenu) {
+        // console.log("activateFilterMenu");
+
+        // == activate filter events and callbacks
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            this.activateFilterItem(nextItem);
+        }
+    }
+
+    // ======= ======= ======= activateGetData ======= ======= =======
+    Display.prototype.activateGetData = function(whichMenu) {
+        // console.log("activateGetData");
+        var self = this;
+        var getData = $("#getData");
+
+        $(getData).off("click").on("click", function(){
+            console.log("-- getData -- ");
+            chartObject.getFilteredData();
+        });
+    }
+
+    // ======= ======= ======= activateFilterItem ======= ======= =======
+    Display.prototype.activateFilterItem = function(whichItem) {
+        // console.log("activateFilterItem");
+
+        var self = this;
+
+        // // == get menu item parameters
+        nextId = whichItem.id;
+        nextCategory = whichItem.category;
+        nextCallback = whichItem.callback;
+        nextItemElement = $("#" + nextId);
+
+        // // ======= hover states =======
+        // $(nextItemElement).off("mouseenter").on("mouseenter", function(event){
+        //     console.log("-- mouseenter --");
+        //     indexElement = event.currentTarget;
+        //     indexElementId = event.currentTarget.id;
+        // });
+        // $(nextItemElement).off("mouseout").on("mouseout", function(event){
+        //     // console.log("-- mouseout --");
+        //     indexElement = event.currentTarget;
+        // });
+
+        // ======= click listeners =======
+        $(nextItemElement).off("click").on("click", function(){
+            console.log("-- selectFilter -- ");
+            chartObject.setSelectedFilter(this);
+        });
+    }
+
+    // ======= ======= ======= resetMenuItems ======= ======= =======
+    Display.prototype.resetMenuItems = function(filterElement, menuCategory) {
+        console.log("resetMenuItems");
+        $(filterElement).siblings("li:not(:last-child)").css("background-color", "#ddd");
+        $(filterElement).siblings("li:not(:last-child)").children("p").css("color", "black");
+
+        switch(menuCategory) {
+            case "years":
+                chartObject.whichYears = null;
+                break;
+            case "schools":
+                chartObject.whichSchools = [null, null];
+                break;
+            case "students":
+                chartObject.whichStudents = null;
+                break;
+            case "buildings":
+                chartObject.whichBuildings = null;
+                break;
+            case "geography":
+                chartObject.whichGeography = null;
+                break;
+        }
+    }
+
+
+
     // ======= ======= ======= ======= ======= UTILITIES ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= UTILITIES ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= UTILITIES ======= ======= ======= ======= =======
+
+
+
+    // ======= ======= ======= geoJsonToPolygon ======= ======= =======
+    function geoJsonToPolygon(geoCoordinates) {
+        console.log("geoJsonToPolygon");
+        console.log("  geoCoordinates.length: " + geoCoordinates.length);
+
+        var opts = {};
+        var paths = [];
+        var exteriorDirection;
+        var interiorDirection;
+
+        // == check if each path isCCW (T/F)?
+        var _ccw = function(path) {
+            var isCCW;
+            var a = 0;
+            for (var i = 0; i < path.length-2; i++) {
+                a += ((path[i+1].lat() - path[i].lat()) * (path[i+2].lng() - path[i].lng()) - (path[i+2].lat() - path[i].lat()) * (path[i+1].lng() - path[i].lng()));
+            }
+            if (a > 0) {
+                isCCW = true;
+            } else {
+                isCCW = false;
+            }
+            return isCCW;
+        };
+
+        // == loop through LatLng coodinate pairs to define paths between pair
+        for (var i = 0; i < geoCoordinates.length; i++){
+            var path = [];
+            for (var j = 0; j < geoCoordinates[i].length; j++) {
+                var ll = new google.maps.LatLng(geoCoordinates[i][j], geoCoordinates[i][j]);
+                // console.log("  ll: " + ll);
+                path.push(ll);
+            }
+            if (!i) {
+                exteriorDirection = _ccw(path);
+                paths.push(path);
+            } else if (i == 1) {
+                interiorDirection = _ccw(path);
+                if (exteriorDirection == interiorDirection) {
+                    paths.push(path.reverse());
+                } else {
+                    paths.push(path);
+                }
+            } else {
+                if (exteriorDirection == interiorDirection) {
+                    paths.push(path.reverse());
+                } else {
+                    paths.push(path);
+                }
+            }
+        }
+        opts.paths = paths;
+        googleObj = new google.maps.Polygon(opts);
+        return googleObj;
+    }
 
     // ======= ======= ======= CSVToArray ======= ======= =======
     function CSVToArray(strData, strDelimiter) {
