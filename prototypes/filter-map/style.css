@@ -68,6 +68,15 @@ h5 {
     font: 16px Arial, Helvetica, sans-serif;
     background: #aaa;
 }
+#message > p{
+    display: block;
+    margin-top: 5px;
+    padding: 5px 0;
+    width: 100%;
+    height: 20px;
+    font: 12px Arial, Helvetica, sans-serif;
+    background-color: sandybrown;
+}
 
 /* ======= displays ======= */
 .displayCol {

@@ -91,6 +91,7 @@ function initApp() {
         this.studentsMenu = ["students", filterMenu.All, filterMenu.AtRisk, filterMenu.SpecEd, filterMenu.Grad];
         this.buildingsMenu = ["buildings", filterMenu.Sqft, filterMenu.Capacity, filterMenu.PopNow, filterMenu.PopFuture];
         this.geographyMenu = ["geography", filterMenu.Ward, filterMenu.Feeder, filterMenu.Quadrant];
+        this.dataTitleArray = [null, null, null, null, null];
     }
     function Chart(whichChart) {
         console.log("Chart");
@@ -133,8 +134,6 @@ function initApp() {
         console.log("setSelectedFilter");
         whichFilter = $(filterElement).attr('id');
         whichCategory = $(filterElement).attr('class').split(/\s+/)[1];
-        console.log("  whichFilter1: ", whichFilter);
-        console.log("  this.whichSchools1: ", this.whichSchools);
         if (whichCategory != "schools") {
             $(filterElement).siblings("li:not(:last-child)").css("background-color", "#ddd");
             $(filterElement).siblings("li:not(:last-child)").children("p").css("color", "black");
@@ -145,22 +144,26 @@ function initApp() {
                 $(filterElement).css("background-color", "yellow");
                 $(filterElement).children("p").css("color", "black");
                 this.whichYears = whichFilter;
+                displayObject.dataTitleArray[0] = filterMenu[whichFilter].text;
                 break;
             case "students":
                 $(filterElement).css("background-color", "purple");
                 $(filterElement).children("p").css("color", "white");
                 this.whichStudents = whichFilter;
+                displayObject.dataTitleArray[2] = filterMenu[whichFilter].text;
                 break;
             case "buildings":
                 $(filterElement).css("background-color", "red");
                 $(filterElement).children("p").css("color", "white");
                 this.whichBuildings = whichFilter;
+                displayObject.dataTitleArray[3] = filterMenu[whichFilter].text;
                 break;
             case "geography":
                 $(filterElement).css("background-color", "blue");
                 $(filterElement).children("p").css("color", "white");
                 this.whichGeography = whichFilter;
                 this.getZoneData(whichFilter);
+                displayObject.dataTitleArray[4] = filterMenu[whichFilter].text;
                 break;
             case "schools":
                 if (whichFilter == "Public") {
@@ -172,17 +175,17 @@ function initApp() {
                     $("#Public").children("p").css("color", "black");
                     this.whichSchools[0] = "Charter";
                 } else if (!(whichFilter == "Public") || (whichFilter == "Charter")) {
-                    console.log("  whichFilter2: ", whichFilter);
                     this.whichSchools[1] = whichFilter;
                     $(filterElement).siblings("li:not(:last-child, #Public, #Charter)").css("background-color", "#ddd");
                     $(filterElement).siblings("li:not(:last-child, #Public, #Charter)").children("p").css("color", "black");
                 }
                 $(filterElement).css("background-color", "green");
                 $(filterElement).children("p").css("color", "white");
+                displayObject.dataTitleArray[1] = filterMenu[whichFilter].text;
                 break;
         }
-        console.log("  this.whichGeography: ", this.whichGeography);
-        console.log("  this.whichSchools2: ", this.whichSchools);
+
+        displayObject.updateFilterTitle();
     }
 
 
@@ -262,6 +265,7 @@ function initApp() {
                 }
             } else {
                 whichGeoType = null;
+                $("#message").children("p").text("No geography filter selected");
             }
 
             if (self.whichSchools) {
@@ -360,9 +364,9 @@ function initApp() {
                 for (var j = 0; j < selectedSchoolcodesArray.length; j++) {
                     nextSchoolCode = selectedSchoolcodesArray[j];
                     if (nextSchoolCode == checkSchoolCode) {
-                        console.log("  nextSchool.School: ", nextSchool.School);
+                        // console.log("  nextSchool.School: ", nextSchool.School);
                         nextData = getDataDetails(nextSchool);
-                        console.log("  nextData.schoolName: ", nextData.schoolName);
+                        // console.log("  nextData.schoolName: ", nextData.schoolName);
                         selectedDataArray.push(nextData);
                         checkDataArray.push(nextSchoolCode);
                     }
@@ -372,13 +376,11 @@ function initApp() {
             console.log("  selectedSchoolcodesArray.length: ", selectedSchoolcodesArray.length);
             console.log("  selectedDataArray.length: ", selectedDataArray.length);
             console.log("  checkDataArray.length: ", checkDataArray.length);
-            console.log("  checkDataArray: ", checkDataArray);
-            console.log("  selectedDataArray: ", selectedDataArray);
+            // console.log("  checkDataArray: ", checkDataArray);
 
             // == store school data on chart object
             this.selectedSchoolData = selectedDataArray;
             makeSchoolsChart(this.selectedSchoolData);
-
 
             // ======= ======= ======= getDataDetails ======= ======= =======
             function getDataDetails(nextSchool) {
@@ -469,6 +471,8 @@ function initApp() {
                 };
             });
 
+            $("#message").children("p").text("Click map to select " + zoneType);
+
             self.activateZoneData(zoneType);
 
         // == errors/fails
@@ -509,6 +513,7 @@ function initApp() {
                         var whichWard = event.feature.getProperty('WARD');
                         var wardName = event.feature.getProperty('NAME');
                         chartObject.whichGeography = ["Ward", whichWard];
+                        $("#message").children("p").text("Ward " + whichWard + " selected");
                         console.log("  wardName: " + wardName);
                     });
                     break;
@@ -519,6 +524,7 @@ function initApp() {
                         var bldg = event.feature.getProperty('BLDG_NUM');
                         var schoolName = event.feature.getProperty('SCHOOLNAME');
                         chartObject.whichGeography = ["Feeder", gis_id];
+                        $("#message").children("p").text(schoolName + " feeder selected");
                         console.log("  gis_id: " + gis_id);
                         console.log("  schoolName: " + schoolName);
                     });
@@ -652,6 +658,25 @@ function initApp() {
 
         $(clearItem).off("click").on("click", function(){
             console.log("-- clear " + menuCategory + " -- ");
+            switch(menuCategory) {
+                case "years":
+                    filterIndex = 0;
+                    break;
+                case "schools":
+                    filterIndex = 1;
+                    break;
+                case "students":
+                    filterIndex = 2;
+                    break;
+                case "buildings":
+                    filterIndex = 3;
+                    break;
+                case "geography":
+                    filterIndex = 4;
+                    break;
+            }
+            displayObject.dataTitleArray[filterIndex] = null;
+            displayObject.updateFilterTitle();
             displayObject.resetMenuItems(clearItem, menuCategory);
         });
     }
@@ -734,6 +759,31 @@ function initApp() {
         }
     }
 
+    // ======= ======= ======= updateFilterTitle ======= ======= =======
+    Display.prototype.updateFilterTitle = function(whichYears) {
+        console.log("updateFilterTitle");
+
+        var filterTitleText = "Filters: ";
+        var nullCount = 0;
+        for (var i = 0; i < displayObject.dataTitleArray.length; i++) {
+            nextFilter = displayObject.dataTitleArray[i];
+            if (nextFilter) {
+                if (filterTitleText.length > 9) {
+                    filterTitleText += ", ";
+                    filterTitleText += nextFilter;
+                } else {
+                    filterTitleText += nextFilter;
+                }
+            } else {
+                nullCount++;
+            }
+        }
+        if (nullCount == 5) {
+            $("#filterTitle").text("Data Display");
+        } else {
+            $("#filterTitle").text(filterTitleText);
+        }
+    }
 
 
     // ======= ======= ======= ======= ======= UTILITIES ======= ======= ======= ======= =======

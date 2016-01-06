@@ -19,7 +19,6 @@ function makeSchoolsChart(schoolDataArray) {
         chartH = 500 - chartPadding.top - chartPadding.bottom;      // outer height of chart
 
     var dataMax = d3.max(schoolDataArray, function(d) {
-        console.log("  d.schoolExpenditure: ", d.schoolExpenditure);
         return d.schoolExpenditure;
     });
     console.log("  dataMax: ", dataMax);
@@ -36,7 +35,7 @@ function makeSchoolsChart(schoolDataArray) {
 
     var yScale = d3.scale.linear()
         .domain([0, d3.max(schoolDataArray, function(d) {
-            console.log("  d.schoolExpenditure: ", d.schoolExpenditure);
+            // console.log("  d.schoolExpenditure: ", d.schoolExpenditure);
             return +d.schoolExpenditure;
         })])
         .range([chartH, 0]);
@@ -83,18 +82,27 @@ function makeSchoolsChart(schoolDataArray) {
             .style("text-anchor", "start");
 
     // ======= rects for bar graph =======
+    var counter = 0;
+    var multiplier = 0;
+    var colorIndex = 0;
     svg.selectAll(".bar")
         .data(schoolDataArray)
         .enter().append("rect")
             .attr("class", "bar")
             .attr("x", function(d) { return xScale(d.schoolName); })
-            .attr("width", xScale.rangeBand() - 5)
+            .attr("width", xScale.rangeBand() - 2)
             .attr("y", function(d) { return yScale(d.schoolExpenditure); })
             .attr("height", function(d) {
                     return chartH - yScale(d.schoolExpenditure);
                 })
             .style({'fill': function(d, i) {
-                    whichColor = fillColors[i];
+                    counter++;
+                    if (counter == fillColors.length) {
+                        multiplier++;
+                        counter = 0
+                    }
+                    colorIndex = i - (fillColors.length * multiplier);
+                    whichColor = fillColors[colorIndex];
                     return whichColor;
                 }})
             .style("font-size", "10px");
