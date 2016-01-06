@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Big-Chart</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+      <style>
+        rect:hover {
+            fill: blue;
+        }
+
+        div.school-info {
+            position: absolute;
+            border-radius: 4px;
+            border: 1px solid #EEE;
+            padding: 7.5px;
+            width: 100px;
+            height: 100px;
+            background-color: white;
+        }
+      </style>
+
+   </head>
+   <body>
+      <h1>At Risk & Underperforming Schools</h1>
+      <p></p>
+
+      <div id="big-chart"></div>
+      <div class="school-info">
+        <h4 class="name">Dunbar</h4>
+        <p><b class="num-std">345</b> Enrolled</p>
+      </div>
+      
+      <script src='script.js'></script>
+      <script type="text/javascript">
+        var b = bigChart(d3.select('#big-chart'));
+        b();
+      </script>
+   </body>  
+</html>

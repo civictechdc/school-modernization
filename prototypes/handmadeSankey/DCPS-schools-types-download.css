@@ -1,0 +1,57 @@
+/*
+Error: Invalid CSS after "...mentary School,": expected selector, was "54017,533 48th ..."
+        on line 2 of DCPS-schools-types-download.csv
+
+1: Agency,School,totalSQFT,Address,Enrolled,SqFtperStudent,SchoolCode,Longitude,Latitude,Ward,AtRiskPct,SQFTgroup,Enrollgroup,SQFTpergroup,FakeExpend,Unknown
+2: DCPS,Aiton Elementary School,54017,533 48th Pl  NE,263,205,202,-76.933700916,38.897001477,7,0.7327935223,"(3.7e+04,6.3e+04]","[60,280]","(153,234]",18215753,ES
+3: DCPS,Amidon-Bowen Elementary School,76734,401 Eye St  SW,347,221,203,-77.018125299,38.879515067,6,0.7280701754,"(6.3e+04,9.44e+04]","(280,369]","(153,234]",1249008,ES
+4: DCPS,Anacostia High School,251297,1601 16th St  SE,680,370,450,-76.983077254,38.870083725,8,0.7909454061,"(9.44e+04,4.71e+06]","(515,3.77e+04]","(234,802]",12002461,HS
+5: DCPS,Bancroft Elementary School,76848,1755 Newton St  NW,508,151,204,-77.040553444,38.934318023,1,0.3204081633,"(6.3e+04,9.44e+04]","(369,515]","(100,153]",44115282,ES
+6: DCPS,Barnard Elementary School,96848,430 Decatur St  NW,602,161,205,-77.01777708,38.948230613,4,0.4425385935,"(9.44e+04,4.71e+06]","(515,3.77e+04]","(153,234]",38335943,ES
+7: DCPS,Beers Elementary School,82748,3600 Alabama Ave  SE,438,189,206,-76.95560475,38.864349505,7,0.5947867299,"(6.3e+04,9.44e+04]","(369,515]","(153,234]",98213056,ES
+
+Backtrace:
+DCPS-schools-types-download.csv:2
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/scss/parser.rb:1162:in `expected'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/scss/parser.rb:1098:in `expected'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/scss/static_parser.rb:21:in `parse_selector'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:425:in `visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/base.rb:52:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/engine.rb:295:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/plugin/compiler.rb:209:in `each'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/plugin/compiler.rb:293:in `watch'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/plugin.rb:108:in `method_missing'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/exec/sass_scss.rb:384:in `watch_or_update'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/exec/base.rb:52:in `parse'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/lib/sass/exec/base.rb:19:in `parse!'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.17/bin/sass:13:in `<top (required)>'
+/usr/bin/sass:23:in `load'
+/usr/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"...mentary School,\": expected selector, was \"54017,533 48th ...\"\A         on line 2 of DCPS-schools-types-download.csv\A \A 1: Agency,School,totalSQFT,Address,Enrolled,SqFtperStudent,SchoolCode,Longitude,Latitude,Ward,AtRiskPct,SQFTgroup,Enrollgroup,SQFTpergroup,FakeExpend,Unknown\A 2: DCPS,Aiton Elementary School,54017,533 48th Pl  NE,263,205,202,-76.933700916,38.897001477,7,0.7327935223,\"(3.7e+04,6.3e+04]\",\"[60,280]\",\"(153,234]\",18215753,ES\A 3: DCPS,Amidon-Bowen Elementary School,76734,401 Eye St  SW,347,221,203,-77.018125299,38.879515067,6,0.7280701754,\"(6.3e+04,9.44e+04]\",\"(280,369]\",\"(153,234]\",1249008,ES\A 4: DCPS,Anacostia High School,251297,1601 16th St  SE,680,370,450,-76.983077254,38.870083725,8,0.7909454061,\"(9.44e+04,4.71e+06]\",\"(515,3.77e+04]\",\"(234,802]\",12002461,HS\A 5: DCPS,Bancroft Elementary School,76848,1755 Newton St  NW,508,151,204,-77.040553444,38.934318023,1,0.3204081633,\"(6.3e+04,9.44e+04]\",\"(369,515]\",\"(100,153]\",44115282,ES\A 6: DCPS,Barnard Elementary School,96848,430 Decatur St  NW,602,161,205,-77.01777708,38.948230613,4,0.4425385935,\"(9.44e+04,4.71e+06]\",\"(515,3.77e+04]\",\"(153,234]\",38335943,ES\A 7: DCPS,Beers Elementary School,82748,3600 Alabama Ave  SE,438,189,206,-76.95560475,38.864349505,7,0.5947867299,\"(6.3e+04,9.44e+04]\",\"(369,515]\",\"(153,234]\",98213056,ES"; }
