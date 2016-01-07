@@ -5,6 +5,9 @@ library(gtools)
 ### Read in data ###
 ### Read in data ###
 ### Read in data ###
+spend<-read.csv("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/InputData/Base spending data and GSF 21CSF.csv",
+                stringsAsFactors=FALSE, strip.white=TRUE)[c(1:2,5,68)]
+
 atRisk<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/At%20risk_DCPS_FY15_Ext.csv",
                  stringsAsFactors=FALSE, strip.white=TRUE)[c(1:4)]
 atRisk<-subset(atRisk, atRisk$Sector==1)[2:4]
@@ -17,7 +20,7 @@ appC.Charter<-subset(appC.Charter,appC.Charter$Enrolled!="")
 
 appC.DCPS<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/DCPS%20Building%20Condition%20Dat%20(2-Table%201.csv",
                     stringsAsFactors=FALSE, strip.white=TRUE, skip=1)[c(2,4,5:14)]
-colnames(appC.DCPS)<-c("Agency","Name","totalSQ","Program","School","Address","Enrolled","EnrollCap.Perm","EnrollCap.Port","Enroll.Cap","EnrollUtilization","SqFtperStudent")
+colnames(appC.DCPS)<-c("Agency","Name","totalSQ","Program","School","Address","Enrolled","maxOccupancy","EnrollCap.Port","Enroll.Cap","EnrollUtilization","SqFtperStudent")
 DCPSenrolled<-subset(appC.DCPS,!(is.na(appC.DCPS$Enrolled)))
 
 budgetDCPS<-read.csv("https://raw.githubusercontent.com/codefordc/dcps-budget/master/app/data/data.csv",
@@ -25,7 +28,7 @@ budgetDCPS<-read.csv("https://raw.githubusercontent.com/codefordc/dcps-budget/ma
 budgetDCPSunq<-budgetDCPS[!duplicated(budgetDCPS[,1:2]),]
 
 CharterPop<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/PCS_Student_Enrollment_by_School__2014-15_.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1,3,28)]
+                     stringsAsFactors=FALSE, strip.white=TRUE)
 
 CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/schools.csv",
                      stringsAsFactors=FALSE, strip.white=TRUE)[c(2:5,8,12:14)]
@@ -40,13 +43,22 @@ DCPSenrolled$SCHOOLCODE<-ifelse(DCPSenrolled$Program=="452/462", "452",
                                            DCPSenrolled$Program))))))
                                 
 DCPSfactors<-join(DCPSenrolled, budgetDCPSunq, by="SCHOOLCODE",type="left")
-DCPS<-DCPSfactors[c(1:3,6:7,12:13,15,16,20,21)]
-colnames(DCPS)<-c("Agency","School","totalSQFT","Address","Enrolled","SqFtperStudent","SchoolCode","Longitude",
-                  "Latitude","Ward","AtRiskPct")
+DCPS<-DCPSfactors[c(1:3,6:8,12:13,15,16,17,19:21)]
+colnames(DCPS)<-c("Agency","School","totalSQFT","Address","Enrolled","maxOccupancy","SqFtperStudent",
+                  "SchoolCode","Longitude","Latitude","Level","Feeder", "Ward","AtRiskPct")
+DCPS$SPED<-rep(NA,105)
 
 ###Create Charter dataset###
-PCSfactors<-join(appC.Charter, CharterPop, by="School.Code",type="inner")[c(1:10,12)]
+PCSfactors<-join(appC.Charter, CharterPop, by="School.Code",type="inner")
+PCSfactors$SPED<-PCSfactors$SPED.Level.1+PCSfactors$SPED.Level.2+PCSfactors$SPED.Level.3+PCSfactors$SPED.Level.4
+##Level is approximated currently and awaiting response from 21st CF
+PCSfactors$Level<-ifelse(PCSfactors$X12==0 & PCSfactors$X5==0,"Elementary",
+                    ifelse(PCSfactors$X12==0 & PCSfactors$X3==0,"Middle",
+                      ifelse(PCSfactors$X3==0 & PCSfactors$X5==0,"High","Mixed")))
+PCSfactors<-PCSfactors[c(1:4,6:9,37,39,40)]
 
+# appC.Charter is by building and CharterPop is by school. In some buildings there are multiple 'schools' 
+# within a single building so here I merge buildings and aggregate that school data up to building
 nomatch<-subset(appC.Charter,!(appC.Charter$School.Code %in% CharterPop$School.Code))
 PopnoMatch<-subset(CharterPop,(CharterPop$LEA.Code %in% nomatch$LEA.Code))
 
@@ -82,10 +94,15 @@ PopnoMatch$SchoolGroupCode<-ifelse(PopnoMatch$School.Code==182 | PopnoMatch$Scho
                                                                "1118 & 125",
                                                           ifelse(PopnoMatch$School.Code==101 | PopnoMatch$School.Code==137,
                                                                  "101 & 137", PopnoMatch$School.Code))))))))))))))))
+PopnoMatch$SPED<-PopnoMatch$SPED.Level.1+PopnoMatch$SPED.Level.2+PopnoMatch$SPED.Level.3+PopnoMatch$SPED.Level.4
+SchoolGroupSPsum<-aggregate(PopnoMatch$SPED, by=list(PopnoMatch$SchoolGroupCode), FUN=sum, na.rm=TRUE)
+colnames(SchoolGroupSPsum)<-c("School.Code","SPED")
 SchoolGroupsum<-aggregate(PopnoMatch$At.Risk, by=list(PopnoMatch$SchoolGroupCode), FUN=sum, na.rm=TRUE)
 colnames(SchoolGroupsum)<-c("School.Code","At.Risk")
+Sum<-join(SchoolGroupSPsum,SchoolGroupsum,by="School.Code",type="left")
 
-match<-join(nomatch,SchoolGroupsum, by="School.Code",type="left")
+match<-join(nomatch,Sum,by="School.Code",type="left")[c(1:4,6:9,11:12)]
+match$Level<-rep("Mixed",18)
 PCSFactor<-rbind(PCSfactors,match)
 PCSFactor$Agency<-rep("PCS",93)
 PCSFactor$Enrolled<-as.numeric(gsub(",","",PCSFactor$Enrolled))
@@ -127,11 +144,11 @@ PCSFactor$SchoolGroupCode<-PCSFactor$School.Code
 CharterLoc<-CharterLoc[!duplicated(CharterLoc[,9]),]
 Charters<-join(PCSFactor,CharterLoc,by="SchoolGroupCode",type="left")
 Charters$ward<-gsub("Ward ","",Charters$ward)
+Charters$Feeder<-rep(NA,93)
 
-PCS<-Charters[c(2:4,7:9,12,13,20:22)]
-colnames(PCS)<-c("SchoolCode","School","Address","totalSQFT","Enrolled","SqFtperStudent",
-                "Agency","AtRiskPct","Latitude","Longitude","Ward")
-
+PCS<-Charters[c(2:8,10:13,20:23)]
+colnames(PCS)<-c("SchoolCode","School","Address","maxOccupancy","totalSQFT","Enrolled","SqFtperStudent","SPED",
+                "Level","Agency","AtRiskPct","Latitude","Longitude","Ward","Feeder")
 ### DC Schools ###
 ### DC Schools ###
 ### DC Schools ###
