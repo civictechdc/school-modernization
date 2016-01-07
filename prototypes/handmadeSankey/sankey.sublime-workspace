@@ -1,0 +1,1129 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"war",
+				"ward_yScale"
+			],
+			[
+				"re",
+				"rect"
+			],
+			[
+				"ward",
+				"ward_yScale"
+			],
+			[
+				"wa",
+				"wardData"
+			],
+			[
+				"get",
+				"getTotalExpenditure"
+			],
+			[
+				"rec",
+				"rectStrokeForSchoolExpend"
+			],
+			[
+				"ge",
+				"genFundsRect"
+			],
+			[
+				"ex",
+				"getExpenditureByWard"
+			],
+			[
+				"en",
+				"enteredWard"
+			],
+			[
+				"csv",
+				"csvData"
+			],
+			[
+				"cs",
+				"csvData"
+			],
+			[
+				"sel",
+				"selectedWard"
+			],
+			[
+				"cv",
+				"csvData"
+			],
+			[
+				"stro",
+				"stroke-width"
+			],
+			[
+				"co",
+				"colorByWard"
+			],
+			[
+				"rect",
+				"rectProperties"
+			],
+			[
+				"line",
+				"lineFor"
+			],
+			[
+				"F",
+				"FakeExpend"
+			],
+			[
+				"sle",
+				"selectAll"
+			],
+			[
+				"dc",
+				"document"
+			],
+			[
+				"t",
+				"totalExpenditures"
+			],
+			[
+				"sum",
+				"sumExpeditures"
+			],
+			[
+				"select",
+				"selectAll"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"sr",
+				"stroke"
+			],
+			[
+				"dat",
+				"dataPadding"
+			],
+			[
+				"data",
+				"dataPadding"
+			],
+			[
+				"sca",
+				"scatterPlot"
+			],
+			[
+				"da",
+				"dataPadding"
+			],
+			[
+				"sele",
+				"select"
+			],
+			[
+				"p",
+				"padding"
+			],
+			[
+				"max",
+				"max_Y"
+			],
+			[
+				"ma",
+				"max_Y"
+			],
+			[
+				"circ",
+				"circles"
+			],
+			[
+				"s",
+				"scatterPlotDimensions"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"hei",
+				"heightMultiplier"
+			],
+			[
+				"bar",
+				"barPadding"
+			],
+			[
+				"po",
+				"pos:a	position:absolute"
+			],
+			[
+				"tabs",
+				"tabsetCtrl"
+			],
+			[
+				"tab",
+				"tab"
+			],
+			[
+				"light",
+				"lighterBlue"
+			],
+			[
+				"dar",
+				"darkerBlue"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"dark",
+				"darkgreen"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"di",
+				"d:ib	display:inline-block"
+			],
+			[
+				"MAR",
+				"margin-top"
+			],
+			[
+				"im",
+				"import"
+			],
+			[
+				"i",
+				"ife	if … else"
+			],
+			[
+				"target",
+				"targetNote"
+			],
+			[
+				"c",
+				"console"
+			],
+			[
+				"key",
+				"keyPressed"
+			],
+			[
+				"targ",
+				"targetNote"
+			],
+			[
+				"url",
+				"urlList"
+			],
+			[
+				"conte",
+				"context"
+			],
+			[
+				"cl",
+				"clearLoadingScreen"
+			],
+			[
+				"sour",
+				"source"
+			],
+			[
+				"two",
+				"twoCities"
+			],
+			[
+				"buff",
+				"bufferList"
+			],
+			[
+				"bu",
+				"bufferList"
+			],
+			[
+				"buf",
+				"bufferList"
+			],
+			[
+				"source",
+				"source1"
+			],
+			[
+				"test",
+				"testVar"
+			],
+			[
+				"con",
+				"consoleLogTest"
+			],
+			[
+				"border",
+				"border-bottom"
+			],
+			[
+				"pos",
+				"pos:r	position:relative"
+			],
+			[
+				"d",
+				"d:i	display:inline"
+			],
+			[
+				"dis",
+				"dis	display"
+			],
+			[
+				"in",
+				"innerHTML"
+			],
+			[
+				"ran",
+				"rand"
+			],
+			[
+				"reu",
+				"return"
+			],
+			[
+				"print",
+				"printThis"
+			],
+			[
+				"sta",
+				"start"
+			],
+			[
+				"e",
+				"el	else"
+			],
+			[
+				"g",
+				"gainNode"
+			],
+			[
+				"a",
+				"AudioContext"
+			],
+			[
+				"Audio",
+				"AudioContext"
+			],
+			[
+				"Aud",
+				"AudioContext"
+			],
+			[
+				"inn",
+				"innerFile"
+			],
+			[
+				"aud",
+				"audioName"
+			],
+			[
+				"q",
+				"questions"
+			],
+			[
+				"ans",
+				"answer2"
+			],
+			[
+				"an",
+				"answer2"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"the",
+				"theTarget"
+			],
+			[
+				"aja",
+				"ajaxDiv"
+			],
+			[
+				"if",
+				"if	if"
+			],
+			[
+				"for",
+				"form	Tag"
+			],
+			[
+				"total",
+				"totalMW"
+			],
+			[
+				"tot",
+				"totalMW"
+			],
+			[
+				"to",
+				"totalGen"
+			],
+			[
+				"str",
+				"strSlice"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"text-",
+				"text-align"
+			],
+			[
+				"f",
+				"font-size"
+			],
+			[
+				"pl",
+				"pl	println"
+			],
+			[
+				"char",
+				"charArray"
+			],
+			[
+				"me",
+				"MessageEncoder"
+			],
+			[
+				"par",
+				"payRate"
+			],
+			[
+				"pay",
+				"payRate"
+			],
+			[
+				"pr",
+				"primaryStage"
+			],
+			[
+				"mo",
+				"memory"
+			],
+			[
+				"b",
+				"boolean"
+			],
+			[
+				"st",
+				"storageType"
+			],
+			[
+				"set",
+				"setCategory"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"th",
+				"this"
+			],
+			[
+				"r",
+				"ram"
+			],
+			[
+				"o",
+				"operatingSystem"
+			],
+			[
+				"m",
+				"memory"
+			],
+			[
+				"ca",
+				"category"
+			],
+			[
+				"cos",
+				"cost"
+			],
+			[
+				"Com",
+				"ComputerScience"
+			],
+			[
+				"de",
+				"department"
+			],
+			[
+				"cour",
+				"courseNumber"
+			],
+			[
+				"te",
+				"teacherLastName"
+			],
+			[
+				"edit",
+				"editorLastName"
+			],
+			[
+				"pub",
+				"publicationMonth"
+			],
+			[
+				"fi",
+				"fictionOrNonFiction"
+			],
+			[
+				"clas",
+				"classUsedFor"
+			],
+			[
+				"cla",
+				"classUsedFor"
+			],
+			[
+				"is",
+				"isBestSeller"
+			],
+			[
+				"ne",
+				"numberOfPages"
+			],
+			[
+				"ye",
+				"yearPublished"
+			],
+			[
+				"nu",
+				"numberOfPages"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "script.js",
+			"settings":
+			{
+				"buffer_size": 6588,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "script2.js",
+			"settings":
+			{
+				"buffer_size": 3527,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 337,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "style.scss",
+			"settings":
+			{
+				"buffer_size": 103,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "pack",
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"Package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 446.0
+	},
+	"console":
+	{
+		"height": 120.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/handmadeSankey"
+	],
+	"file_history":
+	[
+		"/Applications/MAMP/htdocs/d3/svgLines/style.css",
+		"/Applications/MAMP/htdocs/d3/svgLines/script2.js",
+		"/Applications/MAMP/htdocs/d3/svgLines/script.js",
+		"/Applications/MAMP/htdocs/d3/svgLines/test.py",
+		"/Applications/MAMP/htdocs/d3/svgLines/DCPS-schools-types-download.csv",
+		"/Applications/MAMP/htdocs/d3/svgLines/DCPS-schools-types.csv",
+		"/Applications/MAMP/htdocs/d3/barwithSVG/style.scss",
+		"/Applications/MAMP/htdocs/d3/barwithSVG/style.css",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/CapitolSpending_Sankey/index.html",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/CapitolSpending_Sankey/script.js",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/CapitolSpending_Sankey/style.css",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/CapitolSpending_Sankey/sankey.js",
+		"/Applications/MAMP/htdocs/d3/first/style.css",
+		"/Applications/MAMP/htdocs/peopleList/hello.html",
+		"/Applications/MAMP/htdocs/peopleList/style.css",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/loading.scss",
+		"/Applications/MAMP/htdocs/interactivePiano/scripts/buffer-loader.js",
+		"/Applications/MAMP/htdocs/interactivePiano/scripts/script.js",
+		"/Applications/MAMP/htdocs/interactivePiano/scripts/piano.js",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/piano.scss",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/loading.css",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/loading.css.map",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/piano.css.map",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/style.css.map",
+		"/Applications/MAMP/htdocs/interactivePiano/styles/piano.css",
+		"/Users/nick/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/nick/Library/Application Support/Sublime Text 3/Packages/User/Package Control.sublime-settings",
+		"/Applications/MAMP/htdocs/canPlay.js",
+		"/Applications/MAMP/htdocs/interactivePiano/assets/twoCities.mp3",
+		"/Applications/MAMP/htdocs/interactivePiano/script.js",
+		"/Applications/MAMP/htdocs/interactivePiano/piano.css",
+		"/Applications/MAMP/htdocs/interactivePiano/style.scss",
+		"/Applications/MAMP/htdocs/interactivePiano/style.css",
+		"/Users/nick/Library/Application Support/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
+		"/Users/nick/Scripts/spring_2015/test.java",
+		"/Applications/MAMP/htdocs/fileAPI/script2.js",
+		"/Applications/MAMP/htdocs/OOP_jsplaylist/index.html",
+		"/Applications/MAMP/htdocs/OOP_jsplaylist/playlist.js",
+		"/Applications/MAMP/htdocs/OOP_jsplaylist/song.js",
+		"/Applications/MAMP/htdocs/OOP_jsplaylist/app.js",
+		"/Users/nick/Scripts/spring_2015/Decoder/TestMessageDecoder.java",
+		"/Users/nick/Scripts/spring_2015/Encoder/TestMessageEncoder.java",
+		"/Users/nick/Scripts/spring_2015/Decoder/MessageDecoder.java",
+		"/Users/nick/Scripts/spring_2015/Encoder/MessageEncoder.java",
+		"/Users/nick/Scripts/spring_2015/Calculator/PayCalculator.java",
+		"/Users/nick/Scripts/spring_2015/MyEvent.java",
+		"/Users/nick/Scripts/spring_2015/MyJavaFX.java",
+		"/Users/nick/Scripts/spring_2015/PayCalculator/PayCalculator.java",
+		"/Users/nick/Scripts/spring_2015/Electronics/ElectronicsTest.java",
+		"/Users/nick/Scripts/spring_2015/Electronics/Electronics.java",
+		"/Applications/MAMP/htdocs/aqua/nova.sublime-workspace",
+		"/Applications/MAMP/htdocs/aqua/nova.sublime-project",
+		"/Users/nick/Scripts/spring_2015/Reading/ReadingMaterials.java",
+		"/Users/nick/Scripts/spring_2015/Courses/CoursesTest.java",
+		"/Users/nick/Scripts/spring_2015/Reading/ReadingMaterialsTest.java",
+		"/Users/nick/Scripts/spring_2015/Sports/SportsTest.java",
+		"/Users/nick/Scripts/spring_2015/Sports/Sports.java",
+		"/Users/nick/Scripts/spring_2015/Courses/Courses.java",
+		"/Users/nick/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/nick/Scripts/spring_2015/book/DemoVolume.java",
+		"/Users/nick/Scripts/spring_2015/book/Volume.java",
+		"/Users/nick/Scripts/spring_2015/book/Book.java",
+		"/Users/nick/Scripts/spring_2015/Cycle/Cycle.java",
+		"/Users/nick/Scripts/spring_2015/Cycle/CycleTest.java",
+		"/Users/nick/Scripts/spring_2015/Room/Room.java",
+		"/Users/nick/Scripts/spring_2015/Room/RoomTest.java",
+		"/Users/nick/Scripts/spring_2015/Diving/DivingTest.java",
+		"/Users/nick/Scripts/spring_2015/Diving/Diving.java",
+		"/Users/nick/Scripts/spring_2015/Temperature/Temperature.java",
+		"/Users/nick/Scripts/spring_2015/CheckSudokuSolution.java",
+		"/Users/nick/Scripts/spring_2015/GirlScouts/GirlScoutsDemo.java",
+		"/Users/nick/Scripts/spring_2015/GirlScouts/GirlScouts.java",
+		"/Users/nick/Scripts/sockets.py",
+		"/Users/nick/Scripts/spring_2015/Vending/VendingMachineDemo.java",
+		"/Users/nick/Scripts/spring_2015/Complex/ComplexNumberDemo.java",
+		"/Users/nick/Scripts/spring_2015/Complex/ComplexNumber.java",
+		"/Users/nick/Scripts/spring_2015/ComputerConfiguration/ComputerConfigurationDemo.java",
+		"/Users/nick/Scripts/spring_2015/Vending/VendingMachine.java",
+		"/Users/nick/Scripts/spring_2015/ComputerConfiguration/ComputerConfiguration.java",
+		"/Users/nick/Scripts/this.html",
+		"/Applications/MAMP/htdocs/trigger/index.html",
+		"/Applications/MAMP/htdocs/trigger/advanced_2.js",
+		"/Users/nick/Scripts/spring_2015/GPS.java",
+		"/Users/nick/Scripts/fall_2014/bank_account/AccountTest.java",
+		"/Users/nick/Scripts/spring_2015/WhichProblem.java",
+		"/Users/nick/Scripts/fall_2014/DrunkardsWalk.java",
+		"/Users/nick/Scripts/spring_2015/Time.java",
+		"/Users/nick/Scripts/spring_2015/VendingMachine.java",
+		"/Users/nick/Scripts/Time/TimeTest.java",
+		"/Users/nick/Scripts/TimeTest.java",
+		"/Users/nick/Scripts/Time.java",
+		"/Users/nick/Scripts/sockets.txt",
+		"/Users/nick/Scripts/bank_account/AccountTest.java",
+		"/Users/nick/Scripts/bank_account/Account.java"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ward_yScale",
+			"getTotalExpenditure",
+			"moveToRightEdge",
+			"data",
+			"selectedWard",
+			"rectStrokeForSchoolExpend",
+			"rectWidth",
+			"DEBUG",
+			"Unknown",
+			"type",
+			"===",
+			"d",
+			"Feeder",
+			"11",
+			"ES",
+			"nodeWidth",
+			"noteWidth",
+			"selection",
+			"dataMin",
+			"dataMax",
+			"select",
+			"attr",
+			"font-size",
+			"fill",
+			"scatterPlotDimensions",
+			"10",
+			"data",
+			"height",
+			"10",
+			"0",
+			"dataset.length",
+			"datum",
+			"attr",
+			"this",
+			"self",
+			"darken($blue, 7%)",
+			"darkgreen",
+			"h3",
+			"e.target",
+			"preUrl",
+			"    source1.start(0);\n     source2.start(0);",
+			"number",
+			"200px",
+			"data",
+			"context",
+			"AudioContext",
+			"i",
+			"product",
+			"e",
+			"!==",
+			"file",
+			"e.target.type",
+			"e",
+			"file",
+			"===",
+			"d",
+			"audio",
+			"innerFile",
+			"answer2",
+			"answer1",
+			"Song",
+			"event",
+			"e",
+			"$('#ajax')",
+			"data",
+			"JQUERY",
+			"9px",
+			"1rem",
+			"document",
+			"transparent",
+			"1px",
+			"public",
+			"isDigital",
+			"IsDigital",
+			"isDigital",
+			"IsDigital",
+			"isDigital",
+			"storageType",
+			"StorageType",
+			"storageType",
+			"StorageType",
+			"storageType",
+			"Cameras",
+			"hasFlash",
+			"HasFlash",
+			"hasFlash",
+			"HasFlash",
+			"hasFlash",
+			"storageType",
+			"StorageType",
+			"storageType",
+			"StorageType",
+			"storageType",
+			"Cameras",
+			"hasFlash",
+			"HasFlash",
+			"hasFlash",
+			"HasFlash",
+			"hasFlash",
+			"isDigital",
+			"IsDigital",
+			"isDigital",
+			"IsDigital",
+			"isDigital",
+			"storageType",
+			"ram",
+			"Math",
+			"String",
+			"public",
+			"build",
+			"String",
+			"int",
+			"String",
+			"none",
+			"touchdows",
+			"given",
+			"private",
+			"public",
+			"calculateAverageHigh",
+			"DEBUG",
+			"scoreTotalToDeduce",
+			"private",
+			"Scaner",
+			"static",
+			"public",
+			"private",
+			"float",
+			"Float"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "script.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6588,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2896,
+								2718
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1275.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "script2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2012,
+								2012
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 871.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								283,
+								283
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "style.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 103,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4,
+								4
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				2
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.659664916992,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.608973672945,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 94.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Java/JavaC.sublime-build",
+	"project": "sankey.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"script2.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 2,
+	"settings":
+	{
+		"last_automatic_layout":
+		[
+			[
+				0,
+				0,
+				1,
+				2
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		]
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 213.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

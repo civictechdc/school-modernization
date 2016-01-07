@@ -1,3 +1,11 @@
-// svg .linkLine {
-//   stroke: lighten(rebeccapurple, 20%);
-// }
+@mixin blackStroke {
+   stroke: #000;
+   stroke-width: .5px;
+}
+
+rect {
+   &.genFundsRect,
+   &.rectsForWards {
+      @include blackStroke;
+   }  
+}
