@@ -1,7 +1,7 @@
 {
 "type": "FeatureCollection",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-
+                                                                                
 "features": [
 { "type": "Feature", "properties": { "OBJECTID": 1, "NAME": "KIPP DC – Promise Academy PCS", "ADDRESS": "4801 BENNING ROAD SE", "DIRECTOR": "Susan Schaeffler", "PHONE": "202-582-1390", "AUTHORIZER": null, "GRADES": "1-4", "ENROLLMENT": 0, "GIS_ID": "chrt_61", "WEB_URL": "http:\/\/www.kippdc.org", "ADDRID": 17421, "X": 405692.28000000003, "Y": 134978.82999999999, "AUTHORIZAT": 0, "MYSCHOOL": "Y" }, "geometry": { "type": "Point", "coordinates": [ -76.934396532426902, 38.882634988796795 ] } },
 { "type": "Feature", "properties": { "OBJECTID": 2, "NAME": "KIPP DC – WILL Academy PCS", "ADDRESS": "421 P STREET NW", "DIRECTOR": "Susan Schaeffler", "PHONE": "202-328-9455", "AUTHORIZER": null, "GRADES": "5-8", "ENROLLMENT": 0, "GIS_ID": "chrt_62", "WEB_URL": "http:\/\/www.kippdc.org", "ADDRID": 294487, "X": 398428.65000000002, "Y": 138002.89000000001, "AUTHORIZAT": 0, "MYSCHOOL": "Y" }, "geometry": { "type": "Point", "coordinates": [ -77.018119626548426, 38.909893846842294 ] } },
