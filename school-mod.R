@@ -5,7 +5,7 @@ library(gtools)
 ### Read in data ###
 ### Read in data ###
 ### Read in data ###
-spend<-read.csv("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/InputData/Base spending data and GSF 21CSF.csv",
+spend<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Base%20spending%20data%20and%20GSF%2021CSF.csv",
                 stringsAsFactors=FALSE, strip.white=TRUE)[c(1:2,5,68)]
 
 atRisk<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/At%20risk_DCPS_FY15_Ext.csv",
