@@ -69,14 +69,15 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 	// **************************************
 	
 	var maxExpend = d3.max(csvData, function(d){ return d.FakeExpend; }),
-		minExpend = d3.min(csvData, function(d){ return d.FakeExpend; }),
-		toScale = d3.scale.linear().domain([minExpend, getTotalExpenditure()]).rangeRound([0, sizes.h]);
+		 minExpend = d3.min(csvData, function(d){ return d.FakeExpend; }),
+		 toScale = d3.scale.linear().domain([minExpend, getTotalExpenditure()]).rangeRound([0, sizes.h]);
+
 
 	// **************************************
 	// BUILDING THE GRAPH
 	// **************************************
 
-	// Build general funds rectangle
+	// Build total expenditure block
 	var rect = svg.append('rect')
 		.attr({
 			class: 'genFundsRect',
@@ -85,7 +86,8 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 			fill: 'green'
 		});
 	
-	var rectsTowardsWards = svg.append('g').selectAll('rect')
+	// Builds the rects/paths towards the ward blocks
+	var rectsTowardsWards = svg.append('g').attr('class', 'rectsTowardsWards').selectAll('rect')
 		.data(wardData)
 		.enter()
 		.append('rect')
@@ -101,11 +103,15 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 			y: function(d,i){ 
 				return toScale(getSum(wardData, (i-1)) - getExpenditureByWard(0)); 
 			} 
-		});
+		})
+		.append('title')
+		.text(function(d, i){
+			return 'Ward ' + (i+1) + ': ' + asMoney(d.FakeExpend);
+		})
 
 
-	// Builds rects for the ward rectangles
-	var rectsForWards = svg.append('g').selectAll('rect')
+	// Builds the ward blocks
+	var rectsForWards = svg.append('g').attr('class', 'wardRectangles').selectAll('rect')
 		.data(wardData)
 		.enter()
 		.append('rect')
@@ -124,34 +130,7 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 		});
 	
 	// Builds the lines for the individual schools	
-	var lines = svg.append('g').attr('class', 'ward1Lines')
-		.selectAll('rect')
-		.data(wards[0])
-		.enter()
-		.append('rect')
-		.attr({
-			class: 'wardLine',
-			height: 5,
-			width: function(d){
-				if(d.SchoolType === 'ES'){ return lineFor.elementarySchool;} 
-					else if(d.SchoolType === 'MS'){ return lineFor.middleSchool;} 
-					else if(d.SchoolType === 'HS'){ return lineFor.highSchool; } 
-					else { return 75; }
-	        },
-	      x: getRightEdge($('#wardNum1')) +
-	      	getRightEdge($('.genFundsRect')) + 
-	      	getRightEdge($('.rectsTowardsWards')),
-	      y: function(d, i){
-	      	
-	      	// console.log(getSvgHeight($('#wardNum1')));
-	      	var h = getSvgHeight($('#wardNum1'));
-	      	return i * (h / wards[0].length);
-	      	// return i * 5;
-	      }
-
-
-		})
-		;
+	createIndividualSchoolLines();
 
 //####################################################################################
 //
@@ -159,9 +138,85 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 //
 //####################################################################################
 	
-	// function getXofSVG(svgEl){
-	// 	svgEl.x.animVal
-	// }
+	function cumulativeOffset(element) {
+		var top = 0, left = 0;
+		do {
+			top += element.offsetTop  || 0;
+			left += element.offsetLeft || 0;
+			element = element.offsetParent;
+		} while(element);
+
+		return {
+			top: top,
+			left: left
+		};
+	};
+
+
+	function createIndividualSchoolLines(){
+		var index = 0,
+			 j = wards.length;
+
+		for(; index<j; index++){
+
+			svg.append('g').attr({
+					id: function(){ return 'ward' + (index + 1) + 'Lines' },
+					transform: function(d,i){
+						var y = 0;
+						for(var i = 0, j = index; i < j; i++){
+							y += (getHeight($('#wardNum' + (i+1))) );  //- 7);
+						}
+						return 'translate(0,' + (-y) + ')';
+					}
+				})
+				.selectAll('rect')
+				.data(wards[index])
+				.enter()
+			.append('rect')
+			.attr({
+				class: 'wardLine',
+				height: function(d){
+					var tempMin = d3.min(wards[index], function(d){ return d.FakeExpend; }),
+						 tempMax = d3.max(wards[index], function(d){ return d.FakeExpend; }),
+						 tempScale = d3.scale.linear().domain([tempMin, tempMax]).rangeRound([2, 8]);
+
+					//console.log(tempScale(d.FakeExpend));
+					return tempScale(d.FakeExpend);
+					return 5;
+				},
+				width: function(d){
+					if(d.SchoolType === 'ES'){ return lineFor.elementarySchool;} 
+						else if(d.SchoolType === 'MS'){ return lineFor.middleSchool;} 
+						else if(d.SchoolType === 'HS'){ return lineFor.highSchool; } 
+						else { return 75; }
+		        },
+		      x: getRightEdge($('#wardNum1')) +
+		      	getRightEdge($('.genFundsRect')) + 
+		      	getRightEdge($('.rectsTowardsWards')),
+		      y: function(d, i){     	
+		      		var baseHeight = 0;
+		      		// console.log('baseHeight:' + baseHeight);
+
+		      		var h = getSvgHeight($('#wardNum' + (index+1)));
+		      		var individualSchool = (i * (h / wards[index].length));
+		      		return baseHeight + individualSchool + sizes.p;
+	      		
+		      },
+		      fill: function(d){
+                var colorByWard = ['orange', 'crimson', 'tomato', 
+                  'dodgerblue', 'steelblue', 'hotpink', 
+                  'red', 'forestgreen' ],
+
+                ward = parseInt(d.Ward);
+                return colorByWard[ward - 1];
+              }
+			})
+			.append('title')
+			.text(function(d){
+				return d.School + ': ' + asMoney(d.FakeExpend);
+			})
+		}
+	}
 
 	function getWard(ward){
 		var arr = [];
