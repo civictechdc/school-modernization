@@ -6,160 +6,177 @@ library(gtools)
 ### Read in data ###
 ### Read in data ###
 spend<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Base%20spending%20data%20and%20GSF%2021CSF.csv",
-                stringsAsFactors=FALSE, strip.white=TRUE)[c(1:2,5,68)]
+                stringsAsFactors=FALSE, strip.white=TRUE)[c(1:2,57,66,68)]
+spend<-subset(spend,spend$School.Names!="")
+spend<-subset(spend,!(grepl("Closed",spend$X) | grepl("Omitted",spend$X) | grepl ("demolished",spend$X)
+                      | grepl ("closed",spend$X) | grepl("#1",spend$X)))
+spend$School.Short<-tolower(spend$School.Names)
 
-atRisk<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/At%20risk_DCPS_FY15_Ext.csv",
-                 stringsAsFactors=FALSE, strip.white=TRUE)[c(1:4)]
-atRisk<-subset(atRisk, atRisk$Sector==1)[2:4]
-colnames(atRisk)<-c("SCHOOLNAME","atRisk15","Enrollment15")
+enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/2014-15%20Enrollment%20Audit.csv",
+                 stringsAsFactors=FALSE, strip.white=TRUE)[c(1,4:21,25:30)]
+enroll$SchoolCode<-enroll$School.ID
 
 appC.Charter<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Charter%20capacities-Table%201.csv",
-                       stringsAsFactors=FALSE, strip.white=TRUE)[c(1:10)]
-colnames(appC.Charter)<-c("LEA.Code","School.Code","School","Address","formerDCPS","maxOccupancy","totalSQ","Enrolled","SqFtperStudent","EnrollCeiling")
-appC.Charter<-subset(appC.Charter,appC.Charter$Enrolled!="")
+                       stringsAsFactors=FALSE, strip.white=TRUE)[c(1:7,10)]
+colnames(appC.Charter)<-c("LEA.Code","SchoolGroupCode","School","Address","formerDCPS","maxOccupancy","totalSQ","EnrollCeiling")
+appC.Charter<-subset(appC.Charter,appC.Charter$SchoolGroupCode!="")
 
 appC.DCPS<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/DCPS%20Building%20Condition%20Dat%20(2-Table%201.csv",
-                    stringsAsFactors=FALSE, strip.white=TRUE, skip=1)[c(2,4,5:14)]
-colnames(appC.DCPS)<-c("Agency","Name","totalSQ","Program","School","Address","Enrolled","maxOccupancy","EnrollCap.Port","Enroll.Cap","EnrollUtilization","SqFtperStudent")
-DCPSenrolled<-subset(appC.DCPS,!(is.na(appC.DCPS$Enrolled)))
+                    stringsAsFactors=FALSE, strip.white=TRUE, skip=1)[c(2,4,5:8,10:12)]
+colnames(appC.DCPS)<-c("Agency","Name","totalSQ","Program","School","Address","maxOccupancy","EnrollCap.Port","Enroll.Cap")
+appC.DCPS<-subset(appC.DCPS,appC.DCPS$Program!="" & appC.DCPS$Name!="")
 
 budgetDCPS<-read.csv("https://raw.githubusercontent.com/codefordc/dcps-budget/master/app/data/data.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:8,11)]
+                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:8,10)]
 budgetDCPSunq<-budgetDCPS[!duplicated(budgetDCPS[,1:2]),]
-
-CharterPop<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/PCS_Student_Enrollment_by_School__2014-15_.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)
 
 CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/schools.csv",
                      stringsAsFactors=FALSE, strip.white=TRUE)[c(2:5,8,12:14)]
-
 ### Create DCPS dataset ###
-DCPSenrolled$SCHOOLCODE<-ifelse(DCPSenrolled$Program=="452/462", "452",
-                            ifelse(DCPSenrolled$Program=="459/456", "459",
-                              ifelse(DCPSenrolled$Program=="201","292",
-                                ifelse(DCPSenrolled$Program=="360", "629",
-                                  ifelse(DCPSenrolled$Program=="433","415",
-                                    ifelse(DCPSenrolled$Program=="175","943",
-                                           DCPSenrolled$Program))))))
-                                
-DCPSfactors<-join(DCPSenrolled, budgetDCPSunq, by="SCHOOLCODE",type="left")
-DCPS<-DCPSfactors[c(1:3,6:8,12:13,15,16,17,19:21)]
-colnames(DCPS)<-c("Agency","School","totalSQFT","Address","Enrolled","maxOccupancy","SqFtperStudent",
-                  "SchoolCode","Longitude","Latitude","Level","Feeder", "Ward","AtRiskPct")
-DCPS$SPED<-rep(NA,105)
+appC.DCPS$SCHOOLCODE<-ifelse(appC.DCPS$Program=="452/462", "452",
+                            ifelse(appC.DCPS$Program=="459/456", "459",
+                              ifelse(appC.DCPS$Program=="201","292",
+                                ifelse(appC.DCPS$Program=="360", "629",
+                                  ifelse(appC.DCPS$Program=="433","415",
+                                    ifelse(appC.DCPS$Program=="175","943",
+                                           appC.DCPS$Program))))))
+#note:this seems to exclude geo info for non feeder schools so need to add this back in later
+DCPSfactors<-join(appC.DCPS, budgetDCPSunq, by="SCHOOLCODE",type="left")
+DCPS<-DCPSfactors[c(1:3,5:7,10,12:14,16:17)]
+colnames(DCPS)<-c("Agency","School","totalSQFT","School.Short","Address","maxOccupancy",
+                  "SchoolCode","Longitude","Latitude","Level","Feeder", "Ward")
+DCPS$School.Short<-tolower(DCPS$School.Short)
+DCPS$School.Short<-str_trim(gsub("es","",DCPS$School.Short))
+DCPS$School.Short<-str_trim(gsub("hs","",DCPS$School.Short))
+DCPS$School.Short<-str_trim(gsub("ec","",DCPS$School.Short))
+DCPS$School.Short<-str_trim(gsub("ms","",DCPS$School.Short))
+
+
+DCPS.Spend<-join(DCPS, spend, by="School.Short",type="inner")[c(1:3,5:12,15:17)]
+colnames(DCPS.Spend)[c(12:14)]<-c("TotalExp9815","TotalAllot1621","LifetimeBudget")
+#going to hold on merging the remaining spend and DCPS until I can get a printout of the mismatches to look at
+mismatchDCPS<-subset(DCPS,!(DCPS$School.Short %in% test$School.Short))
+mismatchSpend<-subset(spend,!(spend$School.Short %in% test$School.Short))
 
 ###Create Charter dataset###
-PCSfactors<-join(appC.Charter, CharterPop, by="School.Code",type="inner")
-PCSfactors$SPED<-PCSfactors$SPED.Level.1+PCSfactors$SPED.Level.2+PCSfactors$SPED.Level.3+PCSfactors$SPED.Level.4
-##Level is approximated currently and awaiting response from 21st CF
-PCSfactors$Level<-ifelse(PCSfactors$X12==0 & PCSfactors$X5==0,"Elementary",
-                    ifelse(PCSfactors$X12==0 & PCSfactors$X3==0,"Middle",
-                      ifelse(PCSfactors$X3==0 & PCSfactors$X5==0,"High","Mixed")))
-PCSfactors<-PCSfactors[c(1:4,6:9,37,39,40)]
-
-# appC.Charter is by building and CharterPop is by school. In some buildings there are multiple 'schools' 
-# within a single building so here I merge buildings and aggregate that school data up to building
-nomatch<-subset(appC.Charter,!(appC.Charter$School.Code %in% CharterPop$School.Code))
-PopnoMatch<-subset(CharterPop,(CharterPop$LEA.Code %in% nomatch$LEA.Code))
-
-PopnoMatch$SchoolGroupCode<-ifelse(PopnoMatch$School.Code==182 | PopnoMatch$School.Code==184 |
-                                     PopnoMatch$School.Code==1207, "1207,184 & 182",
-                              ifelse(PopnoMatch$School.Code==102 | PopnoMatch$School.Code==109,
-                                     "102 & 109",
-                                ifelse(PopnoMatch$School.Code==1110 | PopnoMatch$School.Code==218,
-                                       "1110 & 218",
-                                  ifelse(PopnoMatch$School.Code==1206 | PopnoMatch$School.Code==1138,
-                                         "1206 & 1138",
-                                    ifelse(PopnoMatch$School.Code==1211 | PopnoMatch$School.Code==1113,
-                                           "1211 & 1113",
-                                      ifelse(PopnoMatch$School.Code==362 | PopnoMatch$School.Code==361,
-                                             "362 & 361",
-                                        ifelse(PopnoMatch$School.Code==363 | PopnoMatch$School.Code==364,
-                                               "363 & 364",
-                                          ifelse(PopnoMatch$School.Code==365 | PopnoMatch$School.Code==366,
-                                                 "365 & 366",
-                                            ifelse(PopnoMatch$School.Code==236 | PopnoMatch$School.Code==237,
-                                                  "236 & 237",
-                                              ifelse(PopnoMatch$School.Code==209 | PopnoMatch$School.Code==242 |
-                                                       PopnoMatch$School.Code==214, "209, 242 & 214",
-                                                ifelse(PopnoMatch$School.Code==1129 | PopnoMatch$School.Code==190
-                                                       | PopnoMatch$School.Code==121, "1129, 190 & 121",
-                                                  ifelse(PopnoMatch$School.Code==189 | PopnoMatch$School.Code==132 |
-                                                           PopnoMatch$School.Code==1121,"189, 132 & 1121",
-                                                    ifelse(PopnoMatch$School.Code==116 | PopnoMatch$School.Code==1122 |
-                                                             PopnoMatch$School.Code==3071, "116, 1122 &3071",
-                                                      ifelse(PopnoMatch$School.Code==222 | PopnoMatch$School.Code==170,
-                                                             "222 & 170",
-                                                        ifelse(PopnoMatch$School.Code==1118 | PopnoMatch$School.Code==125,
-                                                               "1118 & 125",
-                                                          ifelse(PopnoMatch$School.Code==101 | PopnoMatch$School.Code==137,
-                                                                 "101 & 137", PopnoMatch$School.Code))))))))))))))))
-PopnoMatch$SPED<-PopnoMatch$SPED.Level.1+PopnoMatch$SPED.Level.2+PopnoMatch$SPED.Level.3+PopnoMatch$SPED.Level.4
-SchoolGroupSPsum<-aggregate(PopnoMatch$SPED, by=list(PopnoMatch$SchoolGroupCode), FUN=sum, na.rm=TRUE)
-colnames(SchoolGroupSPsum)<-c("School.Code","SPED")
-SchoolGroupsum<-aggregate(PopnoMatch$At.Risk, by=list(PopnoMatch$SchoolGroupCode), FUN=sum, na.rm=TRUE)
-colnames(SchoolGroupsum)<-c("School.Code","At.Risk")
-Sum<-join(SchoolGroupSPsum,SchoolGroupsum,by="School.Code",type="left")
-
-match<-join(nomatch,Sum,by="School.Code",type="left")[c(1:4,6:9,11:12)]
-match$Level<-rep("Mixed",18)
-PCSFactor<-rbind(PCSfactors,match)
-PCSFactor$Agency<-rep("PCS",93)
-PCSFactor$Enrolled<-as.numeric(gsub(",","",PCSFactor$Enrolled))
-PCSFactor$ATRISKPCT<-PCSFactor$At.Risk/PCSFactor$Enrolled
-
 CharterLoc$SchoolGroupCode<-ifelse(CharterLoc$school_code==182 | CharterLoc$school_code==184 |
                                      CharterLoc$school_code==1207, "1207,184 & 182",
                               ifelse(CharterLoc$school_code==102 | CharterLoc$school_code==109,
                                           "102 & 109",
                                 ifelse(CharterLoc$school_code==1110 | CharterLoc$school_code==218,
                                                  "1110 & 218",
-                                  ifelse(CharterLoc$school_code==1206 | CharterLoc$school_code==1138,
+                                 ifelse(CharterLoc$school_code==1206 | CharterLoc$school_code==1138,
                                                         "1206 & 1138",
-                                    ifelse(CharterLoc$school_code==1211 | CharterLoc$school_code==1113,
+                                  ifelse(CharterLoc$school_code==1211 | CharterLoc$school_code==1113,
                                                                "1211 & 1113",
-                                      ifelse(CharterLoc$school_code==362 | CharterLoc$school_code==361,
+                                    ifelse(CharterLoc$school_code==362 | CharterLoc$school_code==361,
                                                                       "362 & 361",
-                                        ifelse(CharterLoc$school_code==363 | CharterLoc$school_code==364,
+                                      ifelse(CharterLoc$school_code==363 | CharterLoc$school_code==364,
                                                                              "363 & 364",
-                                           ifelse(CharterLoc$school_code==365 | CharterLoc$school_code==366,
+                                        ifelse(CharterLoc$school_code==365 | CharterLoc$school_code==366,
                                                                                     "365 & 366",
-                                              ifelse(CharterLoc$school_code==236 | CharterLoc$school_code==237,
+                                          ifelse(CharterLoc$school_code==236 | CharterLoc$school_code==237,
                                                                                            "236 & 237",
-                                               ifelse(CharterLoc$school_code==209 | CharterLoc$school_code==242 |
-                                                        CharterLoc$school_code==214, "209, 242 & 214",
-                                                  ifelse(CharterLoc$school_code==1129 | CharterLoc$school_code==190
-                                                           | CharterLoc$school_code==121, "1129, 190 & 121",
-                                                    ifelse(CharterLoc$school_code==189 | CharterLoc$school_code==132 |
-                                                            CharterLoc$school_code==1121,"189, 132 & 1121",
-                                                     ifelse(CharterLoc$school_code==116 | CharterLoc$school_code==1122 |
-                                                            CharterLoc$school_code==3071, "116, 1122 &3071",
-                                                       ifelse(CharterLoc$school_code==222 | CharterLoc$school_code==170,
-                                                          "222 & 170",
-                                                        ifelse(CharterLoc$school_code==1118 | CharterLoc$school_code==125,
-                                                            "1118 & 125",
-                                                        ifelse(CharterLoc$school_code==101 | CharterLoc$school_code==137,
-                                                             "101 & 137", CharterLoc$school_code))))))))))))))))
-PCSFactor$SchoolGroupCode<-PCSFactor$School.Code
+                                            ifelse(CharterLoc$school_code==209 | CharterLoc$school_code==242 |
+                                                             CharterLoc$school_code==214, "209, 242 & 214",
+                                              ifelse(CharterLoc$school_code==1129 | CharterLoc$school_code==190
+                                                              | CharterLoc$school_code==121, "1129, 190 & 121",
+                                                ifelse(CharterLoc$school_code==189 | CharterLoc$school_code==132 |
+                                                                  CharterLoc$school_code==1121,"189, 132 & 1121",
+                                                  ifelse(CharterLoc$school_code==116 | CharterLoc$school_code==1122 |
+                                                                      CharterLoc$school_code==3071, "116, 1122 &3071",
+                                                    ifelse(CharterLoc$school_code==222 | CharterLoc$school_code==170,
+                                                                       "222 & 170",
+                                                      ifelse(CharterLoc$school_code==1118 | CharterLoc$school_code==125,
+                                                                        "1118 & 125",
+                                                         ifelse(CharterLoc$school_code==101 | CharterLoc$school_code==137,
+                                                                       "101 & 137", CharterLoc$school_code))))))))))))))))
+
 CharterLoc<-CharterLoc[!duplicated(CharterLoc[,9]),]
-Charters<-join(PCSFactor,CharterLoc,by="SchoolGroupCode",type="left")
-Charters$ward<-gsub("Ward ","",Charters$ward)
-Charters$Feeder<-rep(NA,93)
+Charters<-join(appC.Charter,CharterLoc,by="SchoolGroupCode",type="left")
+Charters$Ward<-gsub("Ward ","",Charters$ward)
+Charters$Feeder<-rep(NA,92)
+Charters$Level<-rep(NA,92)
+Charters$TotalExp9815<-rep(NA,92)
+Charters$TotalAllot1621<-rep(NA,92)
+Charters$LifetimeBudget<-rep(NA,92)
+Charters$Agency<-rep("PCS",92)
+Charters<-Charters[c(2:4,6:7,14:15,17:23)]
+colnames(Charters)[c(1,5:7)]<-c("SchoolCode","totalSQFT","Latitude","Longitude")
 
-PCS<-Charters[c(2:8,10:13,20:23)]
-colnames(PCS)<-c("SchoolCode","School","Address","maxOccupancy","totalSQFT","Enrolled","SqFtperStudent","SPED",
-                "Level","Agency","AtRiskPct","Latitude","Longitude","Ward","Feeder")
 ### DC Schools ###
 ### DC Schools ###
 ### DC Schools ###
-DCSchools<-rbind(DCPS,PCS)
-DCSchools$totalSQFT<-as.numeric(gsub(",","",DCSchools$totalSQFT))
-DCSchools$Enrolled<-as.numeric(gsub(",","",DCSchools$Enrolled))
-DCSchools$SqFtperStudent<-as.numeric(gsub(",","",DCSchools$SqFtperStudent))
+DCschools<-rbind(Charters,DCPS.Spend)
 
-DCSchools$SQFTgroup<-quantcut(DCSchools$totalSQFT,4,na.rm=TRUE)
-DCSchools$Enrollgroup<-quantcut(DCSchools$Enrolled,4,na.rm=TRUE)
-DCSchools$SQFTpergroup<-quantcut(DCSchools$SqFtperStudent,4,na.rm=TRUE)
+DCSchool.Enroll<-join(DCschools,enroll,by="SchoolCode",type="inner")
+nomatch<-subset(DCschools,!(DCschools$SchoolCode %in% DCSchool.Enroll$SchoolCode))
+enrollnm<-subset(enroll,!(enroll$SchoolCode %in% DCSchool.Enroll$SchoolCode) & enroll$Sector=="Charters")
 
-DCSchools$FakeExpend<-sample(10^8,198,replace=TRUE)
-write.csv(DCSchools,"/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchoolsRough.csv",row.names=FALSE)
+# appC.Charter is by building and CharterPop is by school. In some buildings there are multiple 'schools' 
+# within a single building so here I merge buildings and aggregate that school data up to building
+enrollnm$Building<-ifelse(enrollnm$SchoolCode==182 | enrollnm$SchoolCode==184 |
+                            enrollnm$SchoolCode==1207, "1207,184 & 182",
+                      ifelse(enrollnm$SchoolCode==102 | enrollnm$SchoolCode==109,
+                            "102 & 109",
+                        ifelse(enrollnm$SchoolCode==1110 | enrollnm$SchoolCode==218,
+                            "1110 & 218",
+                          ifelse(enrollnm$SchoolCode==1206 | enrollnm$SchoolCode==1138,
+                             "1206 & 1138",
+                            ifelse(enrollnm$SchoolCode==1211 | enrollnm$SchoolCode==1113,
+                                "1211 & 1113",
+                              ifelse(enrollnm$SchoolCode==362 | enrollnm$SchoolCode==361,
+                                 "362 & 361",
+                                ifelse(enrollnm$SchoolCode==363 | enrollnm$SchoolCode==364,
+                                     "363 & 364",
+                                 ifelse(enrollnm$SchoolCode==365 | enrollnm$SchoolCode==366,
+                                    "365 & 366",
+                                   ifelse(enrollnm$SchoolCode==236 | enrollnm$SchoolCode==237,
+                                     "236 & 237",
+                                     ifelse(enrollnm$SchoolCode==209 | enrollnm$SchoolCode==242 |
+                                       enrollnm$SchoolCode==214, "209, 242 & 214",
+                                       ifelse(enrollnm$SchoolCode==1129 | enrollnm$SchoolCode==190
+                                         | enrollnm$SchoolCode==121, "1129, 190 & 121",
+                                         ifelse(enrollnm$SchoolCode==189 | enrollnm$SchoolCode==132 |
+                                           enrollnm$SchoolCode==1121,"189, 132 & 1121",
+                                           ifelse(enrollnm$SchoolCode==116 | enrollnm$SchoolCode==1122 |
+                                                enrollnm$SchoolCode==3071, "116, 1122 &3071",
+                                             ifelse(enrollnm$SchoolCode==222 | enrollnm$SchoolCode==170,
+                                                   "222 & 170",
+                                               ifelse(enrollnm$SchoolCode==1118 | enrollnm$SchoolCode==125,
+                                                    "1118 & 125",
+                                                  ifelse(enrollnm$SchoolCode==101 | enrollnm$SchoolCode==137,
+                                                      "101 & 137", enrollnm$SchoolCode))))))))))))))))
+enrollnum<-enrollnm[c(4:25,27)]
+enrollnum$SchoolCode<-enrollnum$Building
+building<-join(enrollnum, DCschools,by="SchoolCode")
+DCSchool.Enroll<-DCSchool.Enroll[-c(15:17)]
+building<-building[-c(23)]
+
+DCSchoolFin<-rbind(DCSchool.Enroll,building, by="SchoolCode")
+
+DCSchoolFin$Level<-ifelse(DCSchoolFin$X12=='0' & DCSchoolFin$X05=='0',"Elementary",
+                          ifelse(DCSchoolFin$X12=='0' & DCSchoolFin$X03=='0',"Middle",
+                                 ifelse(DCSchoolFin$X03=='0' & DCSchoolFin$X05=='0',"High","Mixed")))
+DCSchoolFin<-DCSchoolFin[-c(16:30)]
+
+DCSchoolFin$totalSQFT<-as.numeric(gsub(",","",DCSchoolFin$totalSQFT))
+DCSchoolFin$maxOccupancy<-as.numeric(gsub(",","",DCSchoolFin$maxOccupancy))
+DCSchoolFin$TotalExp9815<-(sub("\\$","",DCSchoolFin$TotalExp9815))
+DCSchoolFin$TotalAllot1621<-(sub("\\$","",DCSchoolFin$TotalAllot1621))
+DCSchoolFin$LifetimeBudget<-(sub("\\$","",DCSchoolFin$LifetimeBudget))
+DCSchoolFin$TotalExp9815<-as.numeric(gsub(",","",DCSchoolFin$TotalExp9815))
+DCSchoolFin$TotalAllot1621<-as.numeric(gsub(",","",DCSchoolFin$TotalAllot1621))
+DCSchoolFin$LifetimeBudget<-as.numeric(gsub(",","",DCSchoolFin$LifetimeBudget))
+
+DCSchoolFin$SPED<-as.numeric(DCSchoolFin$Level.1)+as.numeric(DCSchoolFin$Level.2)+
+  as.numeric(DCSchoolFin$Level.3)+as.numeric(DCSchoolFin$Level.4)
+
+DCSchoolFin$AtRiskPer<-as.numeric(DCSchoolFin$At_Risk)/as.numeric(DCSchoolFin$Total.Enrolled)
+DCSchoolFin$SPEDPer<-DCSchoolFin$SPED/as.numeric(DCSchoolFin$Total.Enrolled)
+DCSchoolFin$ESLPer<-as.numeric(DCSchoolFin$Limited.English.Proficient)/as.numeric(DCSchoolFin$Total.Enrolled)
+DCSchoolFin$SqFtPerEnroll<-DCSchoolFin$totalSQFT/as.numeric(DCSchoolFin$Total.Enrolled)
+DCSchoolFin$LTBudgetPerEnroll<-DCSchoolFin$LifetimeBudget/as.numeric(DCSchoolFin$Total.Enrolled)
+DCSchoolFin$LTBudgetPerSqFt<-DCSchoolFin$LifetimeBudget/DCSchoolFin$totalSQFT
+
+write.csv(DCSchoolFin,"/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchoolsRough.csv",row.names=FALSE)
