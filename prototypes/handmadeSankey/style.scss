@@ -7,5 +7,13 @@ rect {
    &.genFundsRect,
    &.rectsForWards {
       @include blackStroke;
-   }  
+   }
+
+   &.wardLine {
+      //fill: #f0f0f0;
+   }
+}
+
+g {
+   margin-bottom: 20px;
 }
