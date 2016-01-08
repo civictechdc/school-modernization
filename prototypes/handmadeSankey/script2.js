@@ -176,12 +176,12 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 			.attr({
 				class: 'wardLine',
 				height: function(d){
-					// var tempMin = d3.min(wards[index], function(d){ return d.FakeExpend; }),
-					// 	 tempMax = d3.max(wards[index], function(d){ return d.FakeExpend; }),
-					// 	 tempScale = d3.scale.linear().domain([tempMin, tempMax]).rangeRound([2, 8]);
+					var tempMin = d3.min(wards[index], function(d){ return d.FakeExpend; }),
+						 tempMax = d3.max(wards[index], function(d){ return d.FakeExpend; }),
+						 tempScale = d3.scale.linear().domain([tempMin, tempMax]).rangeRound([2, 8]);
 
-					// //console.log(tempScale(d.FakeExpend));
-					// return tempScale(d.FakeExpend);
+					//console.log(tempScale(d.FakeExpend));
+					return tempScale(d.FakeExpend);
 					return 5;
 				},
 				width: function(d){
