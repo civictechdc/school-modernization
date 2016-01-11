@@ -124,12 +124,13 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 			width: rectProperties.width,
 			height: function(d){ return toScale(d) - sizes.p; },
 			fill: function(d, i){
-					var colorByWard = ['darkgreen', 'crimson', 'tomato', 
-                  'dodgerblue', 'steelblue', 'mediumorcid', 
-                  'rebeccapurple', 'forestgreen' ],
+					// var colorByWard = ['darkgreen', 'crimson', 'tomato', 
+     //              'dodgerblue', 'steelblue', 'mediumorcid', 
+     //              'rebeccapurple', 'forestgreen' ],
 
-               ward = parseInt(i);
-               return colorByWard[ward - 1];
+     //           ward = parseInt(i);
+     //           return colorByWard[ward - 1];
+     				return rectProperties.color;
 				},
 			x: function(d){ return getRightEdge($('.genFundsRect')) + getRightEdge($('.rectsTowardsWards')) } , // dummy figure
 			y: function(d,i){ 
@@ -145,30 +146,19 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 	//****************************************************
 
 	// Text to indicate the general funnds bar
-	// makeTextElement('genFundsText', data)
-	// 	.text(function(){
-	// 		return 'Total Expendture: General Funds';
-	// 	})
-	// 	.attr({
-	// 		x: function(){
-	// 			return 50;
-	// 		},
-	// 		y: function(){
-	// 			return (toScale(getTotalExpenditure())/2);
-	// 		}
-	// 	});
 	svg.append('g').attr('id', 'genFundsText')
 		.append('text')
 		.text(function(){
-			return 'Total Expendture: General Funds';
+			return 'Total Expendture: General Funds: ' + asMoney(getTotalExpenditure());
 		})
 		.attr({
-			transform: 'translate(50,0) rotate(90)',
+			transform: 'translate(-575,700) rotate(270)',
 			y: function(){
 				return (toScale(getTotalExpenditure())/2);
-			},
-			
-		});
+			}
+		})
+		.attr('font-size', '18')
+		;
 
 
 
@@ -188,7 +178,8 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 					- getExpenditureByWard(0))) 
 					+ sizes.p+(getSvgHeight($$('.rectsTowardsWards')[i])/2); 
 			}
-		}) 
+		})
+		.attr('font-size', '14')
 		;
 
 //####################################################################################
@@ -243,26 +234,19 @@ d3.csv('DCPS-schools-types_onlyESMSHS.csv', function(data){
 						else if(d.SchoolType === 'MS'){ return lineFor.middleSchool;} 
 						else if(d.SchoolType === 'HS'){ return lineFor.highSchool; } 
 						else { return 75; }
-		        },
+		        }
+		   	// return 
+		   	,
 		      x: getRightEdge($('#wardNum1')) +
 		      	getRightEdge($('.genFundsRect')) + 
 		      	getRightEdge($('.rectsTowardsWards')),
 		      y: function(d, i){     	
 		      		var baseHeight = 0,
 		      			h = getSvgHeight($('#wardNum' + (index+1))),
-		      			individualSchool = Math.floor(i * (h / wards[index].length));
+		      			individualSchool = (i * (h / wards[index].length));
 		      		return baseHeight + individualSchool;
 		      },
-		      fill: function(d){
-                // var colorByWard = ['orange', 'crimson', 'tomato', 
-                //   'dodgerblue', 'steelblue', 'hotpink', 
-                //   'red', 'forestgreen' ],
-
-                // ward = parseInt(d.Ward);
-                // return colorByWard[ward - 1];
-
-              return pathColor;
-              }
+		      fill: pathColor
 			})
 			.append('title')
 			.text(function(d){
