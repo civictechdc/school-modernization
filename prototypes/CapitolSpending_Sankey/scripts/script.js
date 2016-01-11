@@ -20,7 +20,6 @@ var sankey = d3.sankey()
    .nodePadding(10)
    .size([sizes.width - sizes.padding, sizes.height - sizes.padding])
    ;
-
 var path = sankey.link();
 
 d3.json("data.json", function(data){
@@ -29,6 +28,9 @@ d3.json("data.json", function(data){
       .nodes(data.nodes)
       .links(data.links)
       .layout(32);
+
+   // debugger;
+   console.log(sankey);
 
    var link = svg.append('g')
       .selectAll('.links')
@@ -71,7 +73,7 @@ d3.json("data.json", function(data){
          .attr("text-anchor", "end")
          .attr("transform", null)
          .text(function(d) { 
-            return d.name + " = " + asMoney(d.value); 
+            // return d.name + " = " + asMoney(d.value); 
          })
        .filter(function(d) { return d.x < sizes.width / 2; })
          .attr("x", 6 + sankey.nodeWidth())

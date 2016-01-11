@@ -61,6 +61,7 @@ d3.sankey = function() {
           x3 = xi(1 - curvature),
           y0 = d.source.y + d.sy + d.dy / 2,
           y1 = d.target.y + d.ty + d.dy / 2;
+
       return "M" + x0 + "," + y0
            + "C" + x2 + "," + y0
            + " " + x3 + "," + y1
@@ -90,9 +91,9 @@ d3.sankey = function() {
       if (typeof target === "number") target = link.target = nodes[link.target];
       source.sourceLinks.push(link);
       target.targetLinks.push(link);
+
+      // console.log(source);
     });
-
-
   }
 
   // Compute the value (size) of each node by summing the associated links.

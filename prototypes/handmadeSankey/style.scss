@@ -3,17 +3,45 @@
    stroke-width: .5px;
 }
 
-rect {
+@mixin lowerOpacity {
+   opacity: 0.2;
+}
+
+$hoverOpacity: 0.4;
+
+* {
+   // margin: 0;
+   // padding: 0;
+   font-family: sans-serif;
+}
+
+.container {
+   width: 80%;
+   margin: 0 auto;
+}
+
+rect {    
+
    &.genFundsRect,
    &.rectsForWards {
+
       @include blackStroke;
    }
 
    &.wardLine {
-      //fill: #f0f0f0;
-   }
-}
+      @include lowerOpacity;
 
-g {
-   margin-bottom: 20px;
+      &:hover {
+         opacity: $hoverOpacity;
+      }
+   }
+
+   &.rectsTowardsWards {
+      // fill: #000;
+      @include lowerOpacity;
+
+      &:hover {
+         opacity: 0.4;
+      }
+   }
 }
