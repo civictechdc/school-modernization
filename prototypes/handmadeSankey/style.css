@@ -1,8 +1,20 @@
+* {
+  font-family: sans-serif; }
+
+.container {
+  width: 80%;
+  margin: 0 auto; }
+
 rect.genFundsRect, rect.rectsForWards {
   stroke: #000;
   stroke-width: .5px; }
-
-g {
-  margin-bottom: 20px; }
+rect.wardLine {
+  opacity: 0.2; }
+  rect.wardLine:hover {
+    opacity: 0.4; }
+rect.rectsTowardsWards {
+  opacity: 0.2; }
+  rect.rectsTowardsWards:hover {
+    opacity: 0.4; }
 
 /*# sourceMappingURL=style.css.map */
