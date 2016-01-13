@@ -6,11 +6,13 @@ library(gtools)
 ### Read in data ###
 ### Read in data ###
 spend<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Base%20spending%20data%20and%20GSF%2021CSF.csv",
-                stringsAsFactors=FALSE, strip.white=TRUE)[c(1:2,57,66,68)]
-spend<-subset(spend,spend$School.Names!="")
-spend<-subset(spend,!(grepl("Closed",spend$X) | grepl("Omitted",spend$X) | grepl ("demolished",spend$X)
-                      | grepl ("closed",spend$X) | grepl("#1",spend$X)))
-spend$School.Short<-tolower(spend$School.Names)
+                stringsAsFactors=FALSE, strip.white=TRUE)[c(1:2,4,6,57,66,68)]
+colnames(spend)<-c("School.Short","School", "totalSQFT","MajorProject.Yr","MajorExp9815","TotalAllotandPlan1621","LifetimeBudget")
+
+spend<-subset(spend,spend$School!="")
+#spend<-subset(spend,!(grepl("Closed",spend$X) | grepl("Omitted",spend$X) | grepl ("demolished",spend$X)
+#                      | grepl ("closed",spend$X) | grepl("#1",spend$X)))
+spend$School<-tolower(spend$School)
 
 enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/2014-15%20Enrollment%20Audit.csv",
                  stringsAsFactors=FALSE, strip.white=TRUE)[c(1,4:21,25:30)]
@@ -18,16 +20,16 @@ enroll$SchoolCode<-enroll$School.ID
 
 appC.Charter<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Charter%20capacities-Table%201.csv",
                        stringsAsFactors=FALSE, strip.white=TRUE)[c(1:7,10)]
-colnames(appC.Charter)<-c("LEA.Code","SchoolGroupCode","School","Address","formerDCPS","maxOccupancy","totalSQ","EnrollCeiling")
+colnames(appC.Charter)<-c("LEA.Code","SchoolGroupCode","School","Address","formerDCPS","maxOccupancy","totalSQFT","EnrollCeiling")
 appC.Charter<-subset(appC.Charter,appC.Charter$SchoolGroupCode!="")
 
 appC.DCPS<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/DCPS%20Building%20Condition%20Dat%20(2-Table%201.csv",
-                    stringsAsFactors=FALSE, strip.white=TRUE, skip=1)[c(2,4,5:8,10:12)]
-colnames(appC.DCPS)<-c("Agency","Name","totalSQ","Program","School","Address","maxOccupancy","EnrollCap.Port","Enroll.Cap")
+                    stringsAsFactors=FALSE, strip.white=TRUE, skip=1)[c(2,4,6:8,10,12)]
+colnames(appC.DCPS)<-c("Agency","Name","Program","School","Address","maxOccupancy","Enroll.Cap")
 appC.DCPS<-subset(appC.DCPS,appC.DCPS$Program!="" & appC.DCPS$Name!="")
 
 budgetDCPS<-read.csv("https://raw.githubusercontent.com/codefordc/dcps-budget/master/app/data/data.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:8,10)]
+                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:6,8,10)]
 budgetDCPSunq<-budgetDCPS[!duplicated(budgetDCPS[,1:2]),]
 
 CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/schools.csv",
@@ -40,23 +42,17 @@ appC.DCPS$SCHOOLCODE<-ifelse(appC.DCPS$Program=="452/462", "452",
                                   ifelse(appC.DCPS$Program=="433","415",
                                     ifelse(appC.DCPS$Program=="175","943",
                                            appC.DCPS$Program))))))
-#note:this seems to exclude geo info for non feeder schools so need to add this back in later
 DCPSfactors<-join(appC.DCPS, budgetDCPSunq, by="SCHOOLCODE",type="left")
-DCPS<-DCPSfactors[c(1:3,5:7,10,12:14,16:17)]
-colnames(DCPS)<-c("Agency","School","totalSQFT","School.Short","Address","maxOccupancy",
-                  "SchoolCode","Longitude","Latitude","Level","Feeder", "Ward")
-DCPS$School.Short<-tolower(DCPS$School.Short)
-DCPS$School.Short<-str_trim(gsub("es","",DCPS$School.Short))
-DCPS$School.Short<-str_trim(gsub("hs","",DCPS$School.Short))
-DCPS$School.Short<-str_trim(gsub("ec","",DCPS$School.Short))
-DCPS$School.Short<-str_trim(gsub("ms","",DCPS$School.Short))
+DCPS<-DCPSfactors[c("Agency","Name","School","Address","maxOccupancy","Enroll.Cap","SCHOOLCODE","LON","LAT","WARD")]
+colnames(DCPS)<-c("Agency","School","School.Short","Address","maxOccupancy","Enroll.Cap",
+                  "SchoolCode","Longitude","Latitude", "Ward")
+DCPS$School<-tolower(DCPS$School)
+DCPS.Spend<-join(DCPS, spend, by="School",type="inner")
+#[c(1:3,5:12,15:17)]
 
-
-DCPS.Spend<-join(DCPS, spend, by="School.Short",type="inner")[c(1:3,5:12,15:17)]
-colnames(DCPS.Spend)[c(12:14)]<-c("TotalExp9815","TotalAllot1621","LifetimeBudget")
 #going to hold on merging the remaining spend and DCPS until I can get a printout of the mismatches to look at
-mismatchDCPS<-subset(DCPS,!(DCPS$School.Short %in% test$School.Short))
-mismatchSpend<-subset(spend,!(spend$School.Short %in% test$School.Short))
+mismatchDCPS<-subset(DCPS,!(DCPS$School %in% DCPS.Spend$School))
+mismatchSpend<-subset(spend,!(spend$School %in% DCPS.Spend$School))
 
 ###Create Charter dataset###
 CharterLoc$SchoolGroupCode<-ifelse(CharterLoc$school_code==182 | CharterLoc$school_code==184 |
@@ -180,3 +176,9 @@ DCSchoolFin$LTBudgetPerEnroll<-DCSchoolFin$LifetimeBudget/as.numeric(DCSchoolFin
 DCSchoolFin$LTBudgetPerSqFt<-DCSchoolFin$LifetimeBudget/DCSchoolFin$totalSQFT
 
 write.csv(DCSchoolFin,"/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchoolsRough.csv",row.names=FALSE)
+
+
+##level needs to be updated w definitions sent over
+## administrative cluster is NOT feeder! 21CF will send over feeder tomorrow
+ # some schools do not yet have feeder
+##allocate SQFT based on enrollment proportion of schools where shared building
