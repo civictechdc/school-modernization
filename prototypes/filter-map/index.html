@@ -1,62 +1,85 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-	  <!-- ======= ======= ======= styles ======= ======= ======= -->
-		<title>DCPS test map</title>
-		<meta name="description" content="">
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-		<link rel="stylesheet" href="style.css" type="text/css">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+    <link rel="icon" href="images/favicon.ico">
 
-	</head>
-	<body>
+  <!-- ======= ======= ======= styles ======= ======= ======= -->
+	<title>DCPS SchoolMod profile</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
+	<!-- <link rel="stylesheet" href="/css/bootstrap-theme.css" type="text/css">
+	<link rel="stylesheet" href="/css/bootstrap.css" type="text/css"> -->
+	<link rel="stylesheet" href="/css/style.css" type="text/css">
 
-		<!-- ======= ======= ======= header ======= ======= ======= -->
+</head>
+<body>
+
+	<!-- ======= ======= ======= header ======= ======= ======= -->
+	<div class="container">
+
+		<!-- ======= ======= ======= tabs ======= ======= ======= -->
 		<div class="row header">
-			<div class="column column-1">&nbsp;</div>
-			<div class="column column-10 intro">
-				<h1>DCPS school modernization</h1>
+			<div class="page-header">
+				<h1>DCPS School Modernization Tool</h1>
 			</div>
-			<div class="column column-1">&nbsp;</div>
+			<ul class="tabs">
+				<li class="tab active-tab"><a href="#">Map</a></li>
+				<li class="tab"><a href="profile.html">Profile</a></li>
+				<li class="tab"><a href="comparison.html">Comparison</a></li>
+			</ul>
 		</div>
 
 		<!-- ======= ======= ======= content ======= ======= ======= -->
 		<div class="row content">
+
+			<!-- ======= main-nav ======= -->
+			<!-- <div class="column col-md-3 mapCol">
+				<h3 class='subtitle'>Filters</h3>
+				<nav id="main-nav"></nav>
+			</div> -->
+
+
 			<!-- ======= map ======= -->
-			<div class="column mapCol">
+			<div class="column col-md-12 mapCol">
+				<!-- <button id="btn_popup">popup</button> -->
+				<div id="smoke">...</div>
+				<div id="popup">
+					<div id="popup_bar">filters</div>
+
+					<nav id="main-nav"></nav>
+
+				</div>
+
 				<div id="map"></div>
-				<div id="message"><p></p></div>
-			</div>
-
-			<!-- ======= profile ======= -->
-			<div class="column profileCol">
-				<h4 class="title">Filters</h4>
-				<nav id="filterNav"></nav>
-				<h4 id="filterTitle" class="title">Data Display</h4>
 				<div id="profileData"></div>
-				<div id="chartData"></div>
+				<div id="message"><p>&nbsp;</p></div>
 			</div>
-		</div>
 
-		<!-- ======= ======= ======= footer ======= ======= ======= -->
-		<div class="row footer">
-			<div class="column column-12">&nbsp;</div>
 		</div>
 
 		<!-- ======= ======= ======= scripts ======= ======= ======= -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<!-- <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script> -->
+	    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-		<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&callback=initMap"></script> -->
-		<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE"></script> -->
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&libraries=geometry"></script>
-		<!-- <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script> -->
 		<script type="text/javascript" src="script.js"></script>
+		<!-- <script type="text/javascript" src="../VENDORS/bootstrap-3.3.6"></script> -->
+		<script type="text/javascript" src="infoBubble.js"></script>
+		<script type="text/javascript" src="utilities.js"></script>
 		<script type="text/javascript" src="d3graphs.js"></script>
 
-	</body>
+	</div>
+</body>
 </html>
 
 
