@@ -9,7 +9,7 @@ library(gtools)
 ### Read in data ###
 #DCPS data
 DCPS.Facility<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Facility%20Condition-Table%201.csv",
-                        stringsAsFactors=FALSE, strip.white=TRUE)[c(1:3,5,55,68:70)]
+                        stringsAsFactors=FALSE, strip.white=TRUE)[c(1:3,5,55,59,68,70)]
 colnames(DCPS.Facility)<-c("School.Short","School", "Level","totalSQFT","ProjectType","MajorExp9815","TotalAllotandPlan1621","LifetimeBudget")
 DCPS.Facility$School<-tolower(DCPS.Facility$School)
 DCPS.Facility<-subset(DCPS.Facility,DCPS.Facility$School.Short!="" & DCPS.Facility$School!="" & 
@@ -163,7 +163,7 @@ tojoin<-cbind(school,buildingcode)
 join2<-join(tojoin,Bout,by="SCHOOLCODE",type="full")
 
 appC.budget<-rbind(join1,join2)
-rm("join1","join2","IndptBuilding","DptBuilding","school","tojoin","Bout","appCout")
+rm("join1","join2","IndptBuilding","DptBuilding","school","tojoin","Bout","appOut")
 
 #Join with Feeder Patterns
 appC.budget$SCHOOLCODE<-as.numeric(appC.budget$SCHOOLCODE)
