@@ -224,8 +224,8 @@ numeric<- function(x) {
   x<-as.numeric(gsub(",","",x))
 }
 
-DCPS.Final$SPED<-Level.1+Level.2+Level.2+Level.3
-DCPS.Final<-DCPS.Final[-c(20:22,24:38,40:43,45)]
+DCPS.Final$SPED<-DCPS.Final$Level.1+DCPS.Final$Level.2+DCPS.Final$Level.2+DCPS.Final$Level.3
+DCPS.Final<-DCPS.Final[-c(20:22,24:38,40:43)]
 
 DCPS.Final$totalSQFT<-numeric(DCPS.Final$totalSQFT)
 DCPS.Final$maxOccupancy<-numeric(DCPS.Final$maxOccupancy)
