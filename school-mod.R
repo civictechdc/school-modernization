@@ -2,8 +2,6 @@ library(stringr)
 library(plyr)
 library(rgdal)
 library(gtools)
-###Open Schools Only###
-
 ### Read in data ###
 ### Read in data ###
 ### Read in data ###
@@ -49,7 +47,9 @@ CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-moderni
                      stringsAsFactors=FALSE, strip.white=TRUE)[c(2:5,8,12:14)]
 
 CharterDataSheet<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Appendix%20B_Public%20Charter%20Facility%20Data%20Sheet%20for%20SY14-15%20NH.csv",
-                           stringsAsFactors=FALSE, strip.white=TRUE)
+                           stringsAsFactors=FALSE, strip.white=TRUE)[c(1:5,7:9)]
+colnames(CharterDataSheet)<-c("LEA.Code","School.ID","School","Level","Address","maxOccupancy","totalSQFT", "Total.Enroll")
+CharterDataSheet<-subset(CharterDataSheet,grepl("^[[:digit:]]",CharterDataSheet$LEA.Code))
 
 ### Create DCPS dataset ###
 ### Create DCPS dataset ###
@@ -163,7 +163,7 @@ tojoin<-cbind(school,buildingcode)
 join2<-join(tojoin,Bout,by="SCHOOLCODE",type="full")
 
 appC.budget<-rbind(join1,join2)
-rm("join1","join2","IndptBuilding","DptBuilding","school","tojoin","Bout","appOut")
+rm("join1","join2","IndptBuilding","DptBuilding","school","tojoin","Bout")
 
 #Join with Feeder Patterns
 appC.budget$SCHOOLCODE<-as.numeric(appC.budget$SCHOOLCODE)
@@ -247,141 +247,108 @@ DCPS.Final$SqFtPerEnroll<-totalSQFT/Total.Enrolled
 
 DCPS.Final$SpentPerEnroll<-MajorExp9815/Total.Enrolled
 DCPS.Final$SpentPerSqFt<-MajorExp9815/totalSQFT
+colnames(DCPS.Final)[17]<-"Ward"
+colnames(DCPS.Final)[16]<-"latitude"
+colnames(DCPS.Final)[15]<-"longitude"
 
+DCPS.Final<-DCPS.Final[-c(6)]
 write.csv(DCPS.Final,
 "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCPS_Master_114.csv",
 row.names=FALSE)
 
-
-### END OF UPDATES FOR 1/14 ###
-
-
-
 ###Create Charter dataset###
 ###Create Charter dataset###
 ###Create Charter dataset###
-CharterLoc$SchoolGroupCode<-ifelse(CharterLoc$school_code==182 | CharterLoc$school_code==184 |
-                                     CharterLoc$school_code==1207, "1207,184 & 182",
-                              ifelse(CharterLoc$school_code==102 | CharterLoc$school_code==109,
-                                          "102 & 109",
-                                ifelse(CharterLoc$school_code==1110 | CharterLoc$school_code==218,
-                                                 "1110 & 218",
-                                 ifelse(CharterLoc$school_code==1206 | CharterLoc$school_code==1138,
-                                                        "1206 & 1138",
-                                  ifelse(CharterLoc$school_code==1211 | CharterLoc$school_code==1113,
-                                                               "1211 & 1113",
-                                    ifelse(CharterLoc$school_code==362 | CharterLoc$school_code==361,
-                                                                      "362 & 361",
-                                      ifelse(CharterLoc$school_code==363 | CharterLoc$school_code==364,
-                                                                             "363 & 364",
-                                        ifelse(CharterLoc$school_code==365 | CharterLoc$school_code==366,
-                                                                                    "365 & 366",
-                                          ifelse(CharterLoc$school_code==236 | CharterLoc$school_code==237,
-                                                                                           "236 & 237",
-                                            ifelse(CharterLoc$school_code==209 | CharterLoc$school_code==242 |
-                                                             CharterLoc$school_code==214, "209, 242 & 214",
-                                              ifelse(CharterLoc$school_code==1129 | CharterLoc$school_code==190
-                                                              | CharterLoc$school_code==121, "1129, 190 & 121",
-                                                ifelse(CharterLoc$school_code==189 | CharterLoc$school_code==132 |
-                                                                  CharterLoc$school_code==1121,"189, 132 & 1121",
-                                                  ifelse(CharterLoc$school_code==116 | CharterLoc$school_code==1122 |
-                                                                      CharterLoc$school_code==3071, "116, 1122 &3071",
-                                                    ifelse(CharterLoc$school_code==222 | CharterLoc$school_code==170,
-                                                                       "222 & 170",
-                                                      ifelse(CharterLoc$school_code==1118 | CharterLoc$school_code==125,
-                                                                        "1118 & 125",
-                                                         ifelse(CharterLoc$school_code==101 | CharterLoc$school_code==137,
-                                                                       "101 & 137", CharterLoc$school_code))))))))))))))))
+enrollCharter<-subset(enroll, enroll$Sector=="Charters")
+CharterDataSheet<-CharterDataSheet[order(CharterDataSheet$School.ID),]
+CharterDataSheet$totalSQFT<-str_trim(gsub("\t","",CharterDataSheet$totalSQFT))
+CharterDataSheet$totalSQFT<-as.numeric(gsub(",","",CharterDataSheet$totalSQFT))
+CharterDataSheet$Total.Enroll<-as.numeric(gsub(",","",CharterDataSheet$Total.Enroll))
 
-CharterLoc<-CharterLoc[!duplicated(CharterLoc[,9]),]
-Charters<-join(appC.Charter,CharterLoc,by="SchoolGroupCode",type="left")
+scCount <-as.data.frame(table(CharterDataSheet$School.ID))
+gt1<-subset(scCount,scCount$Freq>1)
+SingleCharter<-subset(CharterDataSheet,!(CharterDataSheet$School.ID %in% gt1$Var1))
+MultiCharter<-subset(CharterDataSheet,(CharterDataSheet$School.ID %in% gt1$Var1))
+
+###Estimate enrollment where multiple building under a single school - sq ft provided, but not enrollment
+sumSQFT<-ddply(MultiCharter,.(School.ID),summarize,totS=sum(totalSQFT,na.rm=TRUE))
+MultiSQFT<-join(MultiCharter,sumSQFT,by="School.ID",type="left")
+sumEnroll<-ddply(MultiCharter,.(School.ID),summarize,totE=sum(Total.Enroll,na.rm=TRUE))
+Multi<-join(MultiSQFT,sumEnroll,by="School.ID",type="left")
+Multi$PropSQFT<-Multi$totalSQFT/Multi$totS
+Multi$EnrollEst<-round(Multi$PropSQFT*Multi$totE)
+Multi$Total.Enroll<-Multi$EnrollEst
+Multi<-Multi[c(1:8)]
+rm(sumSQFT,MultiSQFT,sumEnroll,MultiCharter,gt1,scCount)
+
+###Estimate SQFT where multiple schools at single address and SQFT not provided, only enrollment
+SingleCharter<-SingleCharter[order(SingleCharter$Address),]
+sumSQFT<-ddply(SingleCharter,.(Address),summarize,totS=sum(totalSQFT,na.rm=TRUE))
+SQFT<-join(SingleCharter,sumSQFT,by="Address",type="left")
+sumEnroll<-ddply(SingleCharter,.(Address),summarize,totE=sum(Total.Enroll,na.rm=TRUE))
+Single<-join(SQFT,sumEnroll,by="Address",type="left")
+
+Single$EnrollProp<-Single$Total.Enroll/Single$totE
+Single$SQFTEst<-round(Single$EnrollProp*Single$totS)
+Single$totalSQFT<-Single$SQFTEst
+Single<-Single[c(1:8)]
+
+rm(SingleCharter,sumSQFT,sumEnroll)
+
+Charter<-rbind(Multi,Single)
+
+###Add group enrollment figures
+enroll$SPED<-enroll$Level.1+enroll$Level.2+enroll$Level.3+enroll$Level.4
+cEnroll<-enroll[c(2:3,20,25,27)]
+
+#the enroll figures are wrong for those that share a school code and need to be updated
+CharterEnroll<-join(Charter,cEnroll, by="School.ID",type="left")
+
+### Add Lat and Long, Ward
+CharterLoc<-subset(CharterLoc, CharterLoc$lea_name!="District of Columbia Public Schools")
+CharterLoc$School.ID<-CharterLoc$school_code
+CharterLoc<-CharterLoc[c(6:9)]
+
+#similarly the address and lat longs are potentially wrong where school ID overlaps. geocoding may be best.
+Charters<-join(CharterEnroll,CharterLoc,by="School.ID",type="left")
+
 Charters$Ward<-gsub("Ward ","",Charters$ward)
-Charters$Feeder<-rep(NA,92)
-Charters$Level<-rep(NA,92)
-Charters$TotalExp9815<-rep(NA,92)
-Charters$TotalAllot1621<-rep(NA,92)
-Charters$LifetimeBudget<-rep(NA,92)
-Charters$Agency<-rep("PCS",92)
-Charters<-Charters[c(2:4,6:7,14:15,17:23)]
-colnames(Charters)[c(1,5:7)]<-c("SchoolCode","totalSQFT","Latitude","Longitude")
+Charters$MajorExp9815<-rep(NA,126)
+Charters$TotalAllotandPlan1621<-rep(NA,126)
+Charters$LifetimeBudget<-rep(NA,126)
+Charters$FeederMS<-rep(NA,126)
+Charters$FeederHS<-rep(NA,126)
+Charters$ProjectPhase<-rep(NA,126)
+Charters$YrComplete<-rep(NA,126)
+Charters$ProjectType<-rep(NA,126)
+Charters$Agency<-rep("PCS",126)
 
-### DC Schools ###
-### DC Schools ###
-### DC Schools ###
-DCschools<-rbind(Charters,DCPS.Spend)
+attach(Charters)
+Charters$AtRiskPer<-At_Risk/Total.Enroll
+Charters$SPEDPer<-SPED/Total.Enroll
+Charters$ESLPer<-Limited.English.Proficient/Total.Enroll
+Charters$SqFtPerEnroll<-totalSQFT/Total.Enroll
 
-DCSchool.Enroll<-join(DCschools,enroll,by="SchoolCode",type="inner")
-nomatch<-subset(DCschools,!(DCschools$SchoolCode %in% DCSchool.Enroll$SchoolCode))
-enrollnm<-subset(enroll,!(enroll$SchoolCode %in% DCSchool.Enroll$SchoolCode) & enroll$Sector=="Charters")
+Charters$SpentPerEnroll<-MajorExp9815/Total.Enroll
+Charters$SpentPerSqFt<-MajorExp9815/totalSQFT
 
-# appC.Charter is by building and CharterPop is by school. In some buildings there are multiple 'schools' 
-# within a single building so here I merge buildings and aggregate that school data up to building
-enrollnm$Building<-ifelse(enrollnm$SchoolCode==182 | enrollnm$SchoolCode==184 |
-                            enrollnm$SchoolCode==1207, "1207,184 & 182",
-                      ifelse(enrollnm$SchoolCode==102 | enrollnm$SchoolCode==109,
-                            "102 & 109",
-                        ifelse(enrollnm$SchoolCode==1110 | enrollnm$SchoolCode==218,
-                            "1110 & 218",
-                          ifelse(enrollnm$SchoolCode==1206 | enrollnm$SchoolCode==1138,
-                             "1206 & 1138",
-                            ifelse(enrollnm$SchoolCode==1211 | enrollnm$SchoolCode==1113,
-                                "1211 & 1113",
-                              ifelse(enrollnm$SchoolCode==362 | enrollnm$SchoolCode==361,
-                                 "362 & 361",
-                                ifelse(enrollnm$SchoolCode==363 | enrollnm$SchoolCode==364,
-                                     "363 & 364",
-                                 ifelse(enrollnm$SchoolCode==365 | enrollnm$SchoolCode==366,
-                                    "365 & 366",
-                                   ifelse(enrollnm$SchoolCode==236 | enrollnm$SchoolCode==237,
-                                     "236 & 237",
-                                     ifelse(enrollnm$SchoolCode==209 | enrollnm$SchoolCode==242 |
-                                       enrollnm$SchoolCode==214, "209, 242 & 214",
-                                       ifelse(enrollnm$SchoolCode==1129 | enrollnm$SchoolCode==190
-                                         | enrollnm$SchoolCode==121, "1129, 190 & 121",
-                                         ifelse(enrollnm$SchoolCode==189 | enrollnm$SchoolCode==132 |
-                                           enrollnm$SchoolCode==1121,"189, 132 & 1121",
-                                           ifelse(enrollnm$SchoolCode==116 | enrollnm$SchoolCode==1122 |
-                                                enrollnm$SchoolCode==3071, "116, 1122 &3071",
-                                             ifelse(enrollnm$SchoolCode==222 | enrollnm$SchoolCode==170,
-                                                   "222 & 170",
-                                               ifelse(enrollnm$SchoolCode==1118 | enrollnm$SchoolCode==125,
-                                                    "1118 & 125",
-                                                  ifelse(enrollnm$SchoolCode==101 | enrollnm$SchoolCode==137,
-                                                      "101 & 137", enrollnm$SchoolCode))))))))))))))))
-enrollnum<-enrollnm[c(4:25,27)]
-enrollnum$SchoolCode<-enrollnum$Building
-building<-join(enrollnum, DCschools,by="SchoolCode")
-DCSchool.Enroll<-DCSchool.Enroll[-c(15:17)]
-building<-building[-c(23)]
+PCS.Final<-Charters[-c(1,3,15)]
+colnames(PCS.Final)[1] <- "SCHOOLCODE"
+colnames(PCS.Final)[7] <- "School"
+colnames(PCS.Final)[6]<-"Total.Enrolled"
 
-DCSchoolFin<-rbind(DCSchool.Enroll,building, by="SchoolCode")
+DCSchools<-rbind(DCPS.Final,PCS.Final)
 
-DCSchoolFin$Level<-ifelse(DCSchoolFin$X12=='0' & DCSchoolFin$X05=='0',"Elementary",
-                          ifelse(DCSchoolFin$X12=='0' & DCSchoolFin$X03=='0',"Middle",
-                                 ifelse(DCSchoolFin$X03=='0' & DCSchoolFin$X05=='0',"High","Mixed")))
-DCSchoolFin<-DCSchoolFin[-c(16:30)]
+write.csv(PCS.Final,
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/PCS_Master_114.csv",
+          row.names=FALSE)
 
-DCSchoolFin$totalSQFT<-as.numeric(gsub(",","",DCSchoolFin$totalSQFT))
-DCSchoolFin$maxOccupancy<-as.numeric(gsub(",","",DCSchoolFin$maxOccupancy))
-DCSchoolFin$TotalExp9815<-(sub("\\$","",DCSchoolFin$TotalExp9815))
-DCSchoolFin$TotalAllot1621<-(sub("\\$","",DCSchoolFin$TotalAllot1621))
-DCSchoolFin$LifetimeBudget<-(sub("\\$","",DCSchoolFin$LifetimeBudget))
-DCSchoolFin$TotalExp9815<-as.numeric(gsub(",","",DCSchoolFin$TotalExp9815))
-DCSchoolFin$TotalAllot1621<-as.numeric(gsub(",","",DCSchoolFin$TotalAllot1621))
-DCSchoolFin$LifetimeBudget<-as.numeric(gsub(",","",DCSchoolFin$LifetimeBudget))
-
-DCSchoolFin$SPED<-as.numeric(DCSchoolFin$Level.1)+as.numeric(DCSchoolFin$Level.2)+
-  as.numeric(DCSchoolFin$Level.3)+as.numeric(DCSchoolFin$Level.4)
-
-DCSchoolFin$AtRiskPer<-as.numeric(DCSchoolFin$At_Risk)/as.numeric(DCSchoolFin$Total.Enrolled)
-DCSchoolFin$SPEDPer<-DCSchoolFin$SPED/as.numeric(DCSchoolFin$Total.Enrolled)
-DCSchoolFin$ESLPer<-as.numeric(DCSchoolFin$Limited.English.Proficient)/as.numeric(DCSchoolFin$Total.Enrolled)
-DCSchoolFin$SqFtPerEnroll<-DCSchoolFin$totalSQFT/as.numeric(DCSchoolFin$Total.Enrolled)
-DCSchoolFin$LTBudgetPerEnroll<-DCSchoolFin$LifetimeBudget/as.numeric(DCSchoolFin$Total.Enrolled)
-DCSchoolFin$LTBudgetPerSqFt<-DCSchoolFin$LifetimeBudget/DCSchoolFin$totalSQFT
-
-write.csv(DCSchoolFin,"/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchoolsRough.csv",row.names=FALSE)
+write.csv(DCSchools,
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_114.csv",
+          row.names=FALSE)
 
 
-
-##allocate SQFT based on enrollment proportion of schools where shared building
+##allocate SQFT based on enrollment proportion of schools where shared building 
+#     - done for charters, need to do for DCPS
+##figure out how to allocate atrisk, SPED and ESL where enrollment estimated
+##check addresses 
