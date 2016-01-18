@@ -1,0 +1,205 @@
+{
+   "nodes": [{
+      "name": "Aiton Elementary School"
+   }, {
+      "name": "Amidon-Bowen Elementary School"
+   }, {
+      "name": "Bancroft Elementary School"
+   }, {
+      "name": "Barnard Elementary School"
+   }, {
+      "name": "Beers Elementary School"
+   }, {
+      "name": "Brent Elementary School"
+   }, {
+      "name": "Bruce-Monroe Elementary School @ Park View"
+   }, {
+      "name": "Burrville Elementary School"
+   }, {
+      "name": "C.W. Harris Elementary School"
+   }, {
+      "name": "Cleveland Elementary School"
+   }, {
+      "name": "Drew Elementary School"
+   }, {
+      "name": "Eaton Elementary School"
+   }, {
+      "name": "Garfield Elementary School"
+   }, {
+      "name": "Garrison Elementary School"
+   }, {
+      "name": "H.D. Cooke Elementary School"
+   }, {
+      "name": "Hearst Elementary School"
+   }, {
+      "name": "Hendley Elementary School"
+   }, {
+      "name": "Houston Elementary School"
+   }, {
+      "name": "Hyde-Addison Elementary School"
+   }, {
+      "name": "J.O. Wilson Elementary School"
+   }, {
+      "name": "Janney Elementary School"
+   }, {
+      "name": "Ketcham Elementary School"
+   }, {
+      "name": "Key Elementary School"
+   }, {
+      "name": "Kimball Elementary School"
+   }, {
+      "name": "King Elementary School"
+   }, {
+      "name": "Lafayette Elementary School"
+   }, {
+      "name": "Leckie Elementary School"
+   }, {
+      "name": "Ludlow-Taylor Elementary School"
+   }, {
+      "name": "Malcolm X Elementary School"
+   }, {
+      "name": "Mann Elementary School"
+   }, {
+      "name": "Marie Reed Elementary School"
+   }, {
+      "name": "Maury Elementary School"
+   }, {
+      "name": "Moten Elementary School"
+   }, {
+      "name": "Murch Elementary School"
+   }, {
+      "name": "Nalle Elementary School"
+   }, {
+      "name": "Orr Elementary School"
+   }, {
+      "name": "Patterson Elementary School"
+   }, {
+      "name": "Payne Elementary School"
+   }, {
+      "name": "Peabody Elementary School"
+   }, {
+      "name": "Plummer Elementary School"
+   }, {
+      "name": "Powell Elementary School"
+   }, {
+      "name": "Ross Elementary School"
+   }, {
+      "name": "Savoy Elementary School"
+   }, {
+      "name": "Seaton Elementary School"
+   }, {
+      "name": "Shepherd Elementary School"
+   }, {
+      "name": "Simon Elementary School"
+   }, {
+      "name": "Smothers Elementary School"
+   }, {
+      "name": "Stanton Elementary School"
+   }, {
+      "name": "Stoddert Elementary School"
+   }, {
+      "name": "Thomas Elementary School"
+   }, {
+      "name": "Thomson Elementary School"
+   }, {
+      "name": "Tubman Elementary School"
+   }, {
+      "name": "Turner Elementary School"
+   }, {
+      "name": "Tyler Elementary School"
+   }, {
+      "name": "Watkins Elementary School"
+   }, {
+      "name": "Deal Middle School"
+   }, {
+      "name": "Eliot-Hine Middle School"
+   }, {
+      "name": "Hardy Middle School"
+   }, {
+      "name": "Hart Middle School"
+   }, {
+      "name": "Jefferson Middle School"
+   }, {
+      "name": "John Hayden Johnson Middle School"
+   }, {
+      "name": "Kelly Miller Middle School"
+   }, {
+      "name": "Kramer Middle School"
+   }, {
+      "name": "Sousa Middle School"
+   }, {
+      "name": "Stuart-Hobson Middle School"
+   }, {
+      "name": "Anacostia High School"
+   }, {
+      "name": "Benjamin Banneker High School"
+   }, {
+      "name": "Coolidge High School"
+   }, {
+      "name": "Dunbar High School (OLD)"
+   }, {
+      "name": "Eastern High School"
+   }, {
+      "name": "Luke C. Moore High School"
+   }, {
+      "name": "McKinley Technology High School"
+   }, {
+      "name": "Phelps Architecture, Construction, and Engineering High School"
+   }, {
+      "name": "Roosevelt High School"
+   }, {
+      "name": "School Without Walls High School"
+   }, {
+      "name": "Washington Metropolitan High School"
+   }, {
+      "name": "Wilson High School"
+   }, {
+      "name": "Ballou HS (includes STAY Program)"
+   }, {
+      "name": "Woodson, H.D. HS"
+   }, {
+      "name": "Brightwood Education Campus"
+   }, {
+      "name": "Brookland Education Campus @ Bunker Hill"
+   }, {
+      "name": "Browne Education Campus"
+   }, {
+      "name": "Burroughs Education Campus"
+   }, {
+      "name": "Columbia Heights Education Campus"
+   }, {
+      "name": "Francis-Stevens Education Campus"
+   }, {
+      "name": "Langdon Education Campus"
+   }, {
+      "name": "Langley Education Campus"
+   }, {
+      "name": "LaSalle-Backus Education Campus"
+   }, {
+      "name": "Noyes Education Campus"
+   }, {
+      "name": "Raymond Education Campus"
+   }, {
+      "name": "Takoma Education Campus"
+   }, {
+      "name": "Truesdell Education Campus"
+   }, {
+      "name": "Walker-Jones Education Campus"
+   }, {
+      "name": "West Education Campus"
+   }, {
+      "name": "Wheatley Education Campus"
+   }, {
+      "name": "Whittier Education Campus"
+   }, {
+      "name": "Cardozo EC"
+   }, {
+      "name": "Capitol Hill Montessori School @ Logan"
+   }],
+   "links": [{
+      "source": 0,
+      "target": 55,
+      "value": 8
+   }
+   ]
+}
