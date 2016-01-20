@@ -13,7 +13,7 @@ var $ = function(sel){return document.querySelector(sel);},
 
 var sizes = {
    width: 960,
-   height: 1200,
+   height: 1650,
    padding: 30
 };
 

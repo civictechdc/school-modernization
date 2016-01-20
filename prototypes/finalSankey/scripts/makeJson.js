@@ -36,9 +36,9 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
             highSchools = data.filter(function(data){ return data.Level === 'HS'; });
         
         // These represent the target for the middle schools and high schools
-        var firstMSindex = elementarySchools.length;
-            firstHSindex = firstMSindex + middleSchools.length,
-            firstECindex = firstMSindex + middleSchools.length + highSchools.length;
+        // var firstMSindex = elementarySchools.length;
+        //     firstHSindex = firstMSindex + middleSchools.length,
+        //     firstECindex = firstMSindex + middleSchools.length + highSchools.length;
 
         //**********************************************
         // FILLS THE NODES AND LINKS IN A SINGLE OBJECT
