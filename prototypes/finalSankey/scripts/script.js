@@ -13,7 +13,7 @@ var $ = function(sel){return document.querySelector(sel);},
 
 var sizes = {
    width: 960,
-   height: 1650,
+   height: 1850,
    padding: 30
 };
 
@@ -76,18 +76,18 @@ d3.json("scripts/data.json", function(data){
       .append("title")
       .text(function(d) { return d.name + "\n" + format(d.value); });
   
-     // node.append("text")
-     //     .attr("x", -6)
-     //     .attr("y", function(d) { return d.dy / 2; })
-     //     .attr("dy", ".35em")
-     //     .attr("text-anchor", "end")
-     //     .attr("transform", null)
-     //     .text(function(d) { 
-     //        return d.name + " = " + asMoney(d.value); 
-     //     })
-     //   .filter(function(d) { return d.x < sizes.width / 2; })
-     //     .attr("x", 6 + sankey.nodeWidth())
-     //     .attr("text-anchor", "start");
+     node.append("text")
+         .attr("x", -6)
+         .attr("y", function(d) { return d.dy / 2; })
+         .attr("dy", ".35em")
+         .attr("text-anchor", "end")
+         .attr("transform", null)
+         .text(function(d) { 
+            return d.name + " = " + asMoney(d.value); 
+         })
+       .filter(function(d) { return d.x < sizes.width / 2; })
+         .attr("x", 6 + sankey.nodeWidth())
+         .attr("text-anchor", "start");
 
      function dragmove(d) {
        d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(sizes.height - d.dy, d3.event.y))) + ")");
