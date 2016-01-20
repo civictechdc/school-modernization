@@ -78,7 +78,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
                         break;
                     case 'Brookland MS':
                         // console.log('Brookland');
-                        tempObj.target = 60;
+                        tempObj.target = 73;
                         break;
                     case 'Cardozo EC (6-8)':
                         // console.log('cardoza');
