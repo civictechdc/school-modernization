@@ -32,13 +32,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
         var elementarySchools = data.filter(function(data){ return data.Level === 'ES'; }),
             middleSchools = data.filter(function(data){ return data.Level === 'MS'; }),
             joinedSchools = data.filter(function(data){ return data.Level === 'ES/MS'; }),
-            // educationCenters = data.filter(function(data){ return data.Level === 'EC'; }),
             highSchools = data.filter(function(data){ return data.Level === 'HS'; });
-        
-        // These represent the target for the middle schools and high schools
-        // var firstMSindex = elementarySchools.length;
-        //     firstHSindex = firstMSindex + middleSchools.length,
-        //     firstECindex = firstMSindex + middleSchools.length + highSchools.length;
 
         //**********************************************
         // FILLS THE NODES AND LINKS IN A SINGLE OBJECT
@@ -88,7 +82,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
                         break;
                     case 'Cardozo EC (6-8)':
                         // console.log('cardoza');
-                        tempObj.target = 95;
+                        tempObj.target = 93;
                         break;
                     case 'Hardy MS':
                         // console.log('hardy');
@@ -104,7 +98,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
                         break;
                     case 'McKinley MS':
                         // console.log('mckinley');
-                        tempObj.target = 100;
+                        tempObj.target = 98;
                         break;
                     case 'Col Hts. Ed. Campus (6-8)':
                         // console.log('col heights');
@@ -141,19 +135,18 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
             // Middle
         for(var m = 0, n = middleSchools.length; m < n; m++){
             var tempObj = {};
-            // tempObj.source = firstMSindex + parseInt([m]);
             tempObj.source = getSource();
             
             // MATCH VALUES HERE
             switch(middleSchools[m].FeederHS){
                 case 'Woodson HS':
-                    tempObj.target = 97;
+                    tempObj.target = 95;
                     break;
                 case 'Wilson HS':
-                    tempObj.target = 92;
+                    tempObj.target = 90;
                     break;
                 case 'Roosevelt HS':
-                    tempObj.target = 98;
+                    tempObj.target = 96;
                     break;
                 case 'Anacostia HS':
                     tempObj.target = 86;
@@ -162,16 +155,16 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
                     tempObj.target = 88;
                     break;
                 case 'Coolidge HS':
-                    tempObj.target = 90;
+                    tempObj.target = 87;
                     break;
                 case 'Dunbar HS':
-                    tempObj.target = 94;
+                    tempObj.target = 92;
                     break;
                 case 'Ballou HS':
-                    tempObj.target = 102;
+                    tempObj.target = 100;
                     break;
                 case 'Cardozo EC (9-12)':
-                    tempObj.target = 95;
+                    tempObj.target = 93;
                     break;
                 default:
                     console.log(middleSchools[m].School, middleSchools[m].FeederHS);
@@ -180,20 +173,44 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
             tempObj.value = 10; // toScale of school expenditure
             links.push(tempObj);
         }
-            // High
 
             // Elementary / Middle Mixed Schools
         for(var i = 0, j = joinedSchools.length; i < j; i++){
             var tempObj = {};
-            // tempObj.source = firstECindex + parseInt([i]);
             tempObj.source = getSource();
-            
-// MATCH VALUES HERE
-            tempObj.target = i;
-            
-
+            switch(joinedSchools[i].FeederHS){
+                case 'Woodson HS':
+                    tempObj.target = 95;
+                    break;
+                case 'Wilson HS':
+                    tempObj.target = 90;
+                    break;
+                case 'Roosevelt HS':
+                    tempObj.target = 96;
+                    break;
+                case 'Anacostia HS':
+                    tempObj.target = 86;
+                    break;
+                case 'Eastern HS':
+                    tempObj.target = 88;
+                    break;
+                case 'Coolidge HS':
+                    tempObj.target = 87;
+                    break;
+                case 'Dunbar HS':
+                    tempObj.target = 92;
+                    break;
+                case 'Ballou HS':
+                    tempObj.target = 100;
+                    break;
+                case 'Cardozo EC (9-12)':
+                    tempObj.target = 93;
+                    break;
+                default:
+                    console.log(joinedSchools[i].School, joinedSchools[i].FeederHS);
+                    break;
+            }             
             tempObj.value = 10; // toScale of school expenditure
-
             links.push(tempObj);
         }
 
@@ -206,7 +223,6 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
         
         // This turns our data object into the JSON file we will use
         jsonFile = JSON.stringify(dataJSON);
-
 
         //************************
         // FUNCTIONS
