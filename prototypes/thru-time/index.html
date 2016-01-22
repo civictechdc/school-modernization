@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Big-Chart</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+        <style>
+            circle:hover {
+                fill: blue;
+            }
+            .axis text {
+                font: 10px sans-serif;
+            }
+
+            .axis line,
+            .axis path {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+
+            div.school-info {
+                position: absolute;
+                border-radius: 4px;
+                border: 1px solid #EEE;
+                padding: 3px;
+                width: 150px;
+                height: 140px;
+                background-color: white;
+            }
+            div.school-info p {
+                margin: 8px 0;
+            }
+        </style>
+
+    </head>
+    <body>
+        <h1>School Projects Through Time</h1>
+        <p></p>
+        <div id="big-chart"></div> 
+        <div class="school-info">
+            <p><b class="facility">Dunbar</b></p>
+            <p>Project Num: <b class="p-code">TB3337</b></p>
+            <p>Ward: <b class="ward">8</b></p>
+            <p>Est Cost: $<b class="est-cost">3450000</b></p>
+        </div>
+
+        <div id="time-chart"></div>
+        <script src='script.js'></script>
+        <script type="text/javascript">
+            var b = timeChart(d3.select('#time-chart'));
+            b();
+        </script>
+    </body>  
+</html>

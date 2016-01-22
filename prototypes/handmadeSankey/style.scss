@@ -1,3 +1,4 @@
+// MIXINS
 @mixin blackStroke {
    stroke: #000;
    stroke-width: .5px;
@@ -7,8 +8,12 @@
    opacity: 0.2;
 }
 
+
+// VARIABLES
 $hoverOpacity: 0.4;
 
+
+// GLOBALS
 * {
    // margin: 0;
    // padding: 0;
@@ -18,6 +23,14 @@ $hoverOpacity: 0.4;
 .container {
    width: 80%;
    margin: 0 auto;
+}
+h1 {
+   font-size: 3.25em;
+}
+
+// THE CHART
+#chart {
+   margin-top: 30px;
 }
 
 rect {    
