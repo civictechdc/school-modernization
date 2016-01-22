@@ -1,5 +1,17 @@
 
 
+// ======= ======= ======= CSV FILES ======= ======= =======
+// ======= ======= ======= CSV FILES ======= ======= =======
+// ======= ======= ======= CSV FILES ======= ======= =======
+
+
+// ======= ======= ======= DCPS_Master_114 ======= ======= =======
+// Agency, School, SCHOOLCODE, Address, maxOccupancy, Enroll.Cap, ProjectPhase, YrComplete, Level, totalSQFT, ProjectType, MajorExp9815, TotalAllotandPlan1621, LifetimeBudget, LON, LAT, WARD, FeederMS, FeederHS, Total.Enrolled, Limited.English.Proficient, At_Risk, AtRiskPer, SPEDPer, ESLPer, SqFtPerEnroll, SpentPerEnroll, SpentPerSqFt
+
+// ======= ======= ======= DCPS_Master_114_dev ======= ======= =======
+// Agency, School, SCHOOLCODE, Address, Level, WARD, FeederMS, FeederHS, LON, LAT, totalSQFT, maxOccupancy, Enroll_Cap, Total_Enrolled, Limited_English, At_Risk, ProjectPhase, YrComplete, ProjectType, MajorExp9815, TotalAllotandPlan1621, LifetimeBudget ... AtRiskPer, SPEDPer, ESLPer, SqFtPerEnroll, SpentPerEnroll, SpentPerSqFt
+
+
 // ======= ======= ======= popup window ======= ======= =======
 (function(){
 
@@ -40,24 +52,6 @@
         if(e.keyCode == 27){ // if ESC key pressed
             btn_close.click(e);
         }
-    }
-
-    btn_popup.onclick = function(e){
-        // smoke
-        spreadSmoke(true);
-        // reset div position
-        popup.style.top = "100px";
-        popup.style.left = "100px";
-        // popup.style.width = window.innerWidth - SCROLL_WIDTH + "px";
-        // popup.style.height = window.innerHeight - SCROLL_WIDTH + "px";
-        popup.style.width = 160 + "px";
-        popup.style.height = 90 + "px";
-        popup.style.display = "block";
-    }
-
-    btn_close.onclick = function(e){
-        popup.style.display = "none";
-        smoke.style.display = "none";
     }
 
     window.onresize = function(e){
