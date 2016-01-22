@@ -4,8 +4,8 @@
 
 var $ = function(sel){return document.querySelector(sel);},
     $$ = function(sel){return document.querySelectorAll(sel);},
-//   asMoney = d3.format('$,.2f'),
-  asPercent = d3.format('%');
+   asMoney = d3.format('$,.2f'),
+   asPercent = d3.format('%');
 
 // // **************************************
 // // SVG SETUP
@@ -19,8 +19,8 @@ var sizes = {
 
 var formatNumber = d3.format(",.0f"),
     asMoney = d3.format("$,.2f");
-    format = function(d) { return "$" + formatNumber(d); },
-    color = d3.scale.category10();
+    format = function(d) { return "$" + formatNumber(d); };
+    // color = d3.scale.category10();
 
 var svg  = d3.select('#chart')
    .append('svg')
@@ -69,10 +69,20 @@ d3.json("scripts/data.json", function(data){
       ;
 
    node.append("rect")
+      //*******************
+      // fill in budget
+      //*******************
       .attr("height", function(d) { return d.dy; })
+
+
+
+      
       .attr("width", sankey.nodeWidth())
-      .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
-      .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+      // .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+      // .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+      .style('fill', function(d){
+         return 'green';
+      })
       .append("title")
       .text(function(d) { return d.name + "\n" + format(d.value); });
   

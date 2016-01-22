@@ -7,10 +7,6 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
     //************************************
     // NEED ACTUAL DATA FOR SCALES
     //************************************
-        // var maxExpend = d3.max(data, function(d){ return d.FakeExpend; }),
-        //     minExpend = d3.min(data, function(d){ return d.FakeExpend; }),
-        //     toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([10, 50]);
-
         var nodes = [],
             links = [];
 
@@ -34,6 +30,8 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
             joinedSchools = data.filter(function(data){ return data.Level === 'ES/MS'; }),
             highSchools = data.filter(function(data){ return data.Level === 'HS'; });
 
+
+
         //**********************************************
         // FILLS THE NODES AND LINKS IN A SINGLE OBJECT
         //**********************************************
@@ -44,9 +42,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
         addToNodes(elementarySchools); // elemetary
         addToNodes(middleSchools); // middle
         addToNodes(joinedSchools); // joined centers
-        // addToNodes(educationCenters); // education centers
         addToNodes(highSchools); // high
-
 
         // LINKS
         //--------------------------------------------------------------------------
@@ -218,9 +214,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
         // that will be used to map the points on the graph 
         dataJSON.nodes = nodes;
         dataJSON.links = links;
-        console.log(dataJSON.nodes);
-        console.log(dataJSON.links);
-        
+
         // This turns our data object into the JSON file we will use
         jsonFile = JSON.stringify(dataJSON);
 
@@ -247,6 +241,5 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
                 totalExpenditures += parseInt(data[i].FakeExpend);
             }
             return totalExpenditures;
-        }
-    
+        }  
 });
