@@ -8,11 +8,15 @@ body {
   width: 80%;
   margin: 0 auto; }
 
+.button_container {
+  margin: 25px 0px; }
+  .button_container.buttons:active {
+    background-color: green; }
+
 .node rect {
   cursor: move;
   fill-opacity: .9;
   shape-rendering: crispEdges; }
-
 .node text {
   pointer-events: none;
   text-shadow: 0 1px 0 #fff;
@@ -22,8 +26,7 @@ body {
   fill: none;
   stroke: #000;
   stroke-opacity: .2; }
-
-.link:hover {
-  stroke-opacity: .5; }
+  .link:hover {
+    stroke-opacity: .5; }
 
 /*# sourceMappingURL=style.css.map */

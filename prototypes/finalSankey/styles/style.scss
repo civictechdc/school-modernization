@@ -1,3 +1,5 @@
+// GLOBALS
+// *************************
 * {
    font-family: sans-serif;
 }
@@ -11,24 +13,40 @@ body {
    margin: 0 auto;
 }
 
-.node rect {
- cursor: move;
- fill-opacity: .9;
- shape-rendering: crispEdges;
+// TRANSITION BUTTONS
+// *************************
+.button_container {
+   margin: 25px 0px;
+
+   &.buttons {
+      &:active {
+         background-color: green;
+      }
+   }
 }
 
-.node text {
- pointer-events: none;
- text-shadow: 0 1px 0 #fff;
- font-size: 12px;
+// NODES AND LINKS
+// *************************
+.node {
+   rect {
+      cursor: move;
+      fill-opacity: .9;
+      shape-rendering: crispEdges;
+   }
+
+   text {
+      pointer-events: none;
+      text-shadow: 0 1px 0 #fff;
+      font-size: 12px;
+   }
 }
 
 .link {
- fill: none;
- stroke: #000;
- stroke-opacity: .2;
-}
+   fill: none;
+   stroke: #000;
+   stroke-opacity: .2;
 
-.link:hover {
- stroke-opacity: .5;
+   &:hover {
+      stroke-opacity: .5;
+   }
 }
