@@ -74,6 +74,7 @@ d3.sankey = function() {
     };
 
     return link;
+
   };
 
   // Populate the sourceLinks and targetLinks for each node.
