@@ -1,0 +1,63 @@
+﻿X,Y,OBJECTID,ID,NAME,ADDRESS,ZIP,TELEPHONE,WEB_URL,GIS_ID
+-77.034756649085992,38.952116027842351,1,10,Academy for Ideal Education,1501 Gallatin St NW,20011,202-726-0313,http://members.tripod.com/~idealschool/,IND_002
+-77.027422633239979,38.964382411764397,2,15,Bridges Academy,6119 Georgia Ave NW,20011,202-829-1901,http://bridges-academy.org ,IND_003
+-77.014204449927803,38.904922978291786,3,24,Holy Redeemer School,1135 New Jersey Ave NW,20001,202-638-5789,http://www.holyredeemerdc.org/ ,IND_004
+-77.070480001975682,38.907459476798259,4,25,Holy Trinity School,1325 36th St NW,20007,202-337-2339,http://www.htsdc.org/,IND_005
+-77.03409110787166,38.950991743486121,5,27,Kingsbury Day School,5000 14th Street NW,20008,202-722-5555,http://www.kingsbury.org/ ,IND_006
+-77.060570875345547,38.92822226943688,6,30,Maret School,3000 Cathedral Ave NW,20008,202-939-8800,http://www.maret.org,IND_007
+-77.026498089991009,38.932635089370919,7,33,Nation House Watoto School,770 Park Rd NW,20010,202-291-5600,http://www.nationhouse.org ,IND_008
+-77.036769952569102,38.949993395629591,8,38,Parkmont School,4842 16th St NW,20011,202-726-0740,http://www.parkmont.org,IND_009
+-77.070522402172202,38.946773922157931,9,49,Sheridan School,4400 36th St NW,20008,202-362-7900,http://www.sheridanschool.org,IND_011
+-77.073987722846852,38.939372306781465,10,50,Sidwell Friends School,3825 Wisconsin Ave NW,20016,202-537-8100,http://www.sidwell.edu,IND_012
+-77.078360657961625,38.933838908599242,11,51,Washington Hebrew Congregation Tyser Ecc,3935 Macomb St NW,20016,202-895-6334,http://www.whcecc.org/ETECC.htm,IND_013
+-77.06112423222234,38.932477616052843,12,52,Washington International School,3100 Macomb St NW,20008,202-243-1800,http://www.wis.edu,IND_014
+-77.004529880009997,38.84150409003778,13,53,Assumption School,220 High View Pl SE,20032,202-562-7070,http://www.assumptionchurch-dc.org/ ,IND_015
+-76.991871312164093,38.86329071159836,14,55,Clara Muhammad School,2313-15 Martin Luther King Jr Ave SE,20020,202-610-1090,http://dccms.org ,IND_016
+-76.948042760770022,38.869675490574004,15,57,Dupont Park Adventist School,3942 Alabama Ave SE,20020,202-583-8500,http://dupont22.adventistschoolconnect.org/ ,IND_017
+-76.972162167376169,38.869223031888424,16,59,Naylor Road School,2403 Naylor Rd SE,20020,202-584-5114,http://www.naylorroadschool.com ,IND_018
+-76.984736906002212,38.864654258747478,17,60,Our Lady of Perpetual Help,1409 V Street SE,20020,202-678-0211,http://www.privateschoolreview.com/school_ov/school_id/5854 ,IND_019
+-76.948113208699823,38.883218820970377,18,62,Our Lady Queen of Peace School,3740 Ely Pl SE,20019,202-582-8600,http://www.parishes.org,IND_021
+-76.994292459681191,38.922137366834335,19,2,Calvary Christian Academy,806 Rhode Island Ave NE,20018,202-526-5176,http://www.calvarychristianacad.org ,IND_022
+-76.92891496936673,38.897211788839606,20,5,"Nannie Helen Burroughs School, Inc.",601 50th St NE,20019,202-398-5266,http://www.nhburroughs.org/ ,IND_023
+-76.984781117157041,38.945775413077754,21,6,St. Anselms Abbey School,4501 South Dakota Ave NE,20017,202-269-2350,http://www.saintanselms.org/ ,IND_024
+-76.991354315219652,38.931733249887735,22,7,St. Anthonys School,12th and Lawrence St NE,20017,202-526-4657,http://www.stanthonyschooldc.org/,IND_025
+-76.97547216740908,38.894605586409696,23,8,St. Benedict The Moor School,330 21st St NE,20002,202-397-3897,http://www.stbenedictofdc.org/,IND_026
+-76.975410622865297,38.928955558893271,24,9,St. Francis De Sales School,2019 Rhode Island Ave NE,20018,202-529-5394,http://www.stfrancisdesaleswdc.org/  ,IND_027
+-77.076416375415647,38.929905870363818,25,12,Annunciation School,3825 Klingle Pl NW,20016,202-362-1408,http://www.annunciationschool.net/ ,IND_028
+-77.055613605934596,38.926190529498918,26,11,Aidan Montessori School,2700 27th St NW,20008,202-387-2700,www.aidanschool.org ,IND_029
+-77.08630279698491,38.907641269588787,27,21,Georgetown Day School Lower/Middle School,4530 MacArthur Blvd NW,20007,202-295-6200,http://www.gds.org,IND_031
+-77.022663878239712,38.90752437203728,28,26,Immaculate Conception School,711 N St NW,20001,202-234-1093,http://www.privateschoolreview.com/school_ov/school_id/5836 ,IND_032
+-77.072789598876838,38.929052314538175,29,42,St. Albans School,3001 Wisconsin Ave NW,20016,202-537-6435,http://www.sta.cathedral.org,IND_033
+-77.080087251831301,38.946913010159605,30,43,St. Anns Academy,4404 Wisconsin Ave NW,20016,202-363-4460,http://www.stannsacademy.net/ ,IND_034
+-77.033319951229743,38.918388678171219,31,44,St. Augustine School,1421 V St NW,20009,202-667-2608,http://www.staug-dc.org/ ,IND_035
+-77.020322702178788,38.943688542841457,32,45,St. Gabriels School,"510 Webster Strreet, NW",20011,202-726-9212,http://www.parishes.org/gabriel.html ,IND_036
+-77.028349624727426,38.963199857571823,33,34,Nativity Catholic Academy,6008 Georgia Ave NW,20011,202-723-3322,http://washington-dc.schooltree.org/private/Nativity-Catholic-Academy-006691.html ,IND_037
+-77.009437183210139,38.966211209928566,34,40,Roots Activity Learning Center,6222 North Capitol St NW,20011,202-882-5155,http://www.rootsactivitylc.org/,IND_038
+-77.001565345393743,38.883472543412182,35,64,St. Peters Interparish School,422 3rd St SE,20003,202-544-1618,http://www.stpetersinterparish.org/ ,IND_039
+-76.999957291351748,38.82504142124268,36,65,St. Thomas More Catholic School,4265 4th St SE,20032,202-561-1189,http://www.privateschoolreview.com/school_ov/school_id/5876 ,IND_040
+-77.037669103836663,38.932315020344276,37,41,Sacred Heart School,1625 Park Rd NW,20010,202-265-4828,http://sacredheartschooldc.org ,IND_041
+-77.054971652169357,38.962479854810844,38,46,St. Johns College High School,2607 Military Rd NW,20015,202-363-2316,http://www.stjohns-chs.org,IND_042
+-76.968596076141068,38.873149143855542,39,63,St. Francis Xavier School,2700 O St SE,20020,202-581-2010,http://www.privateschoolreview.com/school_ov/school_id/5871 ,IND_043
+-77.003181149015631,38.882308996230044,40,54,Capitol Hill Day School,210 South Carolina Ave SE,20003,202-547-2244,http://www.chds.org,IND_044
+-76.983237972529594,38.889417424088847,41,58,Holy Comforter - St. Cyprian School,1503 East Capitol St SE,20003,202-547-7556,http://www.holycomforterstcypriandc.parishesonline.com/scripts/HostedSites,IND_045
+-76.981892841187104,38.867486737239837,42,56,Anacostia Bible Church School,1610 T St SE,20020,202-678-6555,http://www.anacostiabible.org/ ,IND_046
+-77.091362884701766,38.91609527670127,43,48,St. Patricks Episcopal Day School,4700 Whitehaven Pkwy NW,20007,202-342-2805,http://www.stpatsdc.org,IND_047
+-76.991214360832132,38.905310672807062,44,66,Holy Name School,1217 West Virginia Ave NE,20002,202-397-1614,http://www.privateschoolreview.com/school_ov/school_id/5830 ,IND_048
+-77.006518221512067,38.940867200202625,45,1,Archbishop Carroll High,4300 Harewood Rd NE,20017,202-529-0900,http://www.archbishopcarroll.org/,IND_049
+-76.975720214463749,38.940124631434458,46,4,Jewels of Ann School,2011 Bunker Hill Rd NE,20018,202-529-5446, ,IND_050
+-77.072175961567282,38.931278982616355,47,13,Beauvoir,3500 Woodley Rd NW,20016,202-537-6485,http://www.beauvoirschool.org/,IND_051
+-77.07513783880745,38.967908240787018,48,14,Blessed Sacrament School,5841 Chevy Chase Pkwy NW,20015,202-966-6682,http://www.bsstoday.org,IND_052
+-77.061426831861098,38.942353274744981,49,17,Edmund Burke School,4101 Connecticut Ave NW,20008,202-362-8882,http://www.eburke.org,IND_053
+-77.041902165143711,38.908542629535361,50,18,Emerson Preparatory School,1324 18th St NW,20036,202-785-2877,http://www.emersonprep.net,IND_054
+-77.047843164463984,38.917245881871629,51,19,The Field School,2126 Wyoming Ave NW,20008,202-232-0733,http://www.fieldschool.com,IND_055
+-77.082572700252797,38.951807651017532,52,20,Georgetown Day School High School,4200 Davenport St NW,20016,202-274-3200,http://www.gds.org,IND_056
+-77.06932215894706,38.909212437616908,53,22,Georgetown Visitation Preparatory School,1524 35th St NW,20007,202-337-3350,http://www.visi.org,IND_057
+-77.010889049404938,38.901619817452293,54,23,Gonzaga College High School,19 Eye St NW,20001,202-336-7100,http://www.gonzaga.org,IND_058
+-77.092496387542909,38.915465494752283,55,28,The Lab School of Washington,4759 Reservoir Rd NW,20007,202-965-6600,http://www.labschool.org,IND_059
+-77.038385246292535,38.984795865391568,56,29,Lowell School,1640 Kalmia Rd NW,20012,202-577-2000,http://www.lowellschool.org,IND_060
+-77.072184017317227,38.932070510870986,57,31,National Cathedral School,3609 Woodley Rd NW,20016,202-537-6300,http://www.ncs.cathedral.org,IND_061
+-77.08097975791766,38.941779426850445,58,32,National Presbyterian School,4121 Nebraska Ave NW,20016,202-537-7500,http://www.nps-dc.org,IND_062
+-77.094503516153651,38.9159721031413,59,36,Our Lady of Victory School,4755 Whitehaven Pkwy NW,20007,202-337-1421,http://www.olvschooldc.net,IND_064
+-77.044690743336702,38.89812818886783,60,37,The Owl School,1920 G Street NW,20006,202-828-1001,http://www.owlschool.com,IND_065
+-77.067692354684382,38.916880836917926,61,16,British School of Washington ,2001 Wisconsin Avenue NW  ,20011 ,202-829-3700 ,http://www.britishschool.org,IND_030 
+-76.982117891202108,38.858122403704954,62,60,Our Lady of Perpetual Help,1604 Morris Road SE,20020,202-678-0211,http://www.privateschoolreview.com/school_ov/school_id/5854 ,IND_019

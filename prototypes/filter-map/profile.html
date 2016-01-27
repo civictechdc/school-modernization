@@ -11,7 +11,7 @@
     <link rel="icon" href="images/favicon.ico">
 
   <!-- ======= ======= ======= styles ======= ======= ======= -->
-	<title>DCPS SchoolMod</title>
+	<title>DCPS SchoolMod profile</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -32,8 +32,8 @@
 				<h1>DCPS School Modernization Tool</h1>
 			</div>
 			<ul class="tabs">
-				<li class="tab active-tab"><a href="#">Map</a></li>
-				<li class="tab"><a href="profile.html">Profile</a></li>
+				<li class="tab"><a href="index.html">Map</a></li>
+				<li class="tab active-tab"><a href="#">Profile</a></li>
 				<li class="tab"><a href="comparison.html">Comparison</a></li>
 			</ul>
 		</div>
@@ -41,24 +41,27 @@
 		<!-- ======= ======= ======= content ======= ======= ======= -->
 		<div class="row content">
 
-			<!-- ======= map ======= -->
-			<div class="column col-md-12 mapCol">
+			<!-- ======= map column ======= -->
+			<div class="column col-md-4 map2Col">
 				<!-- <button id="btn_popup">popup</button> -->
 				<div id="tooltips"></div>
 				<div id="smoke">...</div>
-				<div id="popup">
-					<div id="popup_bar" class="popup_bar"><p>filters</p></div>
-					<nav id="main-nav"></nav>
-				</div>
 				<div id="info">
 					<div class="popup_bar"><p>info</p></div>
 					<div id="infoText"></div>
 				</div>
-				<div id="map"></div>
-				<div id="message"><p>&nbsp;</p></div>
-				<div id="profileData"></div>
+				<div id="map2"></div>
+
 			</div>
 
+			<!-- ======= profile column ======= -->
+			<div class="column col-md-8 profileCol">
+
+				<!-- ======= map ======= -->
+				<h3 id="schoolTitle"></h3>
+				<div id="profileData"></div>
+
+			</div>
 		</div>
 
 		<!-- ======= ======= ======= scripts ======= ======= ======= -->
@@ -68,11 +71,10 @@
 		<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE"></script> -->
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&libraries=geometry&libraries=visualization"></script>
 		<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&libraries=visualization"></script> -->
-		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript" src="script_profile.js"></script>
 		<script type="text/javascript" src="utilities.js"></script>
 		<script type="text/javascript" src="d3graphs.js"></script>
 
-	</div>
 </body>
 </html>
 
