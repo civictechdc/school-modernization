@@ -43,10 +43,6 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
     csvData = csv; 
     maxExpend = d3.max(csv, function(d){ return +d.MajorExp9815; });
     minExpend = d3.min(csv, function(d){ return +d.MajorExp9815; });
-    maxFutureSpend = d3.max(csv, function(d){ return +d.TotalAllotandPlan1621; });
-    minFutureSpend = d3.min(csv, function(d){ return +d.TotalAllotandPlan1621; });
-
-    console.log(maxFutureSpend, minFutureSpend);
 
     var toScale = d3.scale.linear().domain([+minExpend, +maxExpend]).rangeRound([0, sizes.h]);
 
@@ -136,13 +132,15 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                     d3.selectAll('.link')
                       .data(newdata.links)
                       .transition()
-                      .duration(150)
+                      .duration(350)
           //             .attr('d', path)
           // .style("stroke-width", function(d) { return Math.max(1, d.dy); })
                     ;
 
                     d3.selectAll('.link')
-                      .data(newdata.links) 
+                      .data(newdata.links)
+                      .transition()
+                      .duration(350) 
                       .attr('d', path)
                       .style("stroke-width", function(d) { 
                          return Math.max(1, d.dy); 
@@ -155,7 +153,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                     d3.selectAll('.node')
                       .data(newdata.nodes)
                       .transition()
-                      .duration(150)
+                      .duration(350)
                       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
                       // .call(d3.behavior.drag()
                       //   .origin(function(d) { return d; })
@@ -167,7 +165,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                     d3.selectAll('rect')
                       .data(newdata.links) 
                       .transition()
-                      .duration(150)
+                      .duration(350)
                       .attr("height", function(d) { return d.dy; }) //d.dy
                     ;
 
@@ -189,33 +187,47 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                       .nodes(olddata.nodes)
                       .links(olddata.links)
                       .layout(32);
-                    
+
+                    // .link
+                    console.log('update links', d3.selectAll('.link'));
                     d3.selectAll('.link')
                       .data(olddata.links)
-                      //.selectAll('.link')
-                      //.data(olddata.links) 
                       .transition()
-                      .duration(150)
+                      .duration(350)
+          //             .attr('d', path)
+          // .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+                    ;
+
+                    d3.selectAll('.link')
+                      .data(olddata.links) 
+                      .transition()
+                      .duration(350)
                       .attr('d', path)
                       .style("stroke-width", function(d) { 
                          return Math.max(1, d.dy); 
                       })
                       .sort(function(a, b) { return b.dy - a.dy; })
-
                     ;
 
+                    // .node
+                    console.log(d3.selectAll('.node'));
                     d3.selectAll('.node')
                       .data(olddata.nodes)
                       .transition()
-                      .duration(150)
+                      .duration(350)
                       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+                      // .call(d3.behavior.drag()
+                      //   .origin(function(d) { return d; })
+                      //   .on("dragstart", function() { this.parentNode.appendChild(this); })
+                      //   .on("drag", dragmove))
                     ;
 
+                    // rect
                     d3.selectAll('rect')
                       .data(olddata.links) 
-                        .transition()
-                        .duration(150)
-                        .attr("height", function(olddata) { return olddata.dy; }) //d.dy
+                      .transition()
+                      .duration(350)
+                      .attr("height", function(d) { return d.dy; }) //d.dy
                     ;
 
                     function dragmove(d) {
