@@ -133,8 +133,6 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                       .data(newdata.links)
                       .transition()
                       .duration(350)
-          //             .attr('d', path)
-          // .style("stroke-width", function(d) { return Math.max(1, d.dy); })
                     ;
 
                     d3.selectAll('.link')
@@ -168,6 +166,19 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                       .duration(350)
                       .attr("height", function(d) { return d.dy; }) //d.dy
                     ;
+
+                    d3.selectAll('text')
+                      .data(newdata.nodes)
+                      .transition()
+                      .duration(350)
+                      .attr("y", function(d) { return d.dy / 2; })
+                      .text(function(d) { 
+                          return d.name; 
+                       })
+                      .filter(function(d) { return d.x < sizes.width / 2; })
+                       .attr("x", 6 + sankey.nodeWidth())
+                       .attr("text-anchor", "start")
+                      ;
 
                     function dragmove(d) {
                        d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(sizes.height - d.dy, d3.event.y))) + ")");
