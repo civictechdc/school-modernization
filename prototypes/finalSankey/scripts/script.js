@@ -56,11 +56,13 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
           .links(data.links)
           .layout(32);
 
-       var link = svg.append('g').attr('class', 'gLinks')
+       var link = svg.append('g')
           .selectAll('.links')
           .data(data.links)
           .enter()
           .append('path')
+
+          // .link
           .attr('class', 'link')
           .attr('d', path)
           .style("stroke-width", function(d) { return Math.max(1, d.dy); })
@@ -74,6 +76,8 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
           .data(data.nodes)
           .enter()
           .append("g")
+          
+          // node
           .attr("class", "node")
           .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
           .call(d3.behavior.drag()
@@ -82,11 +86,12 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
           .on("drag", dragmove));
           ;
 
+       // rect
        node.append("rect")
           .attr("height", function(d) { return d.dy; }) //d.dy
           .attr("width", sankey.nodeWidth())
           // .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
-          // .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+          .style("stroke", function(d) { return d3.rgb(d.color).darker(1); })
           .style('fill', function(d){
              return 'green';
           })
@@ -120,18 +125,57 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
         d3.select($('#future'))
             .on('click', function(){
                 d3.json("scripts/json_update.json", function(newdata){
+                    var path = sankey.link();
                     sankey
                       .nodes(newdata.nodes)
                       .links(newdata.links)
                       .layout(32);
+
+                    // .link
+                    console.log('update links', d3.selectAll('.link'));
                     d3.selectAll('.link')
-                        .data(newdata.links) 
-                        .transition()
-                        .duration(150)
-                        .style("stroke-width", function(d) { 
-                            return Math.max(1, d.dy); 
-                        })
+                      .data(newdata.links)
+                      .transition()
+                      .duration(150)
+          //             .attr('d', path)
+          // .style("stroke-width", function(d) { return Math.max(1, d.dy); })
                     ;
+
+                    d3.selectAll('.link')
+                      .data(newdata.links) 
+                      .attr('d', path)
+                      .style("stroke-width", function(d) { 
+                         return Math.max(1, d.dy); 
+                      })
+                      .sort(function(a, b) { return b.dy - a.dy; })
+                    ;
+
+                    // .node
+                    console.log(d3.selectAll('.node'));
+                    d3.selectAll('.node')
+                      .data(newdata.nodes)
+                      .transition()
+                      .duration(150)
+                      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+                      // .call(d3.behavior.drag()
+                      //   .origin(function(d) { return d; })
+                      //   .on("dragstart", function() { this.parentNode.appendChild(this); })
+                      //   .on("drag", dragmove))
+                    ;
+
+                    // rect
+                    d3.selectAll('rect')
+                      .data(newdata.links) 
+                      .transition()
+                      .duration(150)
+                      .attr("height", function(d) { return d.dy; }) //d.dy
+                    ;
+
+                    function dragmove(d) {
+                       d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(sizes.height - d.dy, d3.event.y))) + ")");
+                       sankey.relayout();
+                       link.attr("d", path);
+                    }
                 })
                 ;
             })
@@ -140,19 +184,45 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
         d3.select($('#past'))
             .on('click', function(){
                 d3.json("scripts/data.json", function(olddata){
+                    var path = sankey.link();
                     sankey
                       .nodes(olddata.nodes)
                       .links(olddata.links)
                       .layout(32);
+                    
                     d3.selectAll('.link')
-                        .data(olddata.links) 
+                      .data(olddata.links)
+                      //.selectAll('.link')
+                      //.data(olddata.links) 
+                      .transition()
+                      .duration(150)
+                      .attr('d', path)
+                      .style("stroke-width", function(d) { 
+                         return Math.max(1, d.dy); 
+                      })
+                      .sort(function(a, b) { return b.dy - a.dy; })
+
+                    ;
+
+                    d3.selectAll('.node')
+                      .data(olddata.nodes)
+                      .transition()
+                      .duration(150)
+                      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+                    ;
+
+                    d3.selectAll('rect')
+                      .data(olddata.links) 
                         .transition()
                         .duration(150)
-                        .style("stroke-width", function(e) { 
-                            console.log(e);
-                            return Math.max(1, e.dy); 
-                        })
+                        .attr("height", function(olddata) { return olddata.dy; }) //d.dy
                     ;
+
+                    function dragmove(d) {
+                       d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(sizes.height - d.dy, d3.event.y))) + ")");
+                       sankey.relayout();
+                       link.attr("d", path);
+                    }
                 })
                 ;
             })

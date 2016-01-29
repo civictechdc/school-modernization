@@ -17,7 +17,7 @@ body {
 // *************************
 .button_container {
    margin: 25px 0px;
-
+   display: fixed;
    &.buttons {
       &:active {
          background-color: green;
