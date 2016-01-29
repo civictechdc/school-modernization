@@ -184,17 +184,18 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
             } 
         }
 
-        // SET VALUE // For every middle school, get the value of all the elementary schools that feed into it
+        // SET VALUE 
+        // For every middle school, get the value of all the elementary schools that feed into it
         
         // Get the pattern number from the middle school
         var pattern = middleSchools[m].FeederMSNum;
         
-        // Loop through all the elementary schools to find the ones with that same pattern, and add the values
+        // Loop through all the elementary schools to find the ones with that same pattern (filter), 
+        // create an array of all the expenditures (map), and add the values (reduce)
         var value = elementarySchools.filter(function(item){ if(item.FeederMSNum === pattern){ return item; }})
                                      .map(function(item){ return toScale(item.MajorExp9815); })
                                      .reduce(function(prev, curr){return prev + curr;});
         // Assign that value to tempObj.value
-
         tempObj.value = value;
         links.push(tempObj);
     }
@@ -268,17 +269,5 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
             tempObj.name = x[m].School || 'unknown EC';                
             nodes.push(tempObj);
         }
-    }
-
-    // Returns the sum off all FakeExpends
-    function getTotalExpenditure(){
-        var totalExpenditures = 0,
-            i = 0,
-            j = data.length;
-        for(; i < j; i++){
-            totalExpenditures += parseInt(data[i].FakeExpend);
-        }
-        return totalExpenditures;
-    }  
-
+    } 
 });

@@ -1,16 +1,17 @@
-// // **************************************
-// // FORMATTING
-// // **************************************
+// **************************************
+// FORMATTING
+// **************************************
 
 var $ = function(sel){return document.querySelector(sel);},
     $$ = function(sel){return document.querySelectorAll(sel);},
    asMoney = d3.format('$,.2f'),
    asPercent = d3.format('%'),
-   maxExpend, minExpend;
+   maxExpend, minExpend,
+   maxFutureSpend, minFutureSpend;
 
-// // **************************************
-// // SVG SETUP
-// // **************************************
+// **************************************
+// SVG SETUP
+// **************************************
 
 var sizes = {
    width: 960,
@@ -42,6 +43,11 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
     csvData = csv; 
     maxExpend = d3.max(csv, function(d){ return +d.MajorExp9815; });
     minExpend = d3.min(csv, function(d){ return +d.MajorExp9815; });
+    maxFutureSpend = d3.max(csv, function(d){ return +d.TotalAllotandPlan1621; });
+    minFutureSpend = d3.min(csv, function(d){ return +d.TotalAllotandPlan1621; });
+
+    console.log(maxFutureSpend, minFutureSpend);
+
     var toScale = d3.scale.linear().domain([+minExpend, +maxExpend]).rangeRound([0, sizes.h]);
 
     d3.json("scripts/data.json", function(data){
@@ -50,7 +56,7 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
           .links(data.links)
           .layout(32);
 
-       var link = svg.append('g')
+       var link = svg.append('g').attr('class', 'gLinks')
           .selectAll('.links')
           .data(data.links)
           .enter()
@@ -104,7 +110,32 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
          function dragmove(d) {
            d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(sizes.height - d.dy, d3.event.y))) + ")");
            sankey.relayout();
-           link.attr("d", path);}
+           link.attr("d", path);
+         }
+
+        // **************************************
+        // TRANSITIONS
+        // **************************************
+        // Aiton Elementary School
+        d3.select($('#future'))
+            .on('click', function(){
+                d3.json("scripts/json_update.json", function(newdata){
+                    sankey
+                      .nodes(newdata.nodes)
+                      .links(newdata.links)
+                      .layout(32);
+                    d3.selectAll('.link')
+                        .data(newdata.links) 
+                        .transition()
+                        .duration(150)
+                        .style("stroke-width", function(d) { 
+                            return Math.max(1, d.dy); 
+                        })
+                    ;
+                })
+                ;
+            })
+        ;
     });
     
 });
