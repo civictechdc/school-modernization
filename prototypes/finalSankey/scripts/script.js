@@ -136,6 +136,27 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                 ;
             })
         ;
+
+        d3.select($('#past'))
+            .on('click', function(){
+                d3.json("scripts/data.json", function(olddata){
+                    sankey
+                      .nodes(olddata.nodes)
+                      .links(olddata.links)
+                      .layout(32);
+                    d3.selectAll('.link')
+                        .data(olddata.links) 
+                        .transition()
+                        .duration(150)
+                        .style("stroke-width", function(e) { 
+                            console.log(e);
+                            return Math.max(1, e.dy); 
+                        })
+                    ;
+                })
+                ;
+            })
+        ;
     });
     
 });
