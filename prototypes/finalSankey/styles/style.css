@@ -1,18 +1,34 @@
 * {
   font-family: sans-serif; }
 
+p {
+  font-size: 12px; }
+
 body {
   background-color: #f0f0f0; }
+
+header {
+  position: fixed;
+  background-color: #d7d7d7;
+  top: 0;
+  border-bottom: 3px solid #717171; }
 
 .container {
   width: 80%;
   margin: 0 auto; }
 
+#chart {
+  margin-top: 15%; }
+
+.button_container {
+  margin: 15px 0px; }
+  .button_container.buttons:active {
+    background-color: green; }
+
 .node rect {
   cursor: move;
   fill-opacity: .9;
   shape-rendering: crispEdges; }
-
 .node text {
   pointer-events: none;
   text-shadow: 0 1px 0 #fff;
@@ -22,8 +38,7 @@ body {
   fill: none;
   stroke: #000;
   stroke-opacity: .2; }
-
-.link:hover {
-  stroke-opacity: .5; }
+  .link:hover {
+    stroke-opacity: .5; }
 
 /*# sourceMappingURL=style.css.map */
