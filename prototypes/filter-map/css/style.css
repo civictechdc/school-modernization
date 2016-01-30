@@ -45,18 +45,23 @@ hr {
     border: 1px solid rgba(86,61,124,.2);*/
 }
 
-/* ======= labels ======= */
+/* ======= title ======= */
 .page-title > h1 {
     display: block;
     margin: 10px;
     text-align: left;
     color: black;
 }
-#filters-title {
-    width: 50%;
-    height: auto;
+
+/* ======= filters ======= */
+.banner {
+    height: 40px;
     padding-left: 20px;
     border: solid 2px #eee;
+}
+#filters-title {
+    width: 50%;
+    float: left;
 }
 #filters-title > h2 {
     display: block;
@@ -76,6 +81,30 @@ hr {
 .filterLabel {
     font-style: normal;
     color: red;
+}
+
+/* ======= clear ======= */
+#clear-button {
+    position: absolute;
+    display: none;
+    height: 38px;
+    width: 60px;
+    left: 54%;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 6px 6px;
+    background-color: darkviolet;
+    border: solid 2px darkslateblue;
+}
+.btn-text {
+    line-height: 38px;
+    margin-left: 11px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+#clear-button:hover {
+    background-color: mediumpurple ;
 }
 
 /* ======= mapCol ======= */
@@ -112,7 +141,7 @@ hr {
     height: auto;
     position: absolute;
     top: 60px;
-    left: 60%;
+    left: 65%;
     background-color: #fff2e5;
     box-shadow: 4px 4px 4px #555;
     border-radius: 6px 6px 2px 2px;
@@ -347,36 +376,6 @@ hr {
     color: purple;
 }
 
-/* ======= navtabs ======= */
-/*.tabs {
-    margin-bottom: 10px;
-    padding-bottom: 2px;
-    border-bottom: 1px solid #ddd;
-}
-.tab {
-    display: inline-block;
-    margin-left: -1px;
-    margin-bottom: -3px;
-    padding: 10px 15px;
-    width: 100px;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 5px 5px 0 0;
-}
-.tab a {
-    display: block;
-    list-style: none;
-    text-decoration: none;
-	font-weight: 700;
-	font-size: 16px;
-    margin: 0;
-    color: #333;
-}
-.active-tab {
-    background-color: #eee;
-    z-index: 9;
-}*/
-
 /* ======= legend ======= */
 /*#chart {
     display:none;
@@ -463,7 +462,7 @@ hr {
 #profile > tr:nth-child(even) {
     background-color: #f2f2f2
 }
-#profile > .data-key, .data-value {
+.data-key, .data-value {
     position: relative;
     padding: -10px 0;
     margin: -10px 0;
@@ -471,14 +470,14 @@ hr {
     vertical-align: center;
     border-bottom: 1px solid #ddd;
 }
-#profile > .data-key {
+.data-key {
     width: 100px;
 }
-#profile > .data-value {
+.data-value {
     width: 260px;
 }
 
-#profile > .key-text {
+.key-text {
     position: relative;
     margin-left: 0 0 0 10px;;
     padding: 1px 0;
@@ -488,20 +487,20 @@ hr {
 	font-size: 14px;
     color: black;
 }
-#profile > .value-text {
+.value-text {
     padding: 1px 0;
     margin: 1px 10px;
     font-size: 14px;
     color: purple;
 }
-#profile > .schoolname {
+.schoolname {
     width: 100%;
     height: 20px;
     text-align: center;
     color: white;
     background-color: firebrick;
 }
-#profile > .schoolname > p {
+.schoolname > p {
     color: white;
 }
 

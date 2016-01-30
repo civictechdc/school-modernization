@@ -80,7 +80,7 @@ function initApp() {
     function ZonesCollection() {
         console.log("ZonesCollection");
         this.zoneMode = "default";       // default, indexed, selected, gradient
-        this.zoneType = null;       // FeederHS, FeederMS, Elementary, Ward, Quadrant
+        this.zoneType = "FeederHS";       // FeederHS, FeederMS, Elementary, Ward, Quadrant
         // this.dataSource = null;         // geojson file
         this.zoneGeojson = null;         // geojson data
         this.zoneDataState = "init";      // init, update, clear
@@ -294,6 +294,29 @@ function initApp() {
         });
     }
 
+    // ======= ======= ======= activateClearButton ======= ======= =======
+    Display.prototype.activateClearButton = function() {
+        console.log("activateClearButton");
+
+        var self = this;
+        $("#clear-button").css("display", "block");
+
+        // ======= ======= ======= selectFilter ======= ======= =======
+        $("#clear-button").off("click").on("click", function(event){
+            console.log("\n======= clear ======= ");
+
+            // this.dataFilters = { "zone": null, "expend": null, "students": null, "levels": null, "agency": null, "selectedZone": null, "selectedSchool": null, };
+            $("#profile").remove();
+            filterText = "your filters";
+            var filterTitleContainer = $("#filters-title").children("h2");
+            $(filterTitleContainer).removeClass("filterList");
+            $(filterTitleContainer).text(filterText);
+            self.dataFilters.selectedZone = null;
+            self.dataFilters.selectedSchool = null;
+            zonesCollectionObj.getZoneData();
+        });
+    }
+
     // ======= ======= ======= findSearchSchool ======= ======= =======
     Display.prototype.findSearchSchool = function(buttonId) {
         console.log("findSearchSchool");
@@ -374,6 +397,8 @@ function initApp() {
         // ======= ======= ======= selectFilter ======= ======= =======
         $(nextElement).off("click").on("click", function(event){
             console.log("\n======= selectFilter ======= ");
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
 
             var classList = $(this).attr('class').split(/\s+/);
             var whichCategory = classList[1];
@@ -391,6 +416,7 @@ function initApp() {
             // == store selected filter value on display object (zone, levels, agency, expend, students)
             switch(whichCategory) {
                 case "zone":
+                    zonesCollectionObj.zoneType = whichFilter;
                     self.dataFilters.zone = whichFilter;
                     break;
                 case "expend":
@@ -408,6 +434,9 @@ function initApp() {
             }
             checkFilterSelection(self, 335);
 
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
+
             updateFilterTitles(self, menuObject.text, "add");
             self.setMenuItem(whichCategory, whichFilter);
             zonesCollectionObj.getZoneData();
@@ -424,6 +453,8 @@ function initApp() {
         // ======= ======= ======= releaseFilter ======= ======= =======
         $(selectedFilterElement).off("click").on("click", function(event){
             console.log("\n======= releaseFilter ======= ");
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
 
             var whichCategory = this.id;
 
@@ -449,6 +480,8 @@ function initApp() {
                     }
                 }
             }
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
             checkFilterSelection(self, 384);
             // zonesCollectionObj.getZoneData();
         });
@@ -463,6 +496,8 @@ function initApp() {
     // ======= ======= ======= getZoneData ======= ======= =======
     ZonesCollection.prototype.getZoneData = function() {
         console.log("\n----- getZoneData -----");
+        console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+        console.log("*** Filters ***", displayObj.dataFilters);
 
         var self = this;
 
@@ -477,15 +512,27 @@ function initApp() {
             self.zoneGeojson = geoJsonData;
             console.log("  self.zoneType: ", self.zoneType);
             console.log("  self.zoneMode: ", self.zoneMode);
+
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
+
             self.zoneMode = setZoneMode(displayObj.dataFilters.zone, displayObj.dataFilters.expend, displayObj.dataFilters.selectedZone);
+
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
+
             console.log("  self.zoneType: ", self.zoneType);
             console.log("  self.zoneMode: ", self.zoneMode);
             if (self.zoneMode == "default") {
                 makeZoneAggregator(self);
-                self.zoneType = "FeederHS";
+                // self.zoneType = "FeederHS";
             } else {
                 clearZoneAggregator(self);
             }
+
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
+
             schoolsCollectionObj.getSchoolData();
 
         // == errors/fails
@@ -507,6 +554,8 @@ function initApp() {
     // ======= ======= ======= getSchoolData ======= ======= =======
     SchoolsCollection.prototype.getSchoolData = function() {
         console.log("\n----- getSchoolData -----");
+        console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+        console.log("*** Filters ***", displayObj.dataFilters);
 
         var self = this;
 
@@ -527,6 +576,7 @@ function initApp() {
             var selectedCodesArray = [];
             var selectedDataArray = [];
             var nextSchool, school, schoolWard, schoolFeederMS, schoolFeederHS, schoolAgency, schoolLevel, selectSchool;
+
             for (var i = 0; i < jsonData.length; i++) {
                 var filterFlagCount = 0;
 
@@ -541,6 +591,7 @@ function initApp() {
                 schoolLevel = nextSchool.Level;
 
                 selectSchool = self.checkFilterMatch(schoolWard, schoolFeederMS, schoolFeederHS, schoolAgency, schoolLevel);
+                displayObj.filterList
 
                 // == build array of schools that match filters
                 if (selectSchool) {
@@ -557,6 +608,9 @@ function initApp() {
             self.selectedSchoolsArray = selectedDataArray;
             console.log("  self.selectedSchoolsArray: ", self.selectedSchoolsArray.length);
             console.log("  zonesCollectionObj.zoneDataArray: ", zonesCollectionObj.zoneDataArray);
+
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
 
             // ======= make map layers ======
             if (selectedDataArray.length > 0) {
@@ -582,8 +636,6 @@ function initApp() {
     // ======= ======= ======= checkFilterMatch ======= ======= =======
     SchoolsCollection.prototype.checkFilterMatch = function(schoolWard, schoolFeederMS, schoolFeederHS, schoolAgency, schoolLevel) {
         // console.log("checkFilterMatch");
-        // console.log("  schoolFeederHS: ", schoolFeederHS);
-        // console.log("  displayObj.dataFilters.selectedZone: ", displayObj.dataFilters.selectedZone);
 
         if (zonesCollectionObj.zoneMode == "default") {
             var zoneMatch = true;
@@ -597,12 +649,14 @@ function initApp() {
                     var zoneMatch = true;
                 }
             } else if (zonesCollectionObj.zoneType == "FeederHS") {
-                if (schoolFeederHS == displayObj.dataFilters.selectedZone) {
+                zoneSuffix = " " + "FeederHS".substring("FeederHS".length - 2, "FeederHS".length);
+                if (schoolFeederHS == displayObj.dataFilters.selectedZone + zoneSuffix) {
                     var zoneMatch = true;
                     // console.log("  zoneMatch: ", zoneMatch);
                 }
             } else if (zonesCollectionObj.zoneType == "FeederMS") {
-                if (schoolFeederMS == displayObj.dataFilters.selectedZone) {
+                zoneSuffix = " " + "FeederMS".substring("FeederMS".length - 2, "FeederMS".length);
+                if (schoolFeederMS == displayObj.dataFilters.selectedZone + zoneSuffix) {
                     var zoneMatch = true;
                 }
             }
@@ -645,8 +699,8 @@ function initApp() {
 
     ZonesCollection.prototype.makeZoneLayer = function() {
         console.log("\n----- makeZoneLayer -----");
-        console.log("  this.zoneMode: ", this.zoneMode);
-        console.log("  schoolsCollectionObj.selectedSchoolsArray.length: ", schoolsCollectionObj.selectedSchoolsArray.length);
+        console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+        console.log("*** Filters ***", displayObj.dataFilters);
 
         var self = this;
         var colorIndex = 0;
@@ -678,6 +732,7 @@ function initApp() {
             featureIndex++;
             colorIndex++;
 
+            // == limit index by number of available colors
             if (colorIndex > self.indexColorsArray.length) {
                 colorIndex = 0
             }
@@ -689,19 +744,13 @@ function initApp() {
                 splitZoneName = zoneName.split(", ");
                 zoneName = splitZoneName[0];
             }
-            zoneSuffix = " " + zonesCollectionObj.zoneType.substring(zonesCollectionObj.zoneType.length - 2, zonesCollectionObj.zoneType.length);
-            zoneName = zoneName + zoneSuffix;
+            // zoneSuffix = " " + zonesCollectionObj.zoneType.substring(zonesCollectionObj.zoneType.length - 2, zonesCollectionObj.zoneType.length);
+            // zoneName = zoneName + zoneSuffix;
 
             // ======= special color handling for selected mode =======
-            if (self.zoneMode == "selected") {
-                if (zoneName == displayObj.dataFilters.selectedZone) {
-                    itemColor = setZoneColor(self, featureIndex, colorIndex);
-                } else {
-                    itemColor = "white";
-                }
-            } else {
-                itemColor = setZoneColor(self, featureIndex, colorIndex);
-            }
+            itemColor = setZoneColor(self, displayObj, featureIndex, colorIndex, zoneName);
+
+            // ======= get center lat lng of feature =======
             centerLatLng = makeZoneGeometry(feature);
 
             // ======= set feature properties =======
@@ -727,6 +776,7 @@ function initApp() {
     // ======= ======= ======= activateZoneListeners ======= ======= =======
     ZonesCollection.prototype.activateZoneListeners = function() {
         console.log("activateZoneListeners");
+        console.log("  this.zoneType: ", this.zoneType);
 
         var self = this;
         var zoneType = this.zoneType;
@@ -738,6 +788,7 @@ function initApp() {
             var itemCenter = event.feature.getProperty('center');
 
             updateHoverText(itemName);
+            updateFilterTitles("Select zone by clicking");
 
             if (map.get('clickedZone')!= event.feature ) {
                 map.data.overrideStyle(event.feature, {
@@ -766,6 +817,10 @@ function initApp() {
         // ======= ======= ======= click ======= ======= =======
         var zoneMouseClick = map.data.addListener('click', function(event) {
             console.log("\n======= select zone =======");
+            console.log("zoneName: ", zoneName);
+
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
 
             // == identify clicked zone from zone name value
             var zoneName = event.feature.getProperty('NAME');
@@ -774,14 +829,14 @@ function initApp() {
                 splitZoneName = zoneName.split(", ");
                 var zoneName = splitZoneName[0];
             }
-            console.log("zoneName: ", zoneName);
 
             // == set new zone info on menuObject
             var menuObject = filterMenu[zoneType];
             menuObject.value = zoneName;
             displayObj.dataFilters.zone = zoneType;
-            zoneSuffix = " " + zonesCollectionObj.zoneType.substring(zonesCollectionObj.zoneType.length - 2, zonesCollectionObj.zoneType.length);
-            displayObj.dataFilters.selectedZone = zoneName + zoneSuffix;
+            // zoneSuffix = " " + zonesCollectionObj.zoneType.substring(zonesCollectionObj.zoneType.length - 2, zonesCollectionObj.zoneType.length);
+            // displayObj.dataFilters.selectedZone = zoneName + zoneSuffix;
+            displayObj.dataFilters.selectedZone = zoneName;
 
             map.data.overrideStyle(event.feature, {
                 fillColor: "blue",
@@ -790,9 +845,14 @@ function initApp() {
                 strokeWeight: 8
             });
 
+            console.log("zoneName: ", zoneName);
+            console.log("*** zoneType ***", zonesCollectionObj.zoneType);
+            console.log("*** Filters ***", displayObj.dataFilters);
+
             updateHoverText(zoneName);
             updateFilterTitles(displayObj, zoneName, "add");
             de_activateZoneListeners(self);
+            displayObj.activateClearButton();
             zonesCollectionObj.getZoneData();
 
             // zoomToZone(event);
@@ -852,6 +912,8 @@ function initApp() {
 
     SchoolsCollection.prototype.makeSchoolLayer = function(selectedDataArray, checkExpend) {
         console.log("\n----- makeSchoolLayer -----");
+        console.log("  zonesCollectionObj.zoneType: ", zonesCollectionObj.zoneType);
+        console.log("*** Filters ***", displayObj.dataFilters);
 
         var selectedDataArray = this.selectedSchoolsArray;
 

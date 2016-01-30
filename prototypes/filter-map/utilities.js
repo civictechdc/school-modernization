@@ -29,25 +29,31 @@ function setZoneMode(zoneFilter, expendFilter, selectedZone) {
     } else if ((!selectedZone) && (expendFilter)) {
         zoneMode = "gradient";
     } else if ((zoneFilter) && (!selectedZone) && (!expendFilter)) {
-        zoneMode = "indexed";
+        zoneMode = "default";
+        // zoneMode = "indexed";
     } else if ((!zoneFilter) && (!selectedZone) && (!expendFilter)) {
         zoneMode = "default";
     }
+
     return zoneMode;
 }
 
 // ======= ======= ======= setZoneColor ======= ======= =======
-function setZoneColor(zonesCollectionObj, featureIndex, colorIndex) {
+function setZoneColor(zonesCollectionObj, displayObj, featureIndex, colorIndex, zoneName) {
     // console.log("setZoneColor");
 
     // == get color based on current zoneMode
     if (zonesCollectionObj.zoneMode == "selected") {
-        itemColor = zonesCollectionObj.indexColorsArray[featureIndex];
+        if (zoneName == displayObj.dataFilters.selectedZone) {
+            itemColor = zonesCollectionObj.indexColorsArray[featureIndex];
+        } else {
+            itemColor = "white";
+        }
     } else if (zonesCollectionObj.zoneMode == "gradient") {
         colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
         itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
     } else if (zonesCollectionObj.zoneMode == "indexed") {
-        itemColor = zonesCollectionObj.indexColorsArray[colorIndex];
+        itemColor = "white";
     } else if (zonesCollectionObj.zoneMode == "default") {
         itemColor = "white";
     }
@@ -129,6 +135,7 @@ function clearZoneAggregator(zonesCollectionObj) {
 // ======= ======= ======= makeZoneAggregator ======= ======= =======
 function makeZoneAggregator(zonesCollectionObj) {
     console.log("makeZoneAggregator");
+
     zonesCollectionObj.zoneNamesArray = [];
     zonesCollectionObj.zoneDataArray = [];
     if (zonesCollectionObj.zoneGeojson) {
@@ -230,7 +237,6 @@ function makeSchoolProfile(schoolsCollectionObj, schoolIndex) {
     // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll
 
     var htmlString = "<table id='profile'>";
-    // htmlString += "<tr><th class='amount'>&nbsp;</th><th class='values'>&nbsp;</th></tr>";
     htmlString += "<tr><td class='schoolname' colspan=2><p class='value-text'>" + cleanedSchoolData.schoolName + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>address</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolAddress + "</p></td></tr>";
@@ -430,7 +436,7 @@ function checkFilterSelection(displayObj) {
 
 // ======= ======= ======= updateHoverText ======= ======= =======
 function updateHoverText(itemName) {
-    console.log("updateHoverText");
+    // console.log("updateHoverText");
 
     var filterTitleContainer = $("#mouseover-text").children("h2");
     // console.log("  $(filterTitleContainer).css(): ", $(filterTitleContainer).css());
@@ -446,56 +452,62 @@ function updateHoverText(itemName) {
 
 // ======= ======= ======= updateFilterTitles ======= ======= =======
 function updateFilterTitles(displayObj, whichFilter, addRemove) {
-    console.log("updateFilterTitles");
+    // console.log("updateFilterTitles");
 
     var filterTitleContainer = $("#filters-title").children("h2");
     var filterText = $(filterTitleContainer).html();
 
-    if ((displayObj.dataFilters.selectedZone != null) && (addRemove == "add")) {
-        displayObj.filterTitlesArray = [];
-        displayObj.filterTitlesArray.push(whichFilter);
-        filterText = "<span class='filterLabel'>Selected Zone: </span>" + whichFilter;
+    if (typeof displayObj == "string") {
+        filterText = "<span class='filterLabel'>Message: </span>";
+        filterText += displayObj;
         $(filterTitleContainer).addClass("filterList");
     } else {
-        if (addRemove == "add") {
-            // == build list of selected filters
+        if ((displayObj.dataFilters.selectedZone != null) && (addRemove == "add")) {
+            displayObj.filterTitlesArray = [];
             displayObj.filterTitlesArray.push(whichFilter);
-            if (displayObj.filterTitlesArray.length == 1){
-                filterText = "<span class='filterLabel'>Filters: </span>" + whichFilter;
-            } else {
-                filterText = "<span class='filterLabel'>Filters: </span>";
-                for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                    nextFilter = displayObj.filterTitlesArray[i];
-                    if (i == (displayObj.filterTitlesArray.length - 1)) {
-                        filterText += whichFilter;
-                    } else {
-                        filterText += nextFilter + ", ";
-                    }
-                }
-            }
+            filterText = "<span class='filterLabel'>Selected Zone: </span>" + whichFilter;
             $(filterTitleContainer).addClass("filterList");
         } else {
-            for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                checkFilter = displayObj.filterTitlesArray[i];
-                if (checkFilter == whichFilter) {
-                    displayObj.filterTitlesArray.splice(i, 1);
-                    break;
-                }
-            }
-            if (displayObj.filterTitlesArray.length == 0) {
-                filterText = "your filters";
-                $(filterTitleContainer).removeClass("filterList");
-            } else {
-                filterText = "<span class='filterLabel'>Filters: </span>";
-                for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                    nextFilter = displayObj.filterTitlesArray[i];
-                    if (i == (displayObj.filterTitlesArray.length - 1)) {
-                        filterText += nextFilter;
-                    } else {
-                        filterText += nextFilter + ", ";
+            if (addRemove == "add") {
+                // == build list of selected filters
+                displayObj.filterTitlesArray.push(whichFilter);
+                if (displayObj.filterTitlesArray.length == 1){
+                    filterText = "<span class='filterLabel'>Filters: </span>" + whichFilter;
+                } else {
+                    filterText = "<span class='filterLabel'>Filters: </span>";
+                    for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+                        nextFilter = displayObj.filterTitlesArray[i];
+                        if (i == (displayObj.filterTitlesArray.length - 1)) {
+                            filterText += whichFilter;
+                        } else {
+                            filterText += nextFilter + ", ";
+                        }
                     }
                 }
                 $(filterTitleContainer).addClass("filterList");
+            } else {
+                for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+                    checkFilter = displayObj.filterTitlesArray[i];
+                    if (checkFilter == whichFilter) {
+                        displayObj.filterTitlesArray.splice(i, 1);
+                        break;
+                    }
+                }
+                if (displayObj.filterTitlesArray.length == 0) {
+                    filterText = "your filters";
+                    $(filterTitleContainer).removeClass("filterList");
+                } else {
+                    filterText = "<span class='filterLabel'>Filters: </span>";
+                    for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+                        nextFilter = displayObj.filterTitlesArray[i];
+                        if (i == (displayObj.filterTitlesArray.length - 1)) {
+                            filterText += nextFilter;
+                        } else {
+                            filterText += nextFilter + ", ";
+                        }
+                    }
+                    $(filterTitleContainer).addClass("filterList");
+                }
             }
         }
     }
