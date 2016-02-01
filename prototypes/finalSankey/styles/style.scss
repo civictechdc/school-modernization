@@ -1,9 +1,24 @@
+//VARIABLES
+$bgc: #f0f0f0;
+
+// GLOBALS
+// *************************
 * {
    font-family: sans-serif;
 }
-
+p {
+   font-size: 12px;
+}
 body {
-   background-color: #f0f0f0;
+   background-color: $bgc;
+}
+
+header {
+   position: fixed;
+   background-color: darken($bgc, 10%);
+   top: 0;
+   // width: 100%;
+   border-bottom: 3px solid darken($bgc, 50%);
 }
 
 .container {
@@ -11,24 +26,43 @@ body {
    margin: 0 auto;
 }
 
-.node rect {
- cursor: move;
- fill-opacity: .9;
- shape-rendering: crispEdges;
+#chart {
+   margin-top: 15%;
 }
 
-.node text {
- pointer-events: none;
- text-shadow: 0 1px 0 #fff;
- font-size: 12px;
+// TRANSITION BUTTONS
+// *************************
+.button_container {
+   margin: 15px 0px;
+   &.buttons {
+      &:active {
+         background-color: green;
+      }
+   }
+}
+
+// NODES AND LINKS
+// *************************
+.node {
+   rect {
+      cursor: move;
+      fill-opacity: .9;
+      shape-rendering: crispEdges;
+   }
+
+   text {
+      pointer-events: none;
+      text-shadow: 0 1px 0 #fff;
+      font-size: 12px;
+   }
 }
 
 .link {
- fill: none;
- stroke: #000;
- stroke-opacity: .2;
-}
+   fill: none;
+   stroke: #000;
+   stroke-opacity: .2;
 
-.link:hover {
- stroke-opacity: .5;
+   &:hover {
+      stroke-opacity: .5;
+   }
 }
