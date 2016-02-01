@@ -1,25 +1,27 @@
 {
-    "name": "School Modernization Funds", 
-    "description": "Looking at fifteen years of school modernization funds", 
+    "name": "School Modernization Spending", 
+    "description": "A data visualization that examines fifteen years of school modernization spending in the District", 
     "license": "CC0-1.0", 
-    "status": "Ideation", 
+    "status": "Alpha", 
     "type": "Web App", 
-    "homepage": "", 
+    "homepage": "http://codefordc.org/school-modernization/", 
     "repository": "https://github.com/codefordc/school-modernization", 
     "thumbnail": "https://github.com/codefordc/school-modernization", 
     "geography": [
         "Washington D.C."
     ], 
     "contact": {
-        "name": "DC Public School Modernization Spending", 
-        "email": "", 
-        "url": ""
+        "name": "Nick Skelsey", 
+        "email": "nskelsey@gmail.com"
     }, 
     "partners": [
         {
             "url": "http://codefordc.org", 
-            "name": "Code for DC", 
-            "email": ""
+            "name": "Code for DC"
+        },
+        {
+            "url": "http://www.21csf.org/csf-home/", 
+            "name": "21st Century School Fund"
         }
     ], 
     "data": [], 
