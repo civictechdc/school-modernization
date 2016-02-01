@@ -10,9 +10,9 @@ DCPS.Facility<-read.csv("https://raw.githubusercontent.com/codefordc/school-mode
                         stringsAsFactors=FALSE, strip.white=TRUE)[c(1:3,5,55,59,68,70)]
 colnames(DCPS.Facility)<-c("School.Short","School", "Level","totalSQFT","ProjectType","MajorExp9815","TotalAllotandPlan1621","LifetimeBudget")
 DCPS.Facility$School<-tolower(DCPS.Facility$School)
-DCPS.Facility<-subset(DCPS.Facility,DCPS.Facility$School.Short!="" & DCPS.Facility$School!="" & 
-                        !(grepl("omit",DCPS.Facility$School) | grepl("close",DCPS.Facility$School) | 
-                         grepl("demolished",DCPS.Facility$School) | grepl("swing",DCPS.Facility$School)))
+DCPS.Facility<-subset(DCPS.Facility,DCPS.Facility$School.Short!="" & DCPS.Facility$School.Short!="NEW ELEM #1")
+
+DCPS.Facility$Status<-ifelse(grepl("close|demolished|swing space",DCPS.Facility$School),"Closed","Open")
 
 DCPS.LastYr<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Last%20Major%20Construction-Table%201.csv",
                       stringsAsFactors=FALSE, strip.white=TRUE)[c(2:4)]
@@ -102,10 +102,14 @@ DCPS.Facility$SchoolJoin<-textedit(DCPS.Facility$School)
 DCPS.appC.Yr$School.Short<-textedit(DCPS.appC.Yr$School.Short)
 DCPS.Facility$School.Short<-textedit(DCPS.Facility$School.Short)
 
+DCPS.Facility$School.Short<-ifelse(DCPS.Facility$School.Short=="brucemonroe","brucemonroe-demolished",
+                                   ifelse(DCPS.Facility$School.Short=="brucemonroe@parkview","brucemonroe",
+                                          DCPS.Facility$School.Short))
+
 join1<-join(DCPS.appC.Yr,DCPS.Facility,by="School.Short",type="inner")
 join1<-join1[c("Agency","School","SCHOOLCODE","School.Short","Address","maxOccupancy","Enroll.Cap",
                "ProjectPhase","YrComplete","SchoolJoin","Level","totalSQFT","ProjectType",
-               "MajorExp9815","TotalAllotandPlan1621","LifetimeBudget")]
+               "MajorExp9815","TotalAllotandPlan1621","LifetimeBudget","Status")]
 
 appCout<-subset(DCPS.appC.Yr,!(DCPS.appC.Yr$School.Short %in% join1$School.Short))
 Facout<-subset(DCPS.Facility,!(DCPS.Facility$School.Short %in% join1$School.Short))
@@ -113,20 +117,22 @@ Facout<-subset(DCPS.Facility,!(DCPS.Facility$School.Short %in% join1$School.Shor
 join2<-join(appCout,Facout,by="SchoolJoin",type="inner")
 join2<-join2[c("Agency","School","SCHOOLCODE","School.Short","Address","maxOccupancy","Enroll.Cap",
                "ProjectPhase","YrComplete","SchoolJoin","Level","totalSQFT","ProjectType",
-               "MajorExp9815","TotalAllotandPlan1621","LifetimeBudget")]
+               "MajorExp9815","TotalAllotandPlan1621","LifetimeBudget","Status")]
 
 appCout2<-subset(appCout,!(appCout$SchoolJoin %in% join2$SchoolJoin))
 Facout2<-subset(Facout,!(Facout$SchoolJoin %in% join2$SchoolJoin))
 
 appCout2$SchoolJoin<-ifelse(appCout2$SchoolJoin=="brooklandeducationcampus@bunkerhill","formerbrookland@bunkerhill/ms",
+                      ifelse(appCout2$SchoolJoin=="dunbarhsschool(old)","dunbarhsschoolomitted",
                       ifelse(appCout2$SchoolJoin=="malcolmxschool","malcolmxatgreen",
+                        ifelse(appCout2$SchoolJoin=="ballouhs(includstayprogram)","ballouhsschoolomitted",
                         ifelse(appCout2$SchoolJoin=="capitolhillmontsorischool@logan","capitolhillmontsori@logan/ms",
                           ifelse(appCout2$SchoolJoin=="lukecmoorehsschool","lukemoorehsschool",
                             ifelse(appCout2$SchoolJoin=="prosptlearningcenter","schoolwithinschool@goding",
                                 ifelse(appCout2$SchoolJoin=="oysteradamsbilingualschool(adams)","adamsoysterbilingualschool(adams)",
                                   ifelse(appCout2$SchoolJoin=="woodson,hdhs","hdwoodsonhs",
                                     ifelse(appCout2$SchoolJoin=="sharpehealthschool","formerspedschool",
-                                           appCout2$SchoolJoin))))))))
+                                           appCout2$SchoolJoin))))))))))
 appCout2$SchoolJoin<-ifelse(appCout2$School.Short=="brooklandms","brooklandmsschool",appCout2$SchoolJoin)
 join3<-join(appCout2,Facout2,by="SchoolJoin",type="full")
 
@@ -148,7 +154,8 @@ IndptBuilding$SCHOOLCODE<-ifelse(IndptBuilding$School.Short=="jeffersonms",415,
                                   ifelse(IndptBuilding$School.Short=="eliothinems",407,
                                    IndptBuilding$SCHOOLCODE)))))))))
 
-join1<-join(IndptBuilding,budgetDCPSunq,by="SCHOOLCODE",type="inner")
+join1<-join(IndptBuilding,budgetDCPSunq,by="SCHOOLCODE",type="left")
+
 join1$BuildingCode<-join1$SCHOOLCODE
 
 Bout<-subset(budgetDCPSunq,!(budgetDCPSunq$SCHOOLCODE %in% join1$SCHOOLCODE))
@@ -193,11 +200,18 @@ appC.budget$SCHOOLCODE<-ifelse(appC.budget$SCHOOLCODE==296,293,
                                       ifelse(appC.budget$SCHOOLCODE==232,232,
                                       appC.budget$SCHOOLCODE))))))))
 DCPS<-join(appC.budget,Feeder,by="SCHOOLCODE",type="left")
-DCPS$School<-ifelse(is.na(DCPS$School),DCPS$SCHOOLNAME,DCPS$School)
+
+DCPS$FeederMS<-ifelse(DCPS$School=="Eaton Elementary School","Hardy MS",DCPS$FeederMS)
+
+DCPS$School<-ifelse((is.na(DCPS$School) | grepl(" |swing space|closed|demolished",DCPS$School)),
+                    DCPS$SCHOOLNAME,DCPS$School)
+DCPS$School<-ifelse(is.na(DCPS$School),DCPS$School.Short,
+                    ifelse(DCPS$School=="", "DCPS MultiSchool",DCPS$School))
 DCPS$Agency<-ifelse(is.na(DCPS$Agency),"DCPS",DCPS$Agency)
-DCPS<-DCPS[c(1:3,5:15,17:18,21,25,26)]
+DCPS<-DCPS[c(1:3,5:16,18:20,22,26,27)]
 
 #Join with enroll
+enroll<-subset(enroll, enroll$Sector!="TOTAL")
 DCPS$SCHOOLCODE<-ifelse(DCPS$School=="Wheatley Education Campus",335,
                     ifelse(DCPS$School=="Hardy Middle School",246,
                     ifelse(DCPS$School=="Jefferson Middle School",433,
@@ -212,8 +226,11 @@ DCPS$SCHOOLCODE<-ifelse(DCPS$School=="Wheatley Education Campus",335,
                                         ifelse(DCPS$School=="Youth Services Center",861,
                                           ifelse(DCPS$School=="Dorothy Height ES",000,
                                             ifelse(DCPS$School=="Langley Education Campus",370,
+                                              ifelse(DCPS$School=="Prospect Learning Center",175,
+                                                ifelse(DCPS$School=="Eaton Elementary School",232,
+                                                  ifelse(DCPS$School=="Oyster-Adams Bilingual School (Oyster)",292,
                                                   DCPS$SCHOOLCODE
-                                            ))))))))))))))
+                                            )))))))))))))))))
 DCPS.Final<-join(DCPS,enroll,by="SCHOOLCODE",type="left")
 
 ###Final DCPS dataset
@@ -225,7 +242,7 @@ numeric<- function(x) {
 }
 
 DCPS.Final$SPED<-DCPS.Final$Level.1+DCPS.Final$Level.2+DCPS.Final$Level.2+DCPS.Final$Level.3
-DCPS.Final<-DCPS.Final[-c(20:22,24:38,40:43)]
+DCPS.Final<-DCPS.Final[-c(6,18,22:24,26:40,42:45)]
 
 DCPS.Final$totalSQFT<-numeric(DCPS.Final$totalSQFT)
 DCPS.Final$maxOccupancy<-numeric(DCPS.Final$maxOccupancy)
