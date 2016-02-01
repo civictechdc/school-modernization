@@ -1,43 +1,34 @@
 {
-    "conformsTo": "http://codefordc.org/resources/specification.html",
-    "status": "Ideation",
-    "thumbnailUrl": "https://github.com/codefordc/school-modernization",
+    "name": "School Modernization Funds", 
+    "description": "Looking at fifteen years of school modernization funds", 
+    "license": "CC0-1.0", 
+    "status": "Ideation", 
+    "type": "Web App", 
+    "homepage": "", 
+    "repository": "https://github.com/codefordc/school-modernization", 
+    "thumbnail": "https://github.com/codefordc/school-modernization", 
+    "geography": [
+        "Washington D.C."
+    ], 
     "contact": {
-        "name": "DC Public School Modernization Spending",
-        "email": "",
-        "twitter": ""
-    },
-    "bornAt": "The halls of power",
-    "geography": "Washington D.C.",
-    "politicalEntity": {},
-    "governmentPartner": {},
-    "communityPartner": {},
-    "type": "Web App",
-    "data": {},
-    "needs": [
+        "name": "DC Public School Modernization Spending", 
+        "email": "", 
+        "url": ""
+    }, 
+    "partners": [
         {
-            "need": "Designers"
-        },
-        {
-            "need": "Smiles"
-        },
-        {
-            "need": "Patience"
+            "url": "http://codefordc.org", 
+            "name": "Code for DC", 
+            "email": ""
         }
-    ],
-    "categories": [
-        {
-            "category": "Cartography"
-        },
-        {
-            "category": "Data Viz"
-        },
-        {
-            "category": "DC Schools"
-        },
-        {
-            "category": "Public Service"
-        }
-    ],
-    "moreInfo": ""
+    ], 
+    "data": [], 
+    "tags": [
+        "Cartography", 
+        "Data Viz", 
+        "DC Schools", 
+        "Public Service"
+    ], 
+    "links": [], 
+    "id": "https://raw.githubusercontent.com/DCgov/civic.json/master/schemas/schema-v1.json"
 }
