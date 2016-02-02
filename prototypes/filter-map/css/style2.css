@@ -1,0 +1,85 @@
+
+/* ======= general ======= */
+body {
+    /*padding-top: 50px;*/
+    font-family:"Ariel", sans-serif;
+}
+
+/* ======= rows columns ======= */
+.row {
+  /*margin-bottom: 20px;*/
+}
+.row .row {
+  /*margin-top: 10px;
+  margin-bottom: 0;*/
+}
+[class*="col-"] {
+  /*padding-top: 15px;
+  padding-bottom: 15px;*/
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border: 1px solid rgba(86,61,124,.2);
+}
+
+hr {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* ======= rows ======= */
+.footer > .column {
+    height: 100px;
+    line-height: 100px;
+    /*background-color: moccasin;*/
+}
+
+/* ======= navbar ======= */
+.navbar {
+    height: 80px;
+}
+.dropdown {
+    width: 160px;
+    margin-left: 20px;
+}
+.dropdown a {
+    width: 100%;
+}
+#geography {
+    width: 220px;
+    margin-left: -30px;
+    margin-right: 50px;
+}
+.dropdown > #years {
+    margin-left: 10px;
+}
+
+/* ======= dropdown ======= */
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+.theme-showcase .navbar .container {
+  width: auto;
+}
+
+/* ======= map ======= */
+#map {
+    margin-top: 20px;
+    height: 200px;
+}
+#map2 {
+    margin-top: 20px;
+    width: 500px;
+    height: 500px;
+}
+
+/* ======= data ======= */
+#chartData {
+    margin-right: 20px;
+    height: 100%;
+    border: 1px solid Tomato;
+}
