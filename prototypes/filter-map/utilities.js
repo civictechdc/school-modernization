@@ -873,13 +873,8 @@ function initMap(zonesCollectionObj) {
     var pathname = window.location.pathname; // Returns path only
 
     // ======= index map =======
-    if ((pathname == "/") || (pathname == "/index.html") || (pathname == "/schoolMod/" || (pathname == "/schoolMod/index.html"))) {
-        var zoom = 12;
-        var mapContainer = document.getElementById('map');
-    } else {
-        var zoom = 10;
-        var mapContainer = document.getElementById('map2');
-    }
+    var zoom = 12;
+    var mapContainer = document.getElementById('map');
 
     map = new google.maps.Map(mapContainer, {
         center: {lat: 38.89, lng: -77.00},
