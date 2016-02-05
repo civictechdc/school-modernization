@@ -16,6 +16,9 @@ function initApp() {
     var schoolsCollectionObj;
     var zonesCollectionObj;
     var displayObj;
+    var availableTags = [
+        "Aiton", "Bancroft", "Barnard", "Beers", "Brent", "Brightwood", "Browne", "Burroughs", "Burrville", "Harris", "Cleveland", "Drew", "Eaton", "Garfield", "Garrison", "Hendley", "Houston", "Hyde-Addison", "Wilson", "Janney", "Ketcham", "Key", "Kimball", "Lafayette", "Langdon", "Langley", "Leckie", "Ludlow-Taylor", "Mann", "Marie", "Maury", "Moten", "Murch", "Nalle", "Noyes", "Old", "Orr", "Patterson", "Payne", "Peabody", "Plummer", "Powell", "Raymond", "Ross", "Savoy", "Seaton", "Shepherd", "Simon", "Smothers", "Stanton", "Stoddert", "Takoma", "Thomas", "Thomson", "Truesdell", "Tubman", "Turner", "Tyler", "Walker-Jones", "Watkins", "Wheatley", "Whittier", "Hearst", "West", "Van", "Amidon-Bowen", "Anacostia", "Coolidge", "Deal", "Eastern", "Eliot-Hine", "Ellington", "Francis-Stevens", "Cooke", "Hardy", "Hart", "Jefferson", "Kelly", "King", "Kramer", "LaSalle-Backus", "Phelps", "School", "Sousa", "Wilson", "Bruce-Monroe", "Columbia", "John", "Stuart-Hobson", "Washington", "Benjamin", "Oyster-Adams", "Brookland", "Dunbar", "Malcolm", "Old", "Cardozo", "Capitol", "Moore", "Prospect"];
+
 
     // ======= ======= ======= initMenuObjects ======= ======= =======
     function initMenuObjects() {
@@ -43,6 +46,7 @@ function initApp() {
         this.expendMenu = ["expend", filterMenu.spendPast, filterMenu.spendLifetime, filterMenu.spendPlanned, filterMenu.spendSqFt, filterMenu.spendEnroll];
         this.filterMenusArray = [this.levelsMenu, this.expendMenu];
         this.filterTitlesArray = [];
+        this.schoolNamesArray = [];
         this.categoryLabels = ["school type", "spending"];
         this.groupLabels = ["where", "what"];
         this.dataFilters = { "levels": null, "expend": null };
@@ -121,6 +125,7 @@ function initApp() {
             this.activateFilterMenu(nextMenu);
         }
         this.activateSearchButton("searchButton");
+        this.activateSearchWindow("searchWindow");
     }
 
     // ======= ======= ======= makeCategoryMenu ======= ======= =======
@@ -201,6 +206,16 @@ function initApp() {
         }
     }
 
+    // ======= ======= ======= activateSearchWindow ======= ======= =======
+    Display.prototype.activateSearchWindow = function(windowId) {
+        console.log("activateSearchWindow");
+
+        $("#" + windowId).on('input',function(e){
+            clearProfileChart();
+        });
+    }
+
+
     // ======= ======= ======= activateSearchButton ======= ======= =======
     Display.prototype.activateSearchButton = function(buttonId) {
         console.log("activateSearchButton");
@@ -208,12 +223,19 @@ function initApp() {
         var self = this;
         var buttonElement = $("#" + buttonId);
 
-        // ======= ======= ======= selectFilter ======= ======= =======
+        // ======= autocomplete =======
+        // availableTags = displayObj.schoolNamesArray;
+        $( "#searchWindow" ).autocomplete({
+            source: availableTags
+        });
+        $('#searchWindow').css('z-index', 999);
+
+        // ======= selectFilter =======
         $(buttonElement).off("click").on("click", function(event){
             console.log("\n======= search =======");
             self.findSearchSchool();
         });
-        // ======= ======= ======= selectFilter ======= ======= =======
+        // ======= selectFilter =======
         $( window ).bind('keypress', function(event){
             if ( event.keyCode == 13 ) {
                 console.log("\n======= search =======");
@@ -242,7 +264,7 @@ function initApp() {
             self.dataFilters.expend = null;
             self.dataFilters.levels = null;
 
-            clearProfieChart();
+            clearProfileChart();
 
             // == clear filter window
             filterText = "your filters";
@@ -254,9 +276,9 @@ function initApp() {
         });
     }
 
-    // ======= ======= ======= clearProfieChart ======= ======= =======
-    function clearProfieChart() {
-        console.log("clearProfieChart");
+    // ======= ======= ======= clearProfileChart ======= ======= =======
+    function clearProfileChart() {
+        console.log("clearProfileChart");
 
         if ($('#mouseover-text').find('table').length) {
             $("#profile").fadeOut( "slow", function() {
@@ -336,7 +358,8 @@ function initApp() {
                 }
                 self.dataFilters.selectedSchool = schoolNamesArray;
             } else {
-                schoolText = "<p>No data.  Please try again.</p>";
+                $(filterTitleContainer).addClass("filterList");
+                schoolText = "No data.  Please try again.  ";
             }
             schoolText = schoolText.substring(0, schoolText.length - 2);
             $(filterTitleContainer).html(schoolText);
@@ -510,10 +533,9 @@ function initApp() {
 
 
 
-    // ======= ======= ======= getSchoolData ======= ======= =======
-    SchoolsCollection.prototype.getSchoolData = function() {
-        console.log("\n----- getSchoolData -----");
-        console.log("  displayObj.zoneType: ", displayObj.zoneType);
+    // ======= ======= ======= loadAutoComplete ======= ======= =======
+    SchoolsCollection.prototype.loadAutoComplete = function() {
+        console.log("loadAutoComplete");
 
         var self = this;
 
@@ -522,13 +544,70 @@ function initApp() {
             url: "Data_Schools/DCPS_Master_114_dev.csv",
             method: "GET",
             dataType: "text"
-        }).done(function(textData){
+        }).done(function(textData) {
             console.log("*** ajax success ***");
             jsonData = CSV2JSON(textData);
             console.dir(jsonData);
 
             // == store school json data
             self.jsonData = jsonData;
+
+            // == get school names
+            displayObj.schoolNamesArray = [];
+            for (var i = 0; i < jsonData.length; i++) {
+                var filterFlagCount = 0;
+
+                // == level filter
+                nextSchool = jsonData[i];
+                displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
+            }
+
+        // == errors/fails
+        }).fail(function(){
+            console.log("*** ajax fail ***");
+        }).error(function() {
+            console.log("*** ajax error ***");
+        });
+    }
+
+
+    // ======= ======= ======= getSchoolData ======= ======= =======
+    SchoolsCollection.prototype.getSchoolData = function() {
+        console.log("\n----- getSchoolData -----");
+        console.log("  displayObj.zoneType: ", displayObj.zoneType);
+
+        var self = this;
+
+        // ======= get selected data =======
+        if (this.jsonData == null) {
+            $.ajax({
+                url: "Data_Schools/DCPS_Master_114_dev.csv",
+                method: "GET",
+                dataType: "text"
+            }).done(function(textData){
+                console.log("*** ajax success ***");
+                jsonData = CSV2JSON(textData);
+                console.dir(jsonData);
+
+                // == store school json data
+                self.jsonData = jsonData;
+                getSchoolData();
+
+            // == errors/fails
+            }).fail(function(){
+                console.log("*** ajax fail ***");
+            }).error(function() {
+                console.log("*** ajax error ***");
+            });
+
+        } else {
+            getSchoolData();
+        }
+
+        // ======= ======= ======= getSchoolData ======= ======= =======
+        function getSchoolData() {
+            console.log("\n----- getSchoolData -----");
+
 
             // ======= get school codes for selected zone, level and type =======
             var selectedCodesArray = [];
@@ -564,8 +643,6 @@ function initApp() {
                 nextZoneName = zonesCollectionObj.aggregatorArray[i].schoolName;
                 zoneNamesArray.push(nextZoneName);
             }
-            console.log("  zoneNamesArray: ", zoneNamesArray);
-            console.log("  selectedNamesArray: ", selectedNamesArray);
             console.log("  selectedCodesArray: ", selectedCodesArray.length);
             console.log("  rejectedCodesArray: ", rejectedCodesArray.length);
 
@@ -578,30 +655,20 @@ function initApp() {
                 self.makeSchoolLayer();
             } else {
                 updateFilterTitles("Sorry, no schools matched criteria.  Click CLEAR");
-                clearProfieChart();
+                clearProfileChart();
             }
-
-        // == errors/fails
-        }).fail(function(){
-            console.log("*** ajax fail ***");
-        }).error(function() {
-            console.log("*** ajax error ***");
-        });
+        }
     }
 
     // ======= ======= ======= checkFilterMatch ======= ======= =======
     SchoolsCollection.prototype.checkFilterMatch = function(nextSchool) {
         // console.log("checkFilterMatch");
-        // console.log("  .levels: ", displayObj.dataFilters.levels);
-        // console.log("  .expend: ", displayObj.dataFilters.expend);
 
         var school = nextSchool.School;
         var schoolWard = nextSchool.WARD;
         var schoolType = nextSchool.Agency;
         var schoolLevel = nextSchool.Level;
         var shortName = processSchoolName(school);
-        // console.log("  schoolType: ", schoolType);
-        // console.log("  schoolLevel: ", schoolLevel);
 
         if (displayObj.dataFilters.levels) {
             var levelsMatch = (displayObj.dataFilters.levels == schoolLevel) ? true : false;
@@ -936,5 +1003,6 @@ function initApp() {
     initMap(zonesCollectionObj);
     displayObj.initFilterMenus();
     displayObj.activateClearButton();
+    schoolsCollectionObj.loadAutoComplete();
     zonesCollectionObj.getZoneData();
 }

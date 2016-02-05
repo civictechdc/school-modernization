@@ -902,7 +902,6 @@ function initMap(zonesCollectionObj) {
     });
 }
 
-
 // ======= ======= ======= floating windows ======= ======= =======
 (function(){
     console.log("initFloatingWindows");
