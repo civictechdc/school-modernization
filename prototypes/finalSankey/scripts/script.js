@@ -89,7 +89,17 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
           // .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
           .style("stroke", function(d) { return d3.rgb(d.color).darker(1); })
           .style('fill', function(d){
-             return 'green';
+            var colors = [
+                'green',
+                'red',
+                'orange',
+                'blue',
+                'pink',
+                'blueviolet',
+                'cadetblue',
+                'coral',
+
+            ];
           })
           .append("title")
           .text(function(d) { return d.name + "\n" + format(d.value); });
@@ -121,14 +131,13 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
         d3.select($('#future'))
             .on('click', function(){
                 d3.json("scripts/json_update.json", function(newdata){
-                    var path = sankey.link();
+                    // var path = sankey.link();
                     sankey
                       .nodes(newdata.nodes)
                       .links(newdata.links)
                       .layout(32);
 
                     // .link
-                    console.log('update links', d3.selectAll('.link'));
                     d3.selectAll('.link')
                       .data(newdata.links)
                       .transition()
@@ -200,7 +209,6 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                       .layout(32);
 
                     // .link
-                    console.log('update links', d3.selectAll('.link'));
                     d3.selectAll('.link')
                       .data(olddata.links)
                       .transition()
@@ -220,8 +228,10 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                       .sort(function(a, b) { return b.dy - a.dy; })
                     ;
 
+                    // d3.selectAll('title')
+                    //   .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+
                     // .node
-                    console.log(d3.selectAll('.node'));
                     d3.selectAll('.node')
                       .data(olddata.nodes)
                       .transition()
@@ -240,6 +250,19 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(csv){
                       .duration(350)
                       .attr("height", function(d) { return d.dy; }) //d.dy
                     ;
+
+                    d3.selectAll('text')
+                      .data(olddata.nodes)
+                      .transition()
+                      .duration(350)
+                      .attr("y", function(d) { return d.dy / 2; })
+                      .text(function(d) { 
+                          return d.name; 
+                       })
+                      .filter(function(d) { return d.x < sizes.width / 2; })
+                       .attr("x", 6 + sankey.nodeWidth())
+                       .attr("text-anchor", "start")
+                      ;
 
                     function dragmove(d) {
                        d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(sizes.height - d.dy, d3.event.y))) + ")");

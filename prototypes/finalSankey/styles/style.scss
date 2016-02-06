@@ -1,5 +1,5 @@
 //VARIABLES
-$bgc: #f0f0f0;
+$bgc: #fafafa;
 
 // GLOBALS
 // *************************
@@ -15,10 +15,10 @@ body {
 
 header {
    position: fixed;
-   background-color: darken($bgc, 10%);
+   background-color: darken($bgc, 1%);
    top: 0;
    // width: 100%;
-   border-bottom: 3px solid darken($bgc, 50%);
+   border-bottom: 3px solid darken($bgc, 10%);
 }
 
 .container {
