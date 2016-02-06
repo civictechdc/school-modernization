@@ -1,43 +1,36 @@
 {
-    "conformsTo": "http://codefordc.org/resources/specification.html",
-    "status": "Ideation",
-    "thumbnailUrl": "https://github.com/codefordc/school-modernization",
+    "name": "School Modernization Spending", 
+    "description": "A data visualization that examines fifteen years of school modernization spending in the District", 
+    "license": "CC0-1.0", 
+    "status": "Alpha", 
+    "type": "Web App", 
+    "homepage": "http://codefordc.org/school-modernization/", 
+    "repository": "https://github.com/codefordc/school-modernization", 
+    "thumbnail": "https://github.com/codefordc/school-modernization", 
+    "geography": [
+        "Washington D.C."
+    ], 
     "contact": {
-        "name": "DC Public School Modernization Spending",
-        "email": "",
-        "twitter": ""
-    },
-    "bornAt": "The halls of power",
-    "geography": "Washington D.C.",
-    "politicalEntity": {},
-    "governmentPartner": {},
-    "communityPartner": {},
-    "type": "Web App",
-    "data": {},
-    "needs": [
+        "name": "Nick Skelsey", 
+        "email": "nskelsey@gmail.com"
+    }, 
+    "partners": [
         {
-            "need": "Designers"
+            "url": "http://codefordc.org", 
+            "name": "Code for DC"
         },
         {
-            "need": "Smiles"
-        },
-        {
-            "need": "Patience"
+            "url": "http://www.21csf.org/csf-home/", 
+            "name": "21st Century School Fund"
         }
-    ],
-    "categories": [
-        {
-            "category": "Cartography"
-        },
-        {
-            "category": "Data Viz"
-        },
-        {
-            "category": "DC Schools"
-        },
-        {
-            "category": "Public Service"
-        }
-    ],
-    "moreInfo": ""
+    ], 
+    "data": [], 
+    "tags": [
+        "Cartography", 
+        "Data Viz", 
+        "DC Schools", 
+        "Public Service"
+    ], 
+    "links": [], 
+    "id": "https://raw.githubusercontent.com/DCgov/civic.json/master/schemas/schema-v1.json"
 }
