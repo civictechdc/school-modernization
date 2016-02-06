@@ -59,6 +59,7 @@ function initApp() {
         this.mapListenersArray = [];
         this.indexColorsArray = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
         this.dataColorsArray = ["#0000ff", "#2200cc", "#4400aa", "#660088", "#880066", "#aa0044", "#cc0022", "#ff0000"];
+        // this.dataColorsArray = ["#ff0000", "#cc0022", "#aa0044", "#880066", "#660088", "#4400aa", "#2200cc", "#0000ff"];
         this.defaultColor = "white";
         this.dataIncrement = 0;
         this.dataBins = 8;
@@ -116,6 +117,7 @@ function initApp() {
         menuHtml += "</ul>";
         menuHtml += this.initSearchBar();
         menuHtml += this.initHoverDisplay();
+        // menuHtml += this.initChartDisplay();
         $(popupContainer).append(menuHtml);
         $("#chart-container").css("display", "none");
 
@@ -176,6 +178,15 @@ function initApp() {
         // console.log("initHoverDisplay");
         var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
         return hoverHtml;
+    }
+
+    // ======= ======= ======= initChartDisplay ======= ======= =======
+    Display.prototype.initChartDisplay = function() {
+        console.log("initChartDisplay");
+        var chartHtml = "<div id='chart-container'>";
+        chartHtml += "<div id='chart-title' class='title_bar'><p>data chart</p></div>";
+        chartHtml += "<div id='chart'></div></div>";
+        return chartHtml;
     }
 
     // ======= ======= ======= setMenuItem ======= ======= =======
@@ -392,6 +403,7 @@ function initApp() {
             var menuObject = filterMenu[whichFilter];
             var whichColumn = menuObject.column;
             var whichValue = menuObject.value;
+            var whichText = menuObject.text;
             var htmlString;
             checkFilterSelection(self, zonesCollectionObj);
             console.log("  whichCategory: ", whichCategory);
@@ -606,7 +618,7 @@ function initApp() {
 
         // ======= ======= ======= getSchoolData ======= ======= =======
         function getSchoolData() {
-            console.log("\n----- getSchoolData -----");
+            console.log("getSchoolData");
 
 
             // ======= get school codes for selected zone, level and type =======
@@ -723,10 +735,11 @@ function initApp() {
             if (displayObj.dataFilters.expend) {
                 this.dataIncrement = calcDataIncrement(this, displayObj);
                 var itemOpacity = 1;
-                makeMapLegend(this);
-                $("#mapLegend").css("display", "block");
+                makeRankChart(zonesCollectionObj, displayObj.dataFilters.expend);
+                // makeMapLegend(this);
+                // $("#mapLegend").css("display", "block");
             } else {
-                $("#mapLegend").css("display", "none");
+                // $("#mapLegend").css("display", "none");
             }
         }
 
@@ -739,6 +752,11 @@ function initApp() {
             // == limit index by number of available colors
             if (colorIndex > self.indexColorsArray.length) {
                 colorIndex = 0
+            }
+            if (displayObj.dataFilters.expend) {
+                strokeColor = "white";
+            } else {
+                strokeColor = "purple";
             }
 
             // ======= get and validate name for each feature =======

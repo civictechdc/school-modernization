@@ -47,7 +47,7 @@ function getZoneUrl(whichLevel) {
 
 // ======= ======= ======= removeAbbreviations ======= ======= =======
 function removeAbbreviations(longName) {
-    console.log("removeAbbreviations");
+    // console.log("removeAbbreviations");
     var nameNoiseIndex = longName.indexOf(", ");
     if (nameNoiseIndex > -1) {
         splitZoneName = longName.split(", ");
@@ -192,8 +192,7 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData) {
 
 // ======= ======= ======= setZoneColor ======= ======= =======
 function setZoneColor(zonesCollectionObj, displayObj, featureIndex, colorIndex) {
-    console.log("setZoneColor");
-    console.log("**  featureIndex: ", featureIndex);
+    // console.log("setZoneColor");
 
     // == get color if expend filter selected
     if (displayObj.dataFilters.levels) {
@@ -211,10 +210,10 @@ function setZoneColor(zonesCollectionObj, displayObj, featureIndex, colorIndex) 
 
 // ======= ======= ======= assignDataColors ======= ======= =======
 function assignDataColors(zonesCollectionObj, featureIndex) {
-    console.log("assignDataColors");
+    // console.log("assignDataColors");
 
     var nextExpendValue = zonesCollectionObj.aggregatorArray[featureIndex - 1].schoolValue;
-    console.log("  nextExpendValue: ", nextExpendValue);
+    // console.log("  nextExpendValue: ", nextExpendValue);
     for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
         binMin = (zonesCollectionObj.dataIncrement * i);
         binMax = (zonesCollectionObj.dataIncrement * (i + 1));
@@ -314,7 +313,7 @@ function calcDataIncrement(zonesCollectionObj, displayObj) {
 
 // ======= ======= ======= removeMarkers ======= ======= =======
 function removeMarkers(schoolsCollectionObj) {
-    console.log("removeMarkers");
+    // console.log("removeMarkers");
 
     // console.log("  markers_before: ", mapDataObject.schoolMarkersArray.length);
     var schoolMarkersArray = schoolsCollectionObj.schoolMarkersArray;
@@ -330,7 +329,7 @@ function removeMarkers(schoolsCollectionObj) {
 
 // ======= ======= ======= de_activateZoneListeners ======= ======= =======
 function de_activateZoneListeners(zonesCollectionObj) {
-    console.log("de_activateZoneListeners");
+    // console.log("de_activateZoneListeners");
 
     google.maps.event.clearListeners(map, 'mouseover');
     google.maps.event.clearListeners(map, 'mouseout');
@@ -411,6 +410,14 @@ function checkFilterSelection(displayObj, zonesCollectionObj) {
     console.log("checkFilterSelection");
     console.log("  levels: ", displayObj.dataFilters.levels);
     console.log("  expend: ", displayObj.dataFilters.expend);
+}
+
+// ======= ======= ======= updateChartText ======= ======= =======
+function updateChartText(expendText) {
+    // console.log("updateChartText");
+
+    $("#expend-text").text(expendText);
+
 }
 
 // ======= ======= ======= updateHoverText ======= ======= =======

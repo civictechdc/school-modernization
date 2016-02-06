@@ -1,4 +1,240 @@
 
+// ======= ======= ======= makeRankChart ======= ======= =======
+function makeRankChart(zonesCollectionObj, expend) {
+    console.log("makeRankChart");
+
+    // ======= chart container =======
+    $("#chart-container").remove();
+    var chartHtml = "<div id='chart-container'>";
+    chartHtml += "<div id='chart-title' class='title_bar'><p id='expend-text'>data chart</p></div>";
+    chartHtml += "<div id='chart'></div></div>";
+    $("#mouseover-text").append(chartHtml);
+    $("#chart-container").fadeIn( "fast", function() {
+        console.log("*** FADEIN ***");
+    });
+    updateChartText(filterMenu[expend].text);
+
+
+    // ======= formatting variables =======
+    var chartW, chartH, shortName, scaleFactor, scaleLabel;
+    // var fillColors = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod", "blueviolet", "chartreuse", "cornflowerblue"];
+    var fillColors = zonesCollectionObj.dataColorsArray;
+
+    // ======= chart formatting =======
+    var chartPadding = {top: 10, right: 10, bottom: 30, left: 80},
+        chartW = 220 - chartPadding.left - chartPadding.right,       // outer width of chart
+        chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+
+    // ======= school data =======
+    var dataObjectsArray = zonesCollectionObj.aggregatorArray;
+    var myJsonString = JSON.stringify(dataObjectsArray);
+    var dataMax = d3.max(dataObjectsArray, function(d) {
+        return d.schoolValue;
+    });
+    console.log("  dataMax: ", dataMax);
+
+    // ======= bar data =======
+    var barScaleArray = [];
+    var barW = 20;
+    var barTicks = zonesCollectionObj.dataColorsArray.length;
+    var barIncrement = dataMax/barTicks;
+    var schoolCircleX = 50;
+    var schoolCircleR = 5;
+    for (var i = 1; i < (barTicks + 1); i++) {
+        barScaleArray.push(parseInt(barIncrement * i));
+    }
+    console.log("  barScaleArray: ", barScaleArray);
+
+    // ======= scale formating =======
+    if (dataMax > 1000000) {
+        scaleFactor = 1000000;
+        scaleLabel = "M$";
+    } else if ((dataMax > 10000) && (dataMax < 1000000)) {
+        scaleFactor = 10000;
+        scaleLabel = "10K$";
+    } else if ((dataMax > 1000) && (dataMax < 10000)) {
+        scaleFactor = 1000;
+        scaleLabel = "1K$";
+    } else {
+        scaleFactor = 1;
+        scaleLabel = "$";
+    }
+
+    // ======= X SCALE =======
+    var xScaleLabels = ["scale", "amount", "school"];
+    var xScale = d3.scale.ordinal()         // maps input domain to output range
+        .domain(xScaleLabels.map(function(d) {
+            console.log("  d: ", d);
+            return d;;
+        }))
+        .range([0, chartW]);
+
+    // ======= Y SCALES =======
+    var yScale = d3.scale.linear()      // maps input domain to output range
+        .domain([0, d3.max(barScaleArray, function(d, i) {
+            console.log("  d: ", d);
+            return d;
+        })])
+        .range([chartH, 0]);
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)          // specify left scale
+        .orient("left")
+        // .tickPadding(10)
+        .tickValues(barScaleArray);
+
+    // ======= build svg objects =======
+    $("#chart").empty();
+    var svg = d3.select("#chart").append("svg")
+        .attr("width", chartW + (chartPadding.left + chartPadding.right))
+        .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
+        .append("g")
+            .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
+
+    // ======= yAxis =======
+    svg.append("g")                 // g group element to contain about-to-be-generated axis elements
+        .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
+        .call(yAxis)            // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
+        .attr("transform", "translate(0, 0)")
+        .selectAll("text")
+            .style("text-anchor", "end")
+            .style("font-size", "10px");
+
+    // ======= rects for bar graph =======
+    svg.selectAll(".bar")
+        .data(barScaleArray)
+        .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) {
+                return 0;
+            })
+            .attr("width", barW)
+            .attr("y", function(d, i) {
+                if (i < (barTicks + 1)) {
+                    return yScale(d);
+                } else {
+                    return null;
+                }
+            })
+            .attr("height", function(d, i) {
+                barH = chartH/barTicks;
+                if (i < (barTicks + 1)) {
+                    return barH;
+                } else {
+                    return 0;
+                }
+            })
+            .style({'fill': function(d, i) {
+                if (i < (barTicks + 1)) {
+                    whichColor = fillColors[i];
+                    return whichColor;
+                } else {
+                    return "white";
+                }
+                }})
+            .style("font-size", "10px");
+
+    // ======= circles for schools =======
+    svg.selectAll("circle")
+        .data(dataObjectsArray)
+        .enter()
+            .append("circle")
+            .attr("cx", function(d) {
+                return schoolCircleX;
+            })
+            .attr("cy", function(d) {
+                return yScale(d.schoolValue);
+            })
+            .attr("r", function(d) {
+                console.log("  d: ", d);
+                return schoolCircleR;
+            })
+            .style('fill', function(d, i){
+                colorIndex = assignChartColors(d.schoolValue);
+                whichColor = fillColors[colorIndex];
+                return whichColor;
+            });
+
+    // ======= circle labels =======
+    svg.selectAll(".text")
+        .data(dataObjectsArray)
+        .enter()
+            .append("text")
+                .attr("class", "schoolValueLabel")
+                .text(function(d) {
+                    return d.schoolName;
+                })
+                .attr("x", function(d) {
+                    return schoolCircleX + 10;
+                })
+                .attr("y", function(d) {
+                    return yScale(d.schoolValue) + 2;
+                })
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "12px")
+                .attr("fill", "purple");
+
+    tweakSchoolLabels();
+
+    // ======= ======= ======= assignChartColors ======= ======= =======
+    function assignChartColors(schoolValue) {
+        // console.log("assignChartColors");
+
+        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
+            binMin = (zonesCollectionObj.dataIncrement * i);
+            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+            // console.log("  binMax: ", binMax);
+            if ((binMin <= schoolValue) && (schoolValue <= binMax)) {
+                colorIndex = i;
+                break;
+            }
+        }
+        return colorIndex;
+    }
+
+
+    // ======= tweakSchoolLabels =======
+    function tweakSchoolLabels() {
+        console.log("tweakSchoolLabels");
+        var yVal, newY, changeFlag;
+        var locOK = false;
+        var prevYarray = [];
+
+        $('.schoolValueLabel').each(function(i) {
+            yVal = parseInt(this.getAttribute("y"));
+            prevYarray.push(yVal);
+        });
+
+        for (var i = 0; i < prevYarray.length; i++) {
+            checkY = prevYarray[i];
+            for (var j = 0; j < prevYarray.length; j++) {
+                if (j == i) {
+                } else {
+                    checkNext = prevYarray[j];
+                    checkDiff = Math.abs(checkY - checkNext);
+                    if (checkDiff < 14) {
+                        prevYarray[j] = checkNext + (14 - checkDiff);
+                    }
+                }
+            }
+        }
+
+        $('.schoolValueLabel').each(function(i) {
+            nextYloc = prevYarray[i];
+            this.setAttribute("y", nextYloc);
+        });
+    }
+
+    // ======= stringToInt =======
+    function stringToInt(d) {
+        // console.log("stringToInt");
+        d.value = +d.value;
+        return d;
+    }
+}
+
+
+
 // ======= ======= ======= makeZoneSchoolsChart ======= ======= =======
 function makeZoneSchoolsChart(dataObjectsArray) {
     console.log("makeZoneSchoolsChart");
@@ -18,17 +254,6 @@ function makeZoneSchoolsChart(dataObjectsArray) {
         chartH = 360 - chartPadding.top - chartPadding.bottom;      // outer height of chart
 
     var dataMax = d3.max(dataObjectsArray, function(d) {
-        // if (dataMax > 1000000) {
-        //     scaleFactor = 1000000;
-        //     scaleLabel = "M$";
-        // } else if ((dataMax < 1000000) && (dataMax > 1000)) {
-        //     scaleFactor = 1000;
-        //     scaleLabel = "K$";
-        // } else {
-        //     scaleFactor = 1;
-        //     scaleLabel = "$";
-        // }
-        // return d.expend / scaleFactor;
         return d.expend;
     });
 
@@ -152,6 +377,7 @@ function makeZoneSchoolsChart(dataObjectsArray) {
 }
 
 
+// ======= ======= ======= makeSchoolsChart ======= ======= =======
 function makeSchoolsChart(schoolDataArray) {
     console.log("makeSchoolsChart");
 
