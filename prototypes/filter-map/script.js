@@ -422,6 +422,7 @@ function initApp() {
                         zonesCollectionObj.zoneType = "Elementary";
                     }
                     zonesCollectionObj.aggregatorArray = [];
+                    updateHoverText(null);
                     break;
                 case "expend":
                     updateHoverText(null);
