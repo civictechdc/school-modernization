@@ -1,9 +1,3 @@
-// var sizes = {
-//    height: 900,
-//    width: 900,
-//    paddin: 5
-// };
-
 var diameter = 960,
     format = d3.format(",d"),
     color = d3.scale.category20c();
@@ -11,7 +5,9 @@ var diameter = 960,
 var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter])
-    .padding(1.5);
+    // .radius(function(){return '20';})
+    // .padding(1.5)
+    ;
 
 var svg = d3.select("#chart").append("svg")
     .attr("width", diameter)
@@ -19,7 +15,6 @@ var svg = d3.select("#chart").append("svg")
     .attr("class", "bubble");
 
 d3.json("scripts/json/data.json", function(error, root) {
-    console.log('chek');
   if (error) throw error;
 
   var node = svg.selectAll(".node")
@@ -33,8 +28,11 @@ d3.json("scripts/json/data.json", function(error, root) {
       .text(function(d) { return d.className + ": " + format(d.value); });
 
   node.append("circle")
-      .attr("r", function(d) { return d.r; })
-      .style("fill", function(d) { 
+      .attr("r", function(d) { 
+        var r_scale = d3.scale.linear().domain([0, 117015598]).rangeRound([10,100]);
+        return r_scale(d.value);
+      })
+      .style("fill", function(d) {
         var value = d.value;
         if(value > 10000000){ // 10 MILLION
             return '#00cc00';
@@ -47,8 +45,6 @@ d3.json("scripts/json/data.json", function(error, root) {
         } else {
             return '#aa0000';
         }
-        // console.log(d);
-        // return color(d.packageName); 
       })
       ;
 

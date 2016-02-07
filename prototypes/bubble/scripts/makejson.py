@@ -32,6 +32,17 @@ num_feeders = find_num_feeders()
 # OPERATIONS
 #------------------------------------------------#
 
+#Find min and max
+max, min = 0, 0;
+for datum in data:
+   if datum['MajorExp9815'] and datum['MajorExp9815'] != "NA":
+      if int(datum['MajorExp9815']) > max:
+         max = int(datum['MajorExp9815'])
+      if int(datum['MajorExp9815']) < min: 
+         min = int(datum['MajorExp9815'])
+print min, max
+
+# Setup the initial state of the data for the json dict
 data_for_json = {
    'name': 'Bubble Chart',
    'children': [
