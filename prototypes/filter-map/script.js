@@ -633,6 +633,7 @@ function initApp() {
             console.log("  .aggregatorArray: ", zonesCollectionObj.aggregatorArray);
 
             // ======= get school codes for selected zone, level and type =======
+            var schoolIndex = -1;
             var selectedCodesArray = [];
             var selectedNamesArray = [];
             var rejectedCodesArray = [];
@@ -648,14 +649,15 @@ function initApp() {
 
                 // == build array of schools that match filters
                 if (selectSchool == true) {
+                    schoolIndex++;
                     schoolData = getDataDetails(nextSchool);
                     selectedSchoolsArray.push(schoolData)
                     selectedNamesArray.push(processSchoolName(schoolData.schoolName))
                     selectedCodesArray.push(schoolData.schoolCode)
                     if ((displayObj.dataFilters.expend != null) && (displayObj.dataFilters.levels != null) && (displayObj.zoneType != "Ward")) {
-                        captureSchoolData(zonesCollectionObj, displayObj, schoolData);
+                        captureSchoolData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                     } else if (displayObj.dataFilters.zones != null)  {
-                        aggregateZoneData(zonesCollectionObj, displayObj, schoolData);
+                        aggregateZoneData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                     }
                 } else {
                     rejectedCodesArray.push(nextSchool.SCHOOLCODE);
@@ -663,8 +665,10 @@ function initApp() {
             }
             self.selectedSchoolsArray = selectedSchoolsArray;
             console.log("  .aggregatorArray: ", zonesCollectionObj.aggregatorArray);
-            console.log("  selectedCodesArray: ", selectedCodesArray.length);
-            console.log("  rejectedCodesArray: ", rejectedCodesArray.length);
+            console.log("  aggregatorArrayCt: ", zonesCollectionObj.aggregatorArray.length);
+            console.log("  selectedSchoolsCt: ", selectedSchoolsArray.length);
+            console.log("  selectedCodesCt: ", selectedCodesArray.length);
+            console.log("  rejectedCodesCt: ", rejectedCodesArray.length);
 
             // == make aggregator for school collection
             // if (schoolsCollectionObj.aggregatorArray.length == 0) {
@@ -761,7 +765,7 @@ function initApp() {
             if (displayObj.dataFilters.expend) {
                 this.dataIncrement = calcDataIncrement(this, displayObj);
                 var itemOpacity = 1;
-                makeRankChart(zonesCollectionObj, displayObj.dataFilters.expend);
+                makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj.dataFilters.expend);
                 // makeMapLegend(this);
                 // $("#mapLegend").css("display", "block");
             } else {
@@ -959,34 +963,21 @@ function initApp() {
             schoolLoc = new google.maps.LatLng(nextLat, nextLng);
 
             // == set color of school circle
-            if (nextSchoolType == "DCPS") {
-                fillColor = "red";
-                strokeColor = "maroon";
+            if (displayObj.dataFilters.expend) {
+                fillColor = "yellow";
+                strokeColor = "black";
             } else {
-                fillColor = "orange";
-                strokeColor = "crimson ";
+                if (nextSchoolType == "DCPS") {
+                    fillColor = "red";
+                    strokeColor = "maroon";
+                } else {
+                    fillColor = "orange";
+                    strokeColor = "crimson ";
+                }
             }
 
             // == make marker overlay object
             // schoolMarkerOverlay.prototype = new google.maps.OverlayView();
-
-            // ======= ======= ======= schoolMarkerOverlay ======= ======= =======
-            function schoolMarkerOverlay(bounds, image, map) {
-                console.log("schoolMarkerOverlay");
-
-                // Initialize all properties.
-                this.bounds_ = bounds;
-                this.image_ = image;
-                this.map_ = map;
-
-                // Define a property to hold the image's div. We'll
-                // actually create this div upon receipt of the onAdd()
-                // method so we'll leave it null for now.
-                this.div_ = null;
-
-                // Explicitly call setMap on this overlay.
-                this.setMap(map);
-            }
 
             // == show markers for available data
             var iconSize = 0.2;
@@ -1004,6 +995,7 @@ function initApp() {
             // var schoolMarker = new schoolMarkerOverlay(bounds, schoolMarkerImageD, map);
 
             var schoolMarker = new google.maps.Marker({
+                // id: id,
                 map: map,
                 // icon: schoolMarkerImage,
                 icon: icon,
@@ -1024,6 +1016,26 @@ function initApp() {
             // == activate marker mouseover/mouseout
             this.activateSchoolMarker(schoolMarker, true);
         }
+        console.log("  selectedSchoolsCt: ", this.selectedSchoolsArray.length);
+        console.log("  schoolMarkersArrayCt: ", this.schoolMarkersArray.length);
+
+        // ======= ======= ======= schoolMarkerOverlay ======= ======= =======
+        function schoolMarkerOverlay(bounds, image, map) {
+            console.log("schoolMarkerOverlay");
+
+            // Initialize all properties.
+            this.bounds_ = bounds;
+            this.image_ = image;
+            this.map_ = map;
+
+            // Define a property to hold the image's div. We'll
+            // actually create this div upon receipt of the onAdd()
+            // method so we'll leave it null for now.
+            this.div_ = null;
+
+            // Explicitly call setMap on this overlay.
+            this.setMap(map);
+        }
     }
 
     // ======= ======= ======= activateSchoolMarker ======= ======= =======
@@ -1033,14 +1045,11 @@ function initApp() {
         // ======= mouseover event listener =======
         google.maps.event.addListener(schoolMarker, 'mouseover', function (event) {
             console.log("--- mouseover ---");
-            var schoolName = this.schoolName;
-            var schoolCode = this.schoolCode;
-            var schoolType = this.schoolType;
             var schoolIndex = this.schoolIndex;
-            var schoolAddress = this.schoolAddress;
-            var schoolLoc = this.position;
+            console.log("  schoolIndex: ", schoolIndex);
+            var schoolName = this.schoolName;
+            var schoolType = this.schoolType;
             updateHoverText(schoolName, schoolType);
-
         });
 
         // ======= mouseout event listener =======

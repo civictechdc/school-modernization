@@ -107,7 +107,7 @@ function makeZoneAggregator(zonesCollectionObj) {
         var nextZoneName, splitZoneName, nextZoneObject;
         for (var i = 0; i < zonesCollectionObj.zoneGeojson.features.length; i++) {
             nextZoneName = zonesCollectionObj.zoneGeojson.features[i].properties.NAME;
-            nextZoneObject = { zoneName: nextZoneName, zoneValue: 0 }
+            nextZoneObject = { zoneName: nextZoneName, zoneValue: 0 , zoneIndex: null }
             zonesCollectionObj.aggregatorArray.push(nextZoneObject);
             // console.log("  nextZoneObject.zoneName: ", i, "/", nextZoneObject.zoneName);
         }
@@ -146,6 +146,7 @@ function clearZoneAggregator(zonesCollectionObj) {
 
     for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
         zonesCollectionObj.aggregatorArray[i].zoneValue = 0;
+        zonesCollectionObj.aggregatorArray[i].zoneIndex = null;
     }
 }
 
@@ -193,7 +194,7 @@ function aggregateSchoolData(schoolsCollectionObj, displayObj, schoolData, schoo
 }
 
 // ======= ======= ======= captureSchoolData ======= ======= =======
-function captureSchoolData(zonesCollectionObj, displayObj, schoolData) {
+function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
     console.log("captureSchoolData");
 
     // == match school name from geojson file with school name from csv file
@@ -208,19 +209,23 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData) {
         for (var i = 0; i < zoneAggregator.length; i++) {
             nextDataObject = zoneAggregator[i];
             nextSchoolName = nextDataObject.zoneName;
-            console.log("  nextSchoolName: ", nextSchoolName);
             if (nextSchoolName == checkSchoolName) {
                 nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
+                console.log("  nextSchoolName: ", nextSchoolName);
+                console.log("  masterIndex: ", masterIndex);
                 if (Number.isInteger(nextSchoolExpend)) {
                     currentExpendValue = nextDataObject.zoneValue;
                     if (currentExpendValue == 0) {
                         aggregatedExpend = currentExpendValue + nextSchoolExpend;
                         nextDataObject.zoneValue = aggregatedExpend;
+                        nextDataObject.zoneIndex = masterIndex;
                     } else {
                         console.log("ERROR: data already captured for " + nextSchoolName);
                         break;
                     }
                 } else {
+                    nextDataObject.zoneValue = 0;
+                    nextDataObject.zoneIndex = masterIndex;
                     console.log("ERROR: non-integer number for " + nextSchoolName);
                 }
                 break;
@@ -465,9 +470,7 @@ function checkFilterSelection(displayObj, zonesCollectionObj) {
 // ======= ======= ======= updateChartText ======= ======= =======
 function updateChartText(expendText) {
     // console.log("updateChartText");
-
     $("#expend-text").text(expendText);
-
 }
 
 // ======= ======= ======= updateHoverText ======= ======= =======

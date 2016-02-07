@@ -1,6 +1,6 @@
 
 // ======= ======= ======= makeRankChart ======= ======= =======
-function makeRankChart(zonesCollectionObj, expend) {
+function makeRankChart(zonesCollectionObj, schoolsCollectionObj, expend) {
     console.log("makeRankChart");
 
     // ======= chart container =======
@@ -14,14 +14,13 @@ function makeRankChart(zonesCollectionObj, expend) {
     });
     updateChartText(filterMenu[expend].text);
 
-
     // ======= formatting variables =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel;
     // var fillColors = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod", "blueviolet", "chartreuse", "cornflowerblue"];
     var fillColors = zonesCollectionObj.dataColorsArray;
 
     // ======= chart formatting =======
-    var chartPadding = {top: 10, right: 10, bottom: 30, left: 80},
+    var chartPadding = {top: 20, right: 10, bottom: 30, left: 80},
         chartW = 220 - chartPadding.left - chartPadding.right,       // outer width of chart
         chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
 
@@ -149,8 +148,12 @@ function makeRankChart(zonesCollectionObj, expend) {
         .data(dataObjectsArray)
         .enter()
             .append("circle")
+            .attr("id", (function(d, i) {
+                circleId = "dataChartValue_" + d.zoneIndex;
+                return circleId;
+            }))
             .attr("class", "dataChartValue")
-            .attr("cx", function(d) {
+            .attr("cx", function(d, i) {
                 return schoolCircleX;
             })
             .attr("cy", function(d) {
@@ -172,23 +175,23 @@ function makeRankChart(zonesCollectionObj, expend) {
         .enter()
             .append("text")
                 .attr("id", (function(d, i) {
-                    labelId = "dataChartLabel" + i
+                    labelId = "dataChartLabel_" + i;
                     return labelId;
                 }))
                 .attr("class", "dataChartLabel")
                 .text(function(d) {
                     return d.zoneName;
                 })
-                .attr("x", function(d) {
-                    return schoolCircleX + 10;
+                .attr("x", function(d, i) {
+                    return schoolCircleX + 15;
                 })
                 .attr("y", function(d) {
                     return yScale(d.zoneValue) + 2;
                 })
                 .attr("font-family", "sans-serif")
-                .attr("font-size", "12px")
-                // .attr("visibility", "hidden")
-                .attr("fill", "rgba(255, 255, 255, 0.9)");
+                .attr("font-size", "16px")
+                .attr("fill", "black")
+                .attr("visibility", "hidden");
 
     // tweakSchoolLabels();
     activateChartValues();
@@ -202,16 +205,39 @@ function makeRankChart(zonesCollectionObj, expend) {
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
                 // console.log("\n======= showLabel ======= ");
-                targetLabel = $('#dataChartLabel' + i);
-                $(targetLabel).attr("fill", "purple");
-                // $(targetLabel).attr("visibility", "visible");
+                targetLabel = $('#dataChartLabel_' + i);
+                $(targetLabel).attr("visibility", "visible");
+                targetMarkerIndex = this.id.split("_")[1];
+                console.log("  this.id: ", this.id);
+                console.log("  targetMarkerIndex: ", targetMarkerIndex);
+                schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                schoolMarker.icon.fillColor = "white";
+                schoolMarker.icon.scale = 0.4;
+                schoolMarker.setMap(map);
             });
 
             // ======= ======= ======= mouseout ======= ======= =======
             $(this).off("mouseout").on("mouseout", function(event){
-                console.log("\n======= hideLabel ======= ");
-                targetLabel = $('#dataChartLabel' + i);
-                $(targetLabel).attr("fill", "rgba(255, 255, 255, 0.9)");
+                // console.log("\n======= hideLabel ======= ");
+                targetLabel = $('#dataChartLabel_' + i);
+                $(targetLabel).attr("visibility", "hidden");
+                targetMarkerIndex = this.id.split("_")[1];
+                schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                schoolMarker.icon.fillColor = "yellow";
+                schoolMarker.icon.scale = 0.2;
+                schoolMarker.setMap(map);
+            });
+
+            // ======= ======= ======= mouseout ======= ======= =======
+            $(this).off("click").on("click", function(event){
+                console.log("\n======= click ======= ");
+                schoolIndex = this.id.split("_")[1];
+                makeSchoolProfile(schoolsCollectionObj, schoolIndex);
+                $("#profile").css("display", "table");
+                schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                schoolMarker.icon.fillColor = "yellow";
+                schoolMarker.icon.scale = 0.2;
+                schoolMarker.setMap(map);
             });
 
         });
