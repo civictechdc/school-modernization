@@ -361,6 +361,7 @@ hr {
     box-shadow: 6px 6px 5px #888888;
     border-radius: 6px 6px 2px 2px;
     background-color: rgba(255, 255, 255, 0.9);
+    /*background-color: #eee;*/
     z-index: 9;
 }
 #chart {

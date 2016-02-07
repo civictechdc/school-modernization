@@ -29,7 +29,7 @@ function makeRankChart(zonesCollectionObj, expend) {
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
     var myJsonString = JSON.stringify(dataObjectsArray);
     var dataMax = d3.max(dataObjectsArray, function(d) {
-        return d.schoolValue;
+        return d.zoneValue;
     });
     console.log("  dataMax: ", dataMax);
 
@@ -64,7 +64,7 @@ function makeRankChart(zonesCollectionObj, expend) {
     var xScaleLabels = ["scale", "amount", "school"];
     var xScale = d3.scale.ordinal()         // maps input domain to output range
         .domain(xScaleLabels.map(function(d) {
-            console.log("  d: ", d);
+            // console.log("  d: ", d);
             return d;;
         }))
         .range([0, chartW]);
@@ -72,7 +72,7 @@ function makeRankChart(zonesCollectionObj, expend) {
     // ======= Y SCALES =======
     var yScale = d3.scale.linear()      // maps input domain to output range
         .domain([0, d3.max(barScaleArray, function(d, i) {
-            console.log("  d: ", d);
+            // console.log("  d: ", d);
             return d;
         })])
         .range([chartH, 0]);
@@ -91,6 +91,15 @@ function makeRankChart(zonesCollectionObj, expend) {
         .append("g")
             .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
 
+    // // ======= background =======
+    // svg.append("rect")
+    //     .attr("width", "100%")
+    //     .attr("height", "100%")
+    //     .attr("fill", "pink");
+    //
+    // svg.append("g")
+    //     .attr("transform", "translate(" + (-chartPadding.left) + "," + (-chartPadding.top) + ")");
+
     // ======= yAxis =======
     svg.append("g")                 // g group element to contain about-to-be-generated axis elements
         .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
@@ -103,7 +112,8 @@ function makeRankChart(zonesCollectionObj, expend) {
     // ======= rects for bar graph =======
     svg.selectAll(".bar")
         .data(barScaleArray)
-        .enter().append("rect")
+        .enter()
+            .append("rect")
             .attr("class", "bar")
             .attr("x", function(d) {
                 return 0;
@@ -139,18 +149,19 @@ function makeRankChart(zonesCollectionObj, expend) {
         .data(dataObjectsArray)
         .enter()
             .append("circle")
+            .attr("class", "dataChartValue")
             .attr("cx", function(d) {
                 return schoolCircleX;
             })
             .attr("cy", function(d) {
-                return yScale(d.schoolValue);
+                return yScale(d.zoneValue);
             })
             .attr("r", function(d) {
                 console.log("  d: ", d);
                 return schoolCircleR;
             })
             .style('fill', function(d, i){
-                colorIndex = assignChartColors(d.schoolValue);
+                colorIndex = assignChartColors(d.zoneValue);
                 whichColor = fillColors[colorIndex];
                 return whichColor;
             });
@@ -160,38 +171,51 @@ function makeRankChart(zonesCollectionObj, expend) {
         .data(dataObjectsArray)
         .enter()
             .append("text")
-                .attr("class", "schoolValueLabel")
+                .attr("id", (function(d, i) {
+                    labelId = "dataChartLabel" + i
+                    return labelId;
+                }))
+                .attr("class", "dataChartLabel")
                 .text(function(d) {
-                    return d.schoolName;
+                    return d.zoneName;
                 })
                 .attr("x", function(d) {
                     return schoolCircleX + 10;
                 })
                 .attr("y", function(d) {
-                    return yScale(d.schoolValue) + 2;
+                    return yScale(d.zoneValue) + 2;
                 })
                 .attr("font-family", "sans-serif")
                 .attr("font-size", "12px")
-                .attr("fill", "purple");
+                // .attr("visibility", "hidden")
+                .attr("fill", "rgba(255, 255, 255, 0.9)");
 
-    tweakSchoolLabels();
+    // tweakSchoolLabels();
+    activateChartValues();
 
-    // ======= ======= ======= assignChartColors ======= ======= =======
-    function assignChartColors(schoolValue) {
-        // console.log("assignChartColors");
+    // ======= activateChartValues =======
+    function activateChartValues() {
+        console.log("activateChartValues");
 
-        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
-            binMin = (zonesCollectionObj.dataIncrement * i);
-            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-            // console.log("  binMax: ", binMax);
-            if ((binMin <= schoolValue) && (schoolValue <= binMax)) {
-                colorIndex = i;
-                break;
-            }
-        }
-        return colorIndex;
+        $('.dataChartValue').each(function(i) {
+
+            // ======= ======= ======= mouseover ======= ======= =======
+            $(this).off("mouseover").on("mouseover", function(event){
+                // console.log("\n======= showLabel ======= ");
+                targetLabel = $('#dataChartLabel' + i);
+                $(targetLabel).attr("fill", "purple");
+                // $(targetLabel).attr("visibility", "visible");
+            });
+
+            // ======= ======= ======= mouseout ======= ======= =======
+            $(this).off("mouseout").on("mouseout", function(event){
+                console.log("\n======= hideLabel ======= ");
+                targetLabel = $('#dataChartLabel' + i);
+                $(targetLabel).attr("fill", "rgba(255, 255, 255, 0.9)");
+            });
+
+        });
     }
-
 
     // ======= tweakSchoolLabels =======
     function tweakSchoolLabels() {
@@ -200,7 +224,7 @@ function makeRankChart(zonesCollectionObj, expend) {
         var locOK = false;
         var prevYarray = [];
 
-        $('.schoolValueLabel').each(function(i) {
+        $('.dataChartLabel').each(function(i) {
             yVal = parseInt(this.getAttribute("y"));
             prevYarray.push(yVal);
         });
@@ -219,10 +243,26 @@ function makeRankChart(zonesCollectionObj, expend) {
             }
         }
 
-        $('.schoolValueLabel').each(function(i) {
+        $('.dataChartLabel').each(function(i) {
             nextYloc = prevYarray[i];
             this.setAttribute("y", nextYloc);
         });
+    }
+
+    // ======= ======= ======= assignChartColors ======= ======= =======
+    function assignChartColors(zoneValue) {
+        // console.log("assignChartColors");
+
+        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
+            binMin = (zonesCollectionObj.dataIncrement * i);
+            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+            // console.log("  binMax: ", binMax);
+            if ((binMin <= zoneValue) && (zoneValue <= binMax)) {
+                colorIndex = i;
+                break;
+            }
+        }
+        return colorIndex;
     }
 
     // ======= stringToInt =======
