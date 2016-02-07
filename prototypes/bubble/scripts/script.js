@@ -35,8 +35,20 @@ d3.json("scripts/json/data.json", function(error, root) {
   node.append("circle")
       .attr("r", function(d) { return d.r; })
       .style("fill", function(d) { 
-        console.log(d);
-        return color(d.packageName); 
+        var value = d.value;
+        if(value > 10000000){ // 10 MILLION
+            return '#00cc00';
+        } else if(value < 10000000 && value > 1000000){
+            return '#009900';
+        } else if (value < 1000000 && value > 100000){
+            return '#004400';
+        } else if (value < 100000 && value > 0){
+            return '#001100';
+        } else {
+            return '#aa0000';
+        }
+        // console.log(d);
+        // return color(d.packageName); 
       })
       ;
 
