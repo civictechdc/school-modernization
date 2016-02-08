@@ -5,13 +5,13 @@ p {
   font-size: 12px; }
 
 body {
-  background-color: #f0f0f0; }
+  background-color: #fafafa; }
 
 header {
   position: fixed;
-  background-color: #d7d7d7;
+  background-color: #f7f7f7;
   top: 0;
-  border-bottom: 3px solid #717171; }
+  border-bottom: 3px solid #e1e1e1; }
 
 .container {
   width: 80%;
