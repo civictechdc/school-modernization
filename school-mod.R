@@ -1,7 +1,7 @@
 library(stringr)
 library(plyr)
-library(rgdal)
 library(gtools)
+library(reshape)
 ### Read in data ###
 ### Read in data ###
 ### Read in data ###
@@ -50,6 +50,13 @@ CharterDataSheet<-read.csv("https://raw.githubusercontent.com/codefordc/school-m
                            stringsAsFactors=FALSE, strip.white=TRUE)[c(1:5,7:9)]
 colnames(CharterDataSheet)<-c("LEA.Code","School.ID","School","Level","Address","maxOccupancy","totalSQFT", "Total.Enroll")
 CharterDataSheet<-subset(CharterDataSheet,grepl("^[[:digit:]]",CharterDataSheet$LEA.Code))
+
+CharterSpend<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/PCS%20Facility%20Allot.%20Sch-by-Sch.csv",
+                       stringsAsFactors=FALSE, strip.white=TRUE)
+CharterSpend<-subset(CharterSpend,CharterSpend$Master.PCS.List.1998.2014.15!="Grand Total")
+CharterSchoolName<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/PCS%20School%20Names.csv",
+                            stringsAsFactors=FALSE, strip.white=TRUE)[c(1:3)]
+colnames(CharterSchoolName)<-c("Agency","Master.PCS.List.1998.2014.15","PCSName")
 
 ### Create DCPS dataset ###
 ### Create DCPS dataset ###
@@ -276,7 +283,78 @@ row.names=FALSE)
 ###Create Charter dataset###
 ###Create Charter dataset###
 ###Create Charter dataset###
+#Identify school open/close dates
+melt<- melt(CharterSpend, id="Master.PCS.List.1998.2014.15")
+melt<-subset(melt,melt$variable!="Totals")
+melt$value<-money(melt$value)
+melt$value<-numeric(melt$value)
+melt$variable<-as.character(melt$variable)
+melt$year<-as.numeric(gsub("[^\\d]+", "", melt$variable, perl=TRUE))
+melt<-melt[order(melt$Master.PCS.List.1998.2014.15,melt$year),]
+
+YrsOpen<-subset(melt,melt$value!=0)
+OpenCount<-count(YrsOpen, "Master.PCS.List.1998.2014.15")
+
+Open<-ddply(YrsOpen, .(Master.PCS.List.1998.2014.15), summarize,
+            Open = min(year), 
+            Close = max(year))
+Years<-join(OpenCount,Open,by="Master.PCS.List.1998.2014.15")
+Years$Open.Now<-ifelse(Years$Close==2015,1,0)
+Years$Close<-ifelse(Years$Close==2015,NA,Years$Close)
+
+SpendLifetime<-join(CharterSpend,Years,by="Master.PCS.List.1998.2014.15")[-c(2:18)]
+colnames(SpendLifetime)[c(2:3)]<-c("MajorExp9815","YearsOpen")
+
+#Join charter school spend with extended school name
+CharterSchoolName$Master.PCS.List.1998.2014.15<-ifelse(
+  CharterSchoolName$PCSName=="LAYC Career Academy (Alternative School Category Latin American Youth Center)",
+  "LAYC Career Academy Alt. School", CharterSchoolName$Master.PCS.List.1998.2014.15)
+  
+join1<-join(SpendLifetime,CharterSchoolName,by="Master.PCS.List.1998.2014.15", type="inner")
+
+Smiss<-subset(SpendLifetime,!(SpendLifetime$Master.PCS.List.1998.2014.15 %in% join1$Master.PCS.List.1998.2014.15))
+Smiss<-Smiss[order(Smiss$Master.PCS.List.1998.2014.15),]
+Nmiss<-subset(CharterSchoolName,!(CharterSchoolName$Master.PCS.List.1998.2014.15 %in% join1$Master.PCS.List.1998.2014.15))
+Nmiss<-Nmiss[order(Nmiss$Master.PCS.List.1998.2014.15),]
+Nmiss<-subset(Nmiss,Nmiss$Master.PCS.List.1998.2014.15!="Center City (combined)" & 
+                Nmiss$Master.PCS.List.1998.2014.15!="Hope Academy")
+join2<-cbind(Smiss,Nmiss)[-c(1)]
+
+CharterSpend.2<-rbind(join1,join2)
+rm(join1,join2,melt,metled,Nmiss,Open,OpenCount,OpenYr,Smiss,Smiss2,Years,YrsOpen)
+CharterOpen<-subset(CharterSpend.2,CharterSpend.2$Open.Now==1)
+
+#Join charter spend with enrollment
 enrollCharter<-subset(enroll, enroll$Sector=="Charters")
+CharterOpen$School.ID<-gsub("[^\\d]+", "", CharterOpen$PCSName, perl=TRUE)
+CharterOpen$School.ID<-ifelse(CharterOpen$School.ID=="190","196",CharterOpen$School.ID)
+enrollCharter<-enrollCharter[order(enrollCharter$School.Name),]
+join1<-join(CharterOpen,enrollCharter,by="School.ID",type="inner")
+sMiss1<-subset(CharterOpen,!(CharterOpen$Master.PCS.List.1998.2014.15 %in% join1$Master.PCS.List.1998.2014.15))
+eMiss1<-subset(enrollCharter,!(enrollCharter$School.Name %in% join1$School.Name))
+
+sMiss1$Master.PCS.List.1998.2014.15<-ifelse(sMiss1$Master.PCS.List.1998.2014.15=="E.W. Stokes",
+                                        "Elsie Whitlow Stokes Community Freedom PCS",
+                                        ifelse(sMiss1$Master.PCS.List.1998.2014.15=="AppleTree  Riverside",
+                                               "AppleTree Learning Center Southwest",
+                                          ifelse(sMiss1$Master.PCS.List.1998.2014.15=="Capital City Upper School",
+                                                  "Capital City High School PCS",
+                                              ifelse(sMiss1$Master.PCS.List.1998.2014.15=="DCI, District of Columbia  International School",
+                                                     "District of Columbia International School",
+                                                ifelse(sMiss1$Master.PCS.List.1998.2014.15=="Friendship Collegiate",
+                                                       "Friendship Woodson Collegiate Academy",
+                                            sMiss1$Master.PCS.List.1998.2014.15)))))
+sMiss1<-sMiss1[order(sMiss1$Master.PCS.List.1998.2014.15),]
+eMiss1<-eMiss1[order(eMiss1$School.Name),]
+eMiss1<-subset(eMiss1,eMiss1$School.Name!="E.L. Haynes PCS Kansas Avenue (Elementary School)")
+
+join2<-cbind(eMiss1,sMiss1)[-c(35)]
+
+PCS.Spend.Enrollment<-rbind(join1,join2)
+PCS.Spend.Enrollment$SPED<-PCS.Spend.Enrollment$Level.1+PCS.Spend.Enrollment$Level.2+PCS.Spend.Enrollment$Level.3+PCS.Spend.Enrollment$Level.4
+rm(join1, join2,eMiss1,sMiss1,enrollCharter,CharterOpen,Check)
+
+#Charter SQFT - hold for Nancy response on multi-building issue
 CharterDataSheet<-CharterDataSheet[order(CharterDataSheet$School.ID),]
 CharterDataSheet$totalSQFT<-str_trim(gsub("\t","",CharterDataSheet$totalSQFT))
 CharterDataSheet$totalSQFT<-as.numeric(gsub(",","",CharterDataSheet$totalSQFT))
@@ -316,7 +394,7 @@ Charter<-rbind(Multi,Single)
 
 ###Add group enrollment figures
 enroll$SPED<-enroll$Level.1+enroll$Level.2+enroll$Level.3+enroll$Level.4
-cEnroll<-enroll[c(2:3,20,25,27)]
+cEnroll<-enroll[c(2:3,20,25,26)]
 
 #the enroll figures are wrong for those that share a school code and need to be updated
 CharterEnroll<-join(Charter,cEnroll, by="School.ID",type="left")
@@ -330,7 +408,6 @@ CharterLoc<-CharterLoc[c(6:9)]
 Charters<-join(CharterEnroll,CharterLoc,by="School.ID",type="left")
 
 Charters$Ward<-gsub("Ward ","",Charters$ward)
-Charters$MajorExp9815<-rep(NA,126)
 Charters$TotalAllotandPlan1621<-rep(NA,126)
 Charters$LifetimeBudget<-rep(NA,126)
 Charters$FeederMS<-rep(NA,126)
