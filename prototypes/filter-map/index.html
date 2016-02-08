@@ -28,14 +28,9 @@
 
 		<!-- ======= ======= ======= tabs ======= ======= ======= -->
 		<div class="row header">
-			<div class="page-header">
-				<h1>DCPS School Modernization Tool</h1>
-			</div>
-			<ul class="tabs">
-				<li class="tab active-tab"><a href="#">Map</a></li>
-				<li class="tab"><a href="profile.html">Profile</a></li>
-				<li class="tab"><a href="comparison.html">Comparison</a></li>
-			</ul>
+			<div class="page-title"><h1>DCPS School Modernization Tool</h1></div>
+			<div id="filters-title" class="banner"><h2>your filters</h2></div>
+			<div id='clear-button'><span class='btn-text'>clear</span></div>
 		</div>
 
 		<!-- ======= ======= ======= content ======= ======= ======= -->
@@ -45,18 +40,20 @@
 			<div class="column col-md-12 mapCol">
 				<!-- <button id="btn_popup">popup</button> -->
 				<div id="tooltips"></div>
-				<div id="smoke">...</div>
 				<div id="popup">
-					<div id="popup_bar" class="popup_bar"><p>filters</p></div>
+					<div id="drag_bar" class="title_bar"><p>filters</p></div>
 					<nav id="main-nav"></nav>
 				</div>
+
 				<div id="info">
-					<div class="popup_bar"><p>info</p></div>
+					<div class="title_bar"><p>info</p></div>
 					<div id="infoText"></div>
 				</div>
 				<div id="map"></div>
-				<div id="message"><p>&nbsp;</p></div>
-				<div id="profileData"></div>
+				<!-- <div id="message"><p>&nbsp;</p></div> -->
+				<!-- <div id="chart"></div> -->
+				<div id="mapLegend"></div>
+				<!-- <div id="profileData"></div> -->
 			</div>
 
 		</div>
@@ -65,12 +62,11 @@
 	    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-		<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE"></script> -->
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&libraries=geometry&libraries=visualization"></script>
-		<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&libraries=visualization"></script> -->
-		<script type="text/javascript" src="script.js"></script>
-		<script type="text/javascript" src="utilities.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkBjmogOyMcL5_QVtayKZ_X85rSQAf3BE&libraries=visualization"></script>
 		<script type="text/javascript" src="d3graphs.js"></script>
+		<script type="text/javascript" src="utilities.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+		<!-- <script type="text/javascript" src="objects.js"></script> -->
 
 	</div>
 </body>

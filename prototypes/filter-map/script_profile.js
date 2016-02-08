@@ -158,7 +158,7 @@ function initApp_P() {
         var chkboxString = "<div class='squaredOne'><input type='checkbox' value='None' id='squaredOne' name='check' /><label for='squaredOne'></label></div>";
 
         // == header == //
-        var htmlString = "<table class='profile'>";
+        var htmlString = "<table id='profile'>";
         htmlString += "<tr><th class='data'>data</th><th class='values'>values</th><th class='select'>select</th></tr>";
 
         htmlString += "<tr><td>Address</td><td>" + schoolData.Address + "</td><td>" + chkboxString + "</td></tr>";
