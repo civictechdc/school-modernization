@@ -114,7 +114,7 @@ function processSchoolName(schoolName) {
 // ======= ======= ======= validateSchoolData ======= ======= =======
 function validateSchoolData(selectedSchoolData) {
     console.log("validateSchoolData");
-    console.log("  selectedSchoolData: ", selectedSchoolData);
+    // console.log("  selectedSchoolData: ", selectedSchoolData);
 
     // school data: schoolCode, schoolName, schoolWard, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel:, schoolAgency
     // building data: schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll

@@ -508,7 +508,7 @@ hr {
 
 /* ======= profile-container ======= */
 #profile-container {
-    display: none;
+    display: block;
     height: auto;
     position: relative;
     left: 0;
