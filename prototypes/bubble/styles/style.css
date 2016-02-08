@@ -1,7 +1,15 @@
 * {
   font-family: sans-serif; }
 
+#container {
+  width: 80%;
+  margin: 0 auto; }
+
 text {
   font-size: 10px; }
+
+.highlighted {
+  fill: 'white';
+  bgc: 'white'; }
 
 /*# sourceMappingURL=style.css.map */
