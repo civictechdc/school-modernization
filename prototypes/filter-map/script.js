@@ -319,9 +319,16 @@ function initApp() {
 
         // ======= autocomplete =======
         // availableTags = displayObj.schoolNamesArray;
-        $( "#searchWindow" ).autocomplete({
-            source: availableTags
-        });
+        // console.log("  availableTags: ", availableTags);
+        // $(function() {
+        //     console.log("autocomplete");
+        //     $("#searchWindow").autocomplete({
+        //         source: displayObj.schoolNamesArray
+        //     });
+        // });
+        // $("#searchWindow").autocomplete({
+        //     source: availableTags
+        // });
         $('#searchWindow').css('z-index', 999);
 
         // ======= selectFilter =======
@@ -601,6 +608,7 @@ function initApp() {
                 nextSchool = jsonData[i];
                 displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
             }
+            initAutoComplete(displayObj);
 
         // == errors/fails
         }).fail(function(){

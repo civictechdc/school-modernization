@@ -972,6 +972,18 @@ function initMap(zonesCollectionObj) {
     });
 }
 
+// ======= ======= ======= initAutoComplete ======= ======= =======
+function initAutoComplete(displayObj) {
+    console.log('initAutoComplete');
+    $(function() {
+        console.log("autocomplete");
+        $("#searchWindow").autocomplete({
+            source: displayObj.schoolNamesArray
+        });
+    });
+}
+
+
 // ======= ======= ======= floating windows ======= ======= =======
 (function(){
     console.log("initFloatingWindows");
