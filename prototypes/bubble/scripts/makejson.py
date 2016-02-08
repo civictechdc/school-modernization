@@ -36,7 +36,8 @@ data_for_json = {
    ]
 } # dictionary to populate for the json dump
 
-# Seperate schools into feeder pattern array feeders = []
+# Seperate schools into feeder pattern array 
+feeders = []
 for index, item in enumerate(range(int(num_feeders))):
    temp_dict = {}
    temp_dict['feeders'] = [item['School'] for item in data if item['FeederHSNum'] == str(index + 1)]

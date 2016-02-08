@@ -1,0 +1,298 @@
+{
+   "name": "Bubble Chart",
+   "children": [{
+      "name": "Feeder 1",
+      "children": [{
+         "name": "Aiton Elementary School",
+         "size": "12115000"
+      }, {
+         "name": "Burrville Elementary School",
+         "size": "0"
+      }, {
+         "name": "C.W. Harris Elementary School",
+         "size": "12606000"
+      }, {
+         "name": "Drew Elementary School",
+         "size": "0"
+      }, {
+         "name": "Houston Elementary School",
+         "size": "15693000"
+      }, {
+         "name": "Nalle Elementary School",
+         "size": "0"
+      }, {
+         "name": "Smothers Elementary School",
+         "size": "12679000"
+      }, {
+         "name": "Thomas Elementary School",
+         "size": "0"
+      }, {
+         "name": "Kelly Miller Middle School",
+         "size": "0"
+      }]
+   }, {
+      "name": "Feeder 2",
+      "children": [{
+         "name": "Bancroft Elementary School",
+         "size": "59943000"
+      }, {
+         "name": "Hyde-Addison Elementary School",
+         "size": "22284976"
+      }, {
+         "name": "Janney Elementary School",
+         "size": "0"
+      }, {
+         "name": "Key Elementary School",
+         "size": "0"
+      }, {
+         "name": "Lafayette Elementary School",
+         "size": "59373105"
+      }, {
+         "name": "Mann Elementary School",
+         "size": "-5.00E+05"
+      }, {
+         "name": "Murch Elementary School",
+         "size": "63156000"
+      }, {
+         "name": "Shepherd Elementary School",
+         "size": "1274389"
+      }, {
+         "name": "Stoddert Elementary School",
+         "size": "0"
+      }, {
+         "name": "Hearst Elementary School",
+         "size": "361277"
+      }, {
+         "name": "Deal Middle School",
+         "size": "0"
+      }, {
+         "name": "Hardy Middle School",
+         "size": "0"
+      }, {
+         "name": "Oyster-Adams Bilingual School (Oyster)",
+         "size": "0"
+      }, {
+         "name": "Oyster-Adams Bilingual School (Adams)",
+         "size": "12236000"
+      }]
+   }, {
+      "name": "Feeder 3",
+      "children": [{
+         "name": "Barnard Elementary School",
+         "size": "0"
+      }, {
+         "name": "Raymond Education Campus",
+         "size": "19567000"
+      }, {
+         "name": "Truesdell Education Campus",
+         "size": "7489000"
+      }, {
+         "name": "West Education Campus",
+         "size": "35095000"
+      }]
+   }, {
+      "name": "Feeder 4",
+      "children": [{
+         "name": "Beers Elementary School",
+         "size": "-24188"
+      }, {
+         "name": "Ketcham Elementary School",
+         "size": "0"
+      }, {
+         "name": "Kimball Elementary School",
+         "size": "17696000"
+      }, {
+         "name": "Moten Elementary School",
+         "size": "0"
+      }, {
+         "name": "Orr Elementary School",
+         "size": "41995000"
+      }, {
+         "name": "Plummer Elementary School",
+         "size": "26191"
+      }, {
+         "name": "Savoy Elementary School",
+         "size": "0"
+      }, {
+         "name": "Stanton Elementary School",
+         "size": "2165644"
+      }, {
+         "name": "Kramer Middle School",
+         "size": "0"
+      }, {
+         "name": "Sousa Middle School",
+         "size": "0"
+      }, {
+         "name": "Old Randle",
+         "size": "NA"
+      }]
+   }, {
+      "name": "Feeder 5",
+      "children": [{
+         "name": "Brent Elementary School",
+         "size": "0"
+      }, {
+         "name": "Browne Education Campus",
+         "size": "20636000"
+      }, {
+         "name": "Eaton Elementary School",
+         "size": "15552000"
+      }, {
+         "name": "J.O. Wilson Elementary School",
+         "size": "0"
+      }, {
+         "name": "Ludlow-Taylor Elementary School",
+         "size": "-1026290"
+      }, {
+         "name": "Maury Elementary School",
+         "size": "5044000"
+      }, {
+         "name": "Old Miner",
+         "size": "0"
+      }, {
+         "name": "Payne Elementary School",
+         "size": "27450"
+      }, {
+         "name": "Peabody Elementary School",
+         "size": "0"
+      }, {
+         "name": "Thomson Elementary School",
+         "size": "0"
+      }, {
+         "name": "Tyler Elementary School",
+         "size": "0"
+      }, {
+         "name": "Watkins Elementary School",
+         "size": "30313978"
+      }, {
+         "name": "Van Ness ES",
+         "size": "17995000"
+      }, {
+         "name": "Amidon-Bowen Elementary School",
+         "size": "0"
+      }, {
+         "name": "Eliot-Hine Middle School",
+         "size": "40911043"
+      }, {
+         "name": "Jefferson Middle School",
+         "size": "35993000"
+      }, {
+         "name": "Stuart-Hobson Middle School",
+         "size": "1190116"
+      }, {
+         "name": "Capitol Hill Montessori School @ Logan",
+         "size": "11987136"
+      }]
+   }, {
+      "name": "Feeder 6",
+      "children": [{
+         "name": "Brightwood Education Campus",
+         "size": "0"
+      }, {
+         "name": "Burroughs Education Campus",
+         "size": "0"
+      }, {
+         "name": "Langdon Education Campus",
+         "size": "0"
+      }, {
+         "name": "Langley Education Campus",
+         "size": "0"
+      }, {
+         "name": "Noyes Education Campus",
+         "size": "0"
+      }, {
+         "name": "Walker-Jones Education Campus",
+         "size": "0"
+      }, {
+         "name": "Wheatley Education Campus",
+         "size": "0"
+      }, {
+         "name": "Brookland Education Campus @ Bunker Hill",
+         "size": "0"
+      }, {
+         "name": "Brookland MS",
+         "size": "-1202174"
+      }]
+   }, {
+      "name": "Feeder 7",
+      "children": [{
+         "name": "Cleveland Elementary School",
+         "size": "0"
+      }, {
+         "name": "Garrison Elementary School",
+         "size": "2.00E+07"
+      }, {
+         "name": "Marie Reed Elementary School",
+         "size": "54503000"
+      }, {
+         "name": "Powell Elementary School",
+         "size": "2504026"
+      }, {
+         "name": "Ross Elementary School",
+         "size": "0"
+      }, {
+         "name": "Seaton Elementary School",
+         "size": "0"
+      }, {
+         "name": "Tubman Elementary School",
+         "size": "0"
+      }, {
+         "name": "Francis-Stevens Education Campus",
+         "size": "20178000"
+      }, {
+         "name": "H.D. Cooke Elementary School",
+         "size": "0"
+      }, {
+         "name": "Bruce-Monroe Elementary School @ Park View",
+         "size": "0"
+      }, {
+         "name": "Columbia Heights Education Campus",
+         "size": "0"
+      }]
+   }, {
+      "name": "Feeder 8",
+      "children": [{
+         "name": "Garfield Elementary School",
+         "size": "12583908"
+      }, {
+         "name": "Hendley Elementary School",
+         "size": "0"
+      }, {
+         "name": "Leckie Elementary School",
+         "size": "0"
+      }, {
+         "name": "Patterson Elementary School",
+         "size": "0"
+      }, {
+         "name": "Simon Elementary School",
+         "size": "0"
+      }, {
+         "name": "Turner Elementary School",
+         "size": "0"
+      }, {
+         "name": "Hart Middle School",
+         "size": "0"
+      }, {
+         "name": "King Elementary School",
+         "size": "372458"
+      }, {
+         "name": "John Hayden Johnson Middle School",
+         "size": "-5857"
+      }, {
+         "name": "Malcolm X Elementary School",
+         "size": "0"
+      }]
+   }, {
+      "name": "Feeder 9",
+      "children": [{
+         "name": "Takoma Education Campus",
+         "size": "0"
+      }, {
+         "name": "Whittier Education Campus",
+         "size": "0"
+      }, {
+         "name": "LaSalle-Backus Education Campus",
+         "size": "0"
+      }]
+   }]
+}
