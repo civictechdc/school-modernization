@@ -30,42 +30,48 @@
         margin: 0;
     }
 
-</style>
-<h2>Capital Spending Lifetime Percentages by School</h2>
+    .center-label text {
+      font-size: 0.7em;
+    }
+    .center-label .percentage,
+    .center-label .total {
+      font-weight: bold;
+    }
 
-<form>
-    <label><input type="radio" name="mode" value="past" checked> Spending Spending Since 1998</label>
-    <label><input type="radio" name="mode" value="future"> Total Planned Spending through 2021</label>
-</form>
-<div id="chart">
-    <div id="explanation" >
-        <h4 class="percentage"></h4>
-        <h4 class="total"> </h4>
-        <p class="title"></p>
-    </div>
-</div>
+</style>
+<h2>DCPS Capital Projects and the Charter Funding Formula</h2>
+
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="/colorbrewer.js"></script>
+<div id="chart">
+
+</div>
 <script>
 
-    var width = 600,
-    height = 600,
-    radius = Math.min(width, height) / 2.25,
-    color = d3.scale.category20c();
+    var width = 900,
+      height = 400,
+      radius = 125,
+      color = d3.scale.category10();
 
     var svg = d3.select("#chart").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height * .52 + ")")
-    .attr("id", "container");
+      .attr("width", width)
+      .attr("height", height);
+
+    var yOffset = 150;
+    var xOffset = 150;
+    svg.append("g")
+      .attr("transform", "translate("+xOffset+","+yOffset+")")
+      .attr("id", "DCPS");
+
+    // Position PCS chart to the right of DCPS chart
+    svg.append("g")
+      .attr("transform", "translate(" + (xOffset+2*radius+50) + "," + yOffset + ")")
+      .attr("id", "PCS");
 
     var partition = d3.layout.partition()
-    .sort(null)
-    .size([2 * Math.PI, radius * radius])
-    .value(PastSpending)
-
-
+      .sort(null)
+      .size([2 * Math.PI, radius * radius])
+      .value(PastSpending)
 
     var tagScale = d3.scale.ordinal().domain([
         "FULL MOD",
@@ -75,66 +81,58 @@
         "PARTIAL MOD + ADD",
         "STABILIZED",
         "Annual Allotment"
-        ])
-    .range(colorbrewer.Set1[7]);
+    ])
+      .range(colorbrewer.Set1[7]);
 
 
     var arc = d3.svg.arc()
-    .startAngle(function(d) { return d.x; })
-    .endAngle(function(d) { return d.x + d.dx; })
-    .innerRadius(function(d) { return Math.sqrt(d.y); })
-    .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
+      .startAngle(function(d) { return d.x; })
+      .endAngle(function(d) { return d.x + d.dx; })
+      .innerRadius(function(d) { return Math.sqrt(d.y); })
+      .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
     function PastSpending(d) {
         return parseInt(d["MajorExp9815"], 10)
     }
 
-    function FutureSpending(d) {
-        var i = parseInt(d["TotalAllotandPlan1621"], 10)
-        if (i > 0) {
-            return i
-        }
-        return 0
-    }
-
-    // Add the mouseleave handler to the bounding circle.
-    d3.select("#container").on("mouseleave", mouseleave);
-
-    // The total cash spent, a global var for the chart.
-    var totalSize = 0;
-
     d3.json("donut.json", function(error, root) {
         if (error) throw error;
 
-        var nodes = partition.nodes(root)
+        var dcps_tree = { 
+            name: "Total Capital Spending",
+            children: [root.children[0],  // Multi-School projects
+                       root.children[2],  // Individual schools
+            ]
+        };
 
-        var path = svg.datum(root).selectAll("path")
-        .data(nodes)
-        .enter().append("path")
-        .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
-        .attr("d", arc)
-        .on("mouseover", mouseover)
-        .style("stroke", "#fff")
-        // TODO scrutnize color choices
-        .style("fill", function(d) { return tagScale(bestLbl(d)); })
-        .each(stash);
+        var pcs_tree = {
+            name: "Total Funds For Charters",
+            children: root.children[1].children
+        };
 
-        totalSize = path.node().__data__.value;
-        centerDefault(totalSize);
-
-        d3.selectAll("input").on("change", function change() {
-            var value = this.value === "future"
-            ? FutureSpending
-            : PastSpending
-            var newPart = partition.value(value);
-
-            path.data(newPart.nodes)
-                .transition()
-                .duration(1500)
-                .attrTween("d", arcTween);
-        });
-
+        makeChart(d3.select("#PCS"), pcs_tree);
+        makeChart(d3.select("#DCPS"), dcps_tree);
+        
     });
+
+    function makeChart(selection, tree) {
+        var nodes = partition.nodes(tree)
+
+        var path = selection.datum(tree).selectAll("path")
+          .data(nodes)
+          .enter().append("path")
+          .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
+          .attr("d", arc)
+          .on("mouseover", mouseover(selection))
+          .style("stroke", "#fff")
+          // TODO scrutnize color choices
+          .style("fill", function(d) { return tagScale(bestLbl(d)); });
+
+        // Add the mouseleave handler to the bounding rectangle.
+        selection.on("mouseleave", mouseleave(selection));
+        addCenterLabel(selection)
+
+    }
 
     function bestLbl(d) {
         if (isDefined(d, 'School')) {
@@ -159,112 +157,112 @@
         return false
     }
 
-    // Stash the old values for transition.
-    function stash(d) {
-        d.x0 = d.x;
-        d.dx0 = d.dx;
-    }
-
-    // Interpolate the arcs in data space.
-    function arcTween(a) {
-        var i = d3.interpolate({x: a.x0, dx: a.dx0}, a);
-        return function(t) {
-            var b = i(t);
-            // Stash the last pos of b in a
-            if (t === 1) {
-                a.x0 = b.x;
-                a.dx0 = b.dx;
-            }
-            return arc(b);
-        };
-    }
-
-    d3.select(self.frameElement).style("height", height + "px");
-
-
     // Fade all but the current sequence, and show it in the breadcrumb trail.
-    function mouseover(d) {
+    function mouseover(selection) {
+      return function(d) {
         console.log("Moused over", d);
+        changeCenterLabel(selection, d);
+        var sequenceArray = getAncestors(d);
+
+        // Fade all the segments.
+        selection.selectAll("path").style("opacity", 0.3);
+
+        // Then highlight only those that are an ancestor of the current segment.
+        selection.selectAll("path")
+          .filter(function(node) {
+              return (sequenceArray.indexOf(node) >= 0);
+          })
+          .style("opacity", 1);
+      }
+    }
+
+    // mouseleave is a closure that parameterizes the leaving functionality within 
+    // an individual donut.
+    function mouseleave(donut, d) {
+        return function(d) {
+          console.log("Mouse left", d);
+
+          // Hide the breadcrumb trail
+          d3.select("#trail")
+            .style("visibility", "hidden");
+
+          // Deactivate all segments during transition.
+          donut.selectAll("path").on("mouseover", null);
+
+          // Transition each segment to full opacity and then reactivate it.
+          donut.selectAll("path")
+            .transition()
+            .duration(250)
+            .style("opacity", 1)
+            .each("end", function() {
+                d3.select(this).on("mouseover", mouseover(donut));
+            });
+
+          centerDefault(donut);
+       }
+    }
+
+    function dollarAmnt(amntStr) {
+      var n = parseInt(amntStr, 10);
+      var totalStr = n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+      return "$"+totalStr.slice(0, -3)
+    }
+
+    // Given a node in a partition layout, return an array of all of its ancestor
+    // nodes, highest first, but excluding the root.
+    function getAncestors(node) {
+      var path = [];
+      var current = node;
+      while (current.parent) {
+          path.unshift(current);
+          current = current.parent;
+      }
+      return path;
+    }
+
+    function addCenterLabel(selection) {
+      var g = selection.append("g")
+        .attr("class", "center-label")
+        .attr("text-anchor", "middle")
+
+      g.append("text")
+        .attr("class", "percentage")
+        .attr("y", -12)
+
+      g.append("text")
+        .attr("class", "total")
+
+      g.append("text")
+        .attr("class", "title")
+        .attr("y", 12)
+
+      centerDefault(selection);
+    }
+
+    function changeCenterLabel(donut, d) {
+        totalSize = donut.datum().value;
         var percentage = (100 * d.value / totalSize).toPrecision(3);
         var percentageString = percentage + "%";
         if (percentage < 0.1) {
             percentageString = "< 0.1%";
         }
 
-        d3.select("#explanation .percentage")
-        .text(percentageString);
+        donut.select(".percentage")
+          .text(percentageString);
 
-        d3.select("#explanation .total")
-            .text(dollarAmnt(d.value));
+        donut.select(".total")
+          .text(dollarAmnt(d.value));
 
-        d3.select("#explanation .title")
-            .text(bestLbl(d));
-
-        d3.select("#explanation")
-        .style("visibility", "");
-
-        var sequenceArray = getAncestors(d);
-
-        // Fade all the segments.
-        d3.selectAll("path")
-        .style("opacity", 0.3);
-
-        // Then highlight only those that are an ancestor of the current segment.
-        svg.selectAll("path")
-        .filter(function(node) {
-            return (sequenceArray.indexOf(node) >= 0);
-        })
-        .style("opacity", 1);
+        donut.select(".title")
+          .text(bestLbl(d));
     }
 
-    // Restore everything to full opacity when moving off the visualization.
-    function mouseleave(d) {
-        console.log("Mouse left", d);
-
-        // Hide the breadcrumb trail
-        d3.select("#trail")
-        .style("visibility", "hidden");
-
-        // Deactivate all segments during transition.
-        d3.selectAll("path").on("mouseover", null);
-
-        // Transition each segment to full opacity and then reactivate it.
-        d3.selectAll("path")
-        .transition()
-        .duration(250)
-        .style("opacity", 1)
-        .each("end", function() {
-            d3.select(this).on("mouseover", mouseover);
-        });
-
-        centerDefault(totalSize);
-    }
-
-    function dollarAmnt(amntStr) {
-        var n = parseInt(amntStr, 10);
-        var totalStr = n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-        return "$"+totalStr.slice(0, -3)
-    }
-
-    // Given a node in a partition layout, return an array of all of its ancestor
-    // nodes, highest first, but excluding the root.
-    function getAncestors(node) {
-        var path = [];
-        var current = node;
-        while (current.parent) {
-            path.unshift(current);
-            current = current.parent;
-        }
-        return path;
-    }
-
-    // centerDefault returns the donut's central label to the summary of all 
-    // of the data
-    function centerDefault(value) {
-        var explain = d3.select("#explanation")
-        explain.select('.total').text(dollarAmnt(value));
-        explain.select('.title').text("Total Capital Spending")
-        explain.select('.percentage').html("&nbsp")
+    // centerDefault returns the donut's central label to the summary of the chart
+    function centerDefault(donut) {
+      var label = donut.select(".center-label")
+      label.select('.total').text(dollarAmnt(donut.datum().value));
+      label.select('.title').text("Total Spending");
+      label.select('.percentage').html("&nbsp");
     }
 
 </script>
