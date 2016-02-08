@@ -27,7 +27,7 @@ function getZoneUrl(displayObj) {
     } else {
         selector = displayObj.dataFilters.levels;
     }
-    console.log("  selector: ", selector);
+    console.log("  displayObj.dataFilters.zones||levels: ", selector);
 
     var url;
 
@@ -107,7 +107,7 @@ function makeZoneAggregator(zonesCollectionObj) {
         var nextZoneName, splitZoneName, nextZoneObject;
         for (var i = 0; i < zonesCollectionObj.zoneGeojson.features.length; i++) {
             nextZoneName = zonesCollectionObj.zoneGeojson.features[i].properties.NAME;
-            nextZoneObject = { zoneName: nextZoneName, zoneValue: 0 , zoneIndex: null }
+            nextZoneObject = { zoneName: nextZoneName, zoneValue: 0 , zoneIndex: i }
             zonesCollectionObj.aggregatorArray.push(nextZoneObject);
             // console.log("  nextZoneObject.zoneName: ", i, "/", nextZoneObject.zoneName);
         }
@@ -159,6 +159,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData) {
         var schoolWard = schoolData.schoolWard;
         for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
             nextZone = zonesCollectionObj.aggregatorArray[i].zoneName;
+            // == extract ward number from name
             nextZoneIndex = nextZone.split(" ")[1];
             if (nextZoneIndex == schoolWard) {
                 schoolZoneIndex = i;
@@ -169,6 +170,8 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData) {
 
     // == identify column holding selected expend data
     nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
+
+    // == aggregate new value into zone total
     if (Number.isInteger(nextSchoolExpend)) {
         currentExpend = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneValue;
         aggregatedExpend = currentExpend + nextSchoolExpend;
@@ -178,24 +181,9 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData) {
     }
 }
 
-// ======= ======= ======= aggregateSchoolData ======= ======= =======
-function aggregateSchoolData(schoolsCollectionObj, displayObj, schoolData, schoolIndex) {
-    console.log("aggregateSchoolData");
-
-    // == identify column holding selected expend data
-    nextSchoolName = schoolData.schoolName;
-    nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
-    if (Number.isInteger(nextSchoolExpend)) {
-        currentExpend = schoolsCollectionObj.selectedDataArray[schoolIndex];
-        aggregatedExpend = currentExpend + nextSchoolExpend;
-        schoolsCollectionObj.selectedNamesArray[schoolIndex] = nextSchoolName;
-        schoolsCollectionObj.selectedDataArray[schoolIndex] = aggregatedExpend;
-    }
-}
-
-// ======= ======= ======= captureSchoolData ======= ======= =======
-function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    console.log("captureSchoolData");
+// ======= ======= ======= captureSchoolZone ======= ======= =======
+function captureSchoolZone(zonesCollectionObj, displayObj, schoolData, masterIndex) {
+    console.log("captureSchoolZone");
 
     // == match school name from geojson file with school name from csv file
     var nextSchoolZone, zoneSuffix;
@@ -304,7 +292,7 @@ function makeMapLegend(zonesCollectionObj) {
 
     // == remove previous legend html if any
     $("#mapLegend").remove();
-    // $("#mouseover-text").children("h2").empty();
+    console.log("*** remove mapLegend ***");
 
     // == make legend html for color chips
     var tableString = "";
@@ -322,7 +310,7 @@ function makeMapLegend(zonesCollectionObj) {
 
     // $("#mouseover-text").children("h2").children("table").remove();
     $("#mouseover-text").append(tableString);
-    // $("#legend").css("display", "block");
+    console.log("*** append mapLegend ***");
 
     // == set colors on color chips
     for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
@@ -446,14 +434,17 @@ function makeChartDisplay() {
 
     // == remove previous profile or chart html if any
     if ($('#mouseover-text').find('table').length) {
-        $("#profile").remove();
+        console.log("*** remove profile-container ***");
+        $("#profile-container").remove();
     }
     if ($('#mouseover-text').find('#chart-container').length) {
+        console.log("*** remove chart-container ***");
         $("#chart-container").remove();
     }
     $("#mouseover-text").append(chartHtml);
-    $("#chart-container").fadeIn( "fast", function() {
-        console.log("*** FADEIN ***");
+    console.log("*** append profile-container ***");
+    $("#chart-container").fadeIn( "slow", function() {
+        console.log("*** FADEIN chart-container ***");
     });
 }
 
@@ -495,13 +486,13 @@ function updateHoverText(itemName, schoolType) {
                 itemName = itemName.substring(0, 35);
             }
         }
-            $("#mouseover-text").children("h2").css("visibility", "visible");
-            if (schoolType == "DCPS") {
-                $("#mouseover-text").children("h2").css("color", "red");
-            } else if (schoolType == "PCS") {
-                $("#mouseover-text").children("h2").css("color", "orange");
-            }
-            $(filterTitleContainer).text(itemName);
+        $("#mouseover-text").children("h2").css("visibility", "visible");
+        if (schoolType == "DCPS") {
+            $("#mouseover-text").children("h2").css("color", "red");
+        } else if (schoolType == "PCS") {
+            $("#mouseover-text").children("h2").css("color", "orange");
+        }
+        $(filterTitleContainer).text(itemName);
     } else {
         $("#mouseover-text").children("h2").css("visibility", "hidden");
         $(filterTitleContainer).text("&nbsp;");
@@ -771,11 +762,6 @@ function getDataDetails(nextSchool) {
 function makeSchoolProfile(collectionOrSchool, schoolIndex) {
     console.log("makeSchoolProfile");
     console.log("  schoolIndex: ", schoolIndex);
-    console.log("  (typeof schoolIndex === 'undefined'): ", (typeof schoolIndex === 'undefined'));
-
-    if ($('#mouseover-text').find('table').length) {
-        $("#mapLegend").remove();
-    };
 
     if (typeof schoolIndex === 'undefined') {
         console.log("*** TRUE ***");
@@ -791,7 +777,7 @@ function makeSchoolProfile(collectionOrSchool, schoolIndex) {
     // student data: schoolEnroll, studentEng, studentAtRisk, studentSpecEd, studentESLPer, studentAtRiskPer, studentSPEDPer
     // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll
 
-    var htmlString = "<table id='profile'>";
+    var htmlString = "<table id='profile-container'>";
     htmlString += "<tr><td class='schoolname' colspan=2><p class='value-text'>" + cleanedSchoolData.schoolName + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>address</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolAddress + "</p></td></tr>";
@@ -821,18 +807,25 @@ function makeSchoolProfile(collectionOrSchool, schoolIndex) {
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.spendSqFt + "</p></td></tr>";
     htmlString += "</table>";
 
-    // == remove previous profile html if any
+    // == remove previous chart or profile html if any
     if ($('#mouseover-text').find('#chart-container').length) {
+        console.log("*** remove chart-container ***");
         $("#chart-container").remove();
     }
-    if ($('#mouseover-text').find('table').length) {
+    if ($('#mouseover-text').find('#mapLegend').length) {
+        console.log("*** remove mapLegend ***");
+        $("#mapLegend").remove();
+    }
+    if ($('#mouseover-text').find('#profile-container').length) {
         console.log("*** TABLE PRESENT ***");
-        $("#profile").remove();
+        $("#profile-container").remove();
+        console.log("*** remove profile-container ***");
         $("#mouseover-text").append(htmlString);
+        console.log("*** append profile ***");
     } else {
         $("#mouseover-text").append(htmlString);
-        $("#profile").fadeIn( "fast", function() {
-            console.log("*** FADEIN ***");
+        $("#profile-container").fadeIn( "slow", function() {
+            console.log("*** FADEIN profile-container ***");
         });
     }
 }

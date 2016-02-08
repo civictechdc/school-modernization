@@ -209,107 +209,6 @@ function initApp() {
         this.activateFilterRelease(selectedFilterElement);
     }
 
-    // ======= ======= ======= activateFilterMenu ======= ======= =======
-    Display.prototype.activateFilterMenu = function(whichMenu) {
-        console.log("activateFilterMenu");
-
-        // == activate filter click events
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            this.activateFilterSelect(nextItem);
-        }
-    }
-
-    // ======= ======= ======= activateSearchWindow ======= ======= =======
-    Display.prototype.activateSearchWindow = function(windowId) {
-        console.log("activateSearchWindow");
-
-        $("#" + windowId).on('input',function(e){
-            clearProfileChart();
-        });
-    }
-
-
-    // ======= ======= ======= activateSearchButton ======= ======= =======
-    Display.prototype.activateSearchButton = function(buttonId) {
-        console.log("activateSearchButton");
-
-        var self = this;
-        var buttonElement = $("#" + buttonId);
-
-        // ======= autocomplete =======
-        // availableTags = displayObj.schoolNamesArray;
-        $( "#searchWindow" ).autocomplete({
-            source: availableTags
-        });
-        $('#searchWindow').css('z-index', 999);
-
-        // ======= selectFilter =======
-        $(buttonElement).off("click").on("click", function(event){
-            console.log("\n======= search =======");
-            self.findSearchSchool();
-        });
-        // ======= selectFilter =======
-        $( window ).bind('keypress', function(event){
-            if ( event.keyCode == 13 ) {
-                console.log("\n======= search =======");
-                self.findSearchSchool();
-            }
-        });
-    }
-
-    // ======= ======= ======= activateClearButton ======= ======= =======
-    Display.prototype.activateClearButton = function() {
-        console.log("activateClearButton");
-
-        var self = this;
-        $("#clear-button").fadeIn( "fast", function() {
-            console.log("*** FADEIN ***");
-        });
-
-        // ======= ======= ======= selectFilter ======= ======= =======
-        $("#clear-button").off("click").on("click", function(event){
-            console.log("\n======= clear ======= ");
-
-            // == clear menus (html) and filters (displayObj)
-            clearMenuCategory("levels");
-            clearMenuCategory("expend");
-            clearMenuCategory("zones");
-            self.filterTitlesArray = [];
-            self.dataFilters.expend = null;
-            self.dataFilters.levels = null;
-            self.dataFilters.zones = null;
-
-            clearProfileChart();
-
-            // == clear filter window
-            filterText = "your filters";
-            var filterTitleContainer = $("#filters-title").children("h2");
-            $(filterTitleContainer).removeClass("filterList");
-            $(filterTitleContainer).text(filterText);
-            updateHoverText(null);
-            zonesCollectionObj.getZoneData();
-        });
-    }
-
-    // ======= ======= ======= clearProfileChart ======= ======= =======
-    function clearProfileChart() {
-        console.log("clearProfileChart");
-
-        if ($('#mouseover-text').find('table').length) {
-            $("#profile").fadeOut( "slow", function() {
-                console.log("*** FADEOUT ***");
-                $("#profile").remove();
-            });
-        }
-        if ($('#mouseover-text').find('#chart-container').length) {
-            $("#chart-container").fadeOut( "slow", function() {
-                console.log("*** FADEOUT ***");
-                $("#chart-container").remove();
-            });
-        }
-    }
-
     // ======= ======= ======= findSearchSchool ======= ======= =======
     Display.prototype.findSearchSchool = function(buttonId) {
         console.log("findSearchSchool");
@@ -359,7 +258,8 @@ function initApp() {
                     $(filterTitleContainer).css("font-size", "16px");
                     schoolText = "<span class='filterLabel'>Your school: </span>";
                     makeSchoolProfile(foundDataArray[0]);
-                    $("#profile").css("display", "table");
+                    $("#profile-container").css("display", "table");
+                    console.log("*** display profile-container ***");
                     updateHoverText(null);
                 }
 
@@ -387,6 +287,115 @@ function initApp() {
         }).error(function() {
             console.log("*** ajax error ***");
         });
+    }
+
+    // ======= ======= ======= activateFilterMenu ======= ======= =======
+    Display.prototype.activateFilterMenu = function(whichMenu) {
+        console.log("activateFilterMenu");
+
+        // == activate filter click events
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            this.activateFilterSelect(nextItem);
+        }
+    }
+
+    // ======= ======= ======= activateSearchWindow ======= ======= =======
+    Display.prototype.activateSearchWindow = function(windowId) {
+        console.log("activateSearchWindow");
+
+        $("#" + windowId).on('input',function(e){
+            // clearProfileChart();
+        });
+    }
+
+
+    // ======= ======= ======= activateSearchButton ======= ======= =======
+    Display.prototype.activateSearchButton = function(buttonId) {
+        console.log("activateSearchButton");
+
+        var self = this;
+        var buttonElement = $("#" + buttonId);
+
+        // ======= autocomplete =======
+        // availableTags = displayObj.schoolNamesArray;
+        $( "#searchWindow" ).autocomplete({
+            source: availableTags
+        });
+        $('#searchWindow').css('z-index', 999);
+
+        // ======= selectFilter =======
+        $(buttonElement).off("click").on("click", function(event){
+            console.log("\n======= search =======");
+            self.findSearchSchool();
+        });
+        // ======= selectFilter =======
+        $( window ).bind('keypress', function(event){
+            if ( event.keyCode == 13 ) {
+                console.log("\n======= search =======");
+                self.findSearchSchool();
+            }
+        });
+    }
+
+    // ======= ======= ======= activateClearButton ======= ======= =======
+    Display.prototype.activateClearButton = function() {
+        console.log("activateClearButton");
+
+        var self = this;
+        $("#clear-button").fadeIn( "slow", function() {
+            console.log("*** FADEIN ***");
+        });
+
+        // ======= ======= ======= selectFilter ======= ======= =======
+        $("#clear-button").off("click").on("click", function(event){
+            console.log("\n======= clear ======= ");
+
+            // == remove mapLegend, profile or chart container if present
+            clearProfileChart();
+
+            // == clear menus (html) and filters (displayObj)
+            clearMenuCategory("levels");
+            clearMenuCategory("expend");
+            clearMenuCategory("zones");
+            zonesCollectionObj.aggregatorArray = [];
+            self.filterTitlesArray = [];
+            self.dataFilters.expend = null;
+            self.dataFilters.levels = null;
+            self.dataFilters.zones = null;
+
+            // == clear filter window
+            filterText = "your filters";
+            var filterTitleContainer = $("#filters-title").children("h2");
+            $(filterTitleContainer).removeClass("filterList");
+            $(filterTitleContainer).text(filterText);
+            updateHoverText(null);
+            zonesCollectionObj.getZoneData();
+        });
+    }
+
+    // ======= ======= ======= clearProfileChart ======= ======= =======
+    function clearProfileChart() {
+        console.log("clearProfileChart");
+
+        if ($('#mouseover-text').find('#mapLegend').length) {
+            $("#mapLegend").fadeOut( "fast", function() {
+                console.log("*** FADEOUT mapLegend ***");
+                $("#mapLegend").remove();
+            });
+        }
+        if ($('#mouseover-text').find('#profile-container').length) {
+            $("#profile-container").fadeOut( "fast", function() {
+                console.log("*** FADEOUT profile-container ***");
+                $("#profile-container").remove();
+            });
+        }
+        if ($('#mouseover-text').find('#chart-container').length) {
+            $("#chart-container").fadeOut( "fast", function() {
+                console.log("*** FADEOUT chart-container ***");
+                $("#chart-container").remove();
+            });
+        }
     }
 
     // ======= ======= ======= activateFilterSelect ======= ======= =======
@@ -418,6 +427,7 @@ function initApp() {
             // == store selected filter value on display object (zone, levels, agency, expend, students)
             switch(whichCategory) {
                 case "levels":
+                    updateHoverText(null);
                     self.dataFilters.levels = whichValue;
                     if (whichValue == "HS") {
                         zonesCollectionObj.zoneType = "FeederHS";
@@ -427,23 +437,27 @@ function initApp() {
                         zonesCollectionObj.zoneType = "Elementary";
                     }
                     zonesCollectionObj.aggregatorArray = [];
-                    updateHoverText(null);
                     break;
                 case "expend":
                     updateHoverText(null);
-                    self.dataFilters.expend = whichFilter;
                     clearZoneAggregator(zonesCollectionObj);
+                    self.dataFilters.expend = whichFilter;
                     if ($('#mouseover-text').find('table').length) {
-                        $("#profile").remove();
+                        console.log("*** remove profile-container ***");
+                        $("#profile-container").remove();
                     }
                     if (self.dataFilters.levels == null) {
                         updateHoverText("Please select school type first");
                     }
                     break;
                 case "zones":
+                    // clearProfileChart();
                     zonesCollectionObj.aggregatorArray = [];
                     self.dataFilters.zones = whichFilter;
                     displayObj.zoneType = whichFilter;
+                    if ((self.dataFilters.levels == null) && (self.dataFilters.expend == null)) {
+                        updateHoverText("Select school or spending filter");
+                    }
                     break;
             }
             checkFilterSelection(self, zonesCollectionObj);
@@ -471,9 +485,9 @@ function initApp() {
             checkFilterSelection(self, zonesCollectionObj);
 
             if ($('#mouseover-text').find('table').length) {
-                $("#profile").fadeOut( "slow", function() {
-                    console.log("*** FADEOUT ***");
-                    $("#profile").remove();
+                $("#profile-container").fadeOut( "slow", function() {
+                    console.log("*** FADEOUT profile-container ***");
+                    $("#profile-container").remove();
                 });
             }
         });
@@ -655,7 +669,7 @@ function initApp() {
                     selectedNamesArray.push(processSchoolName(schoolData.schoolName))
                     selectedCodesArray.push(schoolData.schoolCode)
                     if ((displayObj.dataFilters.expend != null) && (displayObj.dataFilters.levels != null) && (displayObj.zoneType != "Ward")) {
-                        captureSchoolData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
+                        captureSchoolZone(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                     } else if (displayObj.dataFilters.zones != null)  {
                         aggregateZoneData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                     }
@@ -765,7 +779,7 @@ function initApp() {
             if (displayObj.dataFilters.expend) {
                 this.dataIncrement = calcDataIncrement(this, displayObj);
                 var itemOpacity = 1;
-                makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj.dataFilters.expend);
+                makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj);
                 // makeMapLegend(this);
                 // $("#mapLegend").css("display", "block");
             } else {
@@ -1044,9 +1058,9 @@ function initApp() {
 
         // ======= mouseover event listener =======
         google.maps.event.addListener(schoolMarker, 'mouseover', function (event) {
-            console.log("--- mouseover ---");
+            // console.log("--- mouseover ---");
             var schoolIndex = this.schoolIndex;
-            console.log("  schoolIndex: ", schoolIndex);
+            // console.log("  schoolIndex: ", schoolIndex);
             var schoolName = this.schoolName;
             var schoolType = this.schoolType;
             updateHoverText(schoolName, schoolType);
@@ -1064,11 +1078,11 @@ function initApp() {
                 console.log("--- click ---");
                 var schoolName = this.schoolName;
                 var schoolCode = this.schoolCode;
-                console.log("  schoolName: ", schoolName);
                 console.log("  schoolCode: ", schoolCode);
 
                 makeSchoolProfile(schoolsCollectionObj, this.schoolIndex);
-                $("#profile").css("display", "table");
+                $("#profile-container").css("display", "table");
+                console.log("*** display profile-container ***");
             });
         }
     }

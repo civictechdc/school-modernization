@@ -1,18 +1,36 @@
 
 // ======= ======= ======= makeRankChart ======= ======= =======
-function makeRankChart(zonesCollectionObj, schoolsCollectionObj, expend) {
-    console.log("makeRankChart");
+function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
+    console.log("\n----- makeRankChart -----");
 
     // ======= chart container =======
-    $("#chart-container").remove();
     var chartHtml = "<div id='chart-container'>";
-    chartHtml += "<div id='chart-title' class='title_bar'><p id='expend-text'>data chart</p></div>";
+    chartHtml += "<div id='chart-title' class='schoolname'><p id='expend-text'>data chart</p></div>";
     chartHtml += "<div id='chart'></div></div>";
-    $("#mouseover-text").append(chartHtml);
-    $("#chart-container").fadeIn( "fast", function() {
-        console.log("*** FADEIN ***");
-    });
-    updateChartText(filterMenu[expend].text);
+
+    // == remove previous chart or profile html if any
+    if ($('#mouseover-text').find('#profile-container').length) {
+        console.log("*** remove profile-container ***");
+        $("#profile-container").remove();
+    }
+    if ($('#mouseover-text').find('#mapLegend').length) {
+        console.log("*** remove mapLegend ***");
+        $("#mapLegend").remove();
+    }
+    if ($('#mouseover-text').find('#chart-container').length) {
+        console.log("*** chart-container PRESENT ***");
+        $("#chart-container").remove();
+        console.log("*** remove chart-container ***");
+        $("#mouseover-text").append(chartHtml);
+        console.log("*** append chart ***");
+    } else {
+        $("#mouseover-text").append(chartHtml);
+        $("#chart-container").fadeIn( "slow", function() {
+            console.log("*** FADEIN chart-container ***");
+        });
+    }
+
+    updateChartText(filterMenu[displayObj.dataFilters.expend].text);
 
     // ======= formatting variables =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel;
@@ -194,11 +212,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, expend) {
                 .attr("visibility", "hidden");
 
     // tweakSchoolLabels();
-    activateChartValues();
+    activateChartCircles();
 
-    // ======= activateChartValues =======
-    function activateChartValues() {
-        console.log("activateChartValues");
+    // ======= activateChartCircles =======
+    function activateChartCircles() {
+        console.log("activateChartCircles");
 
         $('.dataChartValue').each(function(i) {
 
@@ -208,12 +226,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, expend) {
                 targetLabel = $('#dataChartLabel_' + i);
                 $(targetLabel).attr("visibility", "visible");
                 targetMarkerIndex = this.id.split("_")[1];
-                console.log("  this.id: ", this.id);
-                console.log("  targetMarkerIndex: ", targetMarkerIndex);
-                schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                schoolMarker.icon.fillColor = "white";
-                schoolMarker.icon.scale = 0.4;
-                schoolMarker.setMap(map);
+                if (displayObj.dataFilters.zones == null) {
+                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                    schoolMarker.icon.fillColor = "white";
+                    schoolMarker.icon.scale = 0.4;
+                    schoolMarker.setMap(map);
+                }
             });
 
             // ======= ======= ======= mouseout ======= ======= =======
@@ -222,10 +240,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, expend) {
                 targetLabel = $('#dataChartLabel_' + i);
                 $(targetLabel).attr("visibility", "hidden");
                 targetMarkerIndex = this.id.split("_")[1];
-                schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                schoolMarker.icon.fillColor = "yellow";
-                schoolMarker.icon.scale = 0.2;
-                schoolMarker.setMap(map);
+                if (displayObj.dataFilters.zones == null) {
+                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                    schoolMarker.icon.fillColor = "yellow";
+                    schoolMarker.icon.scale = 0.2;
+                    schoolMarker.setMap(map);
+                }
             });
 
             // ======= ======= ======= mouseout ======= ======= =======
