@@ -9,30 +9,10 @@
         width: 960px;
     }
 
-    form {
-    }
-
-    #chart {
-        position: relative; 
-    }
-
-    #explanation {
-        position: absolute;
-        top: 270px;
-        left: 205px;
-        width: 200px;
-        text-align: center;
-        color: #666;
-        z-index: -1;
-    }
-
-    #explanation h4, #explanation p {
-        margin: 0;
-    }
-
     .center-label text {
       font-size: 0.7em;
     }
+
     .center-label .percentage,
     .center-label .total {
       font-weight: bold;
@@ -72,17 +52,9 @@
       .sort(null)
       .size([2 * Math.PI, radius * radius])
       .value(PastSpending)
-
-    var tagScale = d3.scale.ordinal().domain([
-        "FULL MOD",
-        "FULL MOD + ADD",
-        "FULL REPLACEMENT",
-        "PARTIAL MOD",
-        "PARTIAL MOD + ADD",
-        "STABILIZED",
-        "Annual Allotment"
-    ])
-      .range(colorbrewer.Set1[7]);
+      .sort(function(a, b) {
+          return b.value - a.value;
+      })
 
 
     var arc = d3.svg.arc()
@@ -110,13 +82,23 @@
             children: root.children[1].children
         };
 
-        makeChart(d3.select("#PCS"), pcs_tree);
-        makeChart(d3.select("#DCPS"), dcps_tree);
+        makeChart(d3.select("#PCS"), pcs_tree, pcsCustomize);
+        makeChart(d3.select("#DCPS"), dcps_tree, dcpsCustomize);
         
     });
 
-    function makeChart(selection, tree) {
+    function makeChart(selection, tree, customizeFnc) {
         var nodes = partition.nodes(tree)
+
+        // Drop nodes that are very small.
+        nodes = nodes.filter(function(d) {
+          // t is the percentage of the pie a node represents
+          var t = d.value / d3.sum(nodes, function(d){ return d.value});
+          if (t < 0.00075) {
+            return false
+          }
+          return true
+        })
 
         var path = selection.datum(tree).selectAll("path")
           .data(nodes)
@@ -125,13 +107,54 @@
           .attr("d", arc)
           .on("mouseover", mouseover(selection))
           .style("stroke", "#fff")
-          // TODO scrutnize color choices
-          .style("fill", function(d) { return tagScale(bestLbl(d)); });
+
+        customizeFnc(path)
 
         // Add the mouseleave handler to the bounding rectangle.
         selection.on("mouseleave", mouseleave(selection));
         addCenterLabel(selection)
 
+    }
+
+    function pcsCustomize(path) {
+        var colorScale = d3.scale.category20b();
+
+        path.style("fill", function(d) {
+            if (d.depth <= 1) {
+                d.color = d3.rgb(colorScale(bestLbl(d)));
+            } else {
+                d.color = d.parent.color.brighter(1.1);
+            }
+            return d.color.toString();
+        });
+    }
+
+    function dcpsCustomize(path) {
+
+        var primScale = d3.scale.category10();
+
+        // TODO play with colors more.
+        var tagScale = d3.scale.ordinal().domain([
+            "FULL MOD",
+            "FULL MOD + ADD",
+            "FULL REPLACEMENT",
+            "PARTIAL MOD",
+            "PARTIAL MOD + ADD",
+            "STABILIZED",
+            "Annual Allotment"
+        ])
+          .range(colorbrewer.Set1[7]);
+
+        var colorScale = d3.scale.category20b();
+
+        path.style("fill", function(d) {
+            if (d.depth <= 2) {
+                d.color = d3.rgb(primScale(bestLbl(d)));
+            } else {
+                d.color = d.parent.color.brighter(1.1);
+            }
+            return d.color.toString();
+        });
     }
 
     function bestLbl(d) {
