@@ -35,7 +35,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
 
     // ======= formatting variables =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel;
-    // var fillColors = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod", "blueviolet", "chartreuse", "cornflowerblue"];
     var fillColors = zonesCollectionObj.dataColorsArray;
 
     // ======= chart formatting =======
@@ -50,11 +49,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
         return d.zoneValue;
     });
     console.log("  dataMax: ", dataMax);
+    var dataMin = d3.min(dataObjectsArray, function(d) {
+        return d.zoneValue;
+    });
+    console.log("  dataMin: ", dataMin);
 
     // ======= bar data =======
     var barScaleArray = [];
     var barW = 20;
-    var barTicks = zonesCollectionObj.dataColorsArray.length;
+    var barTicks = zonesCollectionObj.dataBins;
     var barIncrement = dataMax/barTicks;
     var schoolCircleX = 50;
     var schoolCircleR = 5;
@@ -121,7 +124,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     // ======= yAxis =======
     svg.append("g")                 // g group element to contain about-to-be-generated axis elements
         .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
-        .call(yAxis)            // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
+        .call(yAxis)                // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
         .attr("transform", "translate(0, 0)")
         .selectAll("text")
             .style("text-anchor", "end")
@@ -215,6 +218,25 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     // tweakSchoolLabels();
     activateChartCircles();
 
+    // ======= ======= ======= assignChartColors ======= ======= =======
+    function assignChartColors(zoneValue) {
+        // console.log("assignChartColors");
+
+        var binMin = binMax = colorIndex = null;
+
+        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
+            binMin = (zonesCollectionObj.dataIncrement * i);
+            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+            console.log(" i -- min/max: ", i, " -- ", parseInt(binMin), "/", parseInt(zoneValue), "/", parseInt(binMax));
+            if ((binMin <= zoneValue) && (zoneValue <= binMax)) {
+                colorIndex = i;
+                break;
+            }
+        }
+        console.log("  colorIndex: ", colorIndex);
+        return colorIndex;
+    }
+
     // ======= activateChartCircles =======
     function activateChartCircles() {
         console.log("activateChartCircles");
@@ -307,22 +329,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
             nextYloc = prevYarray[i];
             this.setAttribute("y", nextYloc);
         });
-    }
-
-    // ======= ======= ======= assignChartColors ======= ======= =======
-    function assignChartColors(zoneValue) {
-        // console.log("assignChartColors");
-
-        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
-            binMin = (zonesCollectionObj.dataIncrement * i);
-            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-            // console.log("  binMax: ", binMax);
-            if ((binMin <= zoneValue) && (zoneValue <= binMax)) {
-                colorIndex = i;
-                break;
-            }
-        }
-        return colorIndex;
     }
 
     // ======= stringToInt =======

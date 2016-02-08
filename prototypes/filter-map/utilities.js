@@ -115,7 +115,6 @@ function makeZoneAggregator(zonesCollectionObj) {
     } else {
         console.log("ERROR: no geojson data");
     }
-    // console.log("  aggregator.length", zonesCollectionObj.aggregatorArray.length);
     console.dir(zonesCollectionObj.aggregatorArray);
 }
 
@@ -152,24 +151,29 @@ function clearZoneAggregator(zonesCollectionObj) {
 }
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
-function aggregateZoneData(zonesCollectionObj, displayObj, schoolData) {
+function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
     console.log("aggregateZoneData");
+
+    var schoolWard = nextZoneIndex = schoolZoneIndex = nextSchoolExpend = currentExpend = aggregatedExpend = 0;
+    var nextZone = null;
 
     // == match school name from geojson file with school name from csv file
     if (zonesCollectionObj.zoneType == "Ward") {
-        var schoolWard = schoolData.schoolWard;
+        schoolWard = schoolData.schoolWard;
+        // console.log("  schoolWard: ", schoolWard);
         for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
             nextZone = zonesCollectionObj.aggregatorArray[i].zoneName;
-            // == extract ward number from name
+            // == extract ward number from ward name
             nextZoneIndex = nextZone.split(" ")[1];
             if (nextZoneIndex == schoolWard) {
                 schoolZoneIndex = i;
+                // console.log("  schoolZoneIndex: ", schoolZoneIndex);
                 break;
             }
         }
     }
 
-    // == identify column holding selected expend data
+    // == identify column holding selected expend filter data
     nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
 
     // == aggregate new value into zone total
@@ -177,9 +181,14 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData) {
         currentExpend = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneValue;
         aggregatedExpend = currentExpend + nextSchoolExpend;
         zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneValue = aggregatedExpend;
+        zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneIndex = schoolZoneIndex;
     } else {
         nextSchoolExpend = 0;
     }
+    console.log("*** school/index: ", schoolData.schoolName, "/", schoolZoneIndex);
+    console.log("  currentExpend: ", currentExpend);
+    console.log("  nextSchoolExpend: ", nextSchoolExpend);
+    console.log("  aggregatedExpend: ", aggregatedExpend);
 }
 
 // ======= ======= ======= captureSchoolZone ======= ======= =======
@@ -341,16 +350,24 @@ function getScaleFactor(dataMax) {
 function calcDataIncrement(zonesCollectionObj, displayObj) {
     console.log("calcDataIncrement");
 
+    // == gather all values in aggregator array
     var zoneValuesArray = [];
     for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
         nextZoneValue = zonesCollectionObj.aggregatorArray[i].zoneValue;
         zoneValuesArray.push(nextZoneValue);
     }
 
+    // == get lowest/highest values, divide by number of data bins
     var fillOpacity = 1;
     var maxValue = Math.max.apply(Math, zoneValuesArray);
     var minValue = Math.min.apply(Math, zoneValuesArray);
-    var dataIncrement = (maxValue - minValue)/zonesCollectionObj.dataBins;
+    // var dataIncrement = (maxValue - minValue)/zonesCollectionObj.dataBins;
+    var dataIncrement = maxValue/zonesCollectionObj.dataBins;
+    // console.log("  maxValue: ", maxValue);
+    // console.log("  minValue: ", minValue);
+    // console.log("  dataIncrement: ", dataIncrement);
+    // console.log("  dataIncrement * zonesCollectionObj.dataBins: ", dataIncrement * zonesCollectionObj.dataBins);
+
     return dataIncrement;
 }
 

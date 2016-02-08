@@ -625,7 +625,7 @@ function initApp() {
 
         var self = this;
 
-        // ======= get selected data =======
+        // ======= get school data =======
         if (this.jsonData == null) {
             $.ajax({
                 url: "Data_Schools/DCPS_Master_114_dev.csv",
@@ -654,10 +654,8 @@ function initApp() {
         // ======= ======= ======= getSchoolData ======= ======= =======
         function getSchoolData() {
             console.log("getSchoolData");
-            console.log("  zonesCollectionObj.zoneType: ", zonesCollectionObj.zoneType);
-            console.log("  .aggregatorArray: ", zonesCollectionObj.aggregatorArray);
 
-            // ======= get school codes for selected zone, level and type =======
+            // ======= variables and temp arrays =======
             var schoolIndex = -1;
             var selectedCodesArray = [];
             var selectedNamesArray = [];
@@ -665,22 +663,27 @@ function initApp() {
             var selectedSchoolsArray = [];
             var nextSchool, schoolData, selectSchool;
 
+            // ======= SCHOOL DATA LOOP =======
             for (var i = 0; i < jsonData.length; i++) {
                 var filterFlagCount = 0;
 
-                // == level filter
+                // == check school with filter settings
                 nextSchool = jsonData[i];
                 selectSchool = self.checkFilterMatch(nextSchool);
 
-                // == build array of schools that match filters
+                // == build arrays of selected/not selected schools
                 if (selectSchool == true) {
                     schoolIndex++;
                     schoolData = getDataDetails(nextSchool);
                     selectedSchoolsArray.push(schoolData)
-                    selectedNamesArray.push(processSchoolName(schoolData.schoolName))
                     selectedCodesArray.push(schoolData.schoolCode)
+                    selectedNamesArray.push(processSchoolName(schoolData.schoolName))
+
+                    // == store school that matches school zone (e.g. Deal Middle School with Deal Middle School Zone)
                     if ((displayObj.dataFilters.expend != null) && (displayObj.dataFilters.levels != null) && (zonesCollectionObj.zoneType != "Ward")) {
                         captureSchoolZone(zonesCollectionObj, displayObj, schoolData, schoolIndex);
+
+                    // == aggregate multiple school data for selected zone type (e.g all-school totals for Ward 3)
                     } else if (displayObj.dataFilters.zones != null)  {
                         aggregateZoneData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                     }
@@ -689,6 +692,9 @@ function initApp() {
                 }
             }
             self.selectedSchoolsArray = selectedSchoolsArray;
+
+            // == check array content for consistency
+            console.log("\n******* array check *******");
             console.log("  .aggregatorArray: ", zonesCollectionObj.aggregatorArray);
             console.log("  aggregatorArrayCt: ", zonesCollectionObj.aggregatorArray.length);
             console.log("  selectedSchoolsCt: ", selectedSchoolsArray.length);
@@ -698,12 +704,6 @@ function initApp() {
             // == make aggregator for school collection
             // if (schoolsCollectionObj.aggregatorArray.length == 0) {
             //     makeSchoolsAggregator(schoolsCollectionObj);
-            // }
-
-            // var zoneNamesArray = [];
-            // for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
-            //     nextZoneName = zonesCollectionObj.aggregatorArray[i].schoolName;
-            //     zoneNamesArray.push(nextZoneName);
             // }
 
             // ======= make map layers ======
