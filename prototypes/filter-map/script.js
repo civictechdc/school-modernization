@@ -59,7 +59,8 @@ function initApp() {
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
         this.indexColorsArray = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
-        this.dataColorsArray = ["#0000ff", "#2200cc", "#4400aa", "#660088", "#880066", "#aa0044", "#cc0022", "#ff0000"];
+        // this.dataColorsArray = ["#0000ff", "#2200cc", "#4400aa", "#660088", "#880066", "#aa0044", "#cc0022", "#ff0000"];
+        this.dataColorsArray = ["#b35806","#e08214","#fdb863","#fee0b6","#d8daeb","#b2abd2","#8073ac","#542788"];
         this.defaultColor = "white";
         this.dataIncrement = 0;
         this.dataBins = 8;
@@ -741,7 +742,7 @@ function initApp() {
         if (displayObj.dataFilters.levels) {
             if (displayObj.dataFilters.expend) {
                 this.dataIncrement = calcDataIncrement(this, displayObj);
-                var itemOpacity = 1;
+                var itemOpacity = 0.7;
                 makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj);
                 // makeMapLegend(this);
             }
