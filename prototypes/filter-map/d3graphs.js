@@ -2,7 +2,6 @@
 // ======= ======= ======= makeRankChart ======= ======= =======
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     console.log("\n----- makeRankChart -----");
-    console.log("  map: ", map);
 
     // ======= chart container =======
     var chartHtml = "<div id='chart-container'>";
@@ -11,19 +10,14 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
 
     // == remove previous chart or profile html if any
     if ($('#mouseover-text').find('#profile-container').length) {
-        console.log("*** remove profile-container ***");
         $("#profile-container").remove();
     }
     if ($('#mouseover-text').find('#mapLegend').length) {
-        console.log("*** remove mapLegend ***");
         $("#mapLegend").remove();
     }
     if ($('#mouseover-text').find('#chart-container').length) {
-        console.log("*** chart-container PRESENT ***");
         $("#chart-container").remove();
-        console.log("*** remove chart-container ***");
         $("#mouseover-text").append(chartHtml);
-        console.log("*** append chart ***");
     } else {
         $("#mouseover-text").append(chartHtml);
         $("#chart-container").fadeIn( "slow", function() {
@@ -182,7 +176,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                 return yScale(d.zoneValue);
             })
             .attr("r", function(d) {
-                console.log("  d: ", d);
+                // console.log("  d: ", d);
                 return schoolCircleR;
             })
             .style('fill', function(d, i){
@@ -221,19 +215,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     // ======= ======= ======= assignChartColors ======= ======= =======
     function assignChartColors(zoneValue) {
         // console.log("assignChartColors");
-
         var binMin = binMax = colorIndex = null;
-
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
             binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-            console.log(" i -- min/max: ", i, " -- ", parseInt(binMin), "/", parseInt(zoneValue), "/", parseInt(binMax));
             if ((binMin <= zoneValue) && (zoneValue <= binMax)) {
                 colorIndex = i;
                 break;
             }
         }
-        console.log("  colorIndex: ", colorIndex);
         return colorIndex;
     }
 
@@ -255,18 +245,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                     schoolMarker.icon.scale = 0.4;
                     schoolMarker.setMap(map);
                 } else {
-                    // feature = map.data.features[targetMarkerIndex];
-                    // map.data.forEach(function(feature) {
-                    //     var itemName = feature.getProperty('itemName');
-                    //     var index = feature.getProperty('index');
-                    //     console.log("  index: ", index);
-                    //     console.log("  itemName: ", itemName);
-                    //     console.log("  map.data.length: ", map.data.length);
-                    // });
-                    // console.log("  zonesCollectionObj.zoneGeojson: ", zonesCollectionObj.zoneGeojson);
-                    // console.log("  zonesCollectionObj.zoneGeojson.features: ", zonesCollectionObj.zoneGeojson.features);
-                    // console.log("  zonesCollectionObj.zoneGeojson.features[7]: ", zonesCollectionObj.zoneGeojson.features[7]);
-                    // console.log("  targetMarkerIndex: ", targetMarkerIndex);
+                    toggleFeatureHilite(i, "on");
                 }
             });
 
@@ -281,6 +260,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                     schoolMarker.icon.fillColor = "yellow";
                     schoolMarker.icon.scale = 0.2;
                     schoolMarker.setMap(map);
+                } else {
+                    toggleFeatureHilite(i, "off");
                 }
             });
 
@@ -288,15 +269,34 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
             $(this).off("click").on("click", function(event){
                 console.log("\n======= click ======= ");
                 schoolIndex = this.id.split("_")[1];
-                makeSchoolProfile(schoolsCollectionObj, schoolIndex);
-                $("#profile").css("display", "table");
-                schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                schoolMarker.icon.fillColor = "yellow";
-                schoolMarker.icon.scale = 0.2;
-                schoolMarker.setMap(map);
+                if (displayObj.dataFilters.zones == null) {
+                    makeSchoolProfile(schoolsCollectionObj, schoolIndex);
+                    $("#profile").css("display", "table");
+                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                    schoolMarker.icon.fillColor = "yellow";
+                    schoolMarker.icon.scale = 0.2;
+                    schoolMarker.setMap(map);
+                }
             });
 
         });
+    }
+
+    // ======= toggleFeatureHilite =======
+    function toggleFeatureHilite(i, onOrOff) {
+        console.log("toggleFeatureHilite");
+        var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
+        var zoneName = zoneFeature.getProperty('itemName');
+        var zoneIndex = zoneFeature.getProperty('index');
+        var itemColor = zoneFeature.getProperty('itemColor');
+        if (onOrOff == "on") {
+            map.data.overrideStyle(zoneFeature, {
+                fillOpacity: 0.5,
+                strokeColor: "purple"
+            });
+        } else {
+            map.data.revertStyle(zoneFeature);
+        }
     }
 
     // ======= tweakSchoolLabels =======
