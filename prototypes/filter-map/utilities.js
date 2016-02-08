@@ -22,6 +22,7 @@
 function getZoneUrl(displayObj) {
     console.log("getZoneUrl");
 
+    // == zone selector has priority (ward map displays for aggregation of any level)
     if (displayObj.dataFilters.zones) {
         selector = displayObj.dataFilters.zones;
     } else {
@@ -152,10 +153,10 @@ function clearZoneAggregator(zonesCollectionObj) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData) {
-    // console.log("aggregateZoneData");
+    console.log("aggregateZoneData");
 
     // == match school name from geojson file with school name from csv file
-    if (displayObj.zoneType == "Ward") {
+    if (zonesCollectionObj.zoneType == "Ward") {
         var schoolWard = schoolData.schoolWard;
         for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
             nextZone = zonesCollectionObj.aggregatorArray[i].zoneName;
@@ -190,7 +191,7 @@ function captureSchoolZone(zonesCollectionObj, displayObj, schoolData, masterInd
     var zoneGeojson = zonesCollectionObj.zoneGeojson;
     var zoneAggregator = zonesCollectionObj.aggregatorArray;
     var checkSchoolName = processSchoolName(schoolData.schoolName)
-    console.log("** checkSchoolName: ", checkSchoolName);
+    // console.log("** checkSchoolName: ", checkSchoolName);
 
     if (displayObj.dataFilters.levels) {
         var nextZoneName, splitZoneName, nextZoneObject;
@@ -388,6 +389,21 @@ function de_activateZoneListeners(zonesCollectionObj) {
     console.log("  listeners_after: ", zonesCollectionObj.mapListenersArray.length);
 }
 
+// ======= ======= ======= mouseoverZone ======= ======= =======
+function mouseoverZone(event, itemName) {
+    console.log("mouseoverZone");
+    updateHoverText(itemName);
+    updateFilterTitles("Select zone or school");
+    if (map.get('clickedZone')!= event.feature ) {
+        map.data.overrideStyle(event.feature, {
+            fillColor: "white",
+            fillOpacity: 0.5,
+            strokePosition: "center",
+            strokeWeight: 8
+        });
+    }
+}
+
 // ======= ======= ======= makeZoneGeometry ======= ======= =======
 function makeZoneGeometry(feature) {
     // console.log("makeZoneGeometry");
@@ -453,6 +469,7 @@ function makeChartDisplay() {
 // ======= ======= ======= checkFilterSelection ======= ======= =======
 function checkFilterSelection(displayObj, zonesCollectionObj) {
     console.log("checkFilterSelection");
+    console.log("  zoneType: ", zonesCollectionObj.zoneType);
     console.log("  levels: ", displayObj.dataFilters.levels);
     console.log("  expend: ", displayObj.dataFilters.expend);
     console.log("  zones: ", displayObj.dataFilters.zones);

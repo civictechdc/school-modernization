@@ -2,6 +2,7 @@
 // ======= ======= ======= makeRankChart ======= ======= =======
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     console.log("\n----- makeRankChart -----");
+    console.log("  map: ", map);
 
     // ======= chart container =======
     var chartHtml = "<div id='chart-container'>";
@@ -222,7 +223,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
-                // console.log("\n======= showLabel ======= ");
+                console.log("\n======= showLabel ======= ");
                 targetLabel = $('#dataChartLabel_' + i);
                 $(targetLabel).attr("visibility", "visible");
                 targetMarkerIndex = this.id.split("_")[1];
@@ -231,6 +232,19 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                     schoolMarker.icon.fillColor = "white";
                     schoolMarker.icon.scale = 0.4;
                     schoolMarker.setMap(map);
+                } else {
+                    // feature = map.data.features[targetMarkerIndex];
+                    // map.data.forEach(function(feature) {
+                    //     var itemName = feature.getProperty('itemName');
+                    //     var index = feature.getProperty('index');
+                    //     console.log("  index: ", index);
+                    //     console.log("  itemName: ", itemName);
+                    //     console.log("  map.data.length: ", map.data.length);
+                    // });
+                    // console.log("  zonesCollectionObj.zoneGeojson: ", zonesCollectionObj.zoneGeojson);
+                    // console.log("  zonesCollectionObj.zoneGeojson.features: ", zonesCollectionObj.zoneGeojson.features);
+                    // console.log("  zonesCollectionObj.zoneGeojson.features[7]: ", zonesCollectionObj.zoneGeojson.features[7]);
+                    // console.log("  targetMarkerIndex: ", targetMarkerIndex);
                 }
             });
 

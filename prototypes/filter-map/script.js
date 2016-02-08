@@ -429,12 +429,14 @@ function initApp() {
                 case "levels":
                     updateHoverText(null);
                     self.dataFilters.levels = whichValue;
-                    if (whichValue == "HS") {
-                        zonesCollectionObj.zoneType = "FeederHS";
-                    } else if (whichValue == "MS") {
-                        zonesCollectionObj.zoneType = "FeederMS";
-                    } else if (whichValue == "ES") {
-                        zonesCollectionObj.zoneType = "Elementary";
+                    if (self.dataFilters.zones != "Ward") {
+                        if (whichValue == "HS") {
+                            zonesCollectionObj.zoneType = "FeederHS";
+                        } else if (whichValue == "MS") {
+                            zonesCollectionObj.zoneType = "FeederMS";
+                        } else if (whichValue == "ES") {
+                            zonesCollectionObj.zoneType = "Elementary";
+                        }
                     }
                     zonesCollectionObj.aggregatorArray = [];
                     break;
@@ -454,7 +456,7 @@ function initApp() {
                     // clearProfileChart();
                     zonesCollectionObj.aggregatorArray = [];
                     self.dataFilters.zones = whichFilter;
-                    displayObj.zoneType = whichFilter;
+                    zonesCollectionObj.zoneType = whichFilter;
                     if ((self.dataFilters.levels == null) && (self.dataFilters.expend == null)) {
                         updateHoverText("Select school or spending filter");
                     }
@@ -546,6 +548,7 @@ function initApp() {
             url: getZoneUrl(displayObj)      // defaults to FeederHS
         }).done(function(geoJsonData, featureArray){
             console.log("*** ajax success ***");
+            console.log(geoJsonData);
             console.dir(geoJsonData);
 
             self.zoneGeojson = geoJsonData;
@@ -643,7 +646,7 @@ function initApp() {
         // ======= ======= ======= getSchoolData ======= ======= =======
         function getSchoolData() {
             console.log("getSchoolData");
-            console.log("  displayObj.zoneType: ", displayObj.zoneType);
+            console.log("  zonesCollectionObj.zoneType: ", zonesCollectionObj.zoneType);
             console.log("  .aggregatorArray: ", zonesCollectionObj.aggregatorArray);
 
             // ======= get school codes for selected zone, level and type =======
@@ -668,7 +671,7 @@ function initApp() {
                     selectedSchoolsArray.push(schoolData)
                     selectedNamesArray.push(processSchoolName(schoolData.schoolName))
                     selectedCodesArray.push(schoolData.schoolCode)
-                    if ((displayObj.dataFilters.expend != null) && (displayObj.dataFilters.levels != null) && (displayObj.zoneType != "Ward")) {
+                    if ((displayObj.dataFilters.expend != null) && (displayObj.dataFilters.levels != null) && (zonesCollectionObj.zoneType != "Ward")) {
                         captureSchoolZone(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                     } else if (displayObj.dataFilters.zones != null)  {
                         aggregateZoneData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
@@ -711,7 +714,7 @@ function initApp() {
 
     // ======= ======= ======= checkFilterMatch ======= ======= =======
     SchoolsCollection.prototype.checkFilterMatch = function(nextSchool) {
-        console.log("checkFilterMatch");
+        // console.log("checkFilterMatch");
 
         var school = nextSchool.School;
         var schoolWard = "Ward " + nextSchool.WARD;
@@ -848,11 +851,8 @@ function initApp() {
         var zoneMouseover = map.data.addListener('mouseover', function(event) {
             // console.log("--- mouseover ---");
             var itemName = event.feature.getProperty('itemName');
-            var itemCenter = event.feature.getProperty('center');
-
             updateHoverText(itemName);
             updateFilterTitles("Select zone or school");
-
             if (map.get('clickedZone')!= event.feature ) {
                 map.data.overrideStyle(event.feature, {
                     fillColor: "white",
@@ -910,7 +910,6 @@ function initApp() {
         this.mapListenersArray.push(zoneMouseover);
         this.mapListenersArray.push(zoneMouseout);
         this.mapListenersArray.push(zoneMouseClick);
-
 
         // ======= ======= ======= zoomToZone ======= ======= =======
         function zoomToZone(event) {
