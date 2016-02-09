@@ -243,9 +243,11 @@ d3.csv('data/DCPS_Master_114_sankey.csv', function(data){
         }            
 
         // SET VALUE           
-        if(joinedSchools[i].MajorExp9815){
-            tempObj.value = toScale(joinedSchools[i].MajorExp9815);
-        } // toScale of school expenditure
+        var pattern = joinedSchools[m].FeederMSNum;
+        var value = elementarySchools.filter(function(item){ if(item.FeederMSNum === pattern){ return item; }})
+                                     .map(function(item){ return toScale(item.MajorExp9815); })
+                                     .reduce(function(prev, curr){return prev + curr;});
+        tempObj.value = value;                                     
         links.push(tempObj);
     }
 
