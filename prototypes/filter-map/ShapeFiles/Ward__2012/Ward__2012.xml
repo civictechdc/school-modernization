@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<origin/>
+<pubdate>20120130</pubdate>
+<title>Wards</title>
+<geoform>vector digital data</geoform>
+</citeinfo>
+</citation>
+<descript>
+<abstract>2012 Wards. The dataset contains polygons representing boundaries of District of Columbia 2012 election wards, created as part of the DC Geographic Information System (DC GIS) for the D.C. Office of the Chief Technology Officer (OCTO) and participating D.C. government agencies. The DC Office of Planning provided the boundaries to the DC GIS program. All DC GIS data is stored and exported in Maryland State Plane coordinates NAD 83 meters. METADATA CONTENT IS IN PROCESS OF VALIDATION AND SUBJECT TO CHANGE</abstract>
+<purpose>This data is used for the planning and management of Washington, D.C. by local government agencies.</purpose>
+</descript>
+<timeperd>
+<timeinfo>
+<sngdate>
+<caldate>20120130</caldate>
+</sngdate>
+</timeinfo>
+<current>publication date</current>
+</timeperd>
+<status>
+<progress>In work</progress>
+<update>As needed</update>
+</status>
+<spdom>
+<bounding>
+<westbc>-77.119896</westbc>
+<eastbc>-76.909016</eastbc>
+<northbc>38.995967</northbc>
+<southbc>38.791582</southbc>
+</bounding>
+</spdom>
+<keywords>
+<theme>
+<themekt>REQUIRED: Reference to a formally registered thesaurus or a similar authoritative source of theme keywords.</themekt>
+<themekey>Politics</themekey>
+<themekey>council</themekey>
+<themekey>boundary</themekey>
+<themekey>Wards</themekey>
+</theme>
+<place>
+<placekt>None</placekt>
+<placekey>Washington</placekey>
+<placekey>Washington</placekey>
+<placekey>DC</placekey>
+</place>
+</keywords>
+<accconst>None</accconst>
+<useconst>http://dc.gov/page/terms-and-conditions-use-district-data</useconst>
+<ptcontac>
+<cntinfo>
+<cntorgp>
+<cntorg>DC Office of Planning</cntorg>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>1100 4th Street, SW, Suite E650</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20024</postal>
+<country>US</country>
+</cntaddr>
+<cntvoice>202 442 7600</cntvoice>
+<hours>9am - 5pm</hours>
+</cntinfo>
+</ptcontac>
+<datacred>Office of Planning</datacred>
+<native>Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.4000</native>
+</idinfo>
+<dataqual>
+<attracc>
+<attraccr>Validated by source and/or responsible agency.</attraccr>
+</attracc>
+<logic>Validated by source and/or responsible agency.</logic>
+<complete>Validated by source and/or responsible agency.</complete>
+<posacc>
+<horizpa>
+<horizpar>Features have been topologically matched to the snapbase where the boundary matched features such as rivers, shoreline, and street centerlines. OCTO took the Office of Planning digitized boundary in between parts that matched the snapbase.</horizpar>
+</horizpa>
+<vertacc>
+<vertaccr>N/A</vertaccr>
+</vertacc>
+</posacc>
+<lineage>
+<srcinfo>
+<srccite>
+<citeinfo>
+<pubdate>20110101</pubdate>
+<title>WARD REDISTRICTING AMENDMENT ACT OF 2011</title>
+</citeinfo>
+</srccite>
+<typesrc>hardcopyPaper</typesrc>
+<srccitea>WARD REDISTRICTING AMENDMENT ACT OF 2011</srccitea>
+<srccontr>location and attribution</srccontr>
+</srcinfo>
+<procstep>
+<procdesc>The District Office of Planning updated the ward boundaries to reflect the revised legislation due to the 10 year redistricting effort. OCTO then took those snapped boundaries and selected snapbase feature, such as street centerlines and shoreline, where the boundaries overlapped. Two line files were formed, areas where the boundaries overlapped snapbase features and the original OLP boundary between the snapbase lines. Staff then merged the two layers together, constructed polygons, and appended the basic 2002 attributes to the layer. Note that these boundaries do split certain Census Blocks.</procdesc>
+<procdate>20110907</procdate>
+<proccont>
+<cntinfo>
+<cntorgp>
+<cntorg>Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>unknown</addrtype>
+<country>AF</country>
+</cntaddr>
+<cntfax>202-727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>9am - 5pm</hours>
+</cntinfo>
+</proccont>
+</procstep>
+</lineage>
+</dataqual>
+<spdoinfo>
+<direct>Vector</direct>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>0</ptvctcnt>
+</sdtsterm>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>0</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>DCGIS.WardPly</enttypl>
+</enttyp>
+<attr>
+<attrlabl>REP_OFFICE</attrlabl>
+<attrdef>Council Representative Office</attrdef>
+</attr>
+<attr>
+<attrlabl>LABEL</attrlabl>
+</attr>
+<attr>
+<attrlabl>AREASQMI</attrlabl>
+</attr>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>REP_NAME</attrlabl>
+<attrdef>Council Representative Name</attrdef>
+</attr>
+<attr>
+<attrlabl>REP_PHONE</attrlabl>
+<attrdef>Council Representative Phone Number</attrdef>
+</attr>
+<attr>
+<attrlabl>SHAPE.LEN</attrlabl>
+</attr>
+<attr>
+<attrlabl>SHAPE.AREA</attrlabl>
+</attr>
+<attr>
+<attrlabl>SHAPE</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>REP_EMAIL</attrlabl>
+<attrdef>Council Representative Email</attrdef>
+</attr>
+<attr>
+<attrlabl>WEB_URL</attrlabl>
+<attrdef>Ward Council Member web link</attrdef>
+</attr>
+<attr>
+<attrlabl>NAME</attrlabl>
+<attrdef>Ward Name</attrdef>
+</attr>
+<attr>
+<attrlabl>GIS_ID</attrlabl>
+<attrdef>OCTO GIS sequential ID</attrdef>
+</attr>
+<attr>
+<attrlabl>WARD_ID</attrlabl>
+</attr>
+<attr>
+<attrlabl>DCGIS.WardPly.FID</attrlabl>
+</attr>
+<attr>
+<attrlabl>SE_ANNO_CAD_DATA</attrlabl>
+</attr>
+<attr>
+<attrlabl>Ward</attrlabl>
+<attrdef>Ward Value</attrdef>
+</attr>
+</detailed>
+</eainfo>
+<distinfo>
+<distrib>
+<cntinfo>
+<cntorgp>
+<cntorg>District of Columbia Office of Planning</cntorg>
+</cntorgp>
+<cntaddr>
+<addrtype>unknown</addrtype>
+<country>AF</country>
+</cntaddr>
+<cntvoice>202 442 7600</cntvoice>
+</cntinfo>
+</distrib>
+<distliab>Acknowledgment of the DC Geographic Information Systems Program (DC GIS). The District of Columbia Government makes no claims as to the completeness, accuracy or content of any data contained hereon, and makes no representation of any kind, including, but not limited to, the warranty of the accuracy or fitness for a particular use, nor are any such warranties to be implied or inferred with respect to the information or data furnished herein.</distliab>
+<custom>Most DC GIS datasets can be downloaded from "http://dcgis.dc.gov" on the data center page. Orders can also be made by contacting OCTO GIS at "dcgis@dc.gov", especially for datasets not available for download.</custom>
+</distinfo>
+<metainfo>
+<metd>20120525</metd>
+<metrd>20110908</metrd>
+<metc>
+<cntinfo>
+<cntorgp>
+<cntorg>Office of the Chief Tecnhology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntvoice>REQUIRED: The telephone number by which individuals can speak to the organization or individual.</cntvoice>
+<cntfax>202-727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+</cntinfo>
+</metc>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>

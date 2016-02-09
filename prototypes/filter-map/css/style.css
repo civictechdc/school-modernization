@@ -1,0 +1,608 @@
+
+/* ======= general ======= */
+body {
+    /*font-family:"Ariel", sans-serif;*/
+    font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+hr {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* ======= rows columns ======= */
+.row, .column {
+    box-sizing: border-box;
+}
+.row {
+    overflow: visible;
+    /*border: 1px solid rebeccapurple;*/
+}
+.column {
+    float: left;
+    /*border: 1px solid Tomato;*/
+}
+.column:before {
+    content: "\00a0";
+}
+
+/* ======= columns ======= */
+.col-md-1 { width: 8.333%; }
+.col-md-2 { width: 16.66%; }
+.col-md-3 { width: 25%; }
+.col-md-4 { width: 33.33%; }
+.col-md-5 { width: 41.66%; }
+.col-md-6 { width: 50%; }
+.col-md-7 { width: 58.33%; }
+.col-md-8 { width: 66.66%; }
+.col-md-9 { width: 75%; }
+.col-md-10 { width: 83.33%; }
+.col-md-11 { width: 91.66%; }
+.col-md-12 { width: 100%; }
+
+[class*="col-"] {
+    background-color: #fff;
+    /*border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);*/
+}
+
+/* ======= title ======= */
+.page-title > h1 {
+    display: block;
+    margin: 10px;
+    text-align: left;
+    color: black;
+}
+
+/* ======= filters ======= */
+.banner {
+    height: 40px;
+    padding: 0 20px;
+    border: solid 2px #eee;
+}
+#filters-title {
+    width: 50%;
+    float: left;
+}
+#filters-title > h2 {
+    display: block;
+    margin: 10px;
+    width: 100%;
+    font-size: 16px;
+    font-style: italic;
+    text-align: right;
+    color: #eee;
+}
+#filters-title > h2.filterList {
+    display: block;
+    margin: 10px;
+    width: 100%;
+    font-size: 16px;
+    text-align: right;
+    color: darkslateblue;
+}
+.filterLabel {
+    font-style: normal;
+    color: red;
+}
+
+/* ======= buttons ======= */
+#zone-school-button {
+    position: absolute;
+    display: none;
+    height: 38px;
+    width: 80px;
+    left: 53%;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 6px 6px;
+    background-color: darkviolet;
+    border: solid 2px darkslateblue;
+}
+#clear-button {
+    position: absolute;
+    display: block;
+    height: 38px;
+    width: 60px;
+    left: 54%;
+    margin-left: 20px;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 6px 6px;
+    background-color: darkviolet;
+    border: solid 2px darkslateblue;
+}
+.btn-text {
+    line-height: 38px;
+    margin-left: 11px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+#clear-button:hover {
+    background-color: mediumpurple ;
+}
+#zone-school-button:hover {
+    background-color: mediumpurple ;
+}
+
+/* ======= mapCol ======= */
+.mapCol {
+    display: -webkit-flex || -webkit-inline-flex;
+    display: -webkit-box || -webkit-inline-box;
+    display: -ms-flexbox || -ms-inline-flexbox;
+    display: -moz-box || -moz-inline-box;
+    display: inline-flex;
+    display: flex;
+    flex-direction: -webkit-column;
+    flex-direction: column;
+    justify-content: -webkit-center;
+    justify-content: center;
+    align-items: -webkit-center;
+    align-items: center;
+}
+
+/* ======= map ======= */
+#map {
+    width: 100%;
+    height: 600px;
+}
+#map2 {
+    float: left;
+    width: 300px;
+    height: 300px;
+    margin-top: 60px;
+}
+
+/* ======= filter window ======= */
+#popup {
+    width: 360px;
+    height: auto;
+    position: absolute;
+    top: 60px;
+    left: 65%;
+    background-color: #fff2e5;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 2px 2px;
+    z-index:999;
+}
+.title_bar {
+    width: 100%;
+    position: relative;
+    height: 24px;
+    margin 0;
+    padding: 1px 0 16px 0;
+    text-align: center;
+    background-color: firebrick;
+    border-radius: 6px 6px 0 0;
+    cursor:move;
+}
+.title_bar > p {
+    margin-top: 8px;
+    font-weight: 700;
+	font-size: 16px;
+    color: white;
+}
+
+/* ======= navbar ======= */
+.labelText {
+    display: inline-block;;
+    width: 30%;
+	margin-left: 10px;
+	padding: 0;
+    text-align: right;
+    color: red;
+}
+#main-nav {
+    width: 100%;
+    float: left;
+}
+#main-nav > .nav-list {
+    display: block;
+	list-style: none;
+	position: relative;
+    width: 100%;
+	margin: 0;
+	padding: 0;
+    z-index: 999;
+}
+#main-nav > .nav-list li {
+	position: relative;
+    width: 50%;
+    height: 36px;
+	margin: 0;
+	padding: 0;
+}
+#main-nav > .nav-list a {
+    display: inline-block;;
+    width: 48%;
+    margin: 0;
+	padding: 8px 10px 8px 10px;
+    text-align: left;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 14px;
+    color: #333;
+	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#main-nav > .nav-list ul {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 100%;
+    width: 100%;
+    list-style: none;
+	background: #fff;
+	padding: 0;
+    background-color: rgba(200, 200, 200, 0.8);
+}
+#main-nav > .nav-list ul li {
+	float: none;
+    width: 100%;
+    border-bottom: 1px solid purple;
+}
+#main-nav > .nav-list ul a {
+    display: inline-block;;
+    width: 200%;
+    margin: 0;
+    text-align: left;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 14px;
+    color: #333;
+    color: purple;
+	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#main-nav > .nav-list li.category:hover {
+	background:#ffd9b3;
+}
+#main-nav > .nav-list li.category:hover > ul {
+	display: block;
+    z-index: 999;
+}
+#main-nav > .nav-list li.category:hover > ul a {
+    color: purple;
+}
+#main-nav > .nav-list li.filter:hover {
+	background:#ffb366;
+}
+#main-nav ul li.geography-set {
+	background: #9999ff;
+}
+#main-nav ul li.levels-set {
+	background: #99c2ff;
+}
+#main-nav ul li.agency-set {
+	background: #d279d2;
+}
+#main-nav ul li.students-set {
+	background: #ff5050;
+}
+#main-nav ul li.expenditures-set {
+	background: #33cc33;
+}
+#main-nav ul li #geography > a {
+	color: #9999ff;
+}
+#main-nav ul li #levels > a {
+	color: #99c2ff;
+}
+#main-nav ul li #agency > a {
+	color: #d279d2;
+}
+#main-nav ul li #students > a {
+	color: #ff5050;
+}
+#main-nav ul li #expenditures > a {
+	color: #33cc33;
+}
+hr {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+/* ======= search ======= */
+#search {
+    position: relative;
+    width: 100%;
+    height: 36px;
+	margin: 0;
+	padding: 0;
+    z-index: 99;
+}
+.searchText {
+    width: 15%;
+}
+#searchWindow {
+    display: inline-block;;
+    position: relative;
+    width: 60%;
+    height: 20px;
+    margin-top: 4px;
+    left: 2%;
+    color: purple;
+    font: 0.8em Arial, Helvetica, sans-serif;
+    z-index: 99;
+}
+#searchButton {
+    display: inline-block;;
+    position: relative;
+    width: 50px;
+    height: 30px;
+    margin-left: 15px;
+}
+
+/* ======= mouseover ======= */
+#mouseover-text {
+    position: relative;
+    width: 100%;
+    height: 36px;
+    margin: 0;
+	padding: 0;
+    background-color: white;
+}
+#mouseover-text > h2 {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;;
+    color: purple;
+}
+
+/* ======= chart ======= */
+#chart-container {
+    display: block;
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+    left: 30%;
+    width: 70%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    /*background-color: rgba(255, 255, 255, 0.9);*/
+    /*background-color: #eee;*/
+    z-index: 9;
+}
+#chart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ======= mouseover ======= */
+/*#mouseover-text {
+    position: absolute;
+    top: 460px;
+    left: 73%;
+    width: 20%;
+    height: 36px;
+    background-color: white;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 2px 2px;
+    z-index: 999;
+}*/
+
+/* ======= legend ======= */
+/*#chart {
+    display:none;
+    width:360px;
+    height:360px;
+    position:absolute;
+    top:300px;
+    left:60%;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index:99;
+}*/
+
+/* ======= mapLegend ======= */
+#mapLegend {
+    display: none;
+    position: relative;
+    margin-top: 10px;
+    left: 50%;
+    width: 50%;
+    height: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9;
+}
+#legend > th {
+    position: relative;
+    height: 10px;
+    color: white;
+    background-color: firebrick;
+}
+#legend > tr {
+    position: relative;
+    height: 8px;
+}
+.minMaxCol {
+    position: relative;
+    width: 70%;
+    height: 8px;
+    margin: -4px 0;
+}
+.colorChipCol {
+    position: relative;
+    width: 30%;
+    height: 8px;
+}
+.minMax {
+    position: relative;
+    padding: 1px 0;
+    margin: 1px 2px;
+    padding: 0;
+    text-align: center;;
+    font-weight: 400;
+	font-size: 12px;
+    color: purple;
+}
+.colorChip {
+    position: relative;
+    margin: 5px 5px;
+    width: 40px;
+    height: 15px;
+}
+
+/* ======= rankLegend ======= */
+#rankLegend {
+    display: none;
+    position: relative;
+    margin-top: 10px;
+    left: 50%;
+    width: 50%;
+    height: auto;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9;
+}
+#rankLegend > th {
+    position: relative;
+    height: 10px;
+    color: white;
+    background-color: firebrick;
+}
+.rank-col {
+    position: relative;
+    width: 30%;
+    height: 60px;
+    margin: 4px 0;
+}
+.rank-scale {
+    position: relative;
+    width: 30%;
+    height: 60px;
+    margin: 4px 0;
+}
+.rank-school {
+    position: relative;
+    width: 30%;
+    height: 60px;
+    margin: 4px 0;
+}
+.rank-label {
+    position: relative;
+    padding: 1px 0;
+    margin: 1px 2px;
+    padding: 0;
+    text-align: center;;
+    font-weight: 400;
+	font-size: 12px;
+    color: purple;
+}
+.rank-Chip {
+    position: relative;
+    margin: 5px 5px;
+    width: 10px;
+    height: 60px;
+    background-color: red;
+}
+
+/* ======= profile-container ======= */
+#profile-container {
+    display: block;
+    height: auto;
+    position: relative;
+    left: 0;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9;
+}
+#profile-container > tbody, tr {
+    width: 100%;
+    padding: -10px 0;
+    margin: -10px 0;
+}
+#profile-container > tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+.data-key, .data-value {
+    position: relative;
+    padding: -10px 0;
+    margin: -10px 0;
+    height: 10px;
+    vertical-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.data-key {
+    width: 100px;
+}
+.data-value {
+    width: 260px;
+}
+
+.key-text {
+    position: relative;
+    margin-left: 0 0 0 10px;;
+    padding: 1px 0;
+    margin: 1px 10px;
+    text-align: right;
+    font-weight: 400;
+	font-size: 14px;
+    color: black;
+}
+.value-text {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 14px;
+    color: purple;
+}
+.schoolname {
+    width: 100%;
+    height: 24px;
+    text-align: center;
+    color: white;
+    background-color: firebrick;
+}
+#expend-text {
+    line-height: 24px;
+}
+.schoolname > p {
+    color: white;
+}
+
+/* ======= tooltips ======= */
+#tooltips {
+    position: absolute;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 2px 2px 2px #222;
+    border-radius:2px;
+    z-index: 999;
+}
+#tooltips p {
+    margin: 8px 20px 4px 20px;
+    line-height: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ======= data ======= */
+.schoolTitle {
+    height: 60px;
+}
+
+/* ======= d3 ======= */
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
