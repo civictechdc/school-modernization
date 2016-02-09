@@ -145,19 +145,7 @@
 
         var primScale = d3.scale.category10();
 
-        // TODO play with colors more.
-        var tagScale = d3.scale.ordinal().domain([
-            "FULL MOD",
-            "FULL MOD + ADD",
-            "FULL REPLACEMENT",
-            "PARTIAL MOD",
-            "PARTIAL MOD + ADD",
-            "STABILIZED",
-            "Annual Allotment"
-        ])
-          .range(colorbrewer.Set1[7]);
-
-        var colorScale = d3.scale.category20b();
+      var colorScale = d3.scale.category20b();
 
         path.style("fill", function(d) {
             if (d.depth <= 2) {
