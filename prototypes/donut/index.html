@@ -48,6 +48,12 @@
       .attr("transform", "translate(" + (xOffset+2*radius+50) + "," + yOffset + ")")
       .attr("id", "PCS");
 
+    svg.append("g")
+      .attr("transform", "translate(" + xOffset + "," + 2*yOffset + ")")
+      .attr("id", "DPCS-budget");
+
+
+
     var partition = d3.layout.partition()
       .sort(null)
       .size([2 * Math.PI, radius * radius])
@@ -85,6 +91,12 @@
         makeChart(d3.select("#PCS"), pcs_tree, pcsCustomize);
         makeChart(d3.select("#DCPS"), dcps_tree, dcpsCustomize);
         
+    });
+
+    d3.json("DCPS-ann-budget.json", function(error, root) {
+        if (error) throw error;
+
+        makeChart(d3.select("#DCPS-ann-budget", root, function(a){}));
     });
 
     function makeChart(selection, tree, customizeFnc) {
