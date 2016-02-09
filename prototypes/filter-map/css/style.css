@@ -191,6 +191,11 @@ hr {
     text-align: right;
     color: red;
 }
+/*.all-filters {
+    display: inline-block;;
+    margin-left: 20px;
+    color: red;
+}*/
 #main-nav {
     width: 100%;
     float: left;
@@ -222,6 +227,17 @@ hr {
 	font-size: 14px;
     color: #333;
 	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#main-nav > .nav-list .all-filters {
+    position: absolute;
+    width: 100%;
+    height: 36px;
+	margin-top: 10px;
+    margin-left: 40px;
+	padding: 0;
+    font-size: 14px;
+    text-align: center;
+    color: gray;
 }
 #main-nav > .nav-list ul {
 	display: none;
@@ -348,29 +364,6 @@ hr {
     color: purple;
 }
 
-/* ======= chart ======= */
-#chart-container {
-    display: block;
-    height: auto;
-    position: relative;
-    margin-top: 10px;
-    left: 30%;
-    width: 70%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    /*background-color: rgba(255, 255, 255, 0.9);*/
-    /*background-color: #eee;*/
-    z-index: 9;
-}
-#chart {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 /* ======= mouseover ======= */
 /*#mouseover-text {
     position: absolute;
@@ -399,7 +392,7 @@ hr {
 }*/
 
 /* ======= mapLegend ======= */
-#mapLegend {
+#legend-container {
     display: none;
     position: relative;
     margin-top: 10px;
@@ -451,14 +444,142 @@ hr {
     height: 15px;
 }
 
-/* ======= rankLegend ======= */
-#rankLegend {
+/* ======= chart ======= */
+#chart-container {
     display: none;
-    position: relative;
-    margin-top: 10px;
-    left: 50%;
-    width: 50%;
     height: auto;
+    position: absolute;
+    top: 40%;
+    left: 65%;
+    width: 360px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    z-index: 9;
+}
+#chart {
+    position: relative;
+    width: 70%;
+    height: auto;
+    left: 30%;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* ======= profile-container ======= */
+#profile-container {
+    display: none;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    left: 65%;
+    width: 360px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9;
+}
+#profile-container > tbody, tr {
+    width: 100%;
+    padding: -10px 0;
+    margin: -10px 0;
+}
+#profile-container > tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+.data-key, .data-value {
+    position: relative;
+    padding: -10px 0;
+    margin: -10px 0;
+    height: 10px;
+    vertical-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.data-key {
+    width: 100px;
+}
+.data-value {
+    width: 260px;
+}
+.key-text {
+    position: relative;
+    margin-left: 0 0 0 10px;;
+    padding: 1px 0;
+    margin: 1px 10px;
+    text-align: right;
+    font-weight: 400;
+	font-size: 14px;
+    color: black;
+}
+.value-text {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 14px;
+    color: purple;
+}
+.schoolname {
+    width: 100%;
+    height: 18px;
+    text-align: center;
+    color: white;
+    background-color: firebrick;
+}
+#expend-text {
+    line-height: 18px;
+}
+.schoolname > p {
+    color: white;
+}
+
+/* ======= tooltips ======= */
+#tooltips {
+    position: absolute;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 2px 2px 2px #222;
+    border-radius:2px;
+    z-index: 999;
+}
+#tooltips p {
+    margin: 8px 20px 4px 20px;
+    line-height: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ======= data ======= */
+.schoolTitle {
+    height: 60px;
+}
+
+/* ======= d3 ======= */
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+/* ======= rankLegend ======= */
+/*#rankLegend {
+    display: none;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    left: 65%;
+    width: 360px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
     box-shadow: 6px 6px 5px #888888;
     border-radius: 6px 6px 2px 2px;
     background-color: rgba(255, 255, 255, 0.9);
@@ -504,105 +625,4 @@ hr {
     width: 10px;
     height: 60px;
     background-color: red;
-}
-
-/* ======= profile-container ======= */
-#profile-container {
-    display: block;
-    height: auto;
-    position: relative;
-    left: 0;
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    background-color: rgba(255, 255, 255, 0.9);
-    z-index: 9;
-}
-#profile-container > tbody, tr {
-    width: 100%;
-    padding: -10px 0;
-    margin: -10px 0;
-}
-#profile-container > tr:nth-child(even) {
-    background-color: #f2f2f2
-}
-.data-key, .data-value {
-    position: relative;
-    padding: -10px 0;
-    margin: -10px 0;
-    height: 10px;
-    vertical-align: center;
-    border-bottom: 1px solid #ddd;
-}
-.data-key {
-    width: 100px;
-}
-.data-value {
-    width: 260px;
-}
-
-.key-text {
-    position: relative;
-    margin-left: 0 0 0 10px;;
-    padding: 1px 0;
-    margin: 1px 10px;
-    text-align: right;
-    font-weight: 400;
-	font-size: 14px;
-    color: black;
-}
-.value-text {
-    padding: 1px 0;
-    margin: 1px 10px;
-    font-size: 14px;
-    color: purple;
-}
-.schoolname {
-    width: 100%;
-    height: 24px;
-    text-align: center;
-    color: white;
-    background-color: firebrick;
-}
-#expend-text {
-    line-height: 24px;
-}
-.schoolname > p {
-    color: white;
-}
-
-/* ======= tooltips ======= */
-#tooltips {
-    position: absolute;
-    height: 24px;
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 2px 2px 2px #222;
-    border-radius:2px;
-    z-index: 999;
-}
-#tooltips p {
-    margin: 8px 20px 4px 20px;
-    line-height: 12px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-/* ======= data ======= */
-.schoolTitle {
-    height: 60px;
-}
-
-/* ======= d3 ======= */
-.axis path,
-.axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
-
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}
+}*/
