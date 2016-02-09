@@ -370,6 +370,10 @@ function initApp() {
             self.dataFilters.levels = null;
             self.dataFilters.zones = null;
 
+            // == restore levels menu
+            self.modFilterMenu(self.filterMenusArray[0]);
+            self.activateFilterMenu(self.filterMenusArray[0]);
+
             // == clear filter window
             filterText = "your filters";
             var filterTitleContainer = $("#filters-title").children("h2");
