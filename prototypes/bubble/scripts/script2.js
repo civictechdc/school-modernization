@@ -23,7 +23,7 @@ d3.csv('data/data.csv', function (error, data) {
         //         return '10';
         //     }
         // }());
-        data[j].radius = 10;
+        data[j].radius = 13;
         data[j].x = Math.random() * width;
         data[j].y = Math.random() * height;
     }
@@ -40,6 +40,10 @@ d3.csv('data/data.csv', function (error, data) {
       .attr("cy", function (d) { return d.y; })
       .attr("r", 2)
       .style("fill", function (d) { return getColor(d.MajorExp9815); })
+      .style({
+        'stroke': 'black',
+        'stroke-width': 1
+      })
       // .on("mouseover", function (d) { showPopover.call(this, d); })
       // .on("mouseout", function (d) { removePopovers(); })
       ;
