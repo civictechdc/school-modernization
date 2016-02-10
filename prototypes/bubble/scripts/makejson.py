@@ -8,14 +8,8 @@ with open('../data/data.csv', 'rU') as file:
    for row in reader:
       data.append(row)
 
-# UTILITY FUNCTIONS
-#------------------------------------------------#
-def ppr(item):
-   pp.pprint(item)
-
 # GLOBALS
 #------------------------------------------------#
-pp = pprint.PrettyPrinter(indent=4)
 num_feeders = 9
 
 # OPERATIONS
