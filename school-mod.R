@@ -38,8 +38,8 @@ enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernizati
 enroll$SCHOOLCODE<-enroll$School.ID
 
 ##pcs datasets
-CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/schools.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)[c(2:5,8,12:14)]
+CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/2015-16_School_Directory.csv",
+                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:3,15)]
 
 CharterDataSheet<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Appendix%20B_Public%20Charter%20Facility%20Data%20Sheet%20for%20SY14-15%20NH.csv",
                            stringsAsFactors=FALSE, strip.white=TRUE)[c(1:5,7:9)]
@@ -62,12 +62,14 @@ textedit<-function (x) {
   x<-tolower(x)
   x<-gsub("ec","",x)
   x<-gsub("es","",x)
+  x<-gsub("pcs","",x)
   x<-gsub("middle","ms",x)
   x<-gsub("high","hs",x)
   x<-gsub("elementary","",x)
   x<-gsub("[.]","",x)
-  x<-gsub("[-]","",x)
+  x<-gsub("[–]","",x)
   x<-gsub("[*]","",x)
+  x<-gsub("[,]","",x)
   x<-gsub("[[:space:]]","",x)
 }
 
@@ -387,12 +389,40 @@ BuildingSum<-rbind(Single,Multi,Fix)
 PCS.Spend.Enroll.Build<-join(PCS.Spend.Enrollment, BuildingSum, by="School.ID",type="left")
 rm(Dup,Multi,Single,Fix,MultiSQFT,MultiMax,BuildingSum)
 
-### Add Lat and Long, Ward
-CharterLoc<-subset(CharterLoc, CharterLoc$lea_name!="District of Columbia Public Schools")
-CharterLoc$School.ID<-CharterLoc$school_code
-CharterLoc<-CharterLoc[c(6:9)]
+# Add Location Info
+CharterLoc$Address<-unlist(lapply(strsplit(CharterLoc$Location.1, '\n', fixed = TRUE), '[', 1))
+CharterLoc$Address<-gsub("St ","Street",CharterLoc$Address)
+CharterLoc$Address<-gsub("Ave ","Avenue",CharterLoc$Address)
+CharterLoc$Address<-ifelse(CharterLoc$Address=="2011 Savannah Street SE","2011 Savannah Terrace, SE",
+                      ifelse(CharterLoc$Address=="2405 Martin Luther King Avenue SE","2405 Martin Luther King Jr. Avenue, SE",
+                        ifelse()))
+###Need to match remaining addresses - why are some of them so far off?
+CharterLoc$LatLong<-unlist(lapply(strsplit(CharterLoc$Location.1, '\n', fixed = TRUE), '[', 3))
+CharterLoc$latitude<-unlist(lapply(strsplit(CharterLoc$LatLong, ',', fixed = TRUE), '[', 1))
+CharterLoc$latitude<-(sub("\\(","",CharterLoc$latitude))
+CharterLoc$longitude<-unlist(lapply(strsplit(CharterLoc$LatLong, ',', fixed = TRUE), '[', 2))
+CharterLoc$longitude<-(sub("\\)","",CharterLoc$longitude))
 
-#similarly the address and lat longs are potentially wrong where school ID overlaps. geocoding may be best.
+CharterLoc<-CharterLoc[c(1:3,5,7:8)]
+CharterLoc$addressJoin<-textedit(CharterLoc$Address)
+PCS.Spend.Enroll.Build$addressJoin<-textedit(PCS.Spend.Enroll.Build$Address)
+
+join1<-join(CharterLoc,PCS.Spend.Enroll.Build,by="addressJoin", type="inner")
+join<-join1[!(duplicated(join1[c("School")])), ]
+
+charterOut<-subset(PCS.Spend.Enroll.Build,!(PCS.Spend.Enroll.Build$addressJoin %in% join$addressJoin))
+charterOut$schoolJoin<-textedit(charterOut$Master.PCS.List.1998.2014.15)
+locOut<-subset(CharterLoc,!(CharterLoc$addressJoin %in% join$addressJoin))
+locOut$schoolJoin<-textedit(locOut$Campus.Facility.Name)
+
+join2<-join(charterOut,locOut,by="schoolJoin",type="inner")
+charterOut2<-subset(charterOut,!(charterOut$schoolJoin %in% join2$schoolJoin))
+locOut2<-subset(locOut,!(locOut$schoolJoin %in% join2$schoolJoin))
+
+charterOut2<-charterOut2[order(charterOut2$School.Name),]
+locOut2<-locOut2[order(locOut2$Campus.Facility.Name),]
+
+
 Charters<-join(CharterEnroll,CharterLoc,by="School.ID",type="left")
 
 Charters$Ward<-gsub("Ward ","",Charters$ward)
