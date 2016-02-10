@@ -3,37 +3,39 @@
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     console.log("\n----- makeRankChart -----");
 
-    // ======= chart container =======
-    var chartHtml = "<div id='chart-container'>";
-    chartHtml += "<div id='chart-title' class='schoolname'><p id='expend-text'>data chart</p></div>";
-    chartHtml += "<div id='chart'></div></div>";
+    // ======= chart =======
+    var chartHtml = "<table id='chart'>";
+    chartHtml += "<tr><td id='chart-title' class='schoolname' colspan=2><p id='expend-text'>data chart</p></td></tr>";
+    chartHtml += "</table>";
 
     // == remove previous chart or profile html if any
-    if ($('#mouseover-text').find('#profile-container').length) {
-        $("#profile-container").remove();
+    if ($('#profile-container').find('#profile').length) {
+        $("#profile").remove();
     }
-    if ($('#mouseover-text').find('#mapLegend').length) {
-        $("#mapLegend").remove();
+    if ($('#legend-container').find('#legend').length) {
+        $("#legend").remove();
     }
-    if ($('#mouseover-text').find('#chart-container').length) {
-        $("#chart-container").remove();
-        $("#mouseover-text").append(chartHtml);
+    if ($('#chart-container').find('#chart').length) {
+        console.log("*** chart found ***");
+        $("#chart").remove();
+        $("#chart-container").append(chartHtml);
     } else {
-        $("#mouseover-text").append(chartHtml);
+        $("#chart-container").append(chartHtml);
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
         });
     }
 
+    // == set title text to indicate selected expenditure
     updateChartText(filterMenu[displayObj.dataFilters.expend].text);
 
     // ======= formatting variables =======
-    var chartW, chartH, shortName, scaleFactor, scaleLabel;
+    var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber;
     var fillColors = zonesCollectionObj.dataColorsArray;
 
     // ======= chart formatting =======
     var chartPadding = {top: 20, right: 10, bottom: 30, left: 80},
-        chartW = 220 - chartPadding.left - chartPadding.right,       // outer width of chart
+        chartW = 230 - chartPadding.left - chartPadding.right,       // outer width of chart
         chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
 
     // ======= school data =======
@@ -42,19 +44,19 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     var dataMax = d3.max(dataObjectsArray, function(d) {
         return d.zoneValue;
     });
-    console.log("  dataMax: ", dataMax);
     var dataMin = d3.min(dataObjectsArray, function(d) {
         return d.zoneValue;
     });
+    console.log("  dataMax: ", dataMax);
     console.log("  dataMin: ", dataMin);
 
     // ======= bar data =======
-    var barScaleArray = [];
     var barW = 20;
+    var schoolCircleR = 5;
+    var schoolCircleX = 50;
+    var barScaleArray = [];
     var barTicks = zonesCollectionObj.dataBins;
     var barIncrement = dataMax/barTicks;
-    var schoolCircleX = 50;
-    var schoolCircleR = 5;
     for (var i = 1; i < (barTicks + 1); i++) {
         barScaleArray.push(parseInt(barIncrement * i));
     }
@@ -95,25 +97,16 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
     var yAxis = d3.svg.axis()
         .scale(yScale)          // specify left scale
         .orient("left")
-        // .tickPadding(10)
+        .tickPadding(10)
         .tickValues(barScaleArray);
 
     // ======= build svg objects =======
-    $("#chart").empty();
+    // $("#chart").empty();
     var svg = d3.select("#chart").append("svg")
         .attr("width", chartW + (chartPadding.left + chartPadding.right))
         .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
         .append("g")
             .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
-
-    // // ======= background =======
-    // svg.append("rect")
-    //     .attr("width", "100%")
-    //     .attr("height", "100%")
-    //     .attr("fill", "pink");
-    //
-    // svg.append("g")
-    //     .attr("transform", "translate(" + (-chartPadding.left) + "," + (-chartPadding.top) + ")");
 
     // ======= yAxis =======
     svg.append("g")                 // g group element to contain about-to-be-generated axis elements
@@ -196,21 +189,71 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                 }))
                 .attr("class", "dataChartLabel")
                 .text(function(d) {
-                    return d.zoneName;
+                    formattedNumber = numberWithCommas(d.zoneValue);
+                    labelString = d.zoneName + " $" + formattedNumber;
+                    return labelString;
                 })
                 .attr("x", function(d, i) {
                     return schoolCircleX + 15;
                 })
                 .attr("y", function(d) {
-                    return yScale(d.zoneValue) + 2;
+                    console.log("  y: ", yScale(d.zoneValue));
+                    return yScale(d.zoneValue);
                 })
                 .attr("font-family", "sans-serif")
-                .attr("font-size", "16px")
+                .attr("font-size", "14px")
                 .attr("fill", "black")
-                .attr("visibility", "hidden");
+                .attr("visibility", "hidden")
+                .call(insertLabelText);
 
-    // tweakSchoolLabels();
     activateChartCircles();
+
+    // ======= ======= ======= numberWithCommas ======= ======= =======
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // ======= ======= ======= insertLabelText ======= ======= =======
+    function insertLabelText(text) {
+        console.log("insertLabelText");
+        text.each(function() {
+            var text = d3.select(this);                         // text as sentence
+            var words = text.text().split(/\s+/).reverse();     // text as array (rebuilds in correct order below)
+            var wordString = words[0] + " " + words[1];
+            var x = text.attr("x");
+            var y = text.attr("y");
+            var word;
+            var width = 100;
+            var lineNumber = 0;
+            var lineHeight = 10;
+            var lineArray = [];                         // line built word by word
+            var tspan = text.text(null)                 // new container for line 1
+                .append("tspan")
+                .attr("x", x)
+                .attr("y", y);
+
+            // == loop through word list to assign lines
+            while (word = words.pop()) {                // add words until width exceeded
+                lineArray.push(word);
+                tspan.text(lineArray.join(" "));
+
+                // == new line when word count exceeds 1 word
+                if (lineArray.length > 1) {
+                    lineArray.pop();                    // remove too-long word
+                    tspan.text(lineArray.join(" "));    // space before addin new tspan element
+                    lineArray = [word];                 // add too-long word to line array
+                    newX = parseInt(parseInt(x) + 5);   // offset values for new line (must be integer)
+                    newY = parseInt(parseInt(y) + 14);
+                    tspan = text.append("tspan")        // make tspan for line 2
+                        .text(word)
+                        .attr("x", newX + "px")
+                        .attr("y", newY + "px")
+                        .attr("font-size", "12px")
+                        .attr("fill", "purple");
+                }
+            }
+        });
+    }
 
     // ======= ======= ======= assignChartColors ======= ======= =======
     function assignChartColors(zoneValue) {
@@ -235,7 +278,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
-                console.log("\n======= showLabel ======= ");
+                // console.log("\n======= showLabel ======= ");
                 targetLabel = $('#dataChartLabel_' + i);
                 $(targetLabel).attr("visibility", "visible");
                 targetMarkerIndex = this.id.split("_")[1];
@@ -284,7 +327,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
 
     // ======= toggleFeatureHilite =======
     function toggleFeatureHilite(i, onOrOff) {
-        console.log("toggleFeatureHilite");
+        // console.log("toggleFeatureHilite");
         var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
         var zoneName = zoneFeature.getProperty('itemName');
         var zoneIndex = zoneFeature.getProperty('index');
