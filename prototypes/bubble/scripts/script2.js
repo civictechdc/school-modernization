@@ -4,7 +4,7 @@ var $ = function(sel){return document.querySelector(sel);},
 d3.csv('data/data.csv', function (error, data) {
 
     var width = 1000,
-        height = 500;
+        height = 900;
     
     var svg = d3.select("#chart")
         .append("svg")
@@ -16,36 +16,28 @@ d3.csv('data/data.csv', function (error, data) {
         toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([5, 50]);
 
     for (var j = 0; j < data.length; j++) {
-        // data[j].radius = (function(){
-        //     if(+data[j].MajorExp9815 && data[j].MajorExp9815 !== 'NA'){
-        //         return toScale(+data[j].MajorExp9815)
-        //     } else {
-        //         return '10';
-        //     }
-        // }());
         data[j].radius = 13;
-        data[j].x = Math.random() * width;
-        data[j].y = Math.random() * height;
+        data[j].x = Math.random() * (width - 300);
+        data[j].y = Math.random() * (height - 300);
     }
     var padding = 4;
     var maxRadius = d3.max(_.pluck(data, 'radius'));
 
-    var nodes = svg.selectAll("circle")
-      .data(data);
-
     // creates circles and puts them in the starting position
-    nodes.enter().append("circle")
+    var nodes = svg.selectAll("circle")
+      .data(data)  
+      .enter().append("circle")
       .attr("class", "node")
       .attr("cx", function (d) { return d.x; })
       .attr("cy", function (d) { return d.y; })
       .attr("r", 2)
-      .style("fill", function (d) { return getColor(d.MajorExp9815); })
       .style({
+        'fill': function (d) { return getColor(d.MajorExp9815);},
         'stroke': 'black',
         'stroke-width': 1
       })
-      // .on("mouseover", function (d) { showPopover.call(this, d); })
-      // .on("mouseout", function (d) { removePopovers(); })
+      .on("mouseover", function (d) { showPopover.call(this, d); })
+      .on("mouseout", function (d) { removePopovers(); })
       ;
 
     nodes
@@ -65,7 +57,7 @@ d3.csv('data/data.csv', function (error, data) {
 
     var force = d3.layout.force();
 
-    // draw('Level');
+    draw('Agency');
     $_all('.btn').forEach(function(item){
         item.addEventListener('click', function(e){
             console.log(e.target.id);
@@ -79,9 +71,8 @@ d3.csv('data/data.csv', function (error, data) {
 
     function draw (varname) {
       var centers = getCenters(varname, [800, 800]);
-      console.log(centers);
       force.on("tick", tick(centers, varname));
-      // labels(centers)
+      labels(centers)
       force.start();
     }                                  
 
@@ -103,7 +94,6 @@ d3.csv('data/data.csv', function (error, data) {
       for (var i = 0; i < centers.length; i++) {
         foci[centers[i].name] = centers[i];
       }
-      console.log(foci);
       // LOOK HERE
       return function (e) {
         for (var i = 0; i < data.length; i++) {
@@ -126,7 +116,6 @@ d3.csv('data/data.csv', function (error, data) {
       .attr("class", "label")
       .text(function (d) { return d.name })
       .attr("transform", function (d) {
-        console.log(d);
         return "translate(" + (d.x - ((d.name.length)*3)) + ", " + (d.y - d.r) + ")";
       });
     }
@@ -146,24 +135,25 @@ d3.csv('data/data.csv', function (error, data) {
         }
     }
 
-    // function removePopovers () {
-    //   $('.popover').each(function() {
-    //     $(this).remove();
-    //   }); 
-    // }
+    function removePopovers () {
+      $('.popover').each(function() {
+        $(this).remove();
+      }); 
+    }
 
-    // function showPopover (d) {
-    //   $(this).popover({
-    //     placement: 'auto top',
-    //     container: 'body',
-    //     trigger: 'manual',
-    //     html : true,
-    //     content: function() { 
-    //       return "Make: " + d.make + "<br/>Model: " + d.model + "<br/>Drive: " + d.drive +
-    //              "<br/>Trans: " + d.trans + "<br/>MPG: " + d.comb; }
-    //   });
-    //   $(this).popover('show')
-    // }
+    function showPopover (d) {
+      $(this).popover({
+        placement: 'auto top',
+        container: 'body',
+        trigger: 'manual',
+        html : true,
+        content: function() { 
+            console.log(d);
+          return "Level: " + d.Level + "<br/>School: " + d.School + "<br/>Ward: " + d.Ward +
+                 "<br/>Exp: " + d.MajorExp9815 + "<br/>MPG: " + d.comb; }
+      });
+      $(this).popover('show')
+    }
 
     function collide(alpha) {
       var quadtree = d3.geom.quadtree(data);
