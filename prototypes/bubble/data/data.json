@@ -1,0 +1,298 @@
+{
+   "name": "Bubble Chart",
+   "children": [{
+      "name": "Feeder 1",
+      "children": [{
+         "name": "Aiton Elementary School",
+         "size": "8916"
+      }, {
+         "name": "Burrville Elementary School",
+         "size": "2991980"
+      }, {
+         "name": "C.W. Harris Elementary School",
+         "size": "0"
+      }, {
+         "name": "Drew Elementary School",
+         "size": "4898637"
+      }, {
+         "name": "Houston Elementary School",
+         "size": "1191032"
+      }, {
+         "name": "Nalle Elementary School",
+         "size": "11521407"
+      }, {
+         "name": "Smothers Elementary School",
+         "size": "152322"
+      }, {
+         "name": "Thomas Elementary School",
+         "size": "7563320"
+      }, {
+         "name": "Kelly Miller Middle School",
+         "size": "10614880"
+      }]
+   }, {
+      "name": "Feeder 2",
+      "children": [{
+         "name": "Bancroft Elementary School",
+         "size": "1446450"
+      }, {
+         "name": "Hyde-Addison Elementary School",
+         "size": "19157333"
+      }, {
+         "name": "Janney Elementary School",
+         "size": "37443325"
+      }, {
+         "name": "Key Elementary School",
+         "size": "13007488"
+      }, {
+         "name": "Lafayette Elementary School",
+         "size": "9939007"
+      }, {
+         "name": "Mann Elementary School",
+         "size": "34565362"
+      }, {
+         "name": "Murch Elementary School",
+         "size": "748083"
+      }, {
+         "name": "Shepherd Elementary School",
+         "size": "20462934"
+      }, {
+         "name": "Stoddert Elementary School",
+         "size": "18707417"
+      }, {
+         "name": "Hearst Elementary School",
+         "size": "35678706"
+      }, {
+         "name": "Deal Middle School",
+         "size": "73524856"
+      }, {
+         "name": "Hardy Middle School",
+         "size": "50758871"
+      }, {
+         "name": "Oyster-Adams Bilingual School (Oyster)",
+         "size": "0"
+      }, {
+         "name": "Oyster-Adams Bilingual School (Adams)",
+         "size": "3803375"
+      }]
+   }, {
+      "name": "Feeder 3",
+      "children": [{
+         "name": "Barnard Elementary School",
+         "size": "17867772"
+      }, {
+         "name": "Raymond Education Campus",
+         "size": "0"
+      }, {
+         "name": "Truesdell Education Campus",
+         "size": "4465045"
+      }, {
+         "name": "West Education Campus",
+         "size": "0"
+      }]
+   }, {
+      "name": "Feeder 4",
+      "children": [{
+         "name": "Beers Elementary School",
+         "size": "14813933"
+      }, {
+         "name": "Ketcham Elementary School",
+         "size": "8328691"
+      }, {
+         "name": "Kimball Elementary School",
+         "size": "0"
+      }, {
+         "name": "Moten Elementary School",
+         "size": "27716993"
+      }, {
+         "name": "Orr Elementary School",
+         "size": "0"
+      }, {
+         "name": "Plummer Elementary School",
+         "size": "13846933"
+      }, {
+         "name": "Savoy Elementary School",
+         "size": "21059646"
+      }, {
+         "name": "Stanton Elementary School",
+         "size": "23307939"
+      }, {
+         "name": "Kramer Middle School",
+         "size": "30951777"
+      }, {
+         "name": "Sousa Middle School",
+         "size": "0"
+      }, {
+         "name": "Old Randle",
+         "size": "NA"
+      }]
+   }, {
+      "name": "Feeder 5",
+      "children": [{
+         "name": "Brent Elementary School",
+         "size": "4475354"
+      }, {
+         "name": "Browne Education Campus",
+         "size": "131951"
+      }, {
+         "name": "Eaton Elementary School",
+         "size": "81414"
+      }, {
+         "name": "J.O. Wilson Elementary School",
+         "size": "4264356"
+      }, {
+         "name": "Ludlow-Taylor Elementary School",
+         "size": "11489803"
+      }, {
+         "name": "Maury Elementary School",
+         "size": "6444395"
+      }, {
+         "name": "Old Miner",
+         "size": "6391359"
+      }, {
+         "name": "Payne Elementary School",
+         "size": "22389213"
+      }, {
+         "name": "Peabody Elementary School",
+         "size": "7028816"
+      }, {
+         "name": "Thomson Elementary School",
+         "size": "25521091"
+      }, {
+         "name": "Tyler Elementary School",
+         "size": "3750929"
+      }, {
+         "name": "Watkins Elementary School",
+         "size": "2675972"
+      }, {
+         "name": "Van Ness ES",
+         "size": "10556642"
+      }, {
+         "name": "Amidon-Bowen Elementary School",
+         "size": "5993305"
+      }, {
+         "name": "Eliot-Hine Middle School",
+         "size": "210957"
+      }, {
+         "name": "Jefferson Middle School",
+         "size": "0"
+      }, {
+         "name": "Stuart-Hobson Middle School",
+         "size": "44653267"
+      }, {
+         "name": "Capitol Hill Montessori School @ Logan",
+         "size": "975866"
+      }]
+   }, {
+      "name": "Feeder 6",
+      "children": [{
+         "name": "Brightwood Education Campus",
+         "size": "22265461"
+      }, {
+         "name": "Burroughs Education Campus",
+         "size": "8239048"
+      }, {
+         "name": "Langdon Education Campus",
+         "size": "19828246"
+      }, {
+         "name": "Langley Education Campus",
+         "size": "10253618"
+      }, {
+         "name": "Noyes Education Campus",
+         "size": "24719301"
+      }, {
+         "name": "Walker-Jones Education Campus",
+         "size": "40442253"
+      }, {
+         "name": "Wheatley Education Campus",
+         "size": "42645563"
+      }, {
+         "name": "Brookland Education Campus @ Bunker Hill",
+         "size": "6533765"
+      }, {
+         "name": "Brookland MS",
+         "size": "58053351"
+      }]
+   }, {
+      "name": "Feeder 7",
+      "children": [{
+         "name": "Cleveland Elementary School",
+         "size": "20270264"
+      }, {
+         "name": "Garrison Elementary School",
+         "size": "655646"
+      }, {
+         "name": "Marie Reed Elementary School",
+         "size": "2970097"
+      }, {
+         "name": "Powell Elementary School",
+         "size": "25490976"
+      }, {
+         "name": "Ross Elementary School",
+         "size": "2604666"
+      }, {
+         "name": "Seaton Elementary School",
+         "size": "4298925"
+      }, {
+         "name": "Tubman Elementary School",
+         "size": "3644743"
+      }, {
+         "name": "Francis-Stevens Education Campus",
+         "size": "1314689"
+      }, {
+         "name": "H.D. Cooke Elementary School",
+         "size": "32500688"
+      }, {
+         "name": "Bruce-Monroe Elementary School @ Park View",
+         "size": "11264300"
+      }, {
+         "name": "Columbia Heights Education Campus",
+         "size": "78652173"
+      }]
+   }, {
+      "name": "Feeder 8",
+      "children": [{
+         "name": "Garfield Elementary School",
+         "size": "1082203"
+      }, {
+         "name": "Hendley Elementary School",
+         "size": "15937127"
+      }, {
+         "name": "Leckie Elementary School",
+         "size": "595860"
+      }, {
+         "name": "Patterson Elementary School",
+         "size": "5365870"
+      }, {
+         "name": "Simon Elementary School",
+         "size": "8505311"
+      }, {
+         "name": "Turner Elementary School",
+         "size": "27580545"
+      }, {
+         "name": "Hart Middle School",
+         "size": "13075759"
+      }, {
+         "name": "King Elementary School",
+         "size": "4118755"
+      }, {
+         "name": "John Hayden Johnson Middle School",
+         "size": "18602234"
+      }, {
+         "name": "Malcolm X Elementary School",
+         "size": "0"
+      }]
+   }, {
+      "name": "Feeder 9",
+      "children": [{
+         "name": "Takoma Education Campus",
+         "size": "26979598"
+      }, {
+         "name": "Whittier Education Campus",
+         "size": "5208611"
+      }, {
+         "name": "LaSalle-Backus Education Campus",
+         "size": "14206295"
+      }]
+   }]
+}
