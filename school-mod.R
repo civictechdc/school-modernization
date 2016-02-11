@@ -2,6 +2,8 @@ library(stringr)
 library(plyr)
 library(gtools)
 library(reshape)
+library(ggmap)
+library(rgdal)
 ### Read in data ###
 ### Read in data ###
 ### Read in data ###
@@ -38,9 +40,6 @@ enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernizati
 enroll$SCHOOLCODE<-enroll$School.ID
 
 ##pcs datasets
-CharterLoc<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/2015-16_School_Directory.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:3,15)]
-
 CharterDataSheet<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Appendix%20B_Public%20Charter%20Facility%20Data%20Sheet%20for%20SY14-15%20NH.csv",
                            stringsAsFactors=FALSE, strip.white=TRUE)[c(1:5,7:9)]
 colnames(CharterDataSheet)<-c("LEA.Code","School.ID","School","Level","Address","maxOccupancy","totalSQFT", "Total.Enroll")
@@ -69,6 +68,7 @@ textedit<-function (x) {
   x<-gsub("[.]","",x)
   x<-gsub("[–]","",x)
   x<-gsub("[*]","",x)
+  x<-gsub("[-]","",x)
   x<-gsub("[,]","",x)
   x<-gsub("[[:space:]]","",x)
 }
@@ -106,13 +106,14 @@ LastYrOut2$School.Short<-ifelse(LastYrOut2$School.Short=="bannekerhs", "benjamin
               ifelse(LastYrOut2$School.Short=="adamsoysteradams","oysteradamsbilingual(adams)",
                 ifelse(LastYrOut2$School.Short=="oysteroysteradams","oysteradamsbilingual(oyster)",
                   ifelse(LastYrOut2$School.Short=="wteducationcampus","wt",
-                    ifelse(LastYrOut2$School.Short=="hdwoodsonhs","woodson,hdhs",
+                    ifelse(LastYrOut2$School.Short=="hdwoodsonhs","woodsonhdhs",
                       ifelse(LastYrOut2$School.Short=="hearstms","hearst",
                              LastYrOut2$School.Short ))))))
 join3<-join(LastYrOut2,appCout2,by="School.Short",type="full")
 join3<-join3[-c(4)]
 
 DCPS.appC.Yr<-rbind(join1,join2,join3)
+DCPS.appC.Yr$School<-ifelse(DCPS.appC.Yr$School.Short=="mckinleyms","McKinley Technology Middle School",DCPS.appC.Yr$School)
 rm("join1", "join2", "join3","LastYrOut","LastYrOut2","appCout","appCout2")
 
 #Join AppC.Yr and Facility
@@ -149,19 +150,23 @@ appCout2$SchoolJoin<-ifelse(appCout2$SchoolJoin=="brooklandeducationcampus@bunke
                           ifelse(appCout2$SchoolJoin=="lukecmoorehsschool","lukemoorehsschool",
                             ifelse(appCout2$SchoolJoin=="prosptlearningcenter","schoolwithinschool@goding",
                                 ifelse(appCout2$SchoolJoin=="oysteradamsbilingualschool(adams)","adamsoysterbilingualschool(adams)",
-                                  ifelse(appCout2$SchoolJoin=="woodson,hdhs","hdwoodsonhs",
+                                  ifelse(appCout2$SchoolJoin=="woodsonhdhs","hdwoodsonhs",
                                     ifelse(appCout2$SchoolJoin=="sharpehealthschool","formerspedschool",
                                            appCout2$SchoolJoin))))))))))
 appCout2$SchoolJoin<-ifelse(appCout2$School.Short=="brooklandms","brooklandmsschool",appCout2$SchoolJoin)
 join3<-join(appCout2,Facout2,by="SchoolJoin",type="full")
 
 DCPS.appC.Facility<-rbind(join1,join2,join3)[-c(10)]
+
 rm("join1", "join2", "join3","Facout","Facout2","appCout","appCout2")
 
-#Join budget and DCPS.appC.Facility
+# Join budget and DCPS.appC.Facility
+# there are a small number of schools which share facilities. the building is not unique.
+# like with charters we are splitting the building out two rows. and making 'unq building'
 IndptBuilding<-subset(DCPS.appC.Facility,!grepl("/",DCPS.appC.Facility$SCHOOLCODE))
+IndptBuilding$unqBuilding<-rep(1,122)
 DptBuilding<-subset(DCPS.appC.Facility,grepl("/",DCPS.appC.Facility$SCHOOLCODE))
-
+DptBuilding$unqBuilding<-rep(0,5)
 IndptBuilding$SCHOOLCODE<-ifelse(IndptBuilding$School.Short=="jeffersonms",415,
                       ifelse(IndptBuilding$School.Short=="langley",235,
                         ifelse(IndptBuilding$School.Short=="vanns",331,
@@ -227,7 +232,7 @@ DCPS$School<-ifelse((is.na(DCPS$School) | grepl(" |swing space|closed|demolished
 DCPS$School<-ifelse(is.na(DCPS$School),DCPS$School.Short,
                     ifelse(DCPS$School=="", "DCPS MultiSchool",DCPS$School))
 DCPS$Agency<-ifelse(is.na(DCPS$Agency),"DCPS",DCPS$Agency)
-DCPS<-DCPS[c(1:3,5:16,18:20,22,26,27)]
+DCPS<-DCPS[c(1:3,5:17,19:21,23,27,28)]
 
 #Join with enroll
 enroll<-subset(enroll, enroll$Sector!="TOTAL")
@@ -254,7 +259,7 @@ DCPS.Final<-join(DCPS,enroll,by="SCHOOLCODE",type="left")
 
 ###Final DCPS dataset
 DCPS.Final$SPED<-DCPS.Final$Level.1+DCPS.Final$Level.2+DCPS.Final$Level.2+DCPS.Final$Level.3
-DCPS.Final<-DCPS.Final[-c(6,18,22:24,26:40,42:45)]
+DCPS.Final<-DCPS.Final[c(1:2,4,5,7:22,26,42,47,48)]
 
 DCPS.Final$totalSQFT<-numeric(DCPS.Final$totalSQFT)
 DCPS.Final$maxOccupancy<-numeric(DCPS.Final$maxOccupancy)
@@ -274,13 +279,24 @@ DCPS.Final$SPEDPer<-SPED/Total.Enrolled
 DCPS.Final$ESLPer<-Limited.English.Proficient/Total.Enrolled
 DCPS.Final$SqFtPerEnroll<-totalSQFT/Total.Enrolled
 
-DCPS.Final$SpentPerEnroll<-MajorExp9815/Total.Enrolled
+DCPS.Final$SpentPerMaxOccupancy<-MajorExp9815/maxOccupancy
 DCPS.Final$SpentPerSqFt<-MajorExp9815/totalSQFT
-colnames(DCPS.Final)[c(15:17)]<-"longitude","latitude","Ward"
 
-DCPS.Final<-DCPS.Final[-c(6)]
+DCPS.Final$YearsOpen<-rep(NA,134)
+DCPS.Final$Open<-rep(NA,134)
+DCPS.Final$Open.Now<-ifelse(DCPS.Final$Status=="Closed",0,1)
+
+DCPS.Final$AnnualExpenseAverage<-MajorExp9815/DCPS.Final$YearsOpen
+DCPS.Final$AnnualSpentPerMaxOccupany<-DCPS.Final$AnnualExpenseAverage/maxOccupancy
+DCPS.Final$AnnualSpentPerSqFt<-DCPS.Final$AnnualExpenseAverage/totalSQFT
+
+DCPS.Final<-DCPS.Final[-c(13,17)]
+colnames(DCPS.Final)[c(14)]<-"longitude"
+colnames(DCPS.Final)[c(15)]<-"latitude"
+colnames(DCPS.Final)[c(16)]<-"Ward"
+
 write.csv(DCPS.Final,
-"/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCPS_Master_114.csv",
+"/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCPS_Master_210.csv",
 row.names=FALSE)
 
 ###Create Charter dataset###
@@ -389,51 +405,30 @@ BuildingSum<-rbind(Single,Multi,Fix)
 PCS.Spend.Enroll.Build<-join(PCS.Spend.Enrollment, BuildingSum, by="School.ID",type="left")
 rm(Dup,Multi,Single,Fix,MultiSQFT,MultiMax,BuildingSum)
 
-# Add Location Info
-CharterLoc$Address<-unlist(lapply(strsplit(CharterLoc$Location.1, '\n', fixed = TRUE), '[', 1))
-CharterLoc$Address<-gsub("St ","Street",CharterLoc$Address)
-CharterLoc$Address<-gsub("Ave ","Avenue",CharterLoc$Address)
-CharterLoc$Address<-ifelse(CharterLoc$Address=="2011 Savannah Street SE","2011 Savannah Terrace, SE",
-                      ifelse(CharterLoc$Address=="2405 Martin Luther King Avenue SE","2405 Martin Luther King Jr. Avenue, SE",
-                        ifelse()))
-###Need to match remaining addresses - why are some of them so far off?
-CharterLoc$LatLong<-unlist(lapply(strsplit(CharterLoc$Location.1, '\n', fixed = TRUE), '[', 3))
-CharterLoc$latitude<-unlist(lapply(strsplit(CharterLoc$LatLong, ',', fixed = TRUE), '[', 1))
-CharterLoc$latitude<-(sub("\\(","",CharterLoc$latitude))
-CharterLoc$longitude<-unlist(lapply(strsplit(CharterLoc$LatLong, ',', fixed = TRUE), '[', 2))
-CharterLoc$longitude<-(sub("\\)","",CharterLoc$longitude))
+# Geocode address for LatLong and Ward
+PCS.Spend.Enroll.Build$FullAddress<-paste(PCS.Spend.Enroll.Build$Address, ",Washington,DC")
+address<-PCS.Spend.Enroll.Build$FullAddress
+latlong<-geocode(address, source="google")
 
-CharterLoc<-CharterLoc[c(1:3,5,7:8)]
-CharterLoc$addressJoin<-textedit(CharterLoc$Address)
-PCS.Spend.Enroll.Build$addressJoin<-textedit(PCS.Spend.Enroll.Build$Address)
+ward = readOGR("http://opendata.dc.gov/datasets/a4442c906559456eb6ef3ea0898fe994_32.geojson", "OGRGeoJSON")
+addAll<-SpatialPoints(latlong, proj4string=CRS(as.character("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")))
+wardID <- over(addAll, ward )
+ward<-wardID[c(4)]
 
-join1<-join(CharterLoc,PCS.Spend.Enroll.Build,by="addressJoin", type="inner")
-join<-join1[!(duplicated(join1[c("School")])), ]
+Charters<-cbind(PCS.Spend.Enroll.Build,latlong,ward)[c(2:6,11:12,28,33,35,38:41,43,45:47)]
 
-charterOut<-subset(PCS.Spend.Enroll.Build,!(PCS.Spend.Enroll.Build$addressJoin %in% join$addressJoin))
-charterOut$schoolJoin<-textedit(charterOut$Master.PCS.List.1998.2014.15)
-locOut<-subset(CharterLoc,!(CharterLoc$addressJoin %in% join$addressJoin))
-locOut$schoolJoin<-textedit(locOut$Campus.Facility.Name)
+Charters$TotalAllotandPlan1621<-rep(NA,125)
+Charters$LifetimeBudget<-rep(NA,125)
+Charters$FeederMS<-rep(NA,125)
+Charters$FeederHS<-rep(NA,125)
+Charters$ProjectPhase<-rep(NA,125)
+Charters$YrComplete<-rep(NA,125)
+Charters$ProjectType<-rep(NA,125)
+Charters$Agency<-rep("PCS",125)
 
-join2<-join(charterOut,locOut,by="schoolJoin",type="inner")
-charterOut2<-subset(charterOut,!(charterOut$schoolJoin %in% join2$schoolJoin))
-locOut2<-subset(locOut,!(locOut$schoolJoin %in% join2$schoolJoin))
-
-charterOut2<-charterOut2[order(charterOut2$School.Name),]
-locOut2<-locOut2[order(locOut2$Campus.Facility.Name),]
-
-
-Charters<-join(CharterEnroll,CharterLoc,by="School.ID",type="left")
-
-Charters$Ward<-gsub("Ward ","",Charters$ward)
-Charters$TotalAllotandPlan1621<-rep(NA,126)
-Charters$LifetimeBudget<-rep(NA,126)
-Charters$FeederMS<-rep(NA,126)
-Charters$FeederHS<-rep(NA,126)
-Charters$ProjectPhase<-rep(NA,126)
-Charters$YrComplete<-rep(NA,126)
-Charters$ProjectType<-rep(NA,126)
-Charters$Agency<-rep("PCS",126)
+colnames(Charters)[c(7)]<-c("Total.Enroll")
+Charters$MajorExp9815<-money(Charters$MajorExp9815)
+Charters$MajorExp9815<-numeric(Charters$MajorExp9815)
 
 attach(Charters)
 Charters$AtRiskPer<-At_Risk/Total.Enroll
@@ -441,26 +436,30 @@ Charters$SPEDPer<-SPED/Total.Enroll
 Charters$ESLPer<-Limited.English.Proficient/Total.Enroll
 Charters$SqFtPerEnroll<-totalSQFT/Total.Enroll
 
-Charters$SpentPerEnroll<-MajorExp9815/Total.Enroll
+Charters$SpentPerMaxOccupancy<-MajorExp9815/maxOccupancy
 Charters$SpentPerSqFt<-MajorExp9815/totalSQFT
 
-PCS.Final<-Charters[-c(1,3,15)]
-colnames(PCS.Final)[1] <- "SCHOOLCODE"
-colnames(PCS.Final)[7] <- "School"
+Charters$AnnualExpenseAverage<-MajorExp9815/YearsOpen
+Charters$AnnualSpentPerMaxOccupany<-Charters$AnnualExpenseAverage/maxOccupancy
+Charters$AnnualSpentPerSqFt<-Charters$AnnualExpenseAverage/totalSQFT
+
+PCS.Final<-Charters[-c(4)]
+
+colnames(PCS.Final)[5] <- "School"
 colnames(PCS.Final)[6]<-"Total.Enrolled"
+colnames(PCS.Final)[15]<-"longitude"
+colnames(PCS.Final)[16]<-"latitude"
+colnames(PCS.Final)[17]<-"Ward"
 
 DCSchools<-rbind(DCPS.Final,PCS.Final)
 
 write.csv(PCS.Final,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/PCS_Master_114.csv",
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/PCS_MasterOpen_210.csv",
+          row.names=FALSE)
+write.csv(CharterClose,
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/PCS_MasterClosed_210.csv",
           row.names=FALSE)
 
 write.csv(DCSchools,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_114.csv",
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchoolsMaster_210_excludesClosedCharter.csv",
           row.names=FALSE)
-
-
-##allocate SQFT based on enrollment proportion of schools where shared building 
-#     - done for charters, need to do for DCPS
-##figure out how to allocate atrisk, SPED and ESL where enrollment estimated
-##check addresses 
