@@ -6,7 +6,7 @@ var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter])
     // .radius(function(){return '20';})
-    // .padding(1.5)
+    .padding(25)
     ;
 
 var svg = d3.select("#chart").append("svg")
@@ -17,7 +17,6 @@ var svg = d3.select("#chart").append("svg")
 d3.json("scripts/json/data.json", function(error, root) {
   if (error) throw error;
 
-  var force = d3.layout.force();
   var node = svg.selectAll(".node")
       .data(bubble.nodes(classes(root))
       .filter(function(d) { return !d.children; }))
