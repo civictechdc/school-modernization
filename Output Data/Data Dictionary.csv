@@ -1,0 +1,35 @@
+Variable Name,Variable Defintion,DCPS Data Source,DCPS Data Source Variable Name,PCS Data Source,PCS Data Source Variable Name,Variable Formula,Notes
+Agency,"school type. Either ""DCPS"" or ""PCS""",None,,None,,,by data source
+School,name of school,Varied,,Varied,,,
+Address,address of school,DCPS Building Condition Dat,School Address,Appendix B Public Charter Facility Data Sheet for SY14-15,School Address(es) (SY14-15),,
+maxOccupancy,maximum occupancy of school,DCPS Building Condition Dat,SY2015-16 Permanent Capacity,Appendix B Public Charter Facility Data Sheet for SY14-15,"Maximum Occupancy (SY14-15, Reported by PCSB)",,For DCPS school 21st CF has reviewed and corrected DCPS maxOccupancy figures that seemed inappropriate. I don't think the same was done with PCS.
+ProjectPhase,phase of project (look to ProjectType for project description),Last Major Construction - Table 1,TYPE,N/A,N/A,,only applicable to DCPS
+YrComplete,year project was completed  (look to ProjectType for project description),Last Major Construction - Table 1,Year of Last Completed Work,N/A,N/A,,only applicable to DCPS
+Level,grade levels served,Facility Condition - Table 1,Grade Levels for 15-16 school year feeder pattern,Appendix B Public Charter Facility Data Sheet for SY14-15,Grade Levels,,
+totalSQFT,square footage of building,Facility Condition - Table 1,21CSF sq ft,Appendix B Public Charter Facility Data Sheet for SY14-15,"Total Square Footage (SY14-15, Reported by PCSB)",,
+ProjectType,"type of project (modernization, renovation, etc)",Facility Condition - Table 1,Type of Project,N/A,N/A,,only applicable to DCPS
+MajorExp9815,capital spending 1998-2015,Facility Condition - Table 1,Total expenditures 1998-2015,PCS Facility Allot Sch-by-Sch,Totals,,
+TotalAllotandPlan1621,total spending allotted for 2016 and planned for 2017-21,Facility Condition - Table 1,Total FY16 Allotted and FY17-21 Planned Expenditures,N/A,N/A,,only applicable to DCPS
+LifetimeBudget,Capital spending over lifetime of school (?),Facility Condition - Table 1,Sum of Lifetime Budget,N/A,N/A,,only applicable to DCPS
+unqBuilding,1 if building has unique school code that no other building shares; 0 otherwise,None - calculated,,None - calculated,,,"Some of the data is only available for a building, where that building houses multiple schools or for a school, which is housed in multiple buildings. A note should be made for any data used for unqBuilding=0."
+longitude,longitude of school building,Code for DC DCPS budget,LON,none,,,PCS: geocoded using Google Maps API in R
+latitude,longitude of school building,Code for DC DCPS budget,LAT,none,,,PCS: geocoded using Google Maps API in R
+Ward,ward of school building,Code for DC DCPS budget,WARD,none,,,PCS: geocoded using Google Maps API and Ward geoJson in R
+FeederMS,the middle school that an elementary school feeds into ,Simple Fdrs for 2014-15,MS Feeder,N/A,N/A,,only applicable to DCPS elementary schools
+FeederHS,the high school that an elementary or middleschool feeds into ,Simple Fdrs for 2014-15,HS Feeder,N/A,N/A,,only applicable to DCPS elementary and middle schools
+Total.Enrolled,total number of students for FY14-15,2014-15 Enrollment Audit,Total Enrolled,2014-15 Enrollment Audit,Total Enrolled,,
+Limited.English.Proficient,number of students with limited english proficiency for FY14-15,2014-15 Enrollment Audit,Limited English Proficient,2014-15 Enrollment Audit,Limited English Proficient,,
+At_Risk,total number of at risk students for FY14-15,2014-15 Enrollment Audit,At_Risk,2014-15 Enrollment Audit,At_Risk,,
+SPED,total number of special education students for FY14-15,2014-15 Enrollment Audit,Level1+Level2+Level3+Level4,2014-15 Enrollment Audit,Level1+Level2+Level3+Level4,,
+AtRiskPer,percent of at risk students as proportion of total student population,None - calculated,,None - calculated,,At_risk/Total.Enrolled,
+SPEDPer,percent of special education students as proportion of total student population,None - calculated,,None - calculated,,SPED/Total.Enrolled,
+ESLPer,percent of limited english proficient students as proportion of total student population,None - calculated,,None - calculated,, Limited.English.Proficient/Total.Enrolled,
+SqFtPerEnroll,number of square feet per each student,None - calculated,,None - calculated,,MajorExp9815/Total.Enrolled,
+SpentPerMaxOccupancy,major expenditures from 1998-2015 per max occupancy,None - calculated,,None - calculated,,MajorExp9815/maxOccupancy,
+SpentPerSqFt,major expenditures from 1998-2015 per square footage,None - calculated,,None - calculated,,MajorExp9815/totalSQFT,
+YearsOpen,number of years school has been open,,,PCS Facility Allot Sch-by-Sch,count of Sum of FY …. That are not 0,,only available for PCS
+Open,year school opened,,,PCS Facility Allot Sch-by-Sch,first Sum of FY …. That is not 0,,only available for PCS
+Open.Now,is school open for FY14-15,Facility Condition - Table 1,School,PCS Facility Allot Sch-by-Sch,Sum of FY2015 FA,"For DCPS if School included ""close"" ""demolished"" ""swing space"" then Open.Now=1. For PCS, if open in 2015",
+AnnualExpenseAverage,"average annual capital expenditure, 1998-2015",,,None - calculated,,MajorExp9815/YearsOpen,only available for PCS
+AnnualSpentPerMaxOccupany,"average annual capital expenditure per max oocupancy, 1998-2015",,,None - calculated,,AnnualExpenseAverage /maxOccupancy,only available for PCS
+AnnualSpentPerSqFt,"average annual capital expenditure per sq foot of building, 1998-2015",,,None - calculated,,AnnualExpenseAverage /totalSQFT,only available for PCS
