@@ -24,7 +24,7 @@ text#tooltip_label {
   border: 3px solid #1f4289; }
   #tooltip p {
     font-size: 12px;
-    line-height: 0.5em;
+    line-height: 1.2em;
     color: #fff; }
   #tooltip.hidden {
     display: none; }
