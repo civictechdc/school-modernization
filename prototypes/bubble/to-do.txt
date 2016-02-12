@@ -1,0 +1,14 @@
+- Add charter schools to csv
+- Subdivide by Agency (DCPS and PCS)
+- Plan all subdivides
+- Figure out doing logic on csv columns in Python
+- SVG Tooltips
+
+: Plan tomorrow: to-do
+   new visa card
+   haircut
+
+: Plan what to do after project ends
+
+/ WT W-2 (taxes)
+/ Personal Property form
