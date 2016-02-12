@@ -8,7 +8,7 @@ d3.csv('data/data.csv', function (error, data) {
     //*******************************************************
     // Setup SVG
     //*******************************************************
-    var width = 1000,
+    var width = 1200,
         height = 800;
     
     var svg = d3.select("#chart")
@@ -28,9 +28,9 @@ d3.csv('data/data.csv', function (error, data) {
         data[j].x = Math.random() * (width);
         data[j].y = Math.random() * (height);
     }
-    var padding = 4,
+    var padding = 15,
         maxRadius = d3.max(_.pluck(data, 'radius')),
-        padding_between_nodes = .65;
+        padding_between_nodes = .17;
 
     //*******************************************************
     // Setup CIRCLES
@@ -53,33 +53,40 @@ d3.csv('data/data.csv', function (error, data) {
         //*******************************************************
         // Circles: mousenter
         //*******************************************************
-      .on('mouseover', function(d){
+      .on('mouseenter', function(d){
 
         // GET THE X/Y COOD OF OBJECT
-        var xPosition = d3.select(this)[0][0]['cx'].animVal.value,
-            yPosition = d3.select(this)[0][0]['cy'].animVal.value,
-            tooltipPadding = 15;
+        var tooltipPadding = 30,
+            xPosition = d3.select(this)[0][0]['cx'].animVal.value - tooltipPadding,
+            yPosition = d3.select(this)[0][0]['cy'].animVal.value - tooltipPadding;
 
         // FORMAT THE TOOLTIP, INSERT TEXT
         d3.select('#tooltip')
             .style('left', xPosition + 'px')
             .style('top', yPosition + 'px');
-        d3.select('#school')
-            .text('School: ' + d.School);
-        d3.select('#expPast')
-            .text('Past Spending: ' + asMoney(d.MajorExp9815));
-        d3.select('#ward')
-            .text('Ward: ' + d.Ward);
         
+        d3.select('#school').text('School: ' + d.School);
+        d3.select('#expPast').text('Past Spending: ' + asMoney(d.MajorExp9815));
+        d3.select('#ward').text('Ward: ' + d.Ward);
+        
+        if(d.FeederHS){
+            d3.select('#hs').text('HS: ' + d.FeederHS);
+        }
+        if(d.FeederMS){
+            d3.select('#ms').text('MS: ' + d.FeederMS);
+        }
+        
+
+
         // SHOW THE TOOLTIP
         d3.select('#tooltip').classed('hidden', false);
-
+        // d3.select(this).attr('')
       })
 
         //*******************************************************
         // Circles: mousenter
         //*******************************************************
-      .on('mouseout', function(){
+      .on('mouseleave', function(){
         // HIDE THE TOOLTIP
         d3.select('#tooltip').classed('hidden', true);
       })
@@ -97,7 +104,7 @@ d3.csv('data/data.csv', function (error, data) {
         })
         ;
 
-    var force = d3.layout.force();
+    var force = d3.layout.force().gravity(50);
     
     //*******************************************************
     // Add interactivity to Subdivider Buttons
@@ -105,7 +112,6 @@ d3.csv('data/data.csv', function (error, data) {
     draw('Agency');
     $_all('.btn').forEach(function(item){
         item.addEventListener('click', function(e){
-            console.log(e.target.id);
             draw(e.target.id);
         });
     });
