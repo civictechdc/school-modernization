@@ -1,10 +1,13 @@
+// CUSTOM
 var $ = function(sel){return document.querySelector(sel);},
     $_all = function(sel){return document.querySelectorAll(sel);},
     asMoney = d3.format('$,.2f')
     ;
 
 d3.csv('data/data.csv', function (error, data) {
-
+    //*******************************************************
+    // Setup SVG
+    //*******************************************************
     var width = 1000,
         height = 800;
     
@@ -13,6 +16,9 @@ d3.csv('data/data.csv', function (error, data) {
         .attr("width", width)
         .attr("height", height);
 
+    //*******************************************************
+    // Scales
+    //*******************************************************
     var minExpend = d3.min(data, function(d){return +d.MajorExp9815;}),
         maxExpend = d3.max(data, function(d){return +d.MajorExp9815;}),
         toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([10, 30]);
@@ -26,7 +32,9 @@ d3.csv('data/data.csv', function (error, data) {
         maxRadius = d3.max(_.pluck(data, 'radius')),
         padding_between_nodes = .65;
 
-
+    //*******************************************************
+    // Setup CIRCLES
+    //*******************************************************
     // creates circles and puts them in the starting position
     var nodes = svg.selectAll("circle")
       .data(data)  
@@ -40,6 +48,11 @@ d3.csv('data/data.csv', function (error, data) {
         'stroke': 'black',
         'stroke-width': 1
       })
+
+
+        //*******************************************************
+        // Circles: mousenter
+        //*******************************************************
       .on('mouseover', function(d){
 
         // GET THE X/Y COOD OF OBJECT
@@ -62,6 +75,10 @@ d3.csv('data/data.csv', function (error, data) {
         d3.select('#tooltip').classed('hidden', false);
 
       })
+
+        //*******************************************************
+        // Circles: mousenter
+        //*******************************************************
       .on('mouseout', function(){
         // HIDE THE TOOLTIP
         d3.select('#tooltip').classed('hidden', true);
@@ -81,7 +98,10 @@ d3.csv('data/data.csv', function (error, data) {
         ;
 
     var force = d3.layout.force();
-
+    
+    //*******************************************************
+    // Add interactivity to Subdivider Buttons
+    //*******************************************************
     draw('Agency');
     $_all('.btn').forEach(function(item){
         item.addEventListener('click', function(e){
@@ -90,24 +110,17 @@ d3.csv('data/data.csv', function (error, data) {
         });
     });
 
-// $( ".btn" ).click(function() {
-//   draw(this.id);
-// });
-
     function draw (varname) {
       var centers = getCenters(varname, [800, 800]);
       force.on("tick", tick(centers, varname));
       labels(centers)
       force.start();
     }    
-
-    // function draw (varname) {
-    //       var foci = varname === "all" ? all_center: year_centers;
-    //       force.on("tick", tick(foci, varname));
-    //       labels(foci)
-    //       force.start();
-    //     }                              
-
+    
+    //****************************************
+    // UTILITY FUNCTIONS
+    //****************************************
+    
     // Returns an array of UNIQUE objects that have the given column name
     function getCenters(vname, size) {
           var centers, map;
@@ -194,23 +207,3 @@ d3.csv('data/data.csv', function (error, data) {
       };
     }
 });
-
-// function removePopovers () {
-//   $('.popover').each(function() {
-//     $(tophis).remove();
-//   }); 
-// }
-
-// function showPopover (d) {
-//   $(this).popover({
-//     placement: 'auto top',
-//     container: 'body',
-//     trigger: 'manual',
-//     html : true,
-//     content: function() { 
-//         console.log(d);
-//       return "Level: " + d.Level + "<br/>School: " + d.School + "<br/>Ward: " + d.Ward +
-//              "<br/>Exp: " + d.MajorExp9815 + "<br/>MPG: " + d.comb; }
-//   });
-//   $(this).popover('show')
-// }
