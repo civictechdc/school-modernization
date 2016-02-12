@@ -1,15 +1,16 @@
 var $ = function(sel){return document.querySelector(sel);},
-    $_all = function(sel){return document.querySelectorAll(sel);};
+    $_all = function(sel){return document.querySelectorAll(sel);},
+    asMoney = d3.format('$,.2f')
+    ;
 
 d3.csv('data/data.csv', function (error, data) {
 
-    var year_centers = {
-          "2008": {name:"2008", x: 150, y: 300},
-          "2009": {name:"2009", x: 550, y: 300},
-          "2010": {name:"2010", x: 900, y: 300}
-        }
-
-        var all_center = { "all": {name:"All Grants", x: 500, y: 300}};
+    // var year_centers = {
+    //       "2008": {name:"2008", x: 150, y: 300},
+    //       "2009": {name:"2009", x: 550, y: 300},
+    //       "2010": {name:"2010", x: 900, y: 300}
+    //     }
+    // var all_center = { "all": {name:"All Grants", x: 500, y: 300}};
 
     var width = 1000,
         height = 800;
@@ -45,34 +46,36 @@ d3.csv('data/data.csv', function (error, data) {
         'stroke-width': 1
       })
       .on('mouseover', function(d){
-        var xPosition = d3.select(this)[0][0]['cx'].animVal.value,
-            yPosition = d3.select(this)[0][0]['cy'].animVal.value;
 
-        svg.append('text')
-            .attr('id', 'tooltip')
-            .attr('x', xPosition)
-            .attr('y', yPosition)
-            .attr('text-anchor', 'middle')
-            .attr('font-weight', 'bold')
-            .attr('font-size', '18px')
-            .text(d.School)
-            ;
-        // console.log(xPosition, yPosition);
+        // GET THE X/Y COOD OF OBJECT
+        var xPosition = d3.select(this)[0][0]['cx'].animVal.value,
+            yPosition = d3.select(this)[0][0]['cy'].animVal.value,
+            tooltipPadding = 15;
+
+        // FORMAT THE TOOLTIP, INSERT TEXT
+        d3.select('#tooltip')
+            .style('left', xPosition + 'px')
+            .style('top', yPosition + 'px');
+        d3.select('#school')
+            .text('School: ' + d.School);
+        d3.select('#expPast')
+            .text('Past Spending: ' + asMoney(d.MajorExp9815));
+        d3.select('#ward')
+            .text('Ward: ' + d.Ward);
+        
+        // SHOW THE TOOLTIP
+        d3.select('#tooltip').classed('hidden', false);
 
       })
       .on('mouseout', function(){
-        d3.select('#tooltip').remove();
+        // HIDE THE TOOLTIP
+        d3.select('#tooltip').classed('hidden', true);
       })
-      // .on("mouseover", function (d) { showPopover.call(this, d); })
-      // .on("mouseout", function (d) { removePopovers(); })
       ;
 
     nodes
         .transition()
         .duration(5000)
-        // .attr("r", function (d) { 
-        //     return d.radius; 
-        // })
         .attr('r', function(d){
             if(+d.MajorExp9815 && d.MajorExp9815 !== 'NA'){
                 return toScale(+d.MajorExp9815)
@@ -169,26 +172,6 @@ d3.csv('data/data.csv', function (error, data) {
         }
     }
 
-    // function removePopovers () {
-    //   $('.popover').each(function() {
-    //     $(tophis).remove();
-    //   }); 
-    // }
-
-    // function showPopover (d) {
-    //   $(this).popover({
-    //     placement: 'auto top',
-    //     container: 'body',
-    //     trigger: 'manual',
-    //     html : true,
-    //     content: function() { 
-    //         console.log(d);
-    //       return "Level: " + d.Level + "<br/>School: " + d.School + "<br/>Ward: " + d.Ward +
-    //              "<br/>Exp: " + d.MajorExp9815 + "<br/>MPG: " + d.comb; }
-    //   });
-    //   $(this).popover('show')
-    // }
-
     function collide(alpha) {
       var quadtree = d3.geom.quadtree(data);
       return function(d) {
@@ -216,3 +199,23 @@ d3.csv('data/data.csv', function (error, data) {
       };
     }
 });
+
+// function removePopovers () {
+//   $('.popover').each(function() {
+//     $(tophis).remove();
+//   }); 
+// }
+
+// function showPopover (d) {
+//   $(this).popover({
+//     placement: 'auto top',
+//     container: 'body',
+//     trigger: 'manual',
+//     html : true,
+//     content: function() { 
+//         console.log(d);
+//       return "Level: " + d.Level + "<br/>School: " + d.School + "<br/>Ward: " + d.Ward +
+//              "<br/>Exp: " + d.MajorExp9815 + "<br/>MPG: " + d.comb; }
+//   });
+//   $(this).popover('show')
+// }
