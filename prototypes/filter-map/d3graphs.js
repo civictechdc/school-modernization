@@ -1,6 +1,6 @@
 
 // ======= ======= ======= makeRankChart ======= ======= =======
-function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
+function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount) {
     console.log("\n----- makeRankChart -----");
 
     // ======= chart =======
@@ -86,13 +86,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
         }))
         .range([0, chartW]);
 
-    // ======= Y SCALES =======
+    // ======= Y SCALE =======
     var yScale = d3.scale.linear()      // maps input domain to output range
         .domain([0, d3.max(barScaleArray, function(d, i) {
             // console.log("  d: ", d);
             return d;
         })])
-        .range([chartH, 0]);
+        .range([chartH + 20, 0]);
 
     var yAxis = d3.svg.axis()
         .scale(yScale)          // specify left scale
@@ -101,7 +101,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
         .tickValues(barScaleArray);
 
     // ======= build svg objects =======
-    // $("#chart").empty();
     var svg = d3.select("#chart").append("svg")
         .attr("width", chartW + (chartPadding.left + chartPadding.right))
         .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
@@ -135,7 +134,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                 }
             })
             .attr("height", function(d, i) {
-                barH = chartH/barTicks;
+                barH = (chartH + 20)/barTicks;
                 if (i < (barTicks + 1)) {
                     return barH;
                 } else {
@@ -190,14 +189,20 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                 .attr("class", "dataChartLabel")
                 .text(function(d) {
                     formattedNumber = numberWithCommas(d.zoneValue);
-                    labelString = d.zoneName + " $" + formattedNumber;
+                    var checkWard = d.zoneName.indexOf("Ward ");
+                    if (checkWard > -1) {
+                        var wardName = d.zoneName.replace(" ", "-");
+                        labelString = wardName + " $" + formattedNumber;
+                    } else {
+                        labelString = d.zoneName + " $" + formattedNumber;
+                    }
                     return labelString;
                 })
                 .attr("x", function(d, i) {
                     return schoolCircleX + 15;
                 })
                 .attr("y", function(d) {
-                    console.log("  y: ", yScale(d.zoneValue));
+                    // console.log("  y: ", yScale(d.zoneValue));
                     return yScale(d.zoneValue);
                 })
                 .attr("font-family", "sans-serif")
@@ -278,7 +283,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
-                // console.log("\n======= showLabel ======= ");
+                console.log("\n======= showLabel ======= ");
                 targetLabel = $('#dataChartLabel_' + i);
                 $(targetLabel).attr("visibility", "visible");
                 targetMarkerIndex = this.id.split("_")[1];
@@ -288,7 +293,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                     schoolMarker.icon.scale = 0.4;
                     schoolMarker.setMap(map);
                 } else {
-                    toggleFeatureHilite(i, "on");
+                    multiLayerOffset = zoneBcount;
+                    toggleFeatureHilite((i + multiLayerOffset), "on");
                 }
             });
 
@@ -304,7 +310,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
                     schoolMarker.icon.scale = 0.2;
                     schoolMarker.setMap(map);
                 } else {
-                    toggleFeatureHilite(i, "off");
+                    multiLayerOffset = zoneBcount;
+                    toggleFeatureHilite((i + multiLayerOffset), "off");
                 }
             });
 
@@ -334,7 +341,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj) {
         var itemColor = zoneFeature.getProperty('itemColor');
         if (onOrOff == "on") {
             map.data.overrideStyle(zoneFeature, {
-                fillOpacity: 0.5,
+                fillOpacity: 0.8,
                 strokeColor: "purple"
             });
         } else {
