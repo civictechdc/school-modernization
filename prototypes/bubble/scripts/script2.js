@@ -5,13 +5,6 @@ var $ = function(sel){return document.querySelector(sel);},
 
 d3.csv('data/data.csv', function (error, data) {
 
-    // var year_centers = {
-    //       "2008": {name:"2008", x: 150, y: 300},
-    //       "2009": {name:"2009", x: 550, y: 300},
-    //       "2010": {name:"2010", x: 900, y: 300}
-    //     }
-    // var all_center = { "all": {name:"All Grants", x: 500, y: 300}};
-
     var width = 1000,
         height = 800;
     
@@ -22,15 +15,17 @@ d3.csv('data/data.csv', function (error, data) {
 
     var minExpend = d3.min(data, function(d){return +d.MajorExp9815;}),
         maxExpend = d3.max(data, function(d){return +d.MajorExp9815;}),
-        toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([5, 20]);
+        toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([10, 30]);
 
     for (var j = 0; j < data.length; j++) {
         data[j].radius = 10;
         data[j].x = Math.random() * (width);
         data[j].y = Math.random() * (height);
     }
-    var padding = 4;
-    var maxRadius = d3.max(_.pluck(data, 'radius'));
+    var padding = 4,
+        maxRadius = d3.max(_.pluck(data, 'radius')),
+        padding_between_nodes = .65;
+
 
     // creates circles and puts them in the starting position
     var nodes = svg.selectAll("circle")
@@ -139,7 +134,7 @@ d3.csv('data/data.csv', function (error, data) {
           o.y += (f.y - o.y) * e.alpha;
           o.x += (f.x - o.x) * e.alpha;
         }
-        nodes.each(collide(.07))
+        nodes.each(collide(padding_between_nodes))
           .attr("cx", function (d) { return d.x; })
           .attr("cy", function (d) { return d.y; });
       }
