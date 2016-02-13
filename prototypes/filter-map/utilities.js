@@ -180,6 +180,7 @@ function checkFilterSelection(displayObj, zonesCollectionObj, whichCategory) {
 
     console.log("  whichCategory: ", whichCategory);
     console.log("  zoneType: ", zonesCollectionObj.zoneType);
+    console.log("  * agency: ", displayObj.dataFilters.agency);
     console.log("  * levels: ", displayObj.dataFilters.levels);
     console.log("  * expend: ", displayObj.dataFilters.expend);
     console.log("  * zones: ", displayObj.dataFilters.zones);
@@ -225,6 +226,17 @@ function updateHoverText(itemName, schoolType) {
         $(filterTitleContainer).text("&nbsp;");
     }
 }
+
+// ======= ======= ======= displayHoverMessage ======= ======= =======
+function displayHoverMessage(displayObj, textMessage) {
+    console.log("displayHoverMessage");
+
+    $("#mouseover-text").children("h2").text("");
+    $("#mouseover-text").children("h2").text(textMessage);
+    $("#mouseover-text").children("h2").css("visibility", "visible");
+    $("#mouseover-text").children("h2").css("color", "purple");
+}
+
 
 // ======= ======= ======= updateFilterTitles ======= ======= =======
 function updateFilterTitles(displayObj, whichFilter, addRemove) {
@@ -445,6 +457,8 @@ function captureSchoolZone(zonesCollectionObj, displayObj, schoolData, masterInd
                 // console.log("  masterIndex: ", masterIndex);
                 if (Number.isInteger(nextSchoolExpend)) {
                     currentExpendValue = nextDataObject.zoneValue;
+
+                    // == capture only one school per zone
                     if (currentExpendValue == 0) {
                         aggregatedExpend = currentExpendValue + nextSchoolExpend;
                         nextDataObject.zoneValue = aggregatedExpend;
@@ -466,9 +480,9 @@ function captureSchoolZone(zonesCollectionObj, displayObj, schoolData, masterInd
 
 // ======= ======= ======= getZoneFormat ======= ======= =======
 function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, whichLayer) {
-    console.log("getZoneFormat");
-    console.log("  zoneName: ", zoneName);
-    console.log("  featureIndex: ", featureIndex);
+    // console.log("getZoneFormat");
+    // console.log("  zoneName: ", zoneName);
+    // console.log("  featureIndex: ", featureIndex);
 
     // == use indexed color if selected zone
     if (displayObj.dataFilters.selectedZone) {
@@ -492,10 +506,10 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
             itemOpacity = 0.7;
         } else if (whichLayer == "single") {
             if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
-                if (displayObj.dataFilters.expend) {
+                if ((displayObj.dataFilters.expend) && (displayObj.dataFilters.agency != "Charter")) {
                     colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
                     itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
-                    strokeColor = "gray";
+                    strokeColor = "white";
                     strokeWeight = 2;
                     itemOpacity = 0.8;
                 } else {
@@ -517,8 +531,8 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
 
 // ======= ======= ======= assignDataColors ======= ======= =======
 function assignDataColors(zonesCollectionObj, featureIndex) {
-    console.log("assignDataColors");
-    console.log("  featureIndex: ", featureIndex);
+    // console.log("assignDataColors");
+    // console.log("  featureIndex: ", featureIndex);
 
     var nextExpendValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneValue;
     // console.log("  nextExpendValue: ", nextExpendValue);
@@ -963,18 +977,16 @@ function makeSchoolProfile(collectionOrSchool, schoolIndex) {
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolFeederMS + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>HS Feeder</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolFeederHS + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>capacity</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolMaxOccupancy + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>school Sqft</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolSqft + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime Spending</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.spendLifetime + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>capacity</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolMaxOccupancy + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>enrolled</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolEnroll + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>sqft/enrolled</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolSqFtPerEnroll + "</p></td></tr>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime Spending</p></td>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.spendLifetime + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>spending/enrolled</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.spendEnroll + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>spending/sqft</p></td>";

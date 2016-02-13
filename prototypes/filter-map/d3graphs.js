@@ -16,7 +16,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         $("#legend").remove();
     }
     if ($('#chart-container').find('#chart').length) {
-        console.log("*** chart found ***");
         $("#chart").remove();
         $("#chart-container").append(chartHtml);
     } else {
@@ -34,7 +33,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var fillColors = zonesCollectionObj.dataColorsArray;
 
     // ======= chart formatting =======
-    var chartPadding = {top: 20, right: 10, bottom: 30, left: 80},
+    var chartPadding = {top: 20, right: 10, bottom: 40, left: 80},
         chartW = 230 - chartPadding.left - chartPadding.right,       // outer width of chart
         chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
 
@@ -47,8 +46,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var dataMin = d3.min(dataObjectsArray, function(d) {
         return d.zoneValue;
     });
-    console.log("  dataMax: ", dataMax);
-    console.log("  dataMin: ", dataMin);
+    // console.log("  dataMax: ", dataMax);
+    // console.log("  dataMin: ", dataMin);
 
     // ======= bar data =======
     var barW = 20;
@@ -66,15 +65,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     if (dataMax > 1000000) {
         scaleFactor = 1000000;
         scaleLabel = "M$";
-    } else if ((dataMax > 10000) && (dataMax < 1000000)) {
-        scaleFactor = 10000;
-        scaleLabel = "10K$";
+        scaleRound = 1000;
     } else if ((dataMax > 1000) && (dataMax < 10000)) {
         scaleFactor = 1000;
-        scaleLabel = "1K$";
+        scaleLabel = "K$";
+        scaleRound = 10;
     } else {
         scaleFactor = 1;
         scaleLabel = "$";
+        scaleRound = 0.01;
     }
 
     // ======= X SCALE =======
@@ -113,6 +112,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         .call(yAxis)                // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
         .attr("transform", "translate(0, 0)")
         .selectAll("text")
+            .attr("class", "yLabels")
+            .text(function(d) {
+                newD = parseInt(d/scaleFactor);
+                // newD2 = Math.ceil(newD/scaleRound)*scaleRound;
+                console.log("  d: ", d)
+                return scaleLabel + " " + newD;
+            })
             .style("text-anchor", "end")
             .style("font-size", "10px");
 
@@ -306,7 +312,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 targetMarkerIndex = this.id.split("_")[1];
                 if (displayObj.dataFilters.zones == null) {
                     schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                    schoolMarker.icon.fillColor = "yellow";
+                    schoolMarker.icon.fillColor = schoolMarker.defaultColor;
                     schoolMarker.icon.scale = 0.2;
                     schoolMarker.setMap(map);
                 } else {
@@ -341,7 +347,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         var itemColor = zoneFeature.getProperty('itemColor');
         if (onOrOff == "on") {
             map.data.overrideStyle(zoneFeature, {
-                fillOpacity: 0.8,
+                fillOpacity: 1,
                 strokeColor: "purple"
             });
         } else {

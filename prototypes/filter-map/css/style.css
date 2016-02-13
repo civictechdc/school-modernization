@@ -394,9 +394,10 @@ hr {
 /* ======= mapLegend ======= */
 #legend-container {
     display: none;
-    position: relative;
-    margin-top: 10px;
-    left: 50%;
+    height: auto;
+    position: absolute;
+    top: 42%;
+    left: 65%;
     width: 50%;
     height: auto;
     border-collapse: collapse;
@@ -449,7 +450,7 @@ hr {
     display: none;
     height: auto;
     position: absolute;
-    top: 40%;
+    top: 42%;
     left: 65%;
     width: 360px;
     margin-top: 20px;
@@ -472,7 +473,7 @@ hr {
     display: none;
     height: auto;
     position: absolute;
-    top: 40%;
+    top: 42%;
     left: 65%;
     width: 360px;
     margin-top: 20px;
@@ -500,10 +501,10 @@ hr {
     border-bottom: 1px solid #ddd;
 }
 .data-key {
-    width: 100px;
+    width: 140px;
 }
 .data-value {
-    width: 260px;
+    width: 220px;
 }
 .key-text {
     position: relative;
