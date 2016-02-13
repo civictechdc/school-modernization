@@ -2,10 +2,10 @@
 // CUSTOM
 var $ = function(sel){return document.querySelector(sel);},
     $_all = function(sel){return document.querySelectorAll(sel);},
-    asMoney = d3.format('$,.2f')
+    asMoney = d3.format('$,')
     ;
 
-d3.csv('data/data.csv', function (error, data) {
+d3.csv('data/data_master.csv', function (error, data) {
     //*******************************************************
     // Setup SVG
     //*******************************************************
@@ -63,8 +63,11 @@ d3.csv('data/data.csv', function (error, data) {
 
         // FORMAT THE TOOLTIP, INSERT TEXT
         d3.select('#tooltip')
-            .style('left', xPosition + 'px')
-            .style('top', yPosition + 'px');
+            // .style('left', xPosition + 'px')
+            // .style('top', yPosition + 'px')
+            .style('left', '950px')
+            .style('top', '200px')
+            ;
         
         d3.select('#school').text('School: ' + camel(d.School));
         d3.select('#expPast').text('Past Spending: ' + asMoney(d.MajorExp9815));
@@ -77,7 +80,8 @@ d3.csv('data/data.csv', function (error, data) {
             d3.select('#ms').text('MS: ' + d.FeederMS);
         }
         
-
+        d3.select(this).attr('fill', 'grey');
+        console.log(d3.select(this));
 
         // SHOW THE TOOLTIP
         d3.select('#tooltip').classed('hidden', false);
