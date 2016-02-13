@@ -1,3 +1,4 @@
+'use strict';
 // CUSTOM
 var $ = function(sel){return document.querySelector(sel);},
     $_all = function(sel){return document.querySelectorAll(sel);},
@@ -65,7 +66,7 @@ d3.csv('data/data.csv', function (error, data) {
             .style('left', xPosition + 'px')
             .style('top', yPosition + 'px');
         
-        d3.select('#school').text('School: ' + d.School);
+        d3.select('#school').text('School: ' + camel(d.School));
         d3.select('#expPast').text('Past Spending: ' + asMoney(d.MajorExp9815));
         d3.select('#ward').text('Ward: ' + d.Ward);
         
@@ -80,7 +81,6 @@ d3.csv('data/data.csv', function (error, data) {
 
         // SHOW THE TOOLTIP
         d3.select('#tooltip').classed('hidden', false);
-        // d3.select(this).attr('')
       })
 
         //*******************************************************
@@ -105,27 +105,33 @@ d3.csv('data/data.csv', function (error, data) {
         ;
 
     var force = d3.layout.force().gravity(50);
-    
+
+    //*******************************************************
+    // Set initial state of graph
+    //*******************************************************    
+    draw('Agency');
+
+
     //*******************************************************
     // Add interactivity to Subdivider Buttons
     //*******************************************************
-    draw('Agency');
-    $_all('.btn').forEach(function(item){
+    var btns = Array.prototype.slice.call($_all('.btn'));
+    btns.forEach(function(item, e){
         item.addEventListener('click', function(e){
             draw(e.target.id);
         });
     });
 
+
+    //****************************************
+    // UTILITY FUNCTIONS
+    //****************************************
     function draw (varname) {
       var centers = getCenters(varname, [800, 800]);
       force.on("tick", tick(centers, varname));
       labels(centers)
       force.start();
     }    
-    
-    //****************************************
-    // UTILITY FUNCTIONS
-    //****************************************
     
     // Returns an array of UNIQUE objects that have the given column name
     function getCenters(vname, size) {
@@ -211,5 +217,38 @@ d3.csv('data/data.csv', function (error, data) {
           return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
         });
       };
+    }
+
+    function getColor(the_data){
+        var value = the_data;
+        if(value > 10000000){ // 10 MILLION
+            return '#77cc00';
+        } else if(value < 10000000 && value > 1000000){
+            return '#779900';
+        } else if (value < 1000000 && value > 100000){
+            return '#774400';
+        } else if (value < 100000 && value > 0){
+            return '#771100';
+        } else {
+            return '#aa0000';
+        }
+    }
+
+    function camel(str){
+      var camelStr = [],
+          strSplit = str.split(' '),
+          i =0, j = strSplit.length;
+      for (; i < j; i++){
+        var splitWord = strSplit[i].split('');
+        for(var m = 0, n = splitWord.length; m<n; m++){
+          var letter = splitWord[0],
+              upperLetter = letter.toUpperCase();
+          splitWord.shift();
+          splitWord.unshift(upperLetter);
+        }
+        camelStr.push(splitWord.join(''));
+      }
+      
+      return camelStr.join(' ');
     }
 });
