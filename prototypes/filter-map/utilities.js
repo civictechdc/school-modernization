@@ -484,6 +484,11 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
     // console.log("  zoneName: ", zoneName);
     // console.log("  featureIndex: ", featureIndex);
 
+    var itemColor = "white";
+    var strokeColor = "purple";
+    var strokeWeight = 2;
+    var itemOpacity = 0.5;
+
     // == use indexed color if selected zone
     if (displayObj.dataFilters.selectedZone) {
         if (zoneName == displayObj.dataFilters.selectedZone) {
@@ -492,38 +497,35 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
             itemColor = "white";
         }
     } else {
-        // == get color if expend filter selected
-        if (whichLayer == "lower") {
-            itemColor = "white";
-            strokeColor = "purple";
-            strokeWeight = 1;
-            itemOpacity = 0.6;
-        } else if (whichLayer == "upper") {
-            colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
-            itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
-            strokeColor = "black";
-            strokeWeight = 4;
-            itemOpacity = 0.7;
-        } else if (whichLayer == "single") {
-            if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
-                if ((displayObj.dataFilters.expend) && (displayObj.dataFilters.agency != "Charter")) {
-                    colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
-                    itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
-                    strokeColor = "white";
-                    strokeWeight = 2;
-                    itemOpacity = 0.8;
-                } else {
-                    itemColor = "white";
-                    strokeColor = "purple";
-                    strokeWeight = 2;
-                    itemOpacity = 0.5;
-                }
-            } else {
+        if (displayObj.dataFilters.agency != "Charter") {
+            if (whichLayer == "lower") {
                 itemColor = "white";
                 strokeColor = "purple";
-                strokeWeight = 2;
-                itemOpacity = 0.5;
+                strokeWeight = 1;
+                itemOpacity = 0.6;
+            } else if (whichLayer == "upper") {
+                colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
+                itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                strokeColor = "black";
+                strokeWeight = 4;
+                itemOpacity = 0.7;
+            } else if (whichLayer == "single") {
+                if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
+                    if (displayObj.dataFilters.expend) {
+                        colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
+                        itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                        strokeColor = "white";
+                        strokeWeight = 2;
+                        itemOpacity = 0.8;
+                    } else {
+                        return [itemColor, strokeColor, strokeWeight, itemOpacity];
+                    }
+                } else {
+                    return [itemColor, strokeColor, strokeWeight, itemOpacity];
+                }
             }
+        } else {
+            return [itemColor, strokeColor, strokeWeight, itemOpacity];
         }
     }
     return [itemColor, strokeColor, strokeWeight, itemOpacity];
@@ -936,14 +938,14 @@ function getDataDetails(nextSchool) {
 }
 
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
-function makeSchoolProfile(collectionOrSchool, schoolIndex) {
+function makeSchoolProfile(collectionOrSchool, displayObj, schoolIndex) {
     console.log("makeSchoolProfile");
     console.log("  schoolIndex: ", schoolIndex);
 
-    if (typeof schoolIndex === 'undefined') {
+    if ((typeof schoolIndex === 'undefined') || (typeof schoolIndex === 'null')) {
         console.log("*** TRUE ***");
-        var processdSchoolData = getDataDetails(collectionOrSchool);
-        var cleanedSchoolData = validateSchoolData(processdSchoolData);
+        var processedSchoolData = getDataDetails(collectionOrSchool);
+        var cleanedSchoolData = validateSchoolData(processedSchoolData);
     } else {
         var selectedSchoolData = collectionOrSchool.selectedSchoolsArray[schoolIndex];
         var cleanedSchoolData = validateSchoolData(selectedSchoolData);
@@ -966,7 +968,7 @@ function makeSchoolProfile(collectionOrSchool, schoolIndex) {
     }
 
     var htmlString = "<table id='profile'>";
-    htmlString += "<tr><td class='schoolname' colspan=2><p class='value-text'>" + itemName + "</p></td></tr>";
+    htmlString += "<tr><td class='schoolname' colspan=2><div id='close-X'>X</div><p class='value-text'>" + itemName + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>address</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolAddress + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>type</p></td>";
@@ -995,7 +997,10 @@ function makeSchoolProfile(collectionOrSchool, schoolIndex) {
 
     // == remove previous chart or profile html if any
     if ($('#chart-container').find('#chart').length) {
-        $("#chart").remove();
+        $("#chart-container").fadeOut( "fast", function() {
+            console.log("*** FADEOUT chart-container ***");
+        });
+        // $("#chart").remove();
     }
     if ($('#legend-container').find('#legend').length) {
         $("#legend").remove();
@@ -1009,6 +1014,7 @@ function makeSchoolProfile(collectionOrSchool, schoolIndex) {
             console.log("*** FADEIN profile-container ***");
         });
     }
+    displayObj.activateCloseButton();
 }
 
 // ======= ======= ======= initMap ======= ======= =======

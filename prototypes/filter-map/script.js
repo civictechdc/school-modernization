@@ -274,7 +274,7 @@ function initApp() {
                     self.activateClearButton();
                     $(filterTitleContainer).css("font-size", "16px");
                     schoolText = "<span class='filterLabel'>Your school: </span>";
-                    makeSchoolProfile(foundDataArray[0]);
+                    makeSchoolProfile(foundDataArray[0], displayObj);
                     $("#profile-container").css("display", "table");
                     console.log("*** display profile-container ***");
                     updateHoverText(null);
@@ -328,6 +328,33 @@ function initApp() {
         });
     }
 
+
+    // ======= ======= ======= activateCloseButton ======= ======= =======
+    Display.prototype.activateCloseButton = function(buttonId) {
+        console.log("activateCloseButton");
+
+        var self = this;
+        var buttonElement = $("#close-X");
+
+        // ======= selectFilter =======
+        $(buttonElement).off("click").on("click", function(event){
+            console.log("\n======= close =======");
+
+            // == remove previous chart or profile html if any
+            $("#profile-container").fadeOut( "fast", function() {
+                    console.log("*** FADEOUT profile-container ***");
+                    $("#profile").remove();
+            });
+            if ($('#chart-container').find('#chart').length) {
+                $("#chart-container").fadeIn( "slow", function() {
+                    console.log("*** FADEIN chart-container ***");
+                });
+            }
+            if ($('#legend-container').find('#legend').length) {
+                $("#legend").remove();
+            }
+        });
+    }
 
     // ======= ======= ======= activateSearchButton ======= ======= =======
     Display.prototype.activateSearchButton = function(buttonId) {
@@ -479,12 +506,19 @@ function initApp() {
                         self.modFilterMenu(self.filterMenusArray[1]);
 
                         // == reset levels menu to previously selected level
-                        if (tempLevels == "ES") {
+                        if (whichFilter == "FeederHS") {
+                            if (tempLevels == "ES") {
+                                self.setMenuItem("levels", "Elem");
+                                self.dataFilters.levels = "ES";
+                            } else if (tempLevels == "MS") {
+                                self.setMenuItem("levels", "Middle");
+                                self.dataFilters.levels = "MS";
+                            } else {
+                                self.dataFilters.levels = null;
+                            }
+                        } else if (whichFilter == "FeederMS") {
                             self.setMenuItem("levels", "Elem");
-                        } else if (tempLevels == "MS") {
-                            self.setMenuItem("levels", "Middle");
-                        } else {
-                            self.dataFilters.levels = null;
+                            self.dataFilters.levels = "ES";
                         }
                         self.activateFilterMenu(self.filterMenusArray[1]);
                     }
@@ -792,15 +826,15 @@ function initApp() {
         var schoolFeederHS = nextSchool.FeederHS;
         var schoolFeederMS = nextSchool.FeederMS;
         var shortName = processSchoolName(school);
-        // console.log("******* school: ", school);
-        // console.log("  schoolAgency: ", schoolType);
-        // console.log("  schoolLevel: ", schoolLevel);
-        // console.log("  schoolWard: ", schoolWard);
-        // console.log("  schoolFeederMS: ", schoolFeederMS);
-        // console.log("  schoolFeederHS: ", schoolFeederHS);
-        // console.log("  displayObj.dataFilters.agency: ", displayObj.dataFilters.agency);
-        // console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
-        // console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+        console.log("******* school: ", school);
+        console.log("  schoolAgency: ", schoolType);
+        console.log("  schoolLevel: ", schoolLevel);
+        console.log("  schoolWard: ", schoolWard);
+        console.log("  schoolFeederMS: ", schoolFeederMS);
+        console.log("  schoolFeederHS: ", schoolFeederHS);
+        console.log("  displayObj.dataFilters.agency: ", displayObj.dataFilters.agency);
+        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
+        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
         if (displayObj.dataFilters.agency) {
             if (displayObj.dataFilters.agency == "District") {
@@ -1282,7 +1316,7 @@ function initApp() {
                 var schoolCode = this.schoolCode;
                 console.log("  schoolCode: ", schoolCode);
 
-                makeSchoolProfile(schoolsCollectionObj, this.schoolIndex);
+                makeSchoolProfile(schoolsCollectionObj, displayObj, this.schoolIndex);
             });
         }
     }
