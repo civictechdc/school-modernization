@@ -11,7 +11,7 @@
     <link rel="icon" href="images/favicon.ico">
 
   <!-- ======= ======= ======= styles ======= ======= ======= -->
-	<title>DCPS SchoolMod</title>
+	<title>DCPS MapTool</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
@@ -45,7 +45,7 @@
 					<nav id="main-nav"></nav>
 				</div>
 
-				<div id="map"></div>
+				<div id="toolMap-container"></div>
 				<div id='profile-container'></div>
 				<div id='legend-container'></div>
 		        <div id='chart-container'></div>
@@ -61,6 +61,14 @@
 		<script type="text/javascript" src="d3graphs.js"></script>
 		<script type="text/javascript" src="utilities.js"></script>
 		<script type="text/javascript" src="script.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+			    console.log('jQuery loaded');
+			    console.log('document ready');
+				var fs = initApp("toolMap");
+			});
+		</script>
 
 	</div>
 </body>
