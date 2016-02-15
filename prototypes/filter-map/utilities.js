@@ -1083,8 +1083,9 @@ function validateSchoolData(selectedSchoolData) {
 }
 
 // ======= ======= ======= initMap ======= ======= =======
-function initMap(zonesCollectionObj) {
+function initMap(zonesCollectionObj, displayObj) {
     console.log('initMap');
+    console.log('  displayObj.displayMode: ', displayObj.displayMode);
 
     // ======= map styles =======
     var styleArray = [
@@ -1122,33 +1123,55 @@ function initMap(zonesCollectionObj) {
     var pathname = window.location.pathname; // Returns path only
 
     // ======= index map =======
-    var zoom = 12;
-    var mapContainer = document.getElementById('map');
+    if (displayObj.displayMode != "storyMap") {
+        console.log("  NOT storyMap");
+        var mapContainer = document.getElementById('toolMap-container');
+        var zoom = 12;
 
-    map = new google.maps.Map(mapContainer, {
-        center: {lat: 38.89, lng: -77.00},
-        disableDefaultUI: false,
-        disableDoubleClickZoom: true,
-        zoomControl: true,
-        zoomControlOpt: {
-            style: 'SMALL',
-            position: 'TOP_LEFT'
-        },
-        draggable: true,
-        scrollwheel: false,
-        styles: styleArray,     // styles for map tiles
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        zoom: zoom
-    });
+        map = new google.maps.Map(mapContainer, {
+            center: {lat: 38.89, lng: -77.00},
+            disableDefaultUI: false,
+            disableDoubleClickZoom: true,
+            zoomControl: true,
+            zoomControlOpt: {
+                style: 'SMALL',
+                position: 'TOP_LEFT'
+            },
+            draggable: true,
+            scrollwheel: false,
+            styles: styleArray,     // styles for map tiles
+            mapTypeId: google.maps.MapTypeId.TERRAIN,
+            zoom: zoom
+        });
 
-    google.maps.event.addListener(map, 'tilesloaded', function() {
-        console.log("tilesloaded.addListener");
-        if (!zonesCollectionObj.mapBounds) {
-            zonesCollectionObj.mapBounds = map.getBounds();
-            // console.log("  zonesCollectionObj.mapBounds: ",zonesCollectionObj.mapBounds);
-            // makeOverlay();
-        }
-    });
+        google.maps.event.addListener(map, 'tilesloaded', function() {
+            console.log("tilesloaded.addListener");
+            if (!zonesCollectionObj.mapBounds) {
+                zonesCollectionObj.mapBounds = map.getBounds();
+                // console.log("  zonesCollectionObj.mapBounds: ",zonesCollectionObj.mapBounds);
+                // makeOverlay();
+            }
+        });
+    } else {
+        var zoom = 10;
+        var mapContainer = document.getElementById('storyMap-container');
+        console.log("  mapContainer: ", mapContainer);
+        map = new google.maps.Map(mapContainer, {
+            center: {lat: 38.89, lng: -77.00},
+            disableDefaultUI: false,
+            disableDoubleClickZoom: true,
+            zoomControl: true,
+            zoomControlOpt: {
+                style: 'SMALL',
+                position: 'TOP_LEFT'
+            },
+            draggable: true,
+            scrollwheel: false,
+            styles: styleArray,     // styles for map tiles
+            mapTypeId: google.maps.MapTypeId.TERRAIN,
+            zoom: zoom
+        });
+    }
 }
 
 // ======= ======= ======= floating windows ======= ======= =======

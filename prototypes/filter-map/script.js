@@ -1,11 +1,7 @@
-$(document).ready(function(){
-    console.log('jQuery loaded');
-    console.log('document ready');
-    initApp();
-});
 
-function initApp() {
+function initApp(presetMode) {
     console.log('initApp');
+    console.log('  presetMode: ', presetMode);
 
 
 
@@ -16,6 +12,7 @@ function initApp() {
     var schoolsCollectionObj;
     var zonesCollectionObj;
     var displayObj;
+    // var map;
 
     // ======= ======= ======= initMenuObjects ======= ======= =======
     function initMenuObjects() {
@@ -56,6 +53,7 @@ function initApp() {
     }
     function Display() {
         console.log("Display");
+        this.displayMode = null;
         this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter];
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
         this.expendMenu = ["expend", filterMenu.spendPast, filterMenu.spendPlanned, filterMenu.spendLifetime];
@@ -663,7 +661,7 @@ function initApp() {
     // ======= ======= ======= ======= ======= ZONES ======= ======= ======= ======= =======
 
     // ======= ======= ======= getZoneData ======= ======= =======
-    ZonesCollection.prototype.getZoneData = function(presetMode) {
+    ZonesCollection.prototype.getZoneData = function() {
         console.log("\n----- getZoneData -----");
         console.log("  this.aggregatorArray.length: ", this.aggregatorArray.length);
         console.dir(this.aggregatorArray);
@@ -693,7 +691,7 @@ function initApp() {
             if (feederFlag == true) {
                 self.getFeederZones(urlB);
             } else {
-                schoolsCollectionObj.getSchoolData(presetMode);
+                schoolsCollectionObj.getSchoolData();
             }
 
         // == errors/fails
@@ -806,7 +804,7 @@ function initApp() {
 
                     // == store school json data
                     self.jsonData = jsonData;
-                    getSchoolData(presetMode);
+                    getSchoolData();
 
                 // == errors/fails
                 }).fail(function(){
@@ -823,11 +821,12 @@ function initApp() {
         }
 
         // ======= ======= ======= getSchoolData ======= ======= =======
-        function getSchoolData(presetMode) {
+        function getSchoolData() {
             console.log("getSchoolData");
 
             // ======= variables and temp arrays =======
             var schoolIndex = -1;
+            var presetMode = displayObj.displayMode;
             var selectedCodesArray = [];
             var selectedNamesArray = [];
             var rejectedCodesArray = [];
@@ -836,7 +835,7 @@ function initApp() {
             var nextSchool, schoolData, selectSchool, rejectedAggregatorCode;
 
             // ======= SCHOOL DATA LOOP =======
-            if (presetMode != "noSchools") {
+            if (presetMode != "storyMap") {
                 for (var i = 0; i < jsonData.length; i++) {
                     var filterFlagCount = 0;
 
@@ -1413,11 +1412,13 @@ function initApp() {
     }
 
     // ======= ======= ======= setFilterSelections ======= ======= =======
-    function setFilterSelections(agency, levels, expend, zones, presetMode) {
+    function setFilterSelections(agency, levels, expend, zones) {
         console.log("******* setFilterSelections *******");
+        console.log("  presetMode: ", presetMode);
 
         clearFilterSelctions();
         updateHoverText(null);
+        initMap(zonesCollectionObj, displayObj);
 
         // == agency
         if (agency) {
@@ -1459,7 +1460,7 @@ function initApp() {
 
         updateHoverText(null);
         checkFilterSelection(displayObj, zonesCollectionObj);
-        zonesCollectionObj.getZoneData(presetMode);
+        zonesCollectionObj.getZoneData();
     }
 
     // ======= ======= ======= clearFilterSelctions ======= ======= =======
@@ -1491,28 +1492,25 @@ function initApp() {
 
     initMenuObjects();
     initDataObjects();
-    initMap(zonesCollectionObj);
-    displayObj.initFilterMenus();
-    displayObj.activateClearButton();
-    displayObj.setMenuItem("zones", "Ward");
-    schoolsCollectionObj.loadAutoComplete();
-    checkFilterSelection(displayObj, zonesCollectionObj, "init");
+    displayObj.displayMode = presetMode;
+    console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
-    // setFilterSelections(null, null, null, null, null);
-    // setFilterSelections(null, null, null, null, "noSchools");
-    // setFilterSelections("District", null, null, "FeederMS", null);
-    // setFilterSelections("District", "MS", null, null, null);
-    // setFilterSelections("District", "ES", "spendPast", "Ward", null);
-    // setFilterSelections("Charter", "ES", "spendLifetime", "FeederMS", null);
-    // setFilterSelections("District", "ES", "spendPast", "FeederHS", null);
-    // setFilterSelections("District", "MS", "spendPast", "Ward", null);
-    // setFilterSelections("Charter", "MS", "spendPast", "Ward", null);
-    // checkFilterSelection(displayObj, zonesCollectionObj, "init");
+    if (displayObj.displayMode != "storyMap") {
+        displayObj.initFilterMenus();
+        displayObj.activateClearButton();
+        displayObj.setMenuItem("zones", "Ward");
+        schoolsCollectionObj.loadAutoComplete();
+        checkFilterSelection(displayObj, zonesCollectionObj, "init");
+        initMap(zonesCollectionObj, displayObj);
+        zonesCollectionObj.getZoneData();
+    }
 
-    zonesCollectionObj.getZoneData();
+    // == see getZoneData for parameter values
+    return setFilterSelections;
 }
 
 // agency -- "District", "Charter"
 // levels -- "ES", "MS", "HS"
 // expend -- "spendPast", "spendLifetime", "spendPlanned", "spendSqFt", "spendEnroll"
 // zone -- "Ward", "FeederHS", "FeederMS"
+//

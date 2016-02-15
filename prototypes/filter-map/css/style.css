@@ -156,16 +156,16 @@ hr {
 }
 
 /* ======= map ======= */
-#map {
+#toolMap-container {
     width: 80%;
     left: 0;
     height: 600px;
 }
-#map2 {
-    float: left;
+#storyMap-container {
+    position: absolute;
     width: 300px;
     height: 300px;
-    margin-top: 60px;
+    top: 120px;
 }
 
 /* ======= filter window ======= */
