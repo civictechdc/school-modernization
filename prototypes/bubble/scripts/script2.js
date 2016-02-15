@@ -1,9 +1,16 @@
 'use strict';
+
 // CUSTOM
 var $ = function(sel){return document.querySelector(sel);},
     $_all = function(sel){return document.querySelectorAll(sel);},
     asMoney = d3.format('$,')
     ;
+
+var pastData = 'MajorExp9815',
+    futureData = 'TotalAllotandPlan1621';
+
+// function Bubble(dataset){
+    // $('#title').innerText = dataset;
 
 d3.csv('data/data_master.csv', function (error, data) {
     //*******************************************************
@@ -11,27 +18,32 @@ d3.csv('data/data_master.csv', function (error, data) {
     //*******************************************************
     var width = 1200,
         height = 800;
-    
+
     var svg = d3.select("#chart")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
 
+
     //*******************************************************
     // Scales
     //*******************************************************
-    var minExpend = d3.min(data, function(d){return +d.MajorExp9815;}),
-        maxExpend = d3.max(data, function(d){return +d.MajorExp9815;}),
-        toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([10, 30]);
+    var minExpend = d3.min(data, function(d){
+            return +(d.MajorExp9815);
+        }),
+        maxExpend = d3.max(data, function(d){
+            return +(d.MajorExp9815);
+        }),
+        toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([5, 25]);
 
     for (var j = 0; j < data.length; j++) {
         data[j].radius = 10;
         data[j].x = Math.random() * (width);
         data[j].y = Math.random() * (height);
     }
-    var padding = 15,
+    var padding = 10,
         maxRadius = d3.max(_.pluck(data, 'radius')),
-        padding_between_nodes = .17;
+        padding_between_nodes = .05;
 
     //*******************************************************
     // Setup CIRCLES
@@ -47,7 +59,8 @@ d3.csv('data/data_master.csv', function (error, data) {
       .style({
         'fill': function (d) { return getColor(d.MajorExp9815);},
         'stroke': 'black',
-        'stroke-width': 1
+        'stroke-width': 1,
+        'opacity': 0.8
       })
 
 
@@ -60,45 +73,46 @@ d3.csv('data/data_master.csv', function (error, data) {
         var tooltipPadding = 30,
             xPosition = d3.select(this)[0][0]['cx'].animVal.value - tooltipPadding,
             yPosition = d3.select(this)[0][0]['cy'].animVal.value - tooltipPadding;
-
-        // FORMAT THE TOOLTIP, INSERT TEXT
-        d3.select('#tooltip')
-            // .style('left', xPosition + 'px')
-            // .style('top', yPosition + 'px')
-            .style('left', '950px')
-            .style('top', '200px')
-            ;
         
+        // TOOLTIP INFO
         d3.select('#school').text('School: ' + camel(d.School));
-        d3.select('#expPast').text('Past Spending: ' + asMoney(d.MajorExp9815));
+        d3.select('#agency').text('Agency: ' + d.Agency);
         d3.select('#ward').text('Ward: ' + d.Ward);
-        
-        if(d.FeederHS){
-            d3.select('#hs').text('HS: ' + d.FeederHS);
+        if(d.ProjectType && d.ProjectType !== 'NA'){
+            d3.select('#project').text('Project: ' + d.ProjectType);
+        } else {
+            d3.select('#project').text('');
         }
-        if(d.FeederMS){
-            d3.select('#ms').text('MS: ' + d.FeederMS);
+        if(d.YrComplete && d.YrComplete !== 'NA'){
+            d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
+        } else {
+            d3.select('#yearComplete').text('');
+        }
+        d3.select('#majorexp').text('Total Spent: ' + asMoney(d.MajorExp9815));
+        d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + asMoney(d.SpentPerSqFt) + '/sq. ft.');
+        d3.select('#expPast').text('Spent per Maximum Occupancy: ' + asMoney(d.SpentPerMaxOccupancy));
+        if(d.FeederHS && d.FeederHS !== "NA"){
+            d3.select('#hs').text('High School: ' + d.FeederHS);
+        } else {
+            d3.select('#hs').text('');
         }
         
-        d3.select(this).attr('fill', 'grey');
-        console.log(d3.select(this));
-
-        // SHOW THE TOOLTIP
-        d3.select('#tooltip').classed('hidden', false);
+        // d3.select(this)[0][0].style.fill = 'gray';
+        d3.select(this).classed('color', true);
       })
 
         //*******************************************************
         // Circles: mousenter
         //*******************************************************
       .on('mouseleave', function(){
-        // HIDE THE TOOLTIP
-        d3.select('#tooltip').classed('hidden', true);
+        d3.select(this).classed('color', false);
+
       })
       ;
 
     nodes
         .transition()
-        .duration(5000)
+        .duration(10000)
         .attr('r', function(d){
             if(+d.MajorExp9815 && d.MajorExp9815 !== 'NA'){
                 return toScale(+d.MajorExp9815)
@@ -181,21 +195,6 @@ d3.csv('data/data_master.csv', function (error, data) {
       });
     }
 
-    function getColor(the_data){
-        var value = the_data;
-        if(value > 10000000){ // 10 MILLION
-            return '#77cc00';
-        } else if(value < 10000000 && value > 1000000){
-            return '#779900';
-        } else if (value < 1000000 && value > 100000){
-            return '#774400';
-        } else if (value < 100000 && value > 0){
-            return '#771100';
-        } else {
-            return '#aa0000';
-        }
-    }
-
     function collide(alpha) {
       var quadtree = d3.geom.quadtree(data);
       return function(d) {
@@ -256,3 +255,18 @@ d3.csv('data/data_master.csv', function (error, data) {
       return camelStr.join(' ');
     }
 });
+// }
+
+// School
+// Agency
+// Ward
+// ProjectType   (Project)
+// YrComplete (IF NA then = blank)  Yr
+// MajorExp9815  (Total Spent)
+// SpentPerSqFt  (Spent per SqFt)
+// SpentPerMaxOccupancy (Spent per Capacity)
+// FeederHS (IF Level is = to ES, MS, ES/MS, PK3/K THEN feeder = FeederHS) (Feeder HS)
+
+// MajorExp9815
+// SpentPerMaxOccupancy
+// SpentPerSqFt

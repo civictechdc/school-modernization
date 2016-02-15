@@ -27,7 +27,9 @@ text {
 }
 
 #tooltip {
-   position: absolute;
+   position: fixed;
+   left: 950px;
+   top: 200px;
    width: 200px;
    height: 250px;
    padding: 10px;
@@ -42,8 +44,12 @@ text {
    }
 
    &.hidden {
-      display: none;
+      // display: none;
    }
+}
+
+.color {
+   fill: 'grey';
 }
 // #school {
 //    font-size: 12px;
