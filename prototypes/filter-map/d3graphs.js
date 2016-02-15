@@ -5,8 +5,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= chart =======
     var chartHtml = "<table id='chart'>";
-    chartHtml += "<tr><td id='chart-title' class='schoolname' colspan=2><p id='expend-text'>data chart</p></td></tr>";
-    chartHtml += "</table>";
+    chartHtml += "<tr><td class='profile-banner' colspan=2>";
+    chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
+    chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
+    // chartHtml += "<div id='sub-nav-container'>";
+    chartHtml += displayObj.makeSubMenu(displayObj.expendPerMenu);
+    // chartHtml += "</div></td></tr></table>";
+    chartHtml += "</td></tr></table>";
 
     // == remove previous chart or profile html if any
     if ($('#profile-container').find('#profile').length) {
@@ -22,6 +27,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         $("#chart-container").append(chartHtml);
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
+            // initSelectMenu(displayObj);
         });
     }
 
@@ -64,17 +70,21 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= scale formating =======
     if (dataMax > 1000000) {
         scaleFactor = 1000000;
-        scaleLabel = "M$";
+        scaleLabel = "$M";
         scaleRound = 1000;
-    } else if ((dataMax > 1000) && (dataMax < 10000)) {
+        subtitle = " in $millions";
+    } else if ((dataMax > 1000) && (dataMax < 1000000)) {
         scaleFactor = 1000;
-        scaleLabel = "K$";
+        scaleLabel = "$K";
         scaleRound = 10;
+        subtitle = " in $thousands";
     } else {
         scaleFactor = 1;
         scaleLabel = "$";
         scaleRound = 0.01;
+        subtitle = " in dollars";
     }
+    $('#chart-subtitle').text(subtitle);
 
     // ======= X SCALE =======
     var xScaleLabels = ["scale", "amount", "school"];

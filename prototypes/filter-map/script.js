@@ -21,6 +21,11 @@ function initApp() {
     function initMenuObjects() {
         console.log("initMenuObjects");
 
+        // school -- School, Address, Agency, Level, longitude, latitude, Ward, FeederMS, FeederHS
+        // students -- Total.Enrolled, At_Risk, SPED, Limited.English.Proficient, AtRiskPer, SPEDPer, ESLPer
+        // building -- unqBuilding, totalSQFT, maxOccupancy, SqFtPerEnroll, ProjectPhase, YrComplete, ProjectType, YearsOpen, Open, Open.Now
+        // expenditures -- MajorExp9815, TotalAllotandPlan1621, LifetimeBudget, SpentPerMaxOccupancy, SpentPerSqFt, AnnualExpenseAverage, AnnualSpentPerMaxOccupany, AnnualSpentPerSqFt
+
         // == filter object properties: id, category, text, callback
         filterMenu = new Menu("filterMenu");
 
@@ -33,12 +38,15 @@ function initApp() {
         filterMenu.Middle = { id:"Middle", category:"schools", text:"Middle Schools", column:"Level", value:"MS" };
         filterMenu.High = { id:"High", category:"schools", text:"High Schools", column:"Level", value:"HS" };
 
-        // == spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll
+        // == spendPast, spendLifetime, spendPlanned
         filterMenu.spendPast = { id:"spendPast", category:"expenditures", text:"Past Spending", column:"MajorExp9815", value:null };
-        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", text:"Total Spending", column:"LifetimeBudget", value:null };
         filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", text:"Planned Spending", column:"TotalAllotandPlan1621", value:null };
-        filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"Current/SqFt", column:"SpentPerSqFt", value:null };
-        filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", text:"Current/Student", column:"SpentPerEnroll", value:null };
+        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", text:"Total Spending", column:"LifetimeBudget", value:null };
+
+        // == spendSqFt, spendEnroll
+        filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"per sqFt", column:"SpentPerSqFt", value:null };
+        filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", text:"per student", column:"SpentPerEnroll", value:null };
+        filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", text:"total amount", column:null, value:null };
 
         // == zones
         filterMenu.Ward = { id:"Ward", category:"zone", text:"Wards", column:"WARD", value:null };
@@ -50,14 +58,15 @@ function initApp() {
         console.log("Display");
         this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter];
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
-        this.expendMenu = ["expend", filterMenu.spendPast, filterMenu.spendLifetime, filterMenu.spendPlanned, filterMenu.spendSqFt, filterMenu.spendEnroll];
+        this.expendMenu = ["expend", filterMenu.spendPast, filterMenu.spendPlanned, filterMenu.spendLifetime];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS];
+        this.expendPerMenu = ["expendPer", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
         this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.expendMenu, this.zonesMenu];
         this.filterTitlesArray = [];
         this.schoolNamesArray = [];
-        this.categoryLabels = ["type", "level", "spending", "location"];
-        this.groupLabels = ["who", "who", "what", "where"];
-        this.dataFilters = { "agency": null, "levels": null, "expend": null, "zones": null, "selectedZone": null  };
+        this.categoryLabels = ["sector", "schools", "spending", "location"];
+        this.groupLabels = ["who", "what", "when", "where"];
+        this.dataFilters = { "agency": null, "levels": null, "expend": null, "zones": "Ward", "selectedZone": null  };
     }
     function ZonesCollection() {
         console.log("ZonesCollection");
@@ -131,6 +140,54 @@ function initApp() {
         this.activateSearchWindow("searchWindow");
     }
 
+    // ======= ======= ======= makeSubMenu ======= ======= =======
+    Display.prototype.makeSubMenu = function(whichMenu, index) {
+        console.log("makeSubMenu");
+        console.log("  whichMenu: ", whichMenu);
+
+        // == popup bar container
+        var subMenuContainer = $("#sub-nav-container");
+
+        // == build sub-menu
+        var nextCategory = whichMenu[0];
+        var subMenuHtml = "<select id='expendPer' name='expendPer'>";
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            nextId = nextItem.id;
+            nextText = nextItem.text;
+            if (i == 1) {
+                subMenuHtml += "<option selected='selected' value='" + nextText + "'>" + nextText + "</option>";
+            } else {
+                subMenuHtml += "<option value='" + nextText + "'>" + nextText + "</option>";
+            }
+        }
+        subMenuHtml += "</select>";
+        return subMenuHtml;
+    }
+
+    // ======= ======= ======= activateSubfilterSelect ======= ======= =======
+    Display.prototype.activateSubfilterSelect = function(nextItem) {
+        console.log("activateSubfilterSelect");
+
+        // == id ties DOM element to menu object
+        var self = this;
+        var nextId = nextItem.id;
+        var nextElement = $("#expendPer");
+
+        // ======= ======= ======= selectFilter ======= ======= =======
+        $(nextElement).off("click").on("click", function(event){
+            console.log("\n======= selectFilter ======= ");
+
+            var classList = $(this).attr('class').split(/\s+/);
+            var whichFilter = this.id;
+            console.log("  whichFilter: ", whichFilter);
+            var selectionHtml = ""
+
+            $("#sub-nav-container").empty();
+            $("#sub-nav-container").html("<a class='sub-filterText' href='#'>" + this.id + "</a>");
+        });
+    }
+
     // ======= ======= ======= makeCategoryMenu ======= ======= =======
     Display.prototype.makeCategoryMenu = function(whichMenu, index) {
         // console.log("makeCategoryMenu");
@@ -187,27 +244,13 @@ function initApp() {
     Display.prototype.modFilterMenu = function(whichMenu) {
         // console.log("modFilterMenu");
 
-        $("#levels").children("ul").remove();
+        var menuContainer = $("#" + whichMenu[0]);
+
+        $(menuContainer).children("ul").remove();
         var menuHtml = "<ul>";
         menuHtml += this.makeFilterMenu(whichMenu);
         menuHtml += "</ul>";
-        $("#levels").children("a").after(menuHtml);
-    }
-
-    // ======= ======= ======= initSearchBar ======= ======= =======
-    Display.prototype.initSearchBar = function() {
-        // console.log("initSearchBar");
-        var searchHtml = "<div id='search' class='category'><span class='labelText searchText'>search</span>";
-        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
-        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
-        return searchHtml;
-    }
-
-    // ======= ======= ======= initHoverDisplay ======= ======= =======
-    Display.prototype.initHoverDisplay = function() {
-        // console.log("initHoverDisplay");
-        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
-        return hoverHtml;
+        $(menuContainer).children("a").after(menuHtml);
     }
 
     // ======= ======= ======= setMenuItem ======= ======= =======
@@ -225,6 +268,22 @@ function initApp() {
         selectedFilterElement.children("ul").html(htmlString);
         selectedFilterElement.children("ul").css("display", "block");
         this.activateFilterRelease(selectedFilterElement);
+    }
+
+    // ======= ======= ======= initSearchBar ======= ======= =======
+    Display.prototype.initSearchBar = function() {
+        // console.log("initSearchBar");
+        var searchHtml = "<div id='search' class='category'><span class='labelText searchText'>search</span>";
+        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
+        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
+        return searchHtml;
+    }
+
+    // ======= ======= ======= initHoverDisplay ======= ======= =======
+    Display.prototype.initHoverDisplay = function() {
+        // console.log("initHoverDisplay");
+        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
+        return hoverHtml;
     }
 
     // ======= ======= ======= findSearchSchool ======= ======= =======
@@ -307,6 +366,17 @@ function initApp() {
         }).error(function() {
             console.log("*** ajax error ***");
         });
+    }
+
+    // ======= ======= ======= activateSubfilterMenu ======= ======= =======
+    Display.prototype.activateSubfilterMenu = function(whichMenu) {
+        console.log("activateSubfilterMenu");
+
+        // == activate filter click events
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            this.activateSubfilterSelect(nextItem);
+        }
     }
 
     // ======= ======= ======= activateFilterMenu ======= ======= =======
@@ -394,20 +464,20 @@ function initApp() {
             // == clear menus (html) and filters (displayObj)
             checkFilterSelection(self, zonesCollectionObj);
             clearFilterSelctions();
-            // clearMenuCategory("agency");
-            // clearMenuCategory("levels");
-            // clearMenuCategory("expend");
-            // clearMenuCategory("zones");
-            // self.filterTitlesArray = [];
-            // self.dataFilters.agency = null;
-            // self.dataFilters.levels = null;
-            // self.dataFilters.expend = null;
-            // self.dataFilters.zones = null;
-            // zonesCollectionObj.zoneGeojson = null;
-            // zonesCollectionObj.feederGeojson = null;
-            // zonesCollectionObj.zoneFeederGeojson = null;
-            // zonesCollectionObj.aggregatorArray = [];
-            // zonesCollectionObj.zoneType = "Ward";
+            clearMenuCategory("agency");
+            clearMenuCategory("levels");
+            clearMenuCategory("expend");
+            clearMenuCategory("zones");
+            self.filterTitlesArray = [];
+            self.dataFilters.agency = null;
+            self.dataFilters.levels = null;
+            self.dataFilters.expend = null;
+            self.dataFilters.zones = null;
+            zonesCollectionObj.zoneGeojson = null;
+            zonesCollectionObj.feederGeojson = null;
+            zonesCollectionObj.zoneFeederGeojson = null;
+            zonesCollectionObj.aggregatorArray = [];
+            zonesCollectionObj.zoneType = "Ward";
 
             // == restore levels menu
             self.modFilterMenu(self.filterMenusArray[1]);
@@ -444,6 +514,7 @@ function initApp() {
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             clearMenuCategory(whichCategory);
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
+            zonesCollectionObj.getZoneData();
         });
     }
 
@@ -456,7 +527,7 @@ function initApp() {
         for (var i = 0; i < displayObj.filterMenusArray.length; i++) {
             nextMenu = displayObj.filterMenusArray[i];
             checkCategory = displayObj.filterMenusArray[i][0];
-            console.log("  checkCategory: ", checkCategory);
+            console.log("  * checkCategory: ", checkCategory);
             if (checkCategory == whichCategory) {
                 displayObj.dataFilters[whichCategory] = null;
 
@@ -515,6 +586,7 @@ function initApp() {
                 case "agency":
                     self.dataFilters.agency = whichFilter;
                     clearZoneAggregator(zonesCollectionObj);
+                    updateFilterTitles(self, menuObject.text, "add");
                     break;
 
                 // == levels filter (ES, MS, HS)
@@ -530,12 +602,15 @@ function initApp() {
                     } else {
                         zonesCollectionObj.zoneType = "Ward";
                     }
+                    updateFilterTitles(self, menuObject.text, "add");
                     break;
 
                 // == expenditures filter (past, present, planed, etc.)
                 case "expend":
                     self.dataFilters.expend = whichFilter;
+                    self.makeSubMenu(self.expendPerMenu);
                     clearZoneAggregator(zonesCollectionObj);
+                    updateFilterTitles(self, menuObject.text, "add");
                     break;
 
                 // == wards or feeder zones for map
@@ -543,6 +618,7 @@ function initApp() {
                     self.dataFilters.zones = whichFilter;
                     zonesCollectionObj.zoneType = whichFilter;
                     zonesCollectionObj.aggregatorArray = [];
+                    zonesCollectionObj.zoneFeederGeojson = null;
 
                     // == modify levels menu to remove HS and/or MS options for feeders
                     if ((whichFilter == "FeederHS") || (whichFilter == "FeederMS")) {
@@ -554,11 +630,9 @@ function initApp() {
                             if (tempLevels == "ES") {
                                 self.setMenuItem("levels", "Elem");
                                 self.dataFilters.levels = "ES";
-                            } else if (tempLevels == "MS") {
+                            } else {
                                 self.setMenuItem("levels", "Middle");
                                 self.dataFilters.levels = "MS";
-                            } else {
-                                self.dataFilters.levels = null;
                             }
                         } else if (whichFilter == "FeederMS") {
                             self.setMenuItem("levels", "Elem");
@@ -566,12 +640,16 @@ function initApp() {
                         }
                         self.activateFilterMenu(self.filterMenusArray[1]);
                     }
+                    updateFilterTitles(self, menuObject.text, whichFilter);
                     break;
             }
-            self.setMenuItem(whichCategory, whichFilter);
+
+            if (self.dataFilters.expend == null) {
+                clearProfileChart();
+            }
+
             updateHoverText(null);
-            clearProfileChart();
-            updateFilterTitles(self, menuObject.text, "add");
+            self.setMenuItem(whichCategory, whichFilter);
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
 
             zonesCollectionObj.getZoneData();
@@ -928,12 +1006,12 @@ function initApp() {
         // ======= ======= ======= calculate data increment ======= ======= =======
         if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
             if (displayObj.dataFilters.agency == "Charter") {
-                textMessage = "Expenditure data for District schools only."
+                textMessage = "Expenditure data for DCPS schools only."
                 displayHoverMessage(displayObj, textMessage);
             } else {
                 if (displayObj.dataFilters.expend) {
                     this.dataIncrement = calcDataIncrement(this, displayObj);
-                    textMessage = "Expenditure data for District schools only."
+                    textMessage = "Expenditure data for DCPS schools only."
                     displayHoverMessage(displayObj, textMessage);
                 } else {
                     textMessage = "Select an expenditure type."
@@ -1059,7 +1137,7 @@ function initApp() {
 
         // ======= ======= ======= setFeatureStyle ======= ======= =======
         function setFeatureStyle(feature) {
-            console.log("setFeatureStyle");
+            // console.log("setFeatureStyle");
 
             // ======= colorize each feature based on colorList =======
             map.data.setStyle(function(feature) {
@@ -1334,13 +1412,11 @@ function initApp() {
         }
     }
 
-
     // ======= ======= ======= setFilterSelections ======= ======= =======
     function setFilterSelections(agency, levels, expend, zones, presetMode) {
         console.log("******* setFilterSelections *******");
 
         clearFilterSelctions();
-        clearProfileChart();
         updateHoverText(null);
 
         // == agency
@@ -1418,11 +1494,12 @@ function initApp() {
     initMap(zonesCollectionObj);
     displayObj.initFilterMenus();
     displayObj.activateClearButton();
+    displayObj.setMenuItem("zones", "Ward");
     schoolsCollectionObj.loadAutoComplete();
-
     checkFilterSelection(displayObj, zonesCollectionObj, "init");
+
+    // setFilterSelections(null, null, null, null, null);
     // setFilterSelections(null, null, null, null, "noSchools");
-    setFilterSelections(null, null, null, null, null);
     // setFilterSelections("District", null, null, "FeederMS", null);
     // setFilterSelections("District", "MS", null, null, null);
     // setFilterSelections("District", "ES", "spendPast", "Ward", null);
@@ -1430,9 +1507,9 @@ function initApp() {
     // setFilterSelections("District", "ES", "spendPast", "FeederHS", null);
     // setFilterSelections("District", "MS", "spendPast", "Ward", null);
     // setFilterSelections("Charter", "MS", "spendPast", "Ward", null);
-    checkFilterSelection(displayObj, zonesCollectionObj, "init");
+    // checkFilterSelection(displayObj, zonesCollectionObj, "init");
 
-    // zonesCollectionObj.getZoneData();
+    zonesCollectionObj.getZoneData();
 }
 
 // agency -- "District", "Charter"

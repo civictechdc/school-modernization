@@ -62,6 +62,7 @@ hr {
 #filters-title {
     width: 50%;
     float: left;
+    background-color: darkslateblue;
 }
 #filters-title > h2 {
     display: block;
@@ -70,7 +71,7 @@ hr {
     font-size: 16px;
     font-style: italic;
     text-align: right;
-    color: #eee;
+    color: gray;
 }
 #filters-title > h2.filterList {
     display: block;
@@ -78,11 +79,11 @@ hr {
     width: 100%;
     font-size: 16px;
     text-align: right;
-    color: darkslateblue;
+    color: white;
 }
 .filterLabel {
     font-style: normal;
-    color: red;
+    color: gray;
 }
 
 /* ======= buttons ======= */
@@ -148,15 +149,16 @@ hr {
     display: flex;
     flex-direction: -webkit-column;
     flex-direction: column;
-    justify-content: -webkit-center;
-    justify-content: center;
-    align-items: -webkit-center;
-    align-items: center;
+    justify-content: -webkit-flex-start;
+    justify-content: flex-start;;
+    align-items: -webkit-flex-start;
+    align-items: flex-start;
 }
 
 /* ======= map ======= */
 #map {
-    width: 100%;
+    width: 80%;
+    left: 0;
     height: 600px;
 }
 #map2 {
@@ -196,46 +198,6 @@ hr {
     color: white;
 }
 
-/* ======= page nav ======= */
-#page-nav {
-    width: 100%;
-    float: left;
-}
-#page-nav > .nav-list {
-    display: block;
-	list-style: none;
-	position: relative;
-    width: 100%;
-	margin: 0;
-	padding: 0;
-    z-index: 999;
-}
-#page-nav > .nav-list li {
-	position: relative;
-    float: left;
-    width: 120px;
-    height: 36px;
-	margin: 0;
-	padding: 0;
-    color: white;
-    background: #ddd9b3;
-}
-#page-nav > .nav-list a {
-    display: inline-block;;
-    width: 100%;
-    margin: 0;
-	padding-top: 8px;
-    text-align: center;
-	text-decoration: none;
-	font-weight: 700;
-	font-size: 14px;
-    color: #333;
-	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-#page-nav > .nav-list li:hover {
-	background:#ffd9b3;
-}
-
 /* ======= navbar ======= */
 .labelText {
     display: inline-block;;
@@ -245,11 +207,6 @@ hr {
     text-align: right;
     color: red;
 }
-/*.all-filters {
-    display: inline-block;;
-    margin-left: 20px;
-    color: red;
-}*/
 #main-nav {
     width: 100%;
     float: left;
@@ -418,32 +375,184 @@ hr {
     color: purple;
 }
 
-/* ======= mouseover ======= */
-/*#mouseover-text {
+/* ======= profile-container ======= */
+#profile-container {
+    display: none;
+    height: auto;
     position: absolute;
-    top: 460px;
-    left: 73%;
-    width: 20%;
-    height: 36px;
-    background-color: white;
-    box-shadow: 4px 4px 4px #555;
-    border-radius: 6px 6px 2px 2px;
-    z-index: 999;
-}*/
-
-/* ======= legend ======= */
-/*#chart {
-    display:none;
-    width:360px;
-    height:360px;
-    position:absolute;
-    top:300px;
-    left:60%;
+    top: 42%;
+    left: 65%;
+    width: 360px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
     box-shadow: 6px 6px 5px #888888;
     border-radius: 6px 6px 2px 2px;
     background-color: rgba(255, 255, 255, 0.9);
-    z-index:99;
-}*/
+    z-index: 9;
+}
+#profile-container > tbody, tr {
+    width: 100%;
+    padding: -10px 0;
+    margin: -10px 0;
+}
+#profile-container > tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+.profile-banner {
+    width: 100%;
+    height: 18px;
+    text-align: center;
+    color: white;
+    background-color: firebrick;
+}
+.profile-banner > p {
+    color: white;
+}
+.profile-title {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 14px;
+    color: white;
+}
+.profile-subtitle {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 12px;
+    color: white;
+}
+.data-key, .data-value {
+    position: relative;
+    padding: -10px 0;
+    margin: -10px 0;
+    height: 14px;
+    vertical-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.data-key {
+    width: 140px;
+}
+.data-value {
+    width: 220px;
+}
+.key-text, .value-text {
+    position: relative;
+    padding: 1px 0;
+    margin: 1px 10px;
+    height: 100%;
+    font-weight: 400;
+	font-size: 14px;
+}
+.key-text {
+    text-align: right;
+    color: black;
+}
+.value-text {
+    text-align: left;
+    color: purple;
+}
+.value-label {
+    color: black;
+}
+
+/* ======= chart ======= */
+#chart-container {
+    display: none;
+    height: auto;
+    position: absolute;
+    top: 42%;
+    left: 65%;
+    width: 360px;
+    margin-top: 20px;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    z-index: 9;
+}
+#chart {
+    position: relative;
+    width: 100%;
+    height: auto;
+    left: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.title-container {
+    float: left;
+    width: 65%;
+}
+#chart-title {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 16px;
+    color: white;
+}
+#chart-subtitle {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 12px;
+    color: white;
+}
+.submenu-default {
+    margin: 0;
+    padding: 0;
+    line-height: 12px;
+    font-size: 12;
+    color: red;
+    background-color: white;
+}
+#sub-nav-container {
+    position: relative;
+    display: inline-block;
+    float: left;
+    height: 30px;
+    width: 100px;
+    margin-top: 2px;
+    margin-left: 5px;
+    line-height: 16px;
+    font-size: 12;
+    background-color: white;
+    border: solid 2px black;
+}
+#sub-nav-container > .sub-nav-list {
+    display: none;
+	list-style: none;
+	position: relative;
+    width: 100%;
+    height: 95%;
+	margin: 0;
+	padding: 0;
+    z-index: 999;
+}
+#sub-nav-container > .sub-nav-list li {
+    position: relative;
+    width: 100%;
+    height: 90%;
+	margin: 2px 0;
+    background-color: gray;
+}
+#sub-nav-container > .sub-nav-list a {
+    display: inline-block;;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 14px;
+    color: purple;
+	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#sub-nav-container:hover > .sub-nav-list {
+    display: block;
+}
+#sub-nav-container > .sub-nav-list > li:hover > a {
+    color: red;
+	background-color: #ffd9b3;
+}
+
 
 /* ======= mapLegend ======= */
 #legend-container {
@@ -499,105 +608,37 @@ hr {
     height: 15px;
 }
 
-/* ======= chart ======= */
-#chart-container {
-    display: none;
-    height: auto;
-    position: absolute;
-    top: 42%;
-    left: 65%;
-    width: 360px;
-    margin-top: 20px;
-    border-collapse: collapse;
-    border-spacing: 0;
-    z-index: 9;
+/* ======= d3 ======= */
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
 }
-#chart {
-    position: relative;
-    width: 70%;
-    height: auto;
-    left: 30%;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    background-color: rgba(255, 255, 255, 0.9);
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
 }
 
-/* ======= profile-container ======= */
-#profile-container {
-    display: none;
-    height: auto;
-    position: absolute;
-    top: 42%;
-    left: 65%;
-    width: 360px;
-    margin-top: 20px;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    background-color: rgba(255, 255, 255, 0.9);
-    z-index: 9;
+/* ======= jquery selectmenu ======= */
+fieldset {
+    border: 0;
 }
-#profile-container > tbody, tr {
-    width: 100%;
-    padding: -10px 0;
-    margin: -10px 0;
+label {
+    display: block;
+    margin: 30px 0 0 0;
 }
-#profile-container > tr:nth-child(even) {
-    background-color: #f2f2f2
+#expendPer {
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
 }
-.data-key, .data-value {
-    position: relative;
-    padding: -10px 0;
-    margin: -10px 0;
-    height: 10px;
-    vertical-align: center;
-    border-bottom: 1px solid #ddd;
-}
-.data-key {
-    width: 140px;
-}
-.data-value {
-    width: 220px;
-}
-.key-text {
-    position: relative;
-    margin-left: 0 0 0 10px;;
-    padding: 1px 0;
-    margin: 1px 10px;
-    text-align: right;
-    font-weight: 400;
-	font-size: 14px;
-    color: black;
-}
-.schoolname {
-    width: 100%;
-    height: 18px;
-    text-align: center;
-    color: white;
-    background-color: firebrick;
-}
-.profile-title {
-    padding: 1px 0;
-    margin: 1px 10px;
-    font-size: 14px;
-    color: white;
-}
-.profile-subtitle {
-    padding: 1px 0;
-    margin: 1px 10px;
-    font-size: 12px;
-    color: white;
-}
-#expend-text {
-    line-height: 18px;
-}
-.schoolname > p {
-    color: white;
+.overflow {
+    height: 100px;
 }
 
 /* ======= tooltips ======= */
-#tooltips {
+/*#tooltips {
     position: absolute;
     height: 24px;
     background-color: rgba(255, 255, 255, 1);
@@ -610,25 +651,48 @@ hr {
     line-height: 12px;
     font-size: 12px;
     font-weight: bold;
-}
+}*/
 
-/* ======= data ======= */
-.schoolTitle {
-    height: 60px;
+/* ======= page nav ======= */
+/*#page-nav {
+    width: 100%;
+    float: left;
 }
+#page-nav > .nav-list {
+    display: block;
+	list-style: none;
+	position: relative;
+    width: 100%;
+	margin: 0;
+	padding: 0;
+    z-index: 999;
+}
+#page-nav > .nav-list li {
+	position: relative;
+    float: left;
+    width: 120px;
+    height: 36px;
+	margin: 0;
+	padding: 0;
+    color: white;
+    background: #ddd9b3;
+}
+#page-nav > .nav-list a {
+    display: inline-block;;
+    width: 100%;
+    margin: 0;
+	padding-top: 8px;
+    text-align: center;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 14px;
+    color: #333;
+	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#page-nav > .nav-list li:hover {
+	background:#ffd9b3;
+}*/
 
-/* ======= d3 ======= */
-.axis path,
-.axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
-
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}
 
 /* ======= rankLegend ======= */
 /*#rankLegend {
@@ -686,4 +750,31 @@ hr {
     width: 10px;
     height: 60px;
     background-color: red;
+}*/
+
+/* ======= mouseover ======= */
+/*#mouseover-text {
+    position: absolute;
+    top: 460px;
+    left: 73%;
+    width: 20%;
+    height: 36px;
+    background-color: white;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 2px 2px;
+    z-index: 999;
+}*/
+
+/* ======= legend ======= */
+/*#chart {
+    display:none;
+    width:360px;
+    height:360px;
+    position:absolute;
+    top:300px;
+    left:60%;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index:99;
 }*/
