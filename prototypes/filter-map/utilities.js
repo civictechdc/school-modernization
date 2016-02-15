@@ -128,13 +128,22 @@ function validateSchoolData(selectedSchoolData) {
     // student data: schoolEnroll, studentEng, studentAtRisk, studentSpecEd, studentESLPer, studentAtRiskPer, studentSPEDPer
     // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll
     if (selectedSchoolData.schoolLevel == "ES") {
-        selectedSchoolData.schoolLevel = "elementary";
+        selectedSchoolData.schoolLevel = "elementary school";
     }
     if (selectedSchoolData.schoolLevel == "MS") {
         selectedSchoolData.schoolLevel = "middle school";
     }
     if (selectedSchoolData.schoolLevel == "HS") {
         selectedSchoolData.schoolLevel = "high school";
+    }
+    if (selectedSchoolData.schoolLevel == "ES/MS") {
+        selectedSchoolData.schoolLevel = "elementary/middle school";
+    }
+    if (selectedSchoolData.schoolLevel == "ALT") {
+        selectedSchoolData.schoolLevel = "alternative school";
+    }
+    if (selectedSchoolData.schoolLevel == "NA") {
+        selectedSchoolData.schoolLevel = "&nbsp;";
     }
 
     var spendEnroll = isNumber(selectedSchoolData.spendEnroll);
@@ -514,7 +523,7 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
                     if (displayObj.dataFilters.expend) {
                         colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
                         itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
-                        strokeColor = "white";
+                        strokeColor = "black";
                         strokeWeight = 2;
                         itemOpacity = 0.8;
                     } else {
@@ -968,15 +977,18 @@ function makeSchoolProfile(collectionOrSchool, displayObj, schoolIndex) {
     }
 
     var htmlString = "<table id='profile'>";
-    htmlString += "<tr><td class='schoolname' colspan=2><div id='close-X'>X</div><p class='value-text'>" + itemName + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>address</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolAddress + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>type</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolLevel + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Ward</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolWard + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>MS Feeder</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolFeederMS + "</p></td></tr>";
+    htmlString += "<tr><td class='schoolname' colspan=2><div id='close-X'>X</div>";
+    htmlString += "<p class='profile-title'>" + itemName + "</p><p class='profile-subtitle'>" + cleanedSchoolData.schoolAddress + "</p>";
+    htmlString += "<p class='profile-subtitle'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + "</p>";
+    htmlString += "</td></tr>";
+    // htmlString += "<tr><td class='data-key'><p class='key-text'>address</p></td>";
+    // htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolAddress + "</p></td></tr>";
+    // htmlString += "<tr><td class='data-key'><p class='key-text'>type</p></td>";
+    // htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolLevel + "</p></td></tr>";
+    // htmlString += "<tr><td class='data-key'><p class='key-text'>Ward</p></td>";
+    // htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolWard + "</p></td></tr>";
+    // htmlString += "<tr><td class='data-key'><p class='key-text'>MS Feeder</p></td>";
+    // htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolFeederMS + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>HS Feeder</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolFeederHS + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>school Sqft</p></td>";

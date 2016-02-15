@@ -348,7 +348,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         if (onOrOff == "on") {
             map.data.overrideStyle(zoneFeature, {
                 fillOpacity: 1,
-                strokeColor: "purple"
+                strokeColor: "red"
             });
         } else {
             map.data.revertStyle(zoneFeature);
