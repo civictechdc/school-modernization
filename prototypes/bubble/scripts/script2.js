@@ -284,7 +284,11 @@ d3.csv('data/data_master.csv', function (error, data) {
       .text(function (d) { return d.name })
       .attr("transform", function (d) {
         return "translate(" + (d.x - ((d.name.length)*3)) + ", " + (d.y - d.r) + ")";
-      });
+      })
+      .style({
+        'font-size': '14'
+      })
+      ;
     }
 
     function collide(alpha) {
@@ -334,8 +338,6 @@ d3.csv('data/data_master.csv', function (error, data) {
                     three: 0
                 }
             };
-
-
 
         if(value > 10000000){ // 10 MILLION
             return '#77cc00';
