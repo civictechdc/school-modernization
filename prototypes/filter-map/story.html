@@ -62,12 +62,13 @@
 			$(document).ready(function(){
 			    console.log('jQuery loaded');
 			    console.log('document ready');
-			    var fs = initApp("storyMap");
-				// fs(null, null, null, null);
-				// fs(null, null, null, null);
-			    // fs("District", null, null, "FeederMS");
+				var fs = initApp("storyMap");
+
+				// fs(null, null, null, null, "noSchools");			// show map with Wards but no schools
+				fs(null, null, null, null, "storyMap");				// show map with Wards and all schools
+			    // fs("District", null, null, "FeederMS");			// show map with MSfeeders and District schools only (no charters)
 			    // fs("District", "MS", null, null);
-			    fs("District", "ES", "spendPast", "Ward");
+			    // fs("District", "ES", "spendPast", "Ward");
 			    // fs("Charter", "ES", "spendLifetime", "FeederMS");
 			    // fs("District", "ES", "spendPast", "FeederHS");
 			    // fs("District", "MS", "spendPast", "Ward");

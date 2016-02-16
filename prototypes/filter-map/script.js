@@ -58,13 +58,13 @@ function initApp(presetMode) {
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
         this.expendMenu = ["expend", filterMenu.spendPast, filterMenu.spendPlanned, filterMenu.spendLifetime];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS];
-        this.expendPerMenu = ["expendPer", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
+        this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
         this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.expendMenu, this.zonesMenu];
         this.filterTitlesArray = [];
         this.schoolNamesArray = [];
         this.categoryLabels = ["sector", "schools", "spending", "location"];
         this.groupLabels = ["who", "what", "when", "where"];
-        this.dataFilters = { "agency": null, "levels": null, "expend": null, "zones": "Ward", "selectedZone": null  };
+        this.dataFilters = { "agency": null, "levels": null, "expend": null, "zones": "Ward", "math": "spendAmount", "selectedZone": null  };
     }
     function ZonesCollection() {
         console.log("ZonesCollection");
@@ -238,7 +238,7 @@ function initApp(presetMode) {
 
         // == build sub-menu
         var nextCategory = whichMenu[0];
-        var subMenuHtml = "<select id='expendPer' name='expendPer'>";
+        var subMenuHtml = "<select id='expendMath' name='expendMath'>";
         for (var i = 1; i < whichMenu.length; i++) {
             nextItem = whichMenu[i];
             nextId = nextItem.id;
@@ -596,7 +596,7 @@ function initApp(presetMode) {
                 // == expenditures filter (past, present, planed, etc.)
                 case "expend":
                     self.dataFilters.expend = whichFilter;
-                    self.makeSubMenu(self.expendPerMenu);
+                    self.makeSubMenu(self.expendMathMenu);
                     clearZoneAggregator(zonesCollectionObj);
                     updateFilterTitles(self, menuObject.text, "add");
                     break;
@@ -818,7 +818,6 @@ function initApp(presetMode) {
 
             // ======= variables and temp arrays =======
             var schoolIndex = -1;
-            var presetMode = displayObj.displayMode;
             var selectedCodesArray = [];
             var selectedNamesArray = [];
             var rejectedCodesArray = [];
@@ -827,7 +826,7 @@ function initApp(presetMode) {
             var nextSchool, schoolData, selectSchool, rejectedAggregatorCode;
 
             // ======= SCHOOL DATA LOOP =======
-            if (presetMode != "storyMap") {
+            if (displayObj.displayMode != "noSchools") {
                 for (var i = 0; i < jsonData.length; i++) {
                     var filterFlagCount = 0;
 
@@ -845,7 +844,7 @@ function initApp(presetMode) {
 
                         // == store school that matches school zone (e.g. Deal Middle School with Deal Middle School Zone)
                         if ((displayObj.dataFilters.expend != null) && (displayObj.dataFilters.levels != null) && (displayObj.dataFilters.zones == null)) {
-                            captureSchoolZone(zonesCollectionObj, displayObj, schoolData, schoolIndex);
+                            captureSchoolData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
 
                         // == aggregate multiple school data for selected zone type (e.g all-school totals for Ward 3)
                         } else if (displayObj.dataFilters.zones != null)  {
@@ -994,14 +993,16 @@ function initApp(presetMode) {
         console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
         console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
-        // ======= ======= ======= calculate data increment ======= ======= =======
+        // ======= ======= ======= display user messages ======= ======= =======
         if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
             if (displayObj.dataFilters.agency == "Charter") {
                 textMessage = "Expenditure data for DCPS schools only."
                 displayHoverMessage(displayObj, textMessage);
             } else {
                 if (displayObj.dataFilters.expend) {
-                    this.dataIncrement = calcDataIncrement(this, displayObj);
+
+                    // == calculate increments, min, max, avg, median
+                    this.dataIncrement = doTheMath(this, displayObj);
                     textMessage = "Expenditure data for DCPS schools only."
                     displayHoverMessage(displayObj, textMessage);
                 } else {
@@ -1353,22 +1354,22 @@ function initApp(presetMode) {
         // var schoolMarker = new schoolMarkerOverlay(bounds, schoolMarkerImageD, map);
         // icon: schoolMarkerImage
 
-        function schoolMarkerOverlay(bounds, image, map) {
-            console.log("schoolMarkerOverlay");
-
-            // Initialize all properties.
-            this.bounds_ = bounds;
-            this.image_ = image;
-            this.map_ = map;
-
-            // Define a property to hold the image's div. We'll
-            // actually create this div upon receipt of the onAdd()
-            // method so we'll leave it null for now.
-            this.div_ = null;
-
-            // Explicitly call setMap on this overlay.
-            this.setMap(map);
-        }
+        // function schoolMarkerOverlay(bounds, image, map) {
+        //     console.log("schoolMarkerOverlay");
+        //
+        //     // Initialize all properties.
+        //     this.bounds_ = bounds;
+        //     this.image_ = image;
+        //     this.map_ = map;
+        //
+        //     // Define a property to hold the image's div. We'll
+        //     // actually create this div upon receipt of the onAdd()
+        //     // method so we'll leave it null for now.
+        //     this.div_ = null;
+        //
+        //     // Explicitly call setMap on this overlay.
+        //     this.setMap(map);
+        // }
     }
 
     // ======= ======= ======= activateSchoolMarker ======= ======= =======
@@ -1404,9 +1405,10 @@ function initApp(presetMode) {
     }
 
     // ======= ======= ======= setFilterSelections ======= ======= =======
-    function setFilterSelections(agency, levels, expend, zones) {
+    function setFilterSelections(agency, levels, expend, zones, presetMode) {
         console.log("******* setFilterSelections *******");
-        console.log("  presetMode: ", presetMode);
+
+        displayObj.displayMode = presetMode;
 
         clearFilterSelctions();
         updateHoverText(null);
@@ -1484,12 +1486,12 @@ function initApp(presetMode) {
 
     initMenuObjects();
     initDataObjects();
-    displayObj.displayMode = presetMode;
     console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
     if (displayObj.displayMode != "storyMap") {
         displayObj.initFilterMenus();
         displayObj.activateClearButton();
+        displayObj.displayMode = presetMode;
         displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");

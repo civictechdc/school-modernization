@@ -9,7 +9,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
     chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
     // chartHtml += "<div id='sub-nav-container'>";
-    chartHtml += displayObj.makeSubMenu(displayObj.expendPerMenu);
+    chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu);
     // chartHtml += "</div></td></tr></table>";
     chartHtml += "</td></tr></table>";
 
@@ -47,10 +47,10 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
     var myJsonString = JSON.stringify(dataObjectsArray);
     var dataMax = d3.max(dataObjectsArray, function(d) {
-        return d.zoneValue;
+        return d.zoneAmount;
     });
     var dataMin = d3.min(dataObjectsArray, function(d) {
-        return d.zoneValue;
+        return d.zoneAmount;
     });
     // console.log("  dataMax: ", dataMax);
     // console.log("  dataMin: ", dataMin);
@@ -181,14 +181,14 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 return schoolCircleX;
             })
             .attr("cy", function(d) {
-                return yScale(d.zoneValue);
+                return yScale(d.zoneAmount);
             })
             .attr("r", function(d) {
                 // console.log("  d: ", d);
                 return schoolCircleR;
             })
             .style('fill', function(d, i){
-                colorIndex = assignChartColors(d.zoneValue);
+                colorIndex = assignChartColors(d.zoneAmount);
                 whichColor = fillColors[colorIndex];
                 return whichColor;
             });
@@ -204,7 +204,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 }))
                 .attr("class", "dataChartLabel")
                 .text(function(d) {
-                    formattedNumber = numberWithCommas(d.zoneValue);
+                    formattedNumber = numberWithCommas(d.zoneAmount);
                     var checkWard = d.zoneName.indexOf("Ward ");
                     if (checkWard > -1) {
                         var wardName = d.zoneName.replace(" ", "-");
@@ -218,8 +218,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     return schoolCircleX + 15;
                 })
                 .attr("y", function(d) {
-                    // console.log("  y: ", yScale(d.zoneValue));
-                    return yScale(d.zoneValue);
+                    // console.log("  y: ", yScale(d.zoneAmount));
+                    return yScale(d.zoneAmount);
                 })
                 .attr("font-family", "sans-serif")
                 .attr("font-size", "14px")
@@ -228,6 +228,20 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 .call(insertLabelText);
 
     activateChartCircles();
+    activateSubmenu();
+
+    // ======= activateSubmenu =======
+    function activateSubmenu() {
+        console.log("activateSubmenu");
+
+        var expendMathContainer = $('#expendMath');
+
+        $('#expendMath').on( "selectmenuselect", function( event, ui ) {
+            console.log("\n======= doTheMath ======= ");
+            nextMath = $("select[name='expendMath'] option").val()
+            console.log("  nextMath: ", nextMath);
+        } );
+    }
 
     // ======= ======= ======= numberWithCommas ======= ======= =======
     function numberWithCommas(x) {
@@ -277,13 +291,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
 
     // ======= ======= ======= assignChartColors ======= ======= =======
-    function assignChartColors(zoneValue) {
+    function assignChartColors(zoneAmount) {
         // console.log("assignChartColors");
         var binMin = binMax = colorIndex = null;
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
             binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-            if ((binMin <= zoneValue) && (zoneValue <= binMax)) {
+            if ((binMin <= zoneAmount) && (zoneAmount <= binMax)) {
                 colorIndex = i;
                 break;
             }
