@@ -6,9 +6,6 @@ var $ = function(sel){return document.querySelector(sel);},
     asMoney = d3.format('$,')
     ;
 
-var pastData = 'MajorExp9815',
-    futureData = 'TotalAllotandPlan1621';
-
 // function Bubble(dataset){
     // $('#title').innerText = dataset;
 
@@ -29,13 +26,18 @@ d3.csv('data/data_master.csv', function (error, data) {
     //*******************************************************
     // Scales
     //*******************************************************
-    var minExpend = d3.min(data, function(d){
-            return +(d.MajorExp9815);
-        }),
-        maxExpend = d3.max(data, function(d){
-            return +(d.MajorExp9815);
-        }),
-        toScale = d3.scale.linear().domain([minExpend, maxExpend]).rangeRound([5, 25]);
+        //Past
+    var minExpendPast = d3.min(data, function(d){ return +(d.MajorExp9815); }),
+        maxExpendPast = d3.max(data, function(d){ return +(d.MajorExp9815); }),
+        toScalePast = d3.scale.linear().domain([minExpendPast, maxExpendPast]).rangeRound([5, 25]),
+        // Lifetime
+        minExpendLife = d3.min(data, function(d){ return +(d.LifetimeBudget); }),
+        maxExpendLife = d3.max(data, function(d){ return +(d.LifetimeBudget); }),
+        toScaleLife = d3.scale.linear().domain([minExpendPast, maxExpendPast]).rangeRound([5, 25]),
+        // Future
+        minExpendFuture = d3.min(data, function(d){ return +(d.TotalAllotandPlan1621); }),
+        maxExpendFuture = d3.max(data, function(d){ return +(d.TotalAllotandPlan1621); }),
+        toScaleFuture = d3.scale.linear().domain([minExpendFuture, maxExpendFuture]).rangeRound([5, 25]);
 
     for (var j = 0; j < data.length; j++) {
         data[j].radius = 10;
@@ -58,7 +60,7 @@ d3.csv('data/data_master.csv', function (error, data) {
       .attr("cy", function (d) { return d.y; })
       .attr("r", 2)
       .style({
-        'fill': function (d) { return getColor(d.MajorExp9815);},
+        'fill': function (d) { return getColor(d.MajorExp9815, 'past');},
         'stroke': 'black',
         'stroke-width': 1,
         'opacity': 0.8
@@ -116,7 +118,7 @@ d3.csv('data/data_master.csv', function (error, data) {
         .duration(10000)
         .attr('r', function(d){
             if(+d.MajorExp9815 && d.MajorExp9815 !== 'NA'){
-                return toScale(+d.MajorExp9815)
+                return toScalePast(+d.MajorExp9815)
             } else {
                 return '3';
             }
@@ -135,12 +137,83 @@ d3.csv('data/data_master.csv', function (error, data) {
     // Add interactivity to Subdivider Buttons
     //*******************************************************
     var btns = Array.prototype.slice.call($_all('.btn'));
+    console.log(btns);
+
     btns.forEach(function(item, e){
         item.addEventListener('click', function(e){
             draw(e.target.id);
         });
     });
 
+    //*******************************************************
+    // Changing datasets
+    //*******************************************************
+    d3.select('#future')
+        .on('click', function(d){
+            nodes
+            .transition()
+            .duration(1000)
+            .attr('r', function(d){
+                if(+d.TotalAllotandPlan1621 && d.TotalAllotandPlan1621 !== 'NA'){
+                    return toScaleFuture(+d.TotalAllotandPlan1621)
+                } else {
+                    return '3';
+                }
+            })
+            .style({
+                'fill': function (d) { return getColor(d.TotalAllotandPlan1621, 'future');},
+                'stroke': 'black',
+                'stroke-width': 1,
+                'opacity': 0.8
+            });
+
+            $('#budget_state').innerText = 'Planned Expenditures for 2016 - 2021';
+        })
+    ;
+    d3.select('#past')
+        .on('click', function(d){
+            nodes
+            .transition()
+            .duration(1000)
+            .attr('r', function(d){
+                if(+d.MajorExp9815 && d.MajorExp9815 !== 'NA'){
+                    return toScalePast(+d.MajorExp9815)
+                } else {
+                    return '3';
+                }
+            })
+            .style({
+                'fill': function (d) { return getColor(d.MajorExp9815, 'past');},
+                'stroke': 'black',
+                'stroke-width': 1,
+                'opacity': 0.8
+            });
+
+            $('#budget_state').innerText = 'Expenditures from 1985 - 2015';
+        })
+    ;
+    d3.select('#lifetime')
+        .on('click', function(d){
+            nodes
+            .transition()
+            .duration(1000)
+            .attr('r', function(d){
+                if(+d.LifetimeBudget && d.LifetimeBudget !== 'NA'){
+                    return toScaleLife(+d.LifetimeBudget)
+                } else {
+                    return '3';
+                }
+            })
+            .style({
+                'fill': function (d) { return getColor(d.LifetimeBudget, 'total');},
+                'stroke': 'black',
+                'stroke-width': 1,
+                'opacity': 0.8
+            });
+
+            $('#budget_state').innerText = 'Lifetime Budget';
+        })
+    ;
 
     //****************************************
     // UTILITY FUNCTIONS
@@ -223,8 +296,29 @@ d3.csv('data/data_master.csv', function (error, data) {
       };
     }
 
-    function getColor(the_data){
-        var value = the_data;
+    function getColor(the_data, set){
+        // if(set)
+        var value = the_data,
+            bands = {
+                MajorExp9815: {
+                    one: 10000000,
+                    two: 1000000,
+                    three: 0
+                },
+                TotalAllotandPlan1621: {
+                    one: 1000000,
+                    two: 500000,
+                    three: 0
+                },
+                LifetimeBudget: {
+                    one: 10000000,
+                    two: 1000000,
+                    three: 0
+                }
+            };
+
+
+
         if(value > 10000000){ // 10 MILLION
             return '#77cc00';
         } else if(value < 10000000 && value > 1000000){
