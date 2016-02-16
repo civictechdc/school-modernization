@@ -168,8 +168,7 @@ d3.csv('data/data_master.csv', function (error, data) {
             });
 
             $('#budget_state').innerText = 'Planned Expenditures for 2016 - 2021';
-        })
-    ;
+        });
     d3.select('#past')
         .on('click', function(d){
             nodes
@@ -190,8 +189,7 @@ d3.csv('data/data_master.csv', function (error, data) {
             });
 
             $('#budget_state').innerText = 'Expenditures from 1985 - 2015';
-        })
-    ;
+        });
     d3.select('#lifetime')
         .on('click', function(d){
             nodes
@@ -212,8 +210,28 @@ d3.csv('data/data_master.csv', function (error, data) {
             });
 
             $('#budget_state').innerText = 'Lifetime Budget';
-        })
-    ;
+        });
+    d3.select('#spendsqft')
+        .on('click', function(d){
+            nodes
+            .transition()
+            .duration(1000)
+            .attr('r', function(d){
+                if(+d.SpentPerSqFt && d.SpentPerSqFt !== 'NA'){
+                    return toScaleLife(+d.SpentPerSqFt)
+                } else {
+                    return '3';
+                }
+            })
+            .style({
+                'fill': function (d) { return getColor(d.SpentPerSqFt, 'total');},
+                'stroke': 'black',
+                'stroke-width': 1,
+                'opacity': 0.8
+            });
+
+            $('#budget_state').innerText = 'Lifetime Budget';
+        });
 
     //****************************************
     // UTILITY FUNCTIONS
