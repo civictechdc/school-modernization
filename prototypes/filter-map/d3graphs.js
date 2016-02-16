@@ -8,10 +8,28 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     chartHtml += "<tr><td class='profile-banner' colspan=2>";
     chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
     chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
-    // chartHtml += "<div id='sub-nav-container'>";
-    chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu);
-    // chartHtml += "</div></td></tr></table>";
+    if (displayObj.displayMode != "storyMap") {
+        chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu);
+    }
     chartHtml += "</td></tr></table>";
+
+
+    // ======= ======= ======= updateChartStyle ======= ======= =======
+    function updateChartStyle() {
+        console.log("updateChartStyle");
+
+        if (displayObj.displayMode == "storyMap") {
+            $("#chart-container").css("top", "52%");
+            $("#chart-container").css("left", "5%");
+            $("#chart-container").css("width", "160px");
+            $("#chart-container").css("height", "200px");
+        } else {
+            $("#chart-container").css("top", "42%");
+            $("#chart-container").css("left", "65%");
+            $("#chart-container").css("width", "360px");
+            $("#chart-container").css("height", "auto");
+        }
+    }
 
     // == remove previous chart or profile html if any
     if ($('#profile-container').find('#profile').length) {
@@ -23,11 +41,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     if ($('#chart-container').find('#chart').length) {
         $("#chart").remove();
         $("#chart-container").append(chartHtml);
+        updateChartStyle();
     } else {
         $("#chart-container").append(chartHtml);
+        updateChartStyle();
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
-            // initSelectMenu(displayObj);
         });
     }
 

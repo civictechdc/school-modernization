@@ -1486,12 +1486,12 @@ function initApp(presetMode) {
 
     initMenuObjects();
     initDataObjects();
+    displayObj.displayMode = presetMode;
     console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
     if (displayObj.displayMode != "storyMap") {
         displayObj.initFilterMenus();
         displayObj.activateClearButton();
-        displayObj.displayMode = presetMode;
         displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");

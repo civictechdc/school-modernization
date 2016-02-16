@@ -424,16 +424,16 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
             nextSchoolEnroll = 0;
         }
 
-        console.log("*** school/index: ", schoolData.schoolName, "/", schoolZoneIndex);
-        console.log("  currentAmount: ", currentAmount);
-        console.log("  nextSchoolExpend: ", nextSchoolExpend);
-        console.log("  aggregatedAmount: ", aggregatedAmount);
-        console.log("    currentSqft: ", currentSqft);
-        console.log("    nextSchoolSqft: ", nextSchoolSqft);
-        console.log("    aggregatedSqft: ", aggregatedSqft);
-        console.log("      currentEnroll: ", currentEnroll);
-        console.log("      nextSchoolEnroll: ", nextSchoolEnroll);
-        console.log("      aggregatedEnroll: ", aggregatedEnroll);
+        // console.log("*** school/index: ", schoolData.schoolName, "/", schoolZoneIndex);
+        // console.log("  currentAmount: ", currentAmount);
+        // console.log("  nextSchoolExpend: ", nextSchoolExpend);
+        // console.log("  aggregatedAmount: ", aggregatedAmount);
+        // console.log("    currentSqft: ", currentSqft);
+        // console.log("    nextSchoolSqft: ", nextSchoolSqft);
+        // console.log("    aggregatedSqft: ", aggregatedSqft);
+        // console.log("      currentEnroll: ", currentEnroll);
+        // console.log("      nextSchoolEnroll: ", nextSchoolEnroll);
+        // console.log("      aggregatedEnroll: ", aggregatedEnroll);
         return null;
     } else {
         return schoolData.schoolCode;
@@ -1195,7 +1195,6 @@ function initMap(zonesCollectionObj, displayObj) {
         console.log("*** storyMap ***");
         var zoom = 10;
         var mapContainer = document.getElementById('storyMap-container');
-        console.log("  mapContainer: ", mapContainer);
         map = new google.maps.Map(mapContainer, {
             center: {lat: 38.89, lng: -77.00},
             disableDefaultUI: false,
