@@ -26,8 +26,6 @@ Resources
 
 Data
 ====
-- [DCPS Facility Conditions Assement xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
-- [Charter School Facility Data Sheet xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
-- [DCPS Capital Expenditures rough xlsx](https://github.com/codefordc/school-modernization/files/69203/2014MP_Appendix.C_DCPS.Schools.-.Facility.Condition.Assessments.FCS.Summary.xlsx)
-- [Funding Changes FY2016 cmgiven csv](https://github.com/codefordc/dcps-budget/blob/master/app/data/data.csv) -- This is the cleaned and parsed version of data put together for the funding changes project by @cmgiven.
-- [At risk data FY2016 cmgiven csv](https://github.com/cmgiven/at-risk/blob/master/app/data/data.csv) -- This is the cleaned version of the data put together for the at risk data-viz put together by @cmgiven.
+Data sources includes DC Public Schools (DCPS), DC Public Charter School Board (PCSB), Office of the State of Superintendent of Education (OSSE), and Office of the Chief Financial Officer (OCFO). Data sources can be found in the [input data folder](https://github.com/codefordc/school-modernization/tree/master/InputData).
+
+The final datasets can be found in the [output data folder](https://github.com/codefordc/school-modernization/tree/master/Output%20Data), including a [data dictionary](https://github.com/codefordc/school-modernization/blob/master/Output%20Data/Data%20Dictionary.csv).
