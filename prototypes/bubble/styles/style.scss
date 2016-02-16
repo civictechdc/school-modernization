@@ -27,9 +27,11 @@ text {
 }
 
 #tooltip {
-   position: absolute;
+   position: fixed;
+   left: 950px;
+   top: 200px;
    width: 200px;
-   height: 100px;
+   height: 250px;
    padding: 10px;
    background-color: $cerulean;
    border-radius: 5px;
@@ -37,15 +39,25 @@ text {
    
    p {
       font-size: 12px;
-      line-height: 0.5em;
+      line-height: 1.2em;
       color: #fff;
    }
 
    &.hidden {
-      display: none;
+      // display: none;
    }
 }
 
+.color {
+   fill: 'grey';
+}
+
+#budget_state {
+   margin-top: -20px;
+}
+// #school {
+//    font-size: 12px;
+// }
 // #school {
 //    font-size: 12px;
 // }

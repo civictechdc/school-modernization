@@ -15,18 +15,24 @@ text#tooltip_label {
   background-color: 'white'; }
 
 #tooltip {
-  position: absolute;
+  position: fixed;
+  left: 950px;
+  top: 200px;
   width: 200px;
-  height: 100px;
+  height: 250px;
   padding: 10px;
   background-color: #2956B2;
   border-radius: 5px;
   border: 3px solid #1f4289; }
   #tooltip p {
     font-size: 12px;
-    line-height: 0.5em;
+    line-height: 1.2em;
     color: #fff; }
-  #tooltip.hidden {
-    display: none; }
+
+.color {
+  fill: 'grey'; }
+
+#budget_state {
+  margin-top: -20px; }
 
 /*# sourceMappingURL=style.css.map */
