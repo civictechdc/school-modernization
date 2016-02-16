@@ -43,12 +43,12 @@ function initApp(presetMode) {
         // == spendSqFt, spendEnroll
         filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"per sqFt", column:"SpentPerSqFt", value:null };
         filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", text:"per student", column:"SpentPerEnroll", value:null };
-        filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", text:"total amount", column:null, value:null };
+        filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", text:"dollar amount", column:null, value:null };
 
         // == zones
         filterMenu.Ward = { id:"Ward", category:"zone", text:"Wards", column:"WARD", value:null };
-        filterMenu.FeederHS = { id:"FeederHS", category:"zone", text:"High School Feeders", column:"FeederHS", value:null };
-        filterMenu.FeederMS = { id:"FeederMS", category:"zone", text:"Middle School Feeders", column:"FeederMS", value:null };
+        filterMenu.FeederHS = { id:"FeederHS", category:"zone", text:"HS Feeders", column:"FeederHS", value:null };
+        filterMenu.FeederMS = { id:"FeederMS", category:"zone", text:"MS Feeders", column:"FeederMS", value:null };
 
     }
     function Display() {
@@ -125,8 +125,8 @@ function initApp(presetMode) {
             menuHtml += "<hr>";
         }
         menuHtml += "</ul>";
-        menuHtml += this.initSearchBar();
-        menuHtml += this.initHoverDisplay();
+        menuHtml += this.makeSearchBar();
+        menuHtml += this.makeHoverDisplay();
         $(popupContainer).append(menuHtml);
 
         // == activate individual filter selectors after appended to DOM
@@ -136,6 +136,96 @@ function initApp(presetMode) {
         }
         this.activateSearchButton("searchButton");
         this.activateSearchWindow("searchWindow");
+    }
+
+    // ======= ======= ======= makeCategoryMenu ======= ======= =======
+    Display.prototype.makeCategoryMenu = function(whichMenu, index) {
+        // console.log("makeCategoryMenu");
+
+        var nextCatLabel = this.categoryLabels[index];
+        var nextGrpLabel = this.groupLabels[index];
+        var nextCategory = whichMenu[0];
+        var menuHtml = "<p class='all-filters'>[ all ]</p>";
+        menuHtml += "<li id='" + nextCategory + "' class='category'><span class='labelText'>" + nextGrpLabel + "</span><a href='#'>" + nextCatLabel + "</a>";
+        menuHtml += "<ul>";
+        menuHtml += this.makeFilterMenu(whichMenu);
+        menuHtml += "</ul>";
+        menuHtml += "</li>";
+        return menuHtml;
+    }
+
+    // ======= ======= ======= makeFilterMenu ======= ======= =======
+    Display.prototype.makeFilterMenu = function(whichMenu, skipFlags) {
+        console.log("makeFilterMenu");
+
+        // == category name is the first item in whichMenu
+        var whichCategory = whichMenu[0];
+        var whichClass = whichCategory;
+        console.log("  whichCategory: ", whichCategory);
+
+        if ((skipFlags == null) || (skipFlags == undefined)) {
+            var skipFlags = [];
+        }
+
+        // == build html string for filter lists
+        filterHtml = "";
+        for (var i = 1; i < whichMenu.length; i++) {
+            if ($.inArray(i, skipFlags) < 0) {
+                nextItem = whichMenu[i];
+                nextId = nextItem.id;
+                nextText = nextItem.text;
+                filterHtml += "<li id='" + nextId + "' class='filter " + whichClass + "'><a class='filterText' href='#'>" + nextText + "</a></li>";
+            } else {
+                continue;
+            }
+        }
+        return filterHtml;
+    }
+
+    // ======= ======= ======= modFilterMenu ======= ======= =======
+    Display.prototype.modFilterMenu = function(whichMenu) {
+        console.log("modFilterMenu");
+
+        // == category name is the first item in whichMenu
+        var menuContainer = $("#" + whichMenu[0]);
+        var whichCategory = whichMenu[0];
+        var whichClass = whichCategory;
+        var skipFlags = [];
+        // console.log("  whichCategory: ", whichCategory);
+
+        if (whichCategory == "levels") {
+            if (this.dataFilters.zones == "FeederHS") {
+                skipFlags = [1];
+            } else if (this.dataFilters.zones == "FeederMS") {
+                skipFlags = [1, 2];
+            } else {
+                skipFlags = [];
+            }
+        }
+
+        $(menuContainer).children("ul").remove();
+        var menuHtml = "<ul>";
+        menuHtml += this.makeFilterMenu(whichMenu, skipFlags);
+        menuHtml += "</ul>";
+
+        $(menuContainer).children("a").after(menuHtml);
+    }
+
+    // ======= ======= ======= setMenuItem ======= ======= =======
+    Display.prototype.setMenuItem = function(whichCategory, whichFilter) {
+        console.log("setMenuItem");
+
+        // == menu text creates user-friendly menu item
+        var menuObject = filterMenu[whichFilter];
+        var menuText = menuObject.text;
+
+        // == modify selected filter menu item to show selection
+        htmlString = "<li><a id='" + whichFilter + "' href='#'>" + menuText + "</a></li>";
+        selectedFilterElement = $("#" + whichCategory);
+        selectedFilterElement.children("ul").empty();
+        selectedFilterElement.children("ul").html(htmlString);
+        selectedFilterElement.children("ul").css("display", "block");
+        this.activateFilterRelease(selectedFilterElement);
     }
 
     // ======= ======= ======= makeSubMenu ======= ======= =======
@@ -163,123 +253,18 @@ function initApp(presetMode) {
         return subMenuHtml;
     }
 
-    // ======= ======= ======= activateSubfilterSelect ======= ======= =======
-    Display.prototype.activateSubfilterSelect = function(nextItem) {
-        console.log("activateSubfilterSelect");
-
-        // == id ties DOM element to menu object
-        var self = this;
-        var nextId = nextItem.id;
-        var nextElement = $("#expendPer");
-
-        // ======= ======= ======= selectFilter ======= ======= =======
-        $(nextElement).off("click").on("click", function(event){
-            console.log("\n======= selectFilter ======= ");
-
-            var classList = $(this).attr('class').split(/\s+/);
-            var whichFilter = this.id;
-            console.log("  whichFilter: ", whichFilter);
-            var selectionHtml = ""
-
-            $("#sub-nav-container").empty();
-            $("#sub-nav-container").html("<a class='sub-filterText' href='#'>" + this.id + "</a>");
-        });
-    }
-
-    // ======= ======= ======= makeCategoryMenu ======= ======= =======
-    Display.prototype.makeCategoryMenu = function(whichMenu, index) {
-        // console.log("makeCategoryMenu");
-
-        var nextCatLabel = this.categoryLabels[index];
-        var nextGrpLabel = this.groupLabels[index];
-        var nextCategory = whichMenu[0];
-        var menuHtml = "<p class='all-filters'>[ all ]</p>";
-        menuHtml += "<li id='" + nextCategory + "' class='category'><span class='labelText'>" + nextGrpLabel + "</span><a href='#'>" + nextCatLabel + "</a>";
-        menuHtml += "<ul>";
-        menuHtml += this.makeFilterMenu(whichMenu);
-        menuHtml += "</ul>";
-        menuHtml += "</li>";
-        return menuHtml;
-    }
-
-    // ======= ======= ======= makeFilterMenu ======= ======= =======
-    Display.prototype.makeFilterMenu = function(whichMenu) {
-        console.log("makeFilterMenu");
-
-        // == category name is the first item in whichMenu
-        var whichCategory = whichMenu[0];
-        var whichClass = whichCategory;
-        var skipFlag = [];
-        console.log("  whichCategory: ", whichCategory);
-        // console.log("  this.dataFilters.zones: ", this.dataFilters.zones);
-
-        if (whichCategory == "levels") {
-            if (this.dataFilters.zones == "FeederHS") {
-                skipFlag = [1];
-            } else if (this.dataFilters.zones == "FeederMS") {
-                skipFlag = [1, 2];
-            } else {
-                skipFlag = [];
-            }
-        }
-
-        // == build html string for filter lists
-        filterHtml = "";
-        for (var i = 1; i < whichMenu.length; i++) {
-            if ($.inArray(i, skipFlag) < 0) {
-                nextItem = whichMenu[i];
-                nextId = nextItem.id;
-                nextText = nextItem.text;
-                filterHtml += "<li id='" + nextId + "' class='filter " + whichClass + "'><a class='filterText' href='#'>" + nextText + "</a></li>";
-            } else {
-                continue;
-            }
-        }
-        return filterHtml;
-    }
-
-    // ======= ======= ======= modFilterMenu ======= ======= =======
-    Display.prototype.modFilterMenu = function(whichMenu) {
-        // console.log("modFilterMenu");
-
-        var menuContainer = $("#" + whichMenu[0]);
-
-        $(menuContainer).children("ul").remove();
-        var menuHtml = "<ul>";
-        menuHtml += this.makeFilterMenu(whichMenu);
-        menuHtml += "</ul>";
-        $(menuContainer).children("a").after(menuHtml);
-    }
-
-    // ======= ======= ======= setMenuItem ======= ======= =======
-    Display.prototype.setMenuItem = function(whichCategory, whichFilter) {
-        console.log("setMenuItem");
-
-        // == menu text creates user-friendly menu item
-        var menuObject = filterMenu[whichFilter];
-        var menuText = menuObject.text;
-
-        // == modify selected filter menu item to show selection
-        htmlString = "<li><a id='" + whichFilter + "' href='#'>" + menuText + "</a></li>";
-        selectedFilterElement = $("#" + whichCategory);
-        selectedFilterElement.children("ul").empty();
-        selectedFilterElement.children("ul").html(htmlString);
-        selectedFilterElement.children("ul").css("display", "block");
-        this.activateFilterRelease(selectedFilterElement);
-    }
-
-    // ======= ======= ======= initSearchBar ======= ======= =======
-    Display.prototype.initSearchBar = function() {
-        // console.log("initSearchBar");
+    // ======= ======= ======= makeSearchBar ======= ======= =======
+    Display.prototype.makeSearchBar = function() {
+        // console.log("makeSearchBar");
         var searchHtml = "<div id='search' class='category'><span class='labelText searchText'>search</span>";
         searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
         searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
         return searchHtml;
     }
 
-    // ======= ======= ======= initHoverDisplay ======= ======= =======
-    Display.prototype.initHoverDisplay = function() {
-        // console.log("initHoverDisplay");
+    // ======= ======= ======= makeHoverDisplay ======= ======= =======
+    Display.prototype.makeHoverDisplay = function() {
+        // console.log("makeHoverDisplay");
         var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
         return hoverHtml;
     }
@@ -511,6 +496,11 @@ function initApp(presetMode) {
             var whichCategory = this.id;
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             clearMenuCategory(whichCategory);
+
+            if (whichCategory == "levels") {
+                self.modFilterMenu(self.filterMenusArray[1]);
+                displayObj.activateFilterMenu(self.filterMenusArray[1]);
+            }
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             zonesCollectionObj.getZoneData();
         });
@@ -617,6 +607,8 @@ function initApp(presetMode) {
                     zonesCollectionObj.zoneType = whichFilter;
                     zonesCollectionObj.aggregatorArray = [];
                     zonesCollectionObj.zoneFeederGeojson = null;
+                    updateFilterTitles(self, menuObject.text, "add");
+                    console.log("  whichFilter: ", whichFilter);
 
                     // == modify levels menu to remove HS and/or MS options for feeders
                     if ((whichFilter == "FeederHS") || (whichFilter == "FeederMS")) {
@@ -628,17 +620,20 @@ function initApp(presetMode) {
                             if (tempLevels == "ES") {
                                 self.setMenuItem("levels", "Elem");
                                 self.dataFilters.levels = "ES";
+                                updateFilterTitles(self, filterMenu["Elem"].text, "add");
                             } else {
                                 self.setMenuItem("levels", "Middle");
                                 self.dataFilters.levels = "MS";
+                                updateFilterTitles(self, filterMenu["Middle"].text, "add");
                             }
                         } else if (whichFilter == "FeederMS") {
                             self.setMenuItem("levels", "Elem");
                             self.dataFilters.levels = "ES";
+                            updateFilterTitles(self, filterMenu["Elem"].text, "add");
                         }
+                        var modMenuObject = filterMenu["levels"];
                         self.activateFilterMenu(self.filterMenusArray[1]);
                     }
-                    updateFilterTitles(self, menuObject.text, whichFilter);
                     break;
             }
 
@@ -785,39 +780,36 @@ function initApp(presetMode) {
 
 
     // ======= ======= ======= getSchoolData ======= ======= =======
-    SchoolsCollection.prototype.getSchoolData = function(presetMode) {
+    SchoolsCollection.prototype.getSchoolData = function() {
         console.log("\n----- getSchoolData -----");
 
         var self = this;
+        var presetMode = displayObj.displayMode;
 
         // ======= get school data =======
-        if (presetMode != "noSchools") {
-            if (this.jsonData == null) {
-                $.ajax({
-                    url: "Data_Schools/DCPS_Master_114_dev.csv",
-                    method: "GET",
-                    dataType: "text"
-                }).done(function(textData){
-                    console.log("*** ajax success ***");
-                    jsonData = CSV2JSON(textData);
-                    console.dir(jsonData);
+        if (this.jsonData == null) {
+            $.ajax({
+                url: "Data_Schools/DCPS_Master_114_dev.csv",
+                method: "GET",
+                dataType: "text"
+            }).done(function(textData){
+                console.log("*** ajax success ***");
+                jsonData = CSV2JSON(textData);
+                console.dir(jsonData);
 
-                    // == store school json data
-                    self.jsonData = jsonData;
-                    getSchoolData();
+                // == store school json data
+                self.jsonData = jsonData;
+                getSchoolData();
 
-                // == errors/fails
-                }).fail(function(){
-                    console.log("*** ajax fail ***");
-                }).error(function() {
-                    console.log("*** ajax error ***");
-                });
+            // == errors/fails
+            }).fail(function(){
+                console.log("*** ajax fail ***");
+            }).error(function() {
+                console.log("*** ajax error ***");
+            });
 
-            } else {
-                getSchoolData(presetMode);
-            }
         } else {
-            getSchoolData(presetMode);
+            getSchoolData();
         }
 
         // ======= ======= ======= getSchoolData ======= ======= =======

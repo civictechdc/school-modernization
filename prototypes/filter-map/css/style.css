@@ -56,11 +56,11 @@ hr {
 /* ======= filters ======= */
 .banner {
     height: 40px;
-    padding: 0 20px;
+    padding: 0 20px 0 0;
     border: solid 2px #eee;
 }
 #filters-title {
-    width: 50%;
+    width: 60%;
     float: left;
     background-color: darkslateblue;
 }
@@ -83,7 +83,7 @@ hr {
 }
 .filterLabel {
     font-style: normal;
-    color: gray;
+    color: red;
 }
 
 /* ======= buttons ======= */
@@ -97,29 +97,6 @@ hr {
     border-radius: 6px 6px 6px 6px;
     background-color: darkviolet;
     border: solid 2px darkslateblue;
-}
-#clear-button {
-    position: absolute;
-    display: block;
-    height: 38px;
-    width: 60px;
-    left: 54%;
-    margin-left: 20px;
-    box-shadow: 4px 4px 4px #555;
-    border-radius: 6px 6px 6px 6px;
-    background-color: darkviolet;
-    border: solid 2px darkslateblue;
-}
-.btn-text {
-    line-height: 38px;
-    margin-left: 11px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-}
-#clear-button:hover {
-    background-color: mediumpurple ;
 }
 #zone-school-button:hover {
     background-color: mediumpurple ;
@@ -178,7 +155,7 @@ hr {
     background-color: #fff2e5;
     box-shadow: 4px 4px 4px #555;
     border-radius: 6px 6px 2px 2px;
-    z-index:999;
+    z-index:99;
 }
 .title_bar {
     width: 100%;
@@ -192,11 +169,38 @@ hr {
     cursor:move;
 }
 .title_bar > p {
+    display: inline-block;
     margin-top: 8px;
     font-weight: 700;
 	font-size: 16px;
     color: white;
 }
+#clear-button {
+    /*position: relative;*/
+    display: inline-block;
+    height: 22px;
+    width: 70px;
+    left: 90%;
+    margin-left: 60px;
+    border-radius: 2px 2px 2px 2px;
+    background-color: darkviolet;
+    border: solid 2px black;
+    z-index: 99999;
+}
+.btn-text {
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+#clear-button:hover {
+    background-color: orchid ;
+}
+#clear-button:hover > span {
+    /*color: purple;*/
+}
+
 
 /* ======= navbar ======= */
 .labelText {

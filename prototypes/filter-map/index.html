@@ -29,7 +29,6 @@
 		<div class="row header">
 			<div class="page-title"><h1>DCPS School Modernization Tool</h1></div>
 			<div id="filters-title" class="banner"><h2>your filters</h2></div>
-			<div id='clear-button'><span class='btn-text'>clear</span></div>
 			<div id='zone-school-button'><span class='btn-text'>schools</span></div>
 		</div>
 
@@ -41,7 +40,10 @@
 				<!-- <button id="btn_popup">popup</button> -->
 				<div id="tooltips"></div>
 				<div id="popup">
-					<div id="drag_bar" class="title_bar"><p>filters</p></div>
+					<div id="drag_bar" class="title_bar">
+						<p>filters</p>
+						<div id='clear-button'><span class='btn-text'>clear</span></div>
+					</div>
 					<nav id="main-nav"></nav>
 				</div>
 
@@ -61,7 +63,7 @@
 		<script type="text/javascript" src="d3graphs.js"></script>
 		<script type="text/javascript" src="utilities.js"></script>
 		<script type="text/javascript" src="script.js"></script>
-		
+
 		<script type="text/javascript">
 			$(document).ready(function(){
 			    console.log('jQuery loaded');

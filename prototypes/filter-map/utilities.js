@@ -194,8 +194,11 @@ function displayHoverMessage(displayObj, textMessage) {
 
 
 // ======= ======= ======= updateFilterTitles ======= ======= =======
-function updateFilterTitles(displayObj, whichFilter, addRemove) {
-    // console.log("updateFilterTitles");
+function updateFilterTitles(displayObj, whichFilterText, addRemove) {
+    console.log("updateFilterTitles");
+    console.log("  whichFilterText: ", whichFilterText);
+    console.log("  addRemove: ", addRemove);
+    console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
 
     var filterTitleContainer = $("#filters-title").children("h2");
     var filterText = $(filterTitleContainer).html();
@@ -207,15 +210,15 @@ function updateFilterTitles(displayObj, whichFilter, addRemove) {
     } else {
         if ((displayObj.dataFilters.selectedZone != null) && (addRemove == "add")) {
             displayObj.filterTitlesArray = [];
-            displayObj.filterTitlesArray.push(whichFilter);
-            filterText = "<span class='filterLabel'>Selected Zone: </span>" + whichFilter;
+            displayObj.filterTitlesArray.push(whichFilterText);
+            filterText = "<span class='filterLabel'>Selected Zone: </span>" + whichFilterText;
             $(filterTitleContainer).addClass("filterList");
         } else {
             if ((addRemove == "add") || (addRemove == "FeederHS") || (addRemove == "FeederMS")) {
-                // == build list of selected filters
-                displayObj.filterTitlesArray.push(whichFilter);
+                console.log("  addRemove: ", addRemove);
+                displayObj.filterTitlesArray.push(whichFilterText);
                 if (displayObj.filterTitlesArray.length == 1){
-                    filterText = "<span class='filterLabel'>Data for: </span>" + whichFilter;
+                    filterText = "<span class='filterLabel'>Data for: </span>" + whichFilterText;
                 } else {
                     if (addRemove == "FeederHS") {
                         for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
@@ -236,7 +239,7 @@ function updateFilterTitles(displayObj, whichFilter, addRemove) {
                     for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
                         nextFilter = displayObj.filterTitlesArray[i];
                         if (i == (displayObj.filterTitlesArray.length - 1)) {
-                            filterText += whichFilter;
+                            filterText += whichFilterText;
                         } else {
                             filterText += nextFilter + ", ";
                         }
@@ -246,7 +249,7 @@ function updateFilterTitles(displayObj, whichFilter, addRemove) {
             } else {
                 for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
                     checkFilter = displayObj.filterTitlesArray[i];
-                    if (checkFilter == whichFilter) {
+                    if (checkFilter == whichFilterText) {
                         displayObj.filterTitlesArray.splice(i, 1);
                         break;
                     }

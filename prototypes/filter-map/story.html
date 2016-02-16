@@ -37,7 +37,7 @@
 
 			<!-- ======= map ======= -->
 			<div class="column col-md-12 mapCol">
-				<!-- <button id="btn_popup">popup</button> -->
+
 				<div id="tooltips"></div>
 
 				<!-- <div id="map-container"></div> -->
@@ -63,15 +63,15 @@
 			    console.log('jQuery loaded');
 			    console.log('document ready');
 			    var fs = initApp("storyMap");
-				fs(null, null, null, null, null);
-				// setFilterSelections(null, null, null, null, "noSchools");
-			    // setFilterSelections("District", null, null, "FeederMS", null);
-			    // setFilterSelections("District", "MS", null, null, null);
-			    // setFilterSelections("District", "ES", "spendPast", "Ward", null);
-			    // setFilterSelections("Charter", "ES", "spendLifetime", "FeederMS", null);
-			    // setFilterSelections("District", "ES", "spendPast", "FeederHS", null);
-			    // setFilterSelections("District", "MS", "spendPast", "Ward", null);
-			    // setFilterSelections("Charter", "MS", "spendPast", "Ward", null);
+				// fs(null, null, null, null);
+				// fs(null, null, null, null);
+			    // fs("District", null, null, "FeederMS");
+			    // fs("District", "MS", null, null);
+			    fs("District", "ES", "spendPast", "Ward");
+			    // fs("Charter", "ES", "spendLifetime", "FeederMS");
+			    // fs("District", "ES", "spendPast", "FeederHS");
+			    // fs("District", "MS", "spendPast", "Ward");
+			    // fs("Charter", "MS", "spendPast", "Ward");
 			    // checkFilterSelection(displayObj, zonesCollectionObj, "init");
 
 			});
