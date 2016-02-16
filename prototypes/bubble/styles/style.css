@@ -32,4 +32,7 @@ text#tooltip_label {
 .color {
   fill: 'grey'; }
 
+#budget_state {
+  margin-top: -20px; }
+
 /*# sourceMappingURL=style.css.map */
