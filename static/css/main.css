@@ -1,0 +1,38 @@
+#wrap {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#navigation {
+    float: left;
+    width: 175px;
+    height: 300px;
+}
+
+#navigation ol {
+    padding-left: 25px;
+}
+
+div.charts #bubble,
+div.charts #map {
+    width: 400px;
+    display: inline-block;
+}
+div.chart {
+    float: left;
+    width: 825px;
+}
+
+div.charts img {
+    height: 300px;
+}
+
+#narrative div.words {
+    min-height: 175px;
+}
+
+
+div#storyMap-container {
+    height: 300px;
+    width: 300px;
+}
