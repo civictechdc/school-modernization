@@ -243,10 +243,10 @@ function initApp(presetMode) {
             nextItem = whichMenu[i];
             nextId = nextItem.id;
             nextText = nextItem.text;
-            if (i == 1) {
-                subMenuHtml += "<option selected='selected' value='" + nextText + "'>" + nextText + "</option>";
+            if (displayObj.dataFilters.math == nextId) {
+                subMenuHtml += "<option selected='selected' value='" + nextId + "'>" + nextText + "</option>";
             } else {
-                subMenuHtml += "<option value='" + nextText + "'>" + nextText + "</option>";
+                subMenuHtml += "<option value='" + nextId + "'>" + nextText + "</option>";
             }
         }
         subMenuHtml += "</select>";
@@ -644,7 +644,6 @@ function initApp(presetMode) {
             updateHoverText(null);
             self.setMenuItem(whichCategory, whichFilter);
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
-
             zonesCollectionObj.getZoneData();
         });
     }
@@ -1002,7 +1001,6 @@ function initApp(presetMode) {
                 if (displayObj.dataFilters.expend) {
 
                     // == calculate increments, min, max, avg, median
-                    this.dataIncrement = doTheMath(this, displayObj);
                     textMessage = "Expenditure data for DCPS schools only."
                     displayHoverMessage(displayObj, textMessage);
                 } else {
@@ -1010,6 +1008,11 @@ function initApp(presetMode) {
                     displayHoverMessage(displayObj, textMessage);
                 }
             }
+        }
+
+        // ======= ======= ======= calculate min, max, increment, average, median ======= ======= =======
+        if (displayObj.dataFilters.expend) {
+            this.dataIncrement = doTheMath(this, displayObj);
         }
 
         // ======= FEATURES DATA LOOP =======

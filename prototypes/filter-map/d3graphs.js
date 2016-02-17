@@ -13,24 +13,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
     chartHtml += "</td></tr></table>";
 
-
-    // ======= ======= ======= updateChartStyle ======= ======= =======
-    function updateChartStyle() {
-        console.log("updateChartStyle");
-
-        if (displayObj.displayMode == "storyMap") {
-            $("#chart-container").css("top", "52%");
-            $("#chart-container").css("left", "5%");
-            $("#chart-container").css("width", "160px");
-            $("#chart-container").css("height", "200px");
-        } else {
-            $("#chart-container").css("top", "42%");
-            $("#chart-container").css("left", "65%");
-            $("#chart-container").css("width", "360px");
-            $("#chart-container").css("height", "auto");
-        }
-    }
-
     // == remove previous chart or profile html if any
     if ($('#profile-container').find('#profile').length) {
         $("#profile").remove();
@@ -66,13 +48,42 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
     var myJsonString = JSON.stringify(dataObjectsArray);
     var dataMax = d3.max(dataObjectsArray, function(d) {
-        return d.zoneAmount;
+        if (displayObj.dataFilters.math == "spendAmount") {
+            return d.zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            if (d.zoneEnroll != 0) {
+                return parseInt(d.zoneAmount / d.zoneEnroll);
+            } else {
+                return 0;
+            }
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            if (d.zoneSqft != 0) {
+                return parseInt(d.zoneAmount / d.zoneSqft);
+            } else {
+                return 0;
+            }
+        }
     });
     var dataMin = d3.min(dataObjectsArray, function(d) {
-        return d.zoneAmount;
+        if (displayObj.dataFilters.math == "spendAmount") {
+            return d.zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            if (d.zoneEnroll != 0) {
+                return parseInt(d.zoneAmount / d.zoneEnroll);
+            } else {
+                return 0;
+            }
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            if (d.zoneSqft != 0) {
+                return parseInt(d.zoneAmount / d.zoneSqft);
+            } else {
+                return 0;
+            }
+        }
     });
-    // console.log("  dataMax: ", dataMax);
-    // console.log("  dataMin: ", dataMin);
+
+    // ======= ======= ======= calculate min, max, increment, average, median ======= ======= =======
+    // displayObj.dataIncrement = doTheMath(zonesCollectionObj, displayObj);
 
     // ======= bar data =======
     var barW = 20;
@@ -84,7 +95,39 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     for (var i = 1; i < (barTicks + 1); i++) {
         barScaleArray.push(parseInt(barIncrement * i));
     }
+
+    // ======= circle data =======
+    var circleValue;
+    var nextDataObject;
+    var circleValuesArray = [];
+    console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    console.log("  dataObjectsArray: ", dataObjectsArray);
+    for (var i = 0; i < dataObjectsArray.length; i++) {
+        nextDataObject = dataObjectsArray[i];
+        if (displayObj.dataFilters.math == "spendAmount") {
+            circleValue = parseInt(nextDataObject.zoneAmount);
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            if (nextDataObject.zoneEnroll != 0) {
+                circleValue = parseInt(nextDataObject.zoneAmount/nextDataObject.zoneEnroll);
+            } else {
+                circleValue = 0;
+            }
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            if (nextDataObject.zoneSqft != 0) {
+                circleValue = parseInt(nextDataObject.zoneAmount/nextDataObject.zoneSqft);
+            } else {
+                circleValue = 0;
+            }
+        }
+        circleValuesArray.push(circleValue);
+        console.log("  circleValue: ", circleValue);
+    }
+
+    // ======= check math =======
+    console.log("  circleValuesArray: ", circleValuesArray);
     console.log("  barScaleArray: ", barScaleArray);
+    console.log("  dataMax: ", dataMax);
+    console.log("  dataMin: ", dataMin);
 
     // ======= scale formating =======
     if (dataMax > 1000000) {
@@ -145,7 +188,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .text(function(d) {
                 newD = parseInt(d/scaleFactor);
                 // newD2 = Math.ceil(newD/scaleRound)*scaleRound;
-                console.log("  d: ", d)
+                // console.log("  d/newD: ", d, " / ", newD);
                 return scaleLabel + " " + newD;
             })
             .style("text-anchor", "end")
@@ -184,7 +227,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     return "white";
                 }
                 }})
-            .style("font-size", "10px");
+            .style("font-size", "12px");
 
     // ======= circles for schools =======
     svg.selectAll("circle")
@@ -199,15 +242,16 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .attr("cx", function(d, i) {
                 return schoolCircleX;
             })
-            .attr("cy", function(d) {
-                return yScale(d.zoneAmount);
+            .attr("cy", function(d, i) {
+                console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
+                return yScale(circleValuesArray[i]);
             })
             .attr("r", function(d) {
                 // console.log("  d: ", d);
                 return schoolCircleR;
             })
             .style('fill', function(d, i){
-                colorIndex = assignChartColors(d.zoneAmount);
+                colorIndex = assignChartColors(circleValuesArray[i]);
                 whichColor = fillColors[colorIndex];
                 return whichColor;
             });
@@ -222,8 +266,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     return labelId;
                 }))
                 .attr("class", "dataChartLabel")
-                .text(function(d) {
-                    formattedNumber = numberWithCommas(d.zoneAmount);
+                .text(function(d, i) {
+                    formattedNumber = numberWithCommas(circleValuesArray[i]);
                     var checkWard = d.zoneName.indexOf("Ward ");
                     if (checkWard > -1) {
                         var wardName = d.zoneName.replace(" ", "-");
@@ -236,9 +280,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 .attr("x", function(d, i) {
                     return schoolCircleX + 15;
                 })
-                .attr("y", function(d) {
-                    // console.log("  y: ", yScale(d.zoneAmount));
-                    return yScale(d.zoneAmount);
+                .attr("y", function(d, i) {
+                    return yScale(circleValuesArray[i]);
                 })
                 .attr("font-family", "sans-serif")
                 .attr("font-size", "14px")
@@ -249,17 +292,41 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     activateChartCircles();
     activateSubmenu();
 
-    // ======= activateSubmenu =======
+    // ======= ======= ======= assignChartColors ======= ======= =======
+    function assignChartColors(zoneAmount) {
+        console.log("assignChartColors");
+        console.log("  zoneAmount: ", zoneAmount)
+        console.log("  zonesCollectionObj.dataBins: ", zonesCollectionObj.dataBins)
+        console.log("  zonesCollectionObj.dataIncrement: ", zonesCollectionObj.dataIncrement)
+        var binMin = binMax = colorIndex = null;
+        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
+            binMin = (zonesCollectionObj.dataIncrement * i);
+            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+            if ((binMin <= zoneAmount) && (zoneAmount <= binMax)) {
+                colorIndex = i;
+                break;
+            }
+        }
+        return colorIndex;
+    }
+
+    // ======= ======= ======= activateSubmenu ======= ======= =======
     function activateSubmenu() {
         console.log("activateSubmenu");
 
-        var expendMathContainer = $('#expendMath');
+        $('#expendMath').on({
+            change: function() {
+                console.log("------- setSubMenu -------");
+                nextMath = $("select[name='expendMath'] option:selected").val()
+                console.log("  event: ", event);
+                console.log("  nextMath: ", nextMath);
+                displayObj.dataFilters.math = nextMath;
+                // clearZoneAggregator(zonesCollectionObj);
+                checkFilterSelection(displayObj, zonesCollectionObj, "math");
 
-        $('#expendMath').on( "selectmenuselect", function( event, ui ) {
-            console.log("\n======= doTheMath ======= ");
-            nextMath = $("select[name='expendMath'] option").val()
-            console.log("  nextMath: ", nextMath);
-        } );
+                zonesCollectionObj.getZoneData();
+            }
+        });
     }
 
     // ======= ======= ======= numberWithCommas ======= ======= =======
@@ -307,21 +374,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 }
             }
         });
-    }
-
-    // ======= ======= ======= assignChartColors ======= ======= =======
-    function assignChartColors(zoneAmount) {
-        // console.log("assignChartColors");
-        var binMin = binMax = colorIndex = null;
-        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
-            binMin = (zonesCollectionObj.dataIncrement * i);
-            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-            if ((binMin <= zoneAmount) && (zoneAmount <= binMax)) {
-                colorIndex = i;
-                break;
-            }
-        }
-        return colorIndex;
     }
 
     // ======= activateChartCircles =======
@@ -428,6 +480,23 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             nextYloc = prevYarray[i];
             this.setAttribute("y", nextYloc);
         });
+    }
+
+    // ======= ======= ======= updateChartStyle ======= ======= =======
+    function updateChartStyle() {
+        console.log("updateChartStyle");
+
+        if (displayObj.displayMode == "storyMap") {
+            $("#chart-container").css("top", "52%");
+            $("#chart-container").css("left", "5%");
+            $("#chart-container").css("width", "160px");
+            $("#chart-container").css("height", "200px");
+        } else {
+            $("#chart-container").css("top", "42%");
+            $("#chart-container").css("left", "65%");
+            $("#chart-container").css("width", "360px");
+            $("#chart-container").css("height", "auto");
+        }
     }
 
     // ======= stringToInt =======
