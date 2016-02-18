@@ -469,15 +469,14 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterInd
             nextSchoolName = nextDataObject.zoneName;
             if (nextSchoolName == checkSchoolName) {
                 nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
-                // console.log("  nextSchoolName: ", nextSchoolName);
-                // console.log("  masterIndex: ", masterIndex);
-                if (Number.isInteger(nextSchoolExpend)) {
-                    currentExpendValue = nextDataObject.zoneAmount;
+                nextSchoolSqft = parseInt(schoolData.schoolSqft);
+                nextSchoolEnroll = parseInt(schoolData.schoolEnroll);
 
-                    // == capture only one school per zone
-                    if (currentExpendValue >= 0) {
-                        if (currentExpendValue == 0) {
-                            aggregatedAmount = currentExpendValue + nextSchoolExpend;
+                if (Number.isInteger(nextSchoolExpend)) {
+                    if (nextSchoolExpend >= 0) {
+                        currentAmount = nextDataObject.zoneAmount;
+                        if (currentAmount == 0) {
+                            aggregatedAmount = currentAmount + nextSchoolExpend;
                             nextDataObject.zoneAmount = aggregatedAmount;
                             nextDataObject.zoneIndex = masterIndex;
                         } else {
@@ -485,12 +484,40 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterInd
                             break;
                         }
                     } else {
-                        console.log("ERROR: negative values for " + nextSchoolName);
-                        break;
+                        console.log("ERROR: negative values for " + schoolData.schoolName);
+                        nextSchoolExpend = 0;
                     }
                 } else {
                     nextDataObject.zoneAmount = 0;
                     nextDataObject.zoneIndex = masterIndex;
+                    console.log("ERROR: non-integer amount for " + nextSchoolName);
+                }
+
+                if (Number.isInteger(nextSchoolSqft)) {
+                    currentSqft = nextDataObject.zoneSqft;
+                    if (currentSqft == 0) {
+                        aggregatedSqft = currentSqft + nextSchoolSqft;
+                        nextDataObject.zoneSqft = aggregatedSqft;
+                    } else {
+                        console.log("ERROR: data already captured for " + nextSchoolName);
+                        break;
+                    }
+                } else {
+                    nextDataObject.zoneSqft = 0;
+                    console.log("ERROR: non-integer sqft for " + nextSchoolName);
+                }
+
+                if (Number.isInteger(nextSchoolEnroll)) {
+                    currentEnroll = nextDataObject.zoneEnroll;
+                    if (currentEnroll == 0) {
+                        aggregatedEnroll = currentEnroll + nextSchoolEnroll;
+                        nextDataObject.zoneEnroll = aggregatedEnroll;
+                    } else {
+                        console.log("ERROR: data already captured for " + nextSchoolName);
+                        break;
+                    }
+                } else {
+                    nextDataObject.zoneEnroll = 0;
                     console.log("ERROR: non-integer number for " + nextSchoolName);
                 }
                 break;
