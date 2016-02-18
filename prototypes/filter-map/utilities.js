@@ -22,10 +22,11 @@
 function getZoneUrls(displayObj) {
     console.log("getZoneUrls");
     console.log("  .zones: ", displayObj.dataFilters.zones);
+    console.log("  .levels: ", displayObj.dataFilters.levels);
 
     var feederFlag = false;
-    // var websitePrefix = "prototypes/filter-map/";
-    var websitePrefix = "";
+    var websitePrefix = "prototypes/filter-map/";
+    // var websitePrefix = "";
 
     if (displayObj.dataFilters.zones) {
         if (displayObj.dataFilters.zones == "Ward") {
@@ -59,6 +60,8 @@ function getZoneUrls(displayObj) {
         }
         urlB = null;
     }
+    console.log("  [urlA, urlB, feederFlag]", urlA, " ", urlB, " ", feederFlag);
+
     return [urlA, urlB, feederFlag];
 }
 
@@ -1284,7 +1287,7 @@ function initMap(zonesCollectionObj, displayObj) {
 }
 
 // ======= ======= ======= floating windows ======= ======= =======
-(function(){
+function initFloatingWindows() {
     console.log("initFloatingWindows");
 
     var popup = document.getElementById("popup");
@@ -1312,4 +1315,4 @@ function initMap(zonesCollectionObj, displayObj) {
         console.log("mouseUp");
         window.removeEventListener('mousemove', popupMove, true);
     }
-}());
+}
