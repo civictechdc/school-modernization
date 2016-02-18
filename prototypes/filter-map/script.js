@@ -68,10 +68,10 @@ function initApp(presetMode) {
     }
     function ZonesCollection() {
         console.log("ZonesCollection");
-        this.zoneType = "Ward";       // FeederHS, FeederMS, Elementary, Ward, Quadrant
-        this.zoneGeojson = null;         // geojson data
-        this.feederGeojson = null;       // geojson data
-        this.zoneFeederGeojson = null;       // geojson data
+        this.zoneA = "Ward";       // FeederHS, FeederMS, Elementary, Ward, Quadrant
+        this.zoneGeojson_A = null;         // geojson data
+        this.zoneGeojson_B = null;       // geojson data
+        this.zoneGeojson_AB = null;       // geojson data
         this.aggregatorArray = [];
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
@@ -456,11 +456,11 @@ function initApp(presetMode) {
             self.dataFilters.levels = null;
             self.dataFilters.expend = null;
             self.dataFilters.zones = null;
-            zonesCollectionObj.zoneGeojson = null;
-            zonesCollectionObj.feederGeojson = null;
-            zonesCollectionObj.zoneFeederGeojson = null;
+            zonesCollectionObj.zoneGeojson_A = null;
+            zonesCollectionObj.zoneGeojson_B = null;
+            zonesCollectionObj.zoneGeojson_AB = null;
             zonesCollectionObj.aggregatorArray = [];
-            zonesCollectionObj.zoneType = "Ward";
+            zonesCollectionObj.zoneA = "Ward";
 
             // == restore levels menu
             self.modFilterMenu(self.filterMenusArray[1]);
@@ -582,13 +582,13 @@ function initApp(presetMode) {
                     self.dataFilters.levels = whichValue;
                     zonesCollectionObj.aggregatorArray = [];
                     if (whichValue == "HS") {
-                        zonesCollectionObj.zoneType = "FeederHS";
+                        zonesCollectionObj.zoneA = "FeederHS";
                     } else if (whichValue == "MS") {
-                        zonesCollectionObj.zoneType = "FeederMS";
+                        zonesCollectionObj.zoneA = "FeederMS";
                     } else if (whichValue == "ES") {
-                        zonesCollectionObj.zoneType = "Elementary";
+                        zonesCollectionObj.zoneA = "Elementary";
                     } else {
-                        zonesCollectionObj.zoneType = "Ward";
+                        zonesCollectionObj.zoneA = "Ward";
                     }
                     updateFilterTitles(self, menuObject.text, "add");
                     break;
@@ -604,10 +604,9 @@ function initApp(presetMode) {
                 // == wards or feeder zones for map
                 case "zones":
                     self.dataFilters.zones = whichFilter;
-                    zonesCollectionObj.zoneType = whichFilter;
+                    zonesCollectionObj.zoneA = whichFilter;
                     zonesCollectionObj.aggregatorArray = [];
-                    zonesCollectionObj.zoneFeederGeojson = null;
-                    updateFilterTitles(self, menuObject.text, "add");
+                    zonesCollectionObj.zoneGeojson_AB = null;
                     console.log("  whichFilter: ", whichFilter);
 
                     // == modify levels menu to remove HS and/or MS options for feeders
@@ -620,19 +619,21 @@ function initApp(presetMode) {
                             if (tempLevels == "ES") {
                                 self.setMenuItem("levels", "Elem");
                                 self.dataFilters.levels = "ES";
-                                updateFilterTitles(self, filterMenu["Elem"].text, "add");
+                                updateFilterTitles(self, filterMenu["Elem"].text, whichFilter);
                             } else {
                                 self.setMenuItem("levels", "Middle");
                                 self.dataFilters.levels = "MS";
-                                updateFilterTitles(self, filterMenu["Middle"].text, "add");
+                                updateFilterTitles(self, filterMenu["Middle"].text, whichFilter);
                             }
                         } else if (whichFilter == "FeederMS") {
                             self.setMenuItem("levels", "Elem");
                             self.dataFilters.levels = "ES";
-                            updateFilterTitles(self, filterMenu["Elem"].text, "add");
+                            updateFilterTitles(self, filterMenu["Elem"].text, whichFilter);
                         }
                         var modMenuObject = filterMenu["levels"];
                         self.activateFilterMenu(self.filterMenusArray[1]);
+                    } else {
+                        updateFilterTitles(self, menuObject.text, "add");
                     }
                     break;
             }
@@ -672,13 +673,13 @@ function initApp(presetMode) {
             url: urlA
         }).done(function(geoJsonData, featureArray){
             console.log("*** ajax success ***");
-            self.zoneGeojson = geoJsonData;
-            console.log("******* zoneGeojson");
-            console.dir(self.zoneGeojson );
+            self.zoneGeojson_A = geoJsonData;
+            console.log("******* zoneGeojson_A");
+            console.dir(self.zoneGeojson_A );
 
             // == aggregate for urlA zones
             if (self.aggregatorArray.length == 0) {
-                makeZoneAggregator(self, self.zoneGeojson);
+                makeZoneAggregator(self, self.zoneGeojson_A);
             }
 
             // == get secondary map data for urlB
@@ -708,20 +709,20 @@ function initApp(presetMode) {
             url: urlB
         }).done(function(geoJsonData, featureArray){
             console.log("*** ajax success ***");
-            self.feederGeojson = geoJsonData;
-            featuresA = self.zoneGeojson.features;
-            featuresB = self.feederGeojson.features;
+            self.zoneGeojson_B = geoJsonData;
+            featuresA = self.zoneGeojson_A.features;
+            featuresB = self.zoneGeojson_B.features;
             featuresAll = featuresB.concat(featuresA);
             mergedGeojsonData = {
                 "type": "FeatureCollection",
                 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                 "features": featuresAll
             }
-            self.zoneFeederGeojson = mergedGeojsonData;
+            self.zoneGeojson_AB = mergedGeojsonData;
             console.log("******* geoJson *******");
-            console.dir(self.zoneGeojson);
-            console.dir(self.feederGeojson);
-            console.dir(self.zoneFeederGeojson);
+            console.dir(self.zoneGeojson_A);
+            console.dir(self.zoneGeojson_B);
+            console.dir(self.zoneGeojson_AB);
             schoolsCollectionObj.getSchoolData();
 
         // == errors/fails
@@ -858,6 +859,56 @@ function initApp(presetMode) {
                 }
                 self.selectedSchoolsArray = selectedSchoolsArray;
 
+                // ======= check aggregated numbers =======
+                var zoneAmountArray = [];
+                var zoneEnrollArray = [];
+                var zoneSqftArray = [];
+                var amountTotal = 0;
+                var enrollTotal = 0;
+                var sqftTotal = 0;
+
+                for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
+                    nextZoneObject = zonesCollectionObj.aggregatorArray[i];
+                    zoneAmountArray.push(nextZoneObject.zoneAmount);
+                    zoneEnrollArray.push(nextZoneObject.zoneEnroll);
+                    zoneSqftArray.push(nextZoneObject.zoneSqft);
+                    amountTotal = amountTotal + nextZoneObject.zoneAmount;
+                    enrollTotal = enrollTotal + nextZoneObject.zoneEnroll;
+                    sqftTotal = sqftTotal + nextZoneObject.zoneSqft;
+                }
+                var minAmount = Math.min.apply(Math, zoneAmountArray);
+                var maxAmount = Math.max.apply(Math, zoneAmountArray);
+                var avgAmount = amountTotal/zonesCollectionObj.aggregatorArray.length;
+                var incAmount = maxAmount/zonesCollectionObj.aggregatorArray.length;
+                var minEnroll = Math.min.apply(Math, zoneEnrollArray);
+                var maxEnroll = Math.max.apply(Math, zoneEnrollArray);
+                var avgEnroll = enrollTotal/zonesCollectionObj.aggregatorArray.length;
+                var incEnroll = maxEnroll/zonesCollectionObj.aggregatorArray.length;
+                var minSqft = Math.min.apply(Math, zoneSqftArray);
+                var maxSqft = Math.max.apply(Math, zoneSqftArray);
+                var avgSqft = sqftTotal/zonesCollectionObj.aggregatorArray.length;
+                var incSqft = maxSqft/zonesCollectionObj.aggregatorArray.length;
+
+                // == check the math
+                console.log("*** amounts ***");
+                console.log("  zoneAmountArray: ", zoneAmountArray);
+                console.log("  minAmount: ", minAmount);
+                console.log("  maxAmount: ", maxAmount);
+                console.log("  avgAmount: ", avgAmount);
+                console.log("  incAmount: ", incAmount);
+                console.log("*** enroll ***");
+                console.log("  zoneEnrollArray: ", zoneEnrollArray);
+                console.log("  minEnroll: ", minEnroll);
+                console.log("  maxEnroll: ", maxEnroll);
+                console.log("  avgEnroll: ", avgEnroll);
+                console.log("  incEnroll: ", incEnroll);
+                console.log("*** sqft ***");
+                console.log("  zoneSqftArray: ", zoneSqftArray);
+                console.log("  minSqft: ", minSqft);
+                console.log("  maxSqft: ", maxSqft);
+                console.log("  avgSqft: ", avgSqft);
+                console.log("  incSqft: ", incSqft);
+
                 // == check arrays for consistency or errors
                 console.log("*** all schools count: ", jsonData.length);
                 console.log("  selectedSchoolsCt: ", selectedSchoolsArray.length);
@@ -979,12 +1030,12 @@ function initApp(presetMode) {
         this.zoneFeaturesArray = [];
 
         // ======= ======= ======= add single or merged geoJson to map ======= ======= =======
-        zoneAcount = this.zoneGeojson.features.length;
-        if (this.zoneFeederGeojson) {
-            map.data.addGeoJson(this.zoneFeederGeojson);
-            zoneBcount = this.feederGeojson.features.length;
+        zoneAcount = this.zoneGeojson_A.features.length;
+        if (this.zoneGeojson_AB) {
+            map.data.addGeoJson(this.zoneGeojson_AB);
+            zoneBcount = this.zoneGeojson_B.features.length;
         } else {
-            map.data.addGeoJson(this.zoneGeojson);
+            map.data.addGeoJson(this.zoneGeojson_A);
             zoneBcount = 0;
         }
         console.log("  zoneAcount: ", zoneAcount);
@@ -1039,6 +1090,7 @@ function initApp(presetMode) {
         var featureIndex = -1;
         var dataDelayCount = 0;
         if (zoneBcount > 0) {
+
             console.log("*** LOWER ZONES ***");
             for (var i = 0; i < zoneBcount; i++) {
                 var start = new Date().getTime();
@@ -1164,10 +1216,10 @@ function initApp(presetMode) {
     // ======= ======= ======= activateZoneListeners ======= ======= =======
     ZonesCollection.prototype.activateZoneListeners = function() {
         console.log("activateZoneListeners");
-        console.log("  this.zoneType: ", this.zoneType);
+        console.log("  this.zoneA: ", this.zoneA);
 
         var self = this;
-        var zoneType = this.zoneType;
+        var zoneA = this.zoneA;
 
         // ======= ======= ======= mouseover ======= ======= =======
         var zoneMouseover = map.data.addListener('mouseover', function(event) {
@@ -1213,9 +1265,9 @@ function initApp(presetMode) {
             console.log("zoneName: ", zoneName);
 
             // == set new zone info on menuObject
-            // var menuObject = filterMenu[zoneType];
+            // var menuObject = filterMenu[zoneA];
             // menuObject.value = zoneName;
-            // displayObj.dataFilters.zone = zoneType;
+            // displayObj.dataFilters.zone = zoneA;
             displayObj.dataFilters.selectedZone = zoneName;
 
             updateHoverText(zoneName);
@@ -1430,13 +1482,13 @@ function initApp(presetMode) {
             displayObj.dataFilters.levels = levels;
             zonesCollectionObj.aggregatorArray = [];
             if (levels == "HS") {
-                zonesCollectionObj.zoneType = "FeederHS";
+                zonesCollectionObj.zoneA = "FeederHS";
             } else if (levels == "MS") {
-                zonesCollectionObj.zoneType = "FeederMS";
+                zonesCollectionObj.zoneA = "FeederMS";
             } else if (levels == "ES") {
-                zonesCollectionObj.zoneType = "Elementary";
+                zonesCollectionObj.zoneA = "Elementary";
             } else {
-                zonesCollectionObj.zoneType = "Ward";
+                zonesCollectionObj.zoneA = "Ward";
             }
         }
 
@@ -1450,7 +1502,7 @@ function initApp(presetMode) {
 
         // == zones
         if (zones) {
-            zonesCollectionObj.zoneType = zones;
+            zonesCollectionObj.zoneA = zones;
             displayObj.dataFilters.zones = zones;
             zonesCollectionObj.aggregatorArray = [];
         }
@@ -1473,11 +1525,11 @@ function initApp(presetMode) {
         displayObj.dataFilters.levels = null;
         displayObj.dataFilters.expend = null;
         displayObj.dataFilters.zones = null;
-        zonesCollectionObj.zoneGeojson = null;
-        zonesCollectionObj.feederGeojson = null;
-        zonesCollectionObj.zoneFeederGeojson = null;
+        zonesCollectionObj.zoneGeojson_A = null;
+        zonesCollectionObj.zoneGeojson_B = null;
+        zonesCollectionObj.zoneGeojson_AB = null;
         zonesCollectionObj.aggregatorArray = [];
-        zonesCollectionObj.zoneType = "Ward";
+        zonesCollectionObj.zoneA = "Ward";
 
     }
 

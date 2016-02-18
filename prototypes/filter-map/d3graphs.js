@@ -295,18 +295,19 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= ======= ======= assignChartColors ======= ======= =======
     function assignChartColors(zoneAmount) {
         console.log("assignChartColors");
-        console.log("  zoneAmount: ", zoneAmount)
-        console.log("  zonesCollectionObj.dataBins: ", zonesCollectionObj.dataBins)
-        console.log("  zonesCollectionObj.dataIncrement: ", zonesCollectionObj.dataIncrement)
         var binMin = binMax = colorIndex = null;
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
             binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+            // console.log("  zoneAmount: ", zoneAmount)
+            // console.log("   binMin: ", binMin)
+            // console.log("   binMax: ", binMax)
             if ((binMin <= zoneAmount) && (zoneAmount <= binMax)) {
                 colorIndex = i;
                 break;
             }
         }
+        console.log("   colorIndex: ", colorIndex)
         return colorIndex;
     }
 

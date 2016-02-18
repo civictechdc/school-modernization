@@ -24,8 +24,8 @@ function getZoneUrls(displayObj) {
     console.log("  .zones: ", displayObj.dataFilters.zones);
 
     var feederFlag = false;
-    var websitePrefix = "prototypes/filter-map/";
-    // var websitePrefix = "";
+    // var websitePrefix = "prototypes/filter-map/";
+    var websitePrefix = "";
 
     if (displayObj.dataFilters.zones) {
         if (displayObj.dataFilters.zones == "Ward") {
@@ -189,56 +189,72 @@ function displayHoverMessage(displayObj, textMessage) {
 function updateFilterTitles(displayObj, whichFilterText, addRemove) {
     console.log("updateFilterTitles");
     console.log("  whichFilterText: ", whichFilterText);
-    console.log("  addRemove: ", addRemove);
     console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
 
     var filterTitleContainer = $("#filters-title").children("h2");
     var filterText = $(filterTitleContainer).html();
+    var checkArray;
 
+    // == add message for user (not filter selections)
     if (typeof displayObj == "string") {
         filterText = "<span class='filterLabel'>Message: </span>";
         filterText += displayObj;
         $(filterTitleContainer).addClass("filterList");
+
+    // == add filter selections
     } else {
+
+        // == selected zone filter
         if ((displayObj.dataFilters.selectedZone != null) && (addRemove == "add")) {
             displayObj.filterTitlesArray = [];
             displayObj.filterTitlesArray.push(whichFilterText);
             filterText = "<span class='filterLabel'>Selected Zone: </span>" + whichFilterText;
             $(filterTitleContainer).addClass("filterList");
+
+        // == no selected zone (normal filter processing)
         } else {
             if ((addRemove == "add") || (addRemove == "FeederHS") || (addRemove == "FeederMS")) {
                 console.log("  addRemove: ", addRemove);
-                displayObj.filterTitlesArray.push(whichFilterText);
-                if (displayObj.filterTitlesArray.length == 1){
-                    filterText = "<span class='filterLabel'>Data for: </span>" + whichFilterText;
-                } else {
-                    if (addRemove == "FeederHS") {
-                        for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                            checkFilter = displayObj.filterTitlesArray[i];
-                            if ((checkFilter == "High Schools") || (checkFilter == "Middle Schools") || (checkFilter == "Elementary Schools")) {
-                                displayObj.filterTitlesArray.splice(i, 1);
+                // if (displayObj.filterTitlesArray.length == 1) {
+                //     console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
+                //     filterText = "<span class='filterLabel'>Data for: </span>" + whichFilterText;
+                // } else {
+
+                    // == remove previously selected levels filters (added back based on zone selection)
+                    if ((addRemove == "FeederHS") || (addRemove == "FeederMS")) {
+                        console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
+                        removeItemsArray = ["High Schools", "Middle Schools", "Elementary Schools", "FeederHS", "FeederMS"];
+                        for (var i = 0; i < removeItemsArray.length; i++) {
+                            checkItem = removeItemsArray[i];
+                            checkArray = $.inArray(checkItem, displayObj.filterTitlesArray);
+                            if (checkArray > -1) {
+                                displayObj.filterTitlesArray.splice(checkArray, 1);
                             }
                         }
-                    } else if (addRemove == "FeederMS") {
-                        for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                            checkFilter = displayObj.filterTitlesArray[i];
-                            if ((checkFilter == "High Schools") || (checkFilter == "Middle Schools") || (checkFilter == "Elementary Schools") ){
-                                displayObj.filterTitlesArray.splice(i, 1);
-                            }
-                        }
+                        displayObj.filterTitlesArray.push(addRemove);
                     }
+                    displayObj.filterTitlesArray.push(whichFilterText);
+                    console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
+
+                    // == build new filter text html from filterTitlesArray
                     filterText = "<span class='filterLabel'>Data for: </span>";
-                    for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                        nextFilter = displayObj.filterTitlesArray[i];
-                        if (i == (displayObj.filterTitlesArray.length - 1)) {
-                            filterText += whichFilterText;
-                        } else {
-                            filterText += nextFilter + ", ";
+                    if (displayObj.filterTitlesArray.length > 0) {
+                        for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+                            nextFilter = displayObj.filterTitlesArray[i];
+                            if (i == (displayObj.filterTitlesArray.length - 1)) {
+                                filterText += whichFilterText;
+                            } else {
+                                filterText += nextFilter + ", ";
+                            }
                         }
                     }
-                }
+                // }
                 $(filterTitleContainer).addClass("filterList");
+
+            // == removing previous filters
             } else {
+
+                // == find selected filter (whichFilterText) in array and remove it
                 for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
                     checkFilter = displayObj.filterTitlesArray[i];
                     if (checkFilter == whichFilterText) {
@@ -246,9 +262,13 @@ function updateFilterTitles(displayObj, whichFilterText, addRemove) {
                         break;
                     }
                 }
+
+                // == all filters have been removed; return to init state
                 if (displayObj.filterTitlesArray.length == 0) {
                     filterText = "your filters";
                     $(filterTitleContainer).removeClass("filterList");
+
+                // == display remaining filters after removing selected filter
                 } else {
                     filterText = "<span class='filterLabel'>Data for: </span>";
                     for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
@@ -380,7 +400,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 nextSchoolExpend = 0;
             }
         } else {
-            console.log("ERROR: nextSchoolExpend NaN " + schoolData.schoolName);
+            // console.log("ERROR: nextSchoolExpend NaN " + schoolData.schoolName);
             nextSchoolExpend = 0;
         }
 
@@ -395,7 +415,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 nextSchoolSqft = 0;
             }
         } else {
-            console.log("ERROR: nextSchoolSqft NaN " + schoolData.schoolName);
+            // console.log("ERROR: nextSchoolSqft NaN " + schoolData.schoolName);
             nextSchoolSqft = 0;
         }
 
@@ -410,7 +430,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 nextSchoolEnroll = 0;
             }
         } else {
-            console.log("ERROR: nextSchoolEnroll NaN " + schoolData.schoolName);
+            // console.log("ERROR: nextSchoolEnroll NaN " + schoolData.schoolName);
             nextSchoolEnroll = 0;
         }
 
@@ -479,9 +499,93 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterInd
     }
 }
 
+// ======= ======= ======= doTheMath ======= ======= =======
+function doTheMath(zonesCollectionObj, displayObj) {
+    console.log("doTheMath");
+    // console.log("  displayObj.dataFilters: ", displayObj.dataFilters);
+
+    var nextSpendAmount, nextZoneValue, nextZoneSqft, nextZoneEnroll;
+
+    // == gather all values in aggregator array
+    var zoneValuesArray = [];
+    for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
+        nextSpendAmount = zonesCollectionObj.aggregatorArray[i].zoneAmount;
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[i].zoneAmount;
+            // console.log("  nextZoneValue: ", nextZoneValue);
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneSqft = zonesCollectionObj.aggregatorArray[i].zoneSqft;
+            // console.log("  nextZoneSqft: ", nextZoneSqft);
+            if (nextZoneSqft != 0) {
+                nextZoneValue = nextSpendAmount/nextZoneSqft;
+            } else {
+                nextZoneValue = 0;
+            }
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneEnroll = zonesCollectionObj.aggregatorArray[i].zoneEnroll;
+            // console.log("  nextZoneEnroll: ", nextZoneEnroll);
+            if (nextZoneEnroll != 0) {
+                nextZoneValue = nextSpendAmount/nextZoneEnroll;
+            } else {
+                nextZoneValue = 0;
+            }
+        }
+        // console.log("  nextZoneValue: ", nextZoneValue);
+        zoneValuesArray.push(nextZoneValue);
+    }
+
+    // == get lowest/highest values, divide by number of data bins
+    var fillOpacity = 1;
+    var maxValue = Math.max.apply(Math, zoneValuesArray);
+    var minValue = Math.min.apply(Math, zoneValuesArray);
+    var dataIncrement = parseFloat(maxValue/zonesCollectionObj.dataBins);
+    // console.log("  maxValue: ", maxValue);
+    // console.log("  minValue: ", minValue);
+    // console.log("  dataIncrement: ", dataIncrement);
+
+    return dataIncrement;
+}
+
+// ======= ======= ======= assignDataColors ======= ======= =======
+function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
+    console.log("assignDataColors");
+    // console.log("  -- featureIndex: ", featureIndex);
+
+    var nextZoneValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
+    var nextExpendValue;
+    if (displayObj.dataFilters.math == "spendAmount") {
+        nextExpendValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
+    } else if (displayObj.dataFilters.math == "spendEnroll") {
+        if (zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll != 0) {
+            nextExpendValue = parseFloat(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll));
+        } else {
+            nextExpendValue = 0;
+        }
+    } else if (displayObj.dataFilters.math == "spendSqFt") {
+        if (zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft != 0) {
+            nextExpendValue = parseFloat(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft));
+        } else {
+            nextExpendValue = 0;
+        }
+    }
+    // console.log("  nextExpendValue: ", nextExpendValue);
+
+    for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
+        binMin = (zonesCollectionObj.dataIncrement * i);
+        binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+        // console.log("  binMax: ", binMax);
+        if ((binMin <= nextExpendValue) && (nextExpendValue <= (binMax + 1))) {
+            var colorIndex = i;
+            break;
+        }
+    }
+    // console.log("  colorIndex: ", colorIndex);
+    return colorIndex;
+}
+
 // ======= ======= ======= getZoneFormat ======= ======= =======
 function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, whichLayer) {
-    // console.log("getZoneFormat");
+    console.log("getZoneFormat");
 
     var itemColor = "white";
     var strokeColor = "purple";
@@ -504,7 +608,7 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
                 itemOpacity = 0.6;
             } else if (whichLayer == "upper") {
                 if (displayObj.dataFilters.expend) {
-                    colorIndex = assignDataColors(zonesCollectionObj, featureIndex);
+                    colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
                     itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                     strokeColor = "black";
                     strokeWeight = 4;
@@ -534,34 +638,6 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
         }
     }
     return [itemColor, strokeColor, strokeWeight, itemOpacity];
-}
-
-// ======= ======= ======= assignDataColors ======= ======= =======
-function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
-    console.log("assignDataColors");
-    console.log("  featureIndex: ", featureIndex);
-
-    var nextZoneValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
-    if (displayObj.dataFilters.math == "spendAmount") {
-        var nextExpendValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
-    } else if (displayObj.dataFilters.math == "spendEnroll") {
-        var nextExpendValue = parseInt(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll));
-    } else if (displayObj.dataFilters.math == "spendSqFt") {
-        var nextExpendValue = parseInt(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft));
-    }
-    // console.log("  nextExpendValue: ", nextExpendValue);
-    for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
-        binMin = (zonesCollectionObj.dataIncrement * i);
-        binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-        console.log("  binMax: ", binMax);
-        console.log("  nextExpendValue: ", nextExpendValue);
-        if ((binMin <= nextExpendValue) && (nextExpendValue <= binMax)) {
-            var colorIndex = i;
-            break;
-        }
-    }
-    console.log("  colorIndex: ", colorIndex);
-    return colorIndex;
 }
 
 // ======= ======= ======= makeMapLegend ======= ======= =======
@@ -639,41 +715,6 @@ function getScaleFactor(dataMax) {
         scaleLabel = "$";
     }
     return [scaleFactor, scaleLabel];
-}
-
-// ======= ======= ======= doTheMath ======= ======= =======
-function doTheMath(zonesCollectionObj, displayObj) {
-    console.log("doTheMath");
-    console.log("  displayObj.dataFilters: ", displayObj.dataFilters);
-
-    var nextSpendAmount, nextZoneValue, nextZoneSqft, nextZoneEnroll;
-
-    // == gather all values in aggregator array
-    var zoneValuesArray = [];
-    for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
-        nextSpendAmount = zonesCollectionObj.aggregatorArray[i].zoneAmount;
-        if (displayObj.dataFilters.math == "spendAmount") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[i].zoneAmount;
-        } else if (displayObj.dataFilters.math == "spendSqFt") {
-            nextZoneSqft = zonesCollectionObj.aggregatorArray[i].zoneSqft;
-            nextZoneValue = nextSpendAmount/nextZoneSqft;
-        } else if (displayObj.dataFilters.math == "spendEnroll") {
-            nextZoneEnroll = zonesCollectionObj.aggregatorArray[i].zoneEnroll;
-            nextZoneValue = nextSpendAmount/nextZoneEnroll;
-        }
-        zoneValuesArray.push(nextZoneValue);
-    }
-
-    // == get lowest/highest values, divide by number of data bins
-    var fillOpacity = 1;
-    var maxValue = Math.max.apply(Math, zoneValuesArray);
-    var minValue = Math.min.apply(Math, zoneValuesArray);
-    var dataIncrement = parseInt(maxValue/zonesCollectionObj.dataBins);
-    console.log("  maxValue: ", maxValue);
-    console.log("  minValue: ", minValue);
-    console.log("  dataIncrement: ", dataIncrement);
-
-    return dataIncrement;
 }
 
 
