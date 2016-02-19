@@ -21,12 +21,15 @@
 // ======= ======= ======= getZoneUrls ======= ======= =======
 function getZoneUrls(displayObj) {
     console.log("getZoneUrls");
+    console.log("  .zoneA: ", displayObj.zoneA);
     console.log("  .zones: ", displayObj.dataFilters.zones);
-    console.log("  .levels: ", displayObj.dataFilters.levels);
 
     var feederFlag = false;
-    var websitePrefix = "prototypes/filter-map/";
-    // var websitePrefix = "";
+    if (displayObj.displayMode == "storyMap") {
+        var websitePrefix = "prototypes/filter-map/";
+    } else {
+        var websitePrefix = "";
+    }
 
     if (displayObj.dataFilters.zones) {
         if (displayObj.dataFilters.zones == "Ward") {
@@ -60,8 +63,6 @@ function getZoneUrls(displayObj) {
         }
         urlB = null;
     }
-    console.log("  [urlA, urlB, feederFlag]", urlA, " ", urlB, " ", feederFlag);
-
     return [urlA, urlB, feederFlag];
 }
 
@@ -137,9 +138,52 @@ function checkFilterSelection(displayObj, zonesCollectionObj, whichCategory) {
 }
 
 // ======= ======= ======= updateChartText ======= ======= =======
-function updateChartText(expendText) {
-    // console.log("updateChartText");
-    $("#chart-title").text(expendText);
+function updateChartText(displayObj, expendText, subtitle) {
+    console.log("updateChartText");
+
+    var words, agencyText, mathText, whichLevel, schoolText;
+
+    // == agency label
+    if (displayObj.dataFilters.agency) {
+        if (displayObj.dataFilters.levels) {
+            agencyText = filterMenu[displayObj.dataFilters.agency].text;
+            words = agencyText.split(/\s+/);
+            agencyText = words[0];
+        } else {
+            agencyText = filterMenu[displayObj.dataFilters.agency].text;
+        }
+    } else {
+        agencyText = "";
+    }
+
+    // == math label
+    if (displayObj.dataFilters.math) {
+        mathText = filterMenu[displayObj.dataFilters.math].text;
+        if (mathText == "dollar amount") {
+            mathText = "";
+        }
+    } else {
+        mathText = "";
+    }
+
+    // == levels label
+    if (displayObj.dataFilters.levels) {
+        if (displayObj.dataFilters.levels == "HS") {
+            whichLevel = "High";
+        } else if (displayObj.dataFilters.levels == "MS") {
+            whichLevel = "Middle";
+        }if (displayObj.dataFilters.levels == "ES") {
+            whichLevel = "Elem";
+        }
+        console.log("  filterMenu: ", filterMenu);
+        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
+        schoolText = filterMenu[whichLevel].text;
+    } else {
+        schoolText = "";
+    }
+    $("#chart-title").text(expendText + " " + mathText);
+    $('#chart-subtitle').text(subtitle);
+    return [mathText, schoolText, agencyText];
 }
 
 // ======= ======= ======= updateHoverText ======= ======= =======
@@ -1287,7 +1331,7 @@ function initMap(zonesCollectionObj, displayObj) {
 }
 
 // ======= ======= ======= floating windows ======= ======= =======
-function initFloatingWindows() {
+(function(){
     console.log("initFloatingWindows");
 
     var popup = document.getElementById("popup");
@@ -1315,4 +1359,4 @@ function initFloatingWindows() {
         console.log("mouseUp");
         window.removeEventListener('mousemove', popupMove, true);
     }
-}
+}());

@@ -32,16 +32,14 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         });
     }
 
-    // == set title text to indicate selected expenditure
-    updateChartText(filterMenu[displayObj.dataFilters.expend].text);
-
     // ======= formatting variables =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber;
+    var mathText = null;
     var fillColors = zonesCollectionObj.dataColorsArray;
 
     // ======= chart formatting =======
-    var chartPadding = {top: 20, right: 10, bottom: 40, left: 80},
-        chartW = 230 - chartPadding.left - chartPadding.right,       // outer width of chart
+    var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
+        chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
         chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
 
     // ======= school data =======
@@ -100,8 +98,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var circleValue;
     var nextDataObject;
     var circleValuesArray = [];
-    console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
-    console.log("  dataObjectsArray: ", dataObjectsArray);
+    // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    // console.log("  dataObjectsArray: ", dataObjectsArray);
     for (var i = 0; i < dataObjectsArray.length; i++) {
         nextDataObject = dataObjectsArray[i];
         if (displayObj.dataFilters.math == "spendAmount") {
@@ -120,7 +118,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             }
         }
         circleValuesArray.push(circleValue);
-        console.log("  circleValue: ", circleValue);
+        // console.log("  circleValue: ", circleValue);
     }
 
     // ======= check math =======
@@ -146,7 +144,21 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         scaleRound = 0.01;
         subtitle = " in dollars";
     }
-    $('#chart-subtitle').text(subtitle);
+
+    // == set title/subtitle text to indicate selected expenditure
+    labelTextArray = updateChartText(displayObj, filterMenu[displayObj.dataFilters.expend].text, subtitle);
+    mathText = labelTextArray[0];
+    schoolText = labelTextArray[1];
+    agencyText = labelTextArray[2];
+    console.log("  mathText: ", mathText);
+    console.log("  schoolText: ", schoolText);
+    console.log("  agencyText: ", agencyText);
+    if (schoolText.length > 0) {
+        schoolText = schoolText + " ";
+    }
+    if (agencyText.length > 0) {
+        agencyText = agencyText + " ";
+    }
 
     // ======= X SCALE =======
     var xScaleLabels = ["scale", "amount", "school"];
@@ -243,7 +255,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 return schoolCircleX;
             })
             .attr("cy", function(d, i) {
-                console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
+                // console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
                 return yScale(circleValuesArray[i]);
             })
             .attr("r", function(d) {
@@ -271,10 +283,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     var checkWard = d.zoneName.indexOf("Ward ");
                     if (checkWard > -1) {
                         var wardName = d.zoneName.replace(" ", "-");
-                        labelString = wardName + " $" + formattedNumber;
+                        labelString = wardName + " " + agencyText + schoolText + "$" + formattedNumber + " " + mathText;
                     } else {
-                        labelString = d.zoneName + " $" + formattedNumber;
+                        labelString = d.zoneName + " " + agencyText + schoolText + "$" + formattedNumber + " " + mathText;
                     }
+                    console.log("  labelString: ", labelString);
                     return labelString;
                 })
                 .attr("x", function(d, i) {
@@ -284,7 +297,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     return yScale(circleValuesArray[i]);
                 })
                 .attr("font-family", "sans-serif")
-                .attr("font-size", "14px")
+                .attr("font-size", "12px")
                 .attr("fill", "black")
                 .attr("visibility", "hidden")
                 .call(insertLabelText);
@@ -294,7 +307,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= ======= ======= assignChartColors ======= ======= =======
     function assignChartColors(zoneAmount) {
-        console.log("assignChartColors");
+        // console.log("assignChartColors");
         var binMin = binMax = colorIndex = null;
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
@@ -307,7 +320,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 break;
             }
         }
-        console.log("   colorIndex: ", colorIndex)
+        // console.log("   colorIndex: ", colorIndex)
         return colorIndex;
     }
 
@@ -317,7 +330,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
         $('#expendMath').on({
             change: function() {
-                console.log("------- setSubMenu -------");
+                console.log("\n------- setSubMenu -------");
                 nextMath = $("select[name='expendMath'] option:selected").val()
                 console.log("  event: ", event);
                 console.log("  nextMath: ", nextMath);
@@ -340,12 +353,33 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         console.log("insertLabelText");
         text.each(function() {
             var text = d3.select(this);                         // text as sentence
-            var words = text.text().split(/\s+/).reverse();     // text as array (rebuilds in correct order below)
-            var wordString = words[0] + " " + words[1];
+            // var words = text.text().split(/\s+/).reverse();     // text as array (rebuilds in correct order below)
+            var words = text.text().split(/\s+/);                // text as array (rebuilds in correct order below)
+            console.log("  words: ", words);
+            var wordString1 = "";
+            var wordString2 = "";
+            if (mathText) {
+                var lineSplit = 3;
+            } else {
+                var lineSplit = 2;
+            }
+            for (var i = 0; i < (words.length - lineSplit); i++) {
+                nextWord = words[i];
+                wordString1 = wordString1 + " " + nextWord;
+            }
+            for (var i = (words.length - lineSplit); i < words.length; i++) {
+                nextWord = words[i];
+                wordString2 = wordString2 + " " + nextWord;
+            }
+            console.log("  words.length: ", words.length);
+            console.log("  wordString1: ", wordString1);
+            console.log("  wordString2: ", wordString2);
+            words = [wordString2, wordString1];
+            console.log("  words: ", words);
             var x = text.attr("x");
             var y = text.attr("y");
             var word;
-            var width = 100;
+            var width = 200;
             var lineNumber = 0;
             var lineHeight = 10;
             var lineArray = [];                         // line built word by word
@@ -362,7 +396,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 // == new line when word count exceeds 1 word
                 if (lineArray.length > 1) {
                     lineArray.pop();                    // remove too-long word
-                    tspan.text(lineArray.join(" "));    // space before addin new tspan element
+                    tspan.text(lineArray.join(" "));    // space before adding new tspan element
                     lineArray = [word];                 // add too-long word to line array
                     newX = parseInt(parseInt(x) + 5);   // offset values for new line (must be integer)
                     newY = parseInt(parseInt(y) + 14);

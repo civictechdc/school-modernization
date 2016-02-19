@@ -782,30 +782,15 @@ function initApp(presetMode) {
     // ======= ======= ======= getSchoolData ======= ======= =======
     SchoolsCollection.prototype.getSchoolData = function() {
         console.log("\n----- getSchoolData -----");
+        console.log("  displayObj.zoneA: ", displayObj.zoneA);
 
         var self = this;
         var presetMode = displayObj.displayMode;
 
-        // ======= get map geojson data =======
-        $.ajax({
-            dataType: "json",
-            // url: "test.json"
-            url: "prototypes/filter-map/Data_Geo/test2.json"
-        }).done(function(testData){
-            console.log("*** test success ***");
-            console.log("  testData: ", testData);
-
-        // == errors/fails
-        }).fail(function(){
-            console.log("*** test fail ***");
-        }).error(function() {
-            console.log("*** test error ***");
-        });
-
         // ======= get school data =======
         if (this.jsonData == null) {
             $.ajax({
-                url: "prototypes/filter-map/Data_Schools/DCPS_Master_114_dev.csv",
+                url: "Data_Schools/DCPS_Master_114_dev.csv",
                 method: "GET",
                 dataType: "text"
             }).done(function(textData){
@@ -1566,7 +1551,6 @@ function initApp(presetMode) {
         displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
-        initFloatingWindows();
         initMap(zonesCollectionObj, displayObj);
         zonesCollectionObj.getZoneData();
     }
