@@ -1558,6 +1558,7 @@ function initApp(presetMode) {
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
         initMap(zonesCollectionObj, displayObj);
+        initFloatingWindows();
         zonesCollectionObj.getZoneData();
     }
 
