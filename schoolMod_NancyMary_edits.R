@@ -101,6 +101,19 @@ noDup<-subset(dcFullNew,!(dcFullNew$Address %in% dupAddress$Address))
 allDup$unqBuilding<-rep(2,36)
 dcFullUpdated<-rbind(noDup,allDup)
 
+### Add in missing LEP
+updateLEP<-subset(dcFullUpdated,is.na(dcFullUpdated$Limited.English.Proficient) & !(is.na(dcFullUpdated$Total.Enrolled)))
+updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(18,20)]
+enroll_LEP_miss<-enroll[c(2,20:24)]
+fixedLEP<-join(updateLEP,enroll_LEP_miss,by="School.ID", type="left")
+fixedLEP$SPED<-fixedLEP$Level.1+fixedLEP$Level.2+fixedLEP$Level.3+fixedLEP$Level.4
+fixedLEP<-fixedLEP[-c(35:38)]
+goodstartLEP<-subset(dcFullUpdated,!(dcFullUpdated$School.ID %in% fixedLEP$School.ID))
+dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
+
+### Remove dots in colnames
+colnames(dcFullUpdated)[c(1,17,18,29)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+
 ### All schools except closed charters
 write.csv(dcFullUpdated,
           "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_214.csv",
@@ -146,6 +159,8 @@ closedCharter$AnnualExpenseAverage<-blanks(closedCharter$AnnualExpenseAverage)
 closedCharter$AnnualSpentPerMaxOccupany<-blanks(closedCharter$AnnualSpentPerMaxOccupany)
 closedCharter$AnnualSpentPerSqFt<-blanks(closedCharter$AnnualSpentPerSqFt)
 closedCharter$Ward<-blanks(closedCharter$Ward)
+
+colnames(closedCharter)[c(3)]<-"Open_Now"
 
 bubbleFinal<-rbind(bubbleXCC,closedCharter)
 
