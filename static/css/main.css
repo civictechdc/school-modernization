@@ -1,5 +1,5 @@
 #wrap {
-    width: 1000px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -20,12 +20,17 @@ div.charts #map {
 }
 div.chart {
     float: left;
-    width: 825px;
+    width: 1025px;
 }
 
 div.charts img {
     height: 300px;
 }
+
+div.charts #map {
+    width: 500px;
+}
+
 
 #narrative div.words {
     min-height: 175px;
@@ -33,6 +38,6 @@ div.charts img {
 
 
 div#storyMap-container {
-    height: 300px;
-    width: 300px;
+    height: 400px;
+    width: 315px;
 }
