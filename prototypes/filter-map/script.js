@@ -1549,6 +1549,7 @@ function initApp(presetMode) {
     initMenuObjects();
     initDataObjects();
     displayObj.displayMode = presetMode;
+    initMap(zonesCollectionObj, displayObj);
     console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
     if (displayObj.displayMode != "storyMap") {
@@ -1557,7 +1558,6 @@ function initApp(presetMode) {
         displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
-        initMap(zonesCollectionObj, displayObj);
         initFloatingWindows();
         zonesCollectionObj.getZoneData();
     }

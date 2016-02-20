@@ -372,7 +372,7 @@ function clearZoneAggregator(zonesCollectionObj) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    // console.log("aggregateZoneData");
+    console.log("aggregateZoneData");
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var nextZone = schoolZoneIndex = null;
@@ -429,9 +429,16 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
     // console.log("  schoolZoneIndex: ", schoolZoneIndex);
     if (schoolZoneIndex != null) {
         // console.log("*** schoolZoneIndex: ", schoolZoneIndex);
-        nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
         nextSchoolSqft = parseInt(schoolData.schoolSqft);
         nextSchoolEnroll = parseInt(schoolData.schoolEnroll);
+        if (displayObj.dataFilters.expend == null) {
+            nextSchoolExpend = schoolData["spendLifetime"];
+            if (Number.isInteger(nextSchoolExpend) == false) {
+                nextSchoolExpend = 0;
+            } else {
+                nextSchoolExpend = parseInt(schoolData["spendLifetime"]);
+            }
+        }
         // console.log("  nextSchoolExpend: ", nextSchoolExpend);
         // console.log("  nextSchoolSqft: ", nextSchoolSqft);
         // console.log("  nextSchoolEnroll: ", nextSchoolEnroll);
@@ -1330,8 +1337,8 @@ function initMap(zonesCollectionObj, displayObj) {
     }
 }
 
-// ======= ======= ======= floating windows ======= ======= =======
-(function(){
+// ======= ======= ======= initFloatingWindows ======= ======= =======
+function initFloatingWindows() {
     console.log("initFloatingWindows");
 
     var popup = document.getElementById("popup");
@@ -1359,4 +1366,4 @@ function initMap(zonesCollectionObj, displayObj) {
         console.log("mouseUp");
         window.removeEventListener('mousemove', popupMove, true);
     }
-}());
+}
