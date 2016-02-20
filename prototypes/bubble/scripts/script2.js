@@ -44,9 +44,10 @@ d3.csv('data/data_master.csv', function (error, data) {
         data[j].x = Math.random() * (width);
         data[j].y = Math.random() * (height);
     }
-    var padding = 10,
+    var padding = 0,
         maxRadius = d3.max(_.pluck(data, 'radius')),
-        padding_between_nodes = .05;
+        padding_between_nodes = .01;
+        // padding_between_nodes = 1.55;
 
     //*******************************************************
     // Setup CIRCLES
@@ -115,7 +116,7 @@ d3.csv('data/data_master.csv', function (error, data) {
 
     nodes
         .transition()
-        .duration(10000)
+        .duration(500)
         .attr('r', function(d){
             if(+d.MajorExp9815 && d.MajorExp9815 !== 'NA'){
                 return toScalePast(+d.MajorExp9815)
@@ -125,7 +126,17 @@ d3.csv('data/data_master.csv', function (error, data) {
         })
         ;
 
-    var force = d3.layout.force().gravity(50);
+    var force = d3.layout.force()
+        // .charge(function(d){
+        //     return (d.radius)
+        // })
+        .gravity(-0.01)
+        .friction(0.9)
+        .charge(function(d){
+            return -Math.pow(d.radius, 2.0) / 8;    
+        })
+        ;
+    // var force = d3.layout.force().alpha(10);
 
     //*******************************************************
     // Set initial state of graph
@@ -162,10 +173,8 @@ d3.csv('data/data_master.csv', function (error, data) {
             })
             .style({
                 'fill': function (d) { return getColor(d.TotalAllotandPlan1621, 'future');},
-                'stroke': 'black',
-                'stroke-width': 1,
-                'opacity': 0.8
-            });
+            })
+            ;
 
             $('#budget_state').innerText = 'Planned Expenditures for 2016 - 2021';
         });
@@ -183,9 +192,6 @@ d3.csv('data/data_master.csv', function (error, data) {
             })
             .style({
                 'fill': function (d) { return getColor(d.MajorExp9815, 'past');},
-                'stroke': 'black',
-                'stroke-width': 1,
-                'opacity': 0.8
             });
 
             $('#budget_state').innerText = 'Expenditures from 1985 - 2015';
@@ -204,9 +210,6 @@ d3.csv('data/data_master.csv', function (error, data) {
             })
             .style({
                 'fill': function (d) { return getColor(d.LifetimeBudget, 'total');},
-                'stroke': 'black',
-                'stroke-width': 1,
-                'opacity': 0.8
             });
 
             $('#budget_state').innerText = 'Lifetime Budget';
@@ -263,7 +266,7 @@ d3.csv('data/data_master.csv', function (error, data) {
       }
       // LOOK HERE
       return function (e) {
-        for (var i = 0; i < data.length; i++) {
+        for (var i = 0; i < (data.length); i++) {
           var o = data[i];
           var f = foci[o[varname]];
           o.y += (f.y - o.y) * e.alpha;
