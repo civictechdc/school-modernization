@@ -38,12 +38,19 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var fillColors = zonesCollectionObj.dataColorsArray;
 
     // ======= chart formatting =======
-    var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
-        chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
-        chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+    if (displayObj.displayMode != "storyMap") {
+        var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
+            chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
+            chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+    } else {
+        var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
+            chartW = 150 - chartPadding.left - chartPadding.right,       // outer width of chart
+            chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+    }
 
     // ======= school data =======
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
+
     var myJsonString = JSON.stringify(dataObjectsArray);
     var dataMax = d3.max(dataObjectsArray, function(d) {
         if (displayObj.dataFilters.math == "spendAmount") {
@@ -79,6 +86,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             }
         }
     });
+    console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    console.log("  dataMax: ", dataMax);
+    console.log("  dataMin: ", dataMin);
 
     // ======= ======= ======= calculate min, max, increment, average, median ======= ======= =======
     // displayObj.dataIncrement = doTheMath(zonesCollectionObj, displayObj);
@@ -146,6 +156,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
 
     // == set title/subtitle text to indicate selected expenditure
+    var labelTitleArray = [];
+    var labelSubtitleArray = [];
     labelTextArray = updateChartText(displayObj, filterMenu[displayObj.dataFilters.expend].text, subtitle);
     mathText = labelTextArray[0];
     schoolText = labelTextArray[1];
@@ -213,7 +225,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .append("rect")
             .attr("class", "bar")
             .attr("x", function(d) {
-                return 0;
+                return 2;
             })
             .attr("width", barW)
             .attr("y", function(d, i) {
@@ -224,7 +236,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 }
             })
             .attr("height", function(d, i) {
-                barH = (chartH + 20)/barTicks;
+                barH = ((chartH + 20)/barTicks) - 2;
                 if (i < (barTicks + 1)) {
                     return barH;
                 } else {
@@ -238,8 +250,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 } else {
                     return "white";
                 }
-                }})
-            .style("font-size", "12px");
+            }});
 
     // ======= circles for schools =======
     svg.selectAll("circle")
@@ -255,7 +266,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 return schoolCircleX;
             })
             .attr("cy", function(d, i) {
-                // console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
+                console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
                 return yScale(circleValuesArray[i]);
             })
             .attr("r", function(d) {
@@ -302,7 +313,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 .attr("visibility", "hidden")
                 .call(insertLabelText);
 
-    activateChartCircles();
+    activateChartCircles(labelTitleArray, labelSubtitleArray);
     activateSubmenu();
 
     // ======= ======= ======= assignChartColors ======= ======= =======
@@ -351,11 +362,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= ======= ======= insertLabelText ======= ======= =======
     function insertLabelText(text) {
         console.log("insertLabelText");
+
         text.each(function() {
             var text = d3.select(this);                         // text as sentence
             // var words = text.text().split(/\s+/).reverse();     // text as array (rebuilds in correct order below)
             var words = text.text().split(/\s+/);                // text as array (rebuilds in correct order below)
-            console.log("  words: ", words);
+            // console.log("  words: ", words);
             var wordString1 = "";
             var wordString2 = "";
             if (mathText) {
@@ -371,11 +383,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 nextWord = words[i];
                 wordString2 = wordString2 + " " + nextWord;
             }
-            console.log("  words.length: ", words.length);
-            console.log("  wordString1: ", wordString1);
-            console.log("  wordString2: ", wordString2);
+            // console.log("  words.length: ", words.length);
+            // console.log("  wordString1: ", wordString1);
+            // console.log("  wordString2: ", wordString2);
             words = [wordString2, wordString1];
-            console.log("  words: ", words);
+            // console.log("  words: ", words);
             var x = text.attr("x");
             var y = text.attr("y");
             var word;
@@ -396,10 +408,14 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 // == new line when word count exceeds 1 word
                 if (lineArray.length > 1) {
                     lineArray.pop();                    // remove too-long word
+                    labelTitleArray.push(lineArray.join(" "));
+                    console.log("  labelTitleArray: ", labelTitleArray);
                     tspan.text(lineArray.join(" "));    // space before adding new tspan element
                     lineArray = [word];                 // add too-long word to line array
                     newX = parseInt(parseInt(x) + 5);   // offset values for new line (must be integer)
                     newY = parseInt(parseInt(y) + 14);
+                    labelSubtitleArray.push(word);
+                    console.log("  labelSubtitleArray: ", labelSubtitleArray);
                     tspan = text.append("tspan")        // make tspan for line 2
                         .text(word)
                         .attr("x", newX + "px")
@@ -412,42 +428,53 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
 
     // ======= activateChartCircles =======
-    function activateChartCircles() {
+    function activateChartCircles(labelTitleArray, labelSubtitleArray) {
         console.log("activateChartCircles");
+        console.log("  labelTitleArray: ", labelTitleArray);
 
         $('.dataChartValue').each(function(i) {
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
                 console.log("\n======= showLabel ======= ");
-                targetLabel = $('#dataChartLabel_' + i);
-                $(targetLabel).attr("visibility", "visible");
-                targetMarkerIndex = this.id.split("_")[1];
-                if (displayObj.dataFilters.zones == null) {
-                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                    schoolMarker.icon.fillColor = "white";
-                    schoolMarker.icon.scale = 0.4;
-                    schoolMarker.setMap(map);
+                if (displayObj.displayMode != "storyMap") {
+                    targetLabel = $('#dataChartLabel_' + i);
+                    $(targetLabel).attr("visibility", "visible");
+                    targetMarkerIndex = this.id.split("_")[1];
+                    if (displayObj.dataFilters.zones == null) {
+                        schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                        schoolMarker.icon.fillColor = "white";
+                        schoolMarker.icon.scale = 0.4;
+                        schoolMarker.setMap(map);
+                    } else {
+                        multiLayerOffset = zoneBcount;
+                        toggleFeatureHilite((i + multiLayerOffset), "on");
+                    }
                 } else {
-                    multiLayerOffset = zoneBcount;
-                    toggleFeatureHilite((i + multiLayerOffset), "on");
+                    $("#data-title").text(labelTitleArray[i]);
+                    $("#data-subtitle").text(labelSubtitleArray[i]);
                 }
             });
 
             // ======= ======= ======= mouseout ======= ======= =======
             $(this).off("mouseout").on("mouseout", function(event){
                 // console.log("\n======= hideLabel ======= ");
-                targetLabel = $('#dataChartLabel_' + i);
-                $(targetLabel).attr("visibility", "hidden");
-                targetMarkerIndex = this.id.split("_")[1];
-                if (displayObj.dataFilters.zones == null) {
-                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                    schoolMarker.icon.fillColor = schoolMarker.defaultColor;
-                    schoolMarker.icon.scale = 0.2;
-                    schoolMarker.setMap(map);
+                if (displayObj.displayMode != "storyMap") {
+                    targetLabel = $('#dataChartLabel_' + i);
+                    $(targetLabel).attr("visibility", "hidden");
+                    targetMarkerIndex = this.id.split("_")[1];
+                    if (displayObj.dataFilters.zones == null) {
+                        schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                        schoolMarker.icon.fillColor = schoolMarker.defaultColor;
+                        schoolMarker.icon.scale = 0.2;
+                        schoolMarker.setMap(map);
+                    } else {
+                        multiLayerOffset = zoneBcount;
+                        toggleFeatureHilite((i + multiLayerOffset), "off");
+                    }
                 } else {
-                    multiLayerOffset = zoneBcount;
-                    toggleFeatureHilite((i + multiLayerOffset), "off");
+                    $("#data-title").text("");
+                    $("#data-subtitle").text("");
                 }
             });
 

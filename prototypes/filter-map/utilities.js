@@ -19,9 +19,9 @@
 // ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
 
 // ======= ======= ======= getZoneUrls ======= ======= =======
-function getZoneUrls(displayObj) {
+function getZoneUrls(displayObj, zonesCollectionObj) {
     console.log("getZoneUrls");
-    console.log("  .zoneA: ", displayObj.zoneA);
+    console.log("  .zoneA: ", zonesCollectionObj.zoneA);
     console.log("  .zones: ", displayObj.dataFilters.zones);
 
     var feederFlag = false;
@@ -33,9 +33,11 @@ function getZoneUrls(displayObj) {
 
     if (displayObj.dataFilters.zones) {
         if (displayObj.dataFilters.zones == "Ward") {
+            zonesCollectionObj.zoneA = "Ward";
             urlA = websitePrefix + "Data_Geo/Ward__2012.geojson";
             urlB = null;
         } else if (displayObj.dataFilters.zones == "FeederHS") {
+            zonesCollectionObj.zoneA = "FeederHS";
             urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Senior_High__New.geojson";
             if (displayObj.dataFilters.levels == "MS") {
                 feederFlag = true;
@@ -48,17 +50,22 @@ function getZoneUrls(displayObj) {
             }
         } else if (displayObj.dataFilters.zones == "FeederMS") {
             feederFlag = true;
+            zonesCollectionObj.zoneA = "FeederMS";
             urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
             urlB = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
         }
     } else {
         if (displayObj.dataFilters.levels == "HS") {
+            zonesCollectionObj.zoneA = "FeederHS";
             urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Senior_High__New.geojson";
         } else if (displayObj.dataFilters.levels == "MS") {
+            zonesCollectionObj.zoneA = "FeederMS";
             urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
         } else if (displayObj.dataFilters.levels == "ES") {
+            zonesCollectionObj.zoneA = "Elementary";
             urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
         } else {
+            zonesCollectionObj.zoneA = "Ward";
             urlA = websitePrefix + "Data_Geo/Ward__2012.geojson";
         }
         urlB = null;
@@ -94,33 +101,36 @@ function removeAbbreviations(longName) {
 // ======= ======= ======= processSchoolName ======= ======= =======
 function processSchoolName(schoolName) {
     // console.log("processSchoolName");
+    // console.log("  schoolName: ", schoolName);
 
     var shortName;
 
-    shortName = schoolName.replace("Elementary School", "");
-    shortName = shortName.replace("High School", "");
-    shortName = shortName.replace("Middle School", "");
-    shortName = shortName.replace("Education Campus", "");
-    shortName = shortName.replace("ES", "");
+    if (schoolName) {
+        shortName = schoolName.replace("Elementary School", "");
+        shortName = shortName.replace("High School", "");
+        shortName = shortName.replace("Middle School", "");
+        shortName = shortName.replace("Education Campus", "");
+        shortName = shortName.replace("ES", "");
 
-    checkName1 = shortName.indexOf(", ");
-    if (checkName1 > -1) {
-        splitZoneName = shortName.split(", ");
-        shortName = splitZoneName[0];
+        checkName1 = shortName.indexOf(", ");
+        if (checkName1 > -1) {
+            splitZoneName = shortName.split(", ");
+            shortName = splitZoneName[0];
+        }
+        checkName2 = shortName.indexOf(". ");
+        if (checkName2 > -1) {
+            splitZoneName = shortName.split(". ");
+            shortName = splitZoneName[1];
+        }
+        checkName3 = shortName.indexOf(" ");
+        if (checkName3 > -1) {
+            splitZoneName = shortName.split(" ");
+            shortName = splitZoneName[0];
+        }
+    } else {
+        shortName = null;
     }
-    checkName2 = shortName.indexOf(". ");
-    if (checkName2 > -1) {
-        splitZoneName = shortName.split(". ");
-        shortName = splitZoneName[1];
-    }
-    checkName3 = shortName.indexOf(" ");
-    if (checkName3 > -1) {
-        splitZoneName = shortName.split(" ");
-        shortName = splitZoneName[0];
-        // if (checkName3 == (shortName.length - 1)) {
-        //     shortName = shortName.substring(0, (shortName.length - 1));
-        // }
-    }
+
     return shortName;
 }
 
@@ -380,6 +390,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
     // console.log("  .schoolFeederHS: ", schoolData.schoolFeederHS);
     // console.log("  .schoolFeederMS: ", schoolData.schoolFeederMS);
     // console.log("  .schoolWard: ", schoolData.schoolWard);
+    // console.log("  .schoolAgency: ", schoolData.schoolAgency);
 
     // == match school name from geojson file with school name from csv file
     if (displayObj.dataFilters.zones) {
@@ -429,16 +440,9 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
     // console.log("  schoolZoneIndex: ", schoolZoneIndex);
     if (schoolZoneIndex != null) {
         // console.log("*** schoolZoneIndex: ", schoolZoneIndex);
+        nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
         nextSchoolSqft = parseInt(schoolData.schoolSqft);
         nextSchoolEnroll = parseInt(schoolData.schoolEnroll);
-        if (displayObj.dataFilters.expend == null) {
-            nextSchoolExpend = schoolData["spendLifetime"];
-            if (Number.isInteger(nextSchoolExpend) == false) {
-                nextSchoolExpend = 0;
-            } else {
-                nextSchoolExpend = parseInt(schoolData["spendLifetime"]);
-            }
-        }
         // console.log("  nextSchoolExpend: ", nextSchoolExpend);
         // console.log("  nextSchoolSqft: ", nextSchoolSqft);
         // console.log("  nextSchoolEnroll: ", nextSchoolEnroll);
@@ -1047,14 +1051,14 @@ function getDataDetails(nextSchool) {
 
     var schoolData = {
         // school identity data
-        "schoolCode": nextSchool.SCHOOLCODE,
+        "schoolCode": nextSchool.School_ID,
         "schoolName": nextSchool.School,
-        "schoolWard": nextSchool.WARD,
+        "schoolWard": nextSchool.Ward,
         "schoolFeederMS": nextSchool.FeederMS,
         "schoolFeederHS": nextSchool.FeederHS,
         "schoolAddress": nextSchool.Address,
-        "schoolLAT": nextSchool.LAT,
-        "schoolLON": nextSchool.LON,
+        "schoolLAT": nextSchool.latitude,
+        "schoolLON": nextSchool.longitude,
         "schoolLevel": nextSchool.Level,
         "schoolAgency": nextSchool.Agency,
 
@@ -1068,7 +1072,7 @@ function getDataDetails(nextSchool) {
         "schoolEnroll": nextSchool.Total_Enrolled,
         "studentEng": nextSchool.Limited_English,
         "studentAtRisk": nextSchool.At_Risk,
-        "studentSpecEd": nextSchool.SpecEd_fake,
+        "studentSpecEd": nextSchool.SpEd,
         "studentESLPer": nextSchool.ESLPer,
         "studentAtRiskPer": nextSchool.AtRiskPer,
         "studentSPEDPer": nextSchool.SPEDPer,
@@ -1086,16 +1090,16 @@ function getDataDetails(nextSchool) {
 }
 
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
-function makeSchoolProfile(collectionOrSchool, displayObj, schoolIndex) {
+function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolIndex) {
     console.log("makeSchoolProfile");
     console.log("  schoolIndex: ", schoolIndex);
 
     if ((typeof schoolIndex === 'undefined') || (typeof schoolIndex === 'null')) {
         console.log("*** TRUE ***");
-        var processedSchoolData = getDataDetails(collectionOrSchool);
+        var processedSchoolData = getDataDetails(schoolData);
         var cleanedSchoolData = validateSchoolData(processedSchoolData);
     } else {
-        var selectedSchoolData = collectionOrSchool.selectedSchoolsArray[schoolIndex];
+        var selectedSchoolData = schoolsCollectionObj.selectedSchoolsArray[schoolIndex];
         var cleanedSchoolData = validateSchoolData(selectedSchoolData);
     }
 
@@ -1160,6 +1164,7 @@ function makeSchoolProfile(collectionOrSchool, displayObj, schoolIndex) {
         });
     }
     displayObj.activateCloseButton();
+    makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, schoolIndex);
 }
 
 // ======= ======= ======= validateSchoolData ======= ======= =======
@@ -1337,7 +1342,70 @@ function initMap(zonesCollectionObj, displayObj) {
     }
 }
 
-// ======= ======= ======= initFloatingWindows ======= ======= =======
+// ======= ======= ======= checkSchoolData ======= ======= =======
+function checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray) {
+    console.log("checkSchoolData");
+
+    // ======= check aggregated numbers =======
+    var zoneAmountArray = [];
+    var zoneEnrollArray = [];
+    var zoneSqftArray = [];
+    var amountTotal = 0;
+    var enrollTotal = 0;
+    var sqftTotal = 0;
+
+    for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
+        nextZoneObject = zonesCollectionObj.aggregatorArray[i];
+        zoneAmountArray.push(nextZoneObject.zoneAmount);
+        zoneEnrollArray.push(nextZoneObject.zoneEnroll);
+        zoneSqftArray.push(nextZoneObject.zoneSqft);
+        amountTotal = amountTotal + nextZoneObject.zoneAmount;
+        enrollTotal = enrollTotal + nextZoneObject.zoneEnroll;
+        sqftTotal = sqftTotal + nextZoneObject.zoneSqft;
+    }
+    var minAmount = Math.min.apply(Math, zoneAmountArray);
+    var maxAmount = Math.max.apply(Math, zoneAmountArray);
+    var avgAmount = amountTotal/zonesCollectionObj.aggregatorArray.length;
+    var incAmount = maxAmount/zonesCollectionObj.aggregatorArray.length;
+    var minEnroll = Math.min.apply(Math, zoneEnrollArray);
+    var maxEnroll = Math.max.apply(Math, zoneEnrollArray);
+    var avgEnroll = enrollTotal/zonesCollectionObj.aggregatorArray.length;
+    var incEnroll = maxEnroll/zonesCollectionObj.aggregatorArray.length;
+    var minSqft = Math.min.apply(Math, zoneSqftArray);
+    var maxSqft = Math.max.apply(Math, zoneSqftArray);
+    var avgSqft = sqftTotal/zonesCollectionObj.aggregatorArray.length;
+    var incSqft = maxSqft/zonesCollectionObj.aggregatorArray.length;
+
+    // == check the math
+    console.log("*** amounts ***");
+    console.log("  zoneAmountArray: ", zoneAmountArray);
+    console.log("  minAmount: ", minAmount);
+    console.log("  maxAmount: ", maxAmount);
+    console.log("  avgAmount: ", avgAmount);
+    console.log("  incAmount: ", incAmount);
+    console.log("*** enroll ***");
+    console.log("  zoneEnrollArray: ", zoneEnrollArray);
+    console.log("  minEnroll: ", minEnroll);
+    console.log("  maxEnroll: ", maxEnroll);
+    console.log("  avgEnroll: ", avgEnroll);
+    console.log("  incEnroll: ", incEnroll);
+    console.log("*** sqft ***");
+    console.log("  zoneSqftArray: ", zoneSqftArray);
+    console.log("  minSqft: ", minSqft);
+    console.log("  maxSqft: ", maxSqft);
+    console.log("  avgSqft: ", avgSqft);
+    console.log("  incSqft: ", incSqft);
+
+    // == check arrays for consistency or errors
+    console.log("*** all schools count: ", schoolsCollectionObj.jsonData.length);
+    console.log("  selectedSchoolsCt: ", selectedSchoolsArray.length);
+    console.log("  selectedCodesCt: ", selectedCodesArray.length);
+    console.log("  rejectedCodesCt: ", rejectedCodesArray.length);
+    console.log("  aggregatorArray: ", zonesCollectionObj.aggregatorArray.length);
+    console.log("  rejectedAggCt: ", rejectedAggregatorArray.length);
+}
+
+// ======= ======= ======= floating windows ======= ======= =======
 function initFloatingWindows() {
     console.log("initFloatingWindows");
 

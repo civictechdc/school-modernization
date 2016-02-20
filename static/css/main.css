@@ -1,3 +1,9 @@
+/* ======= general ======= */
+body {
+    /*font-family:"Ariel", sans-serif;*/
+    font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 #wrap {
     width: 1200px;
     margin: 0 auto;
@@ -33,17 +39,11 @@ div.charts #map {
 }
 
 #storyMap-container {
+    position: relative;
+    left: 0;
+    top: 8px;
     height: 300px;
     width: 415px;
-}
-
-#chart-container {
-    float: left;
-    width: 150px;
-}
-
-#map-container {
-    float: left;
 }
 
 #narrative div.words {
@@ -51,6 +51,155 @@ div.charts #map {
 }
 
 
-#chart svg {
-    width: 100px !important;
+/* ======= chart ======= */
+#chart-container {
+    float: left;
+    width: 160px;
+    height: auto;
 }
+/*#chart svg {
+    width: 100px !important;
+}*/
+.title-container {
+    float: left;
+    width: 100%;
+    height: 40px;
+}
+#chart-title {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 16px;
+    color: white;
+}
+#chart-subtitle {
+    padding: 1px 0;
+    margin: 1px 10px;
+    font-size: 12px;
+    color: white;
+}
+/* ======= banners ======= */
+.profile-banner {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    color: white;
+    background-color: firebrick;
+}
+.profile-banner > p {
+    color: white;
+}
+#data-display {
+    position: relative;
+    left: 160px;
+    top: 2px;
+    width: 415px;
+    height: 52px;
+    font-size: 16px;
+    color: white;
+    background-color: firebrick;
+}
+#data-title, #data-subtitle {
+    display: block;
+    position: relative;
+    margin: 10px 0;
+    text-align: left;
+    color: white;
+}
+#data-subtitle {
+    font-size: 14px;
+}
+
+/* ======= d3 ======= */
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+line,
+path {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+}
+/*.submenu-default {
+    margin: 0;
+    padding: 0;
+    line-height: 12px;
+    font-size: 12;
+    color: red;
+    background-color: white;
+}
+#sub-nav-container {
+    position: relative;
+    display: inline-block;
+    float: left;
+    height: 30px;
+    width: 100px;
+    margin-top: 2px;
+    margin-left: 5px;
+    line-height: 16px;
+    font-size: 12;
+    background-color: white;
+    border: solid 2px black;
+}
+#sub-nav-container > .sub-nav-list {
+    display: none;
+	list-style: none;
+	position: relative;
+    width: 100%;
+    height: 95%;
+	margin: 0;
+	padding: 0;
+    z-index: 999;
+}
+#sub-nav-container > .sub-nav-list li {
+    position: relative;
+    width: 100%;
+    height: 90%;
+	margin: 2px 0;
+    background-color: gray;
+}
+#sub-nav-container > .sub-nav-list a {
+    display: inline-block;;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 14px;
+    color: purple;
+	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+#sub-nav-container:hover > .sub-nav-list {
+    display: block;
+}
+#sub-nav-container > .sub-nav-list > li:hover > a {
+    color: red;
+	background-color: #ffd9b3;
+}*/
+
+/* ======= ======= ======= ARCHIVE ======= ======= ======= */
+
+/*#chart-container {
+    display: none;
+    height: auto;
+    position: absolute;
+    top: 42%;
+    left: 65%;
+    width: 360px;
+    margin-top: 20px;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    z-index: 9;
+}*/
+/*#chart {
+    position: relative;
+    width: 100%;
+    height: auto;
+    left: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+}*/

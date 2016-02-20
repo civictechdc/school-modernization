@@ -297,7 +297,7 @@ function initApp(presetMode) {
                 // == zone (geography), level, agency flags
                 nextSchool = jsonData[i];
                 schoolName = nextSchool.School;
-                schoolCode = nextSchool.SCHOOLCODE;
+                schoolCode = nextSchool.School_ID;
 
                 // == name (school) from json is long; name (checkGeo) from geojson is short
                 var checkSchool = schoolName.indexOf(searchSchoolName);
@@ -662,7 +662,7 @@ function initApp(presetMode) {
         console.dir(this.aggregatorArray);
 
         var self = this;
-        var selectedZonesArray = getZoneUrls(displayObj);
+        var selectedZonesArray = getZoneUrls(displayObj, zonesCollectionObj);
         var urlA = selectedZonesArray[0];
         var urlB = selectedZonesArray[1];
         var feederFlag = selectedZonesArray[2];
@@ -782,7 +782,8 @@ function initApp(presetMode) {
     // ======= ======= ======= getSchoolData ======= ======= =======
     SchoolsCollection.prototype.getSchoolData = function() {
         console.log("\n----- getSchoolData -----");
-        console.log("  displayObj.zoneA: ", displayObj.zoneA);
+        console.log("  zonesCollectionObj.zoneA: ", zonesCollectionObj.zoneA);
+        console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
         var self = this;
         var presetMode = displayObj.displayMode;
@@ -796,7 +797,7 @@ function initApp(presetMode) {
         // ======= get school data =======
         if (this.jsonData == null) {
             $.ajax({
-                url: websitePrefix + "Data_Schools/DCPS_Master_114_dev.csv",
+                url: websitePrefix + "Data_Schools/DC_OpenSchools_Master_214.csv",
                 method: "GET",
                 dataType: "text"
             }).done(function(textData){
@@ -845,6 +846,8 @@ function initApp(presetMode) {
                     if (selectSchool == true) {
                         schoolIndex++;
                         schoolData = getDataDetails(nextSchool);
+                        console.log("  nextSchool.Ward: ", nextSchool.Ward);
+                        console.log("  schoolData.schoolWard: ", schoolData.schoolWard);
                         selectedSchoolsArray.push(schoolData)
                         selectedCodesArray.push(schoolData.schoolCode)
                         selectedNamesArray.push(processSchoolName(schoolData.schoolName))
@@ -861,68 +864,11 @@ function initApp(presetMode) {
                             }
                         }
                     } else {
-                        rejectedCodesArray.push(nextSchool.SCHOOLCODE);
+                        rejectedCodesArray.push(nextSchool.School_ID);
                     }
                 }
                 self.selectedSchoolsArray = selectedSchoolsArray;
-
-                // ======= check aggregated numbers =======
-                var zoneAmountArray = [];
-                var zoneEnrollArray = [];
-                var zoneSqftArray = [];
-                var amountTotal = 0;
-                var enrollTotal = 0;
-                var sqftTotal = 0;
-
-                for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
-                    nextZoneObject = zonesCollectionObj.aggregatorArray[i];
-                    zoneAmountArray.push(nextZoneObject.zoneAmount);
-                    zoneEnrollArray.push(nextZoneObject.zoneEnroll);
-                    zoneSqftArray.push(nextZoneObject.zoneSqft);
-                    amountTotal = amountTotal + nextZoneObject.zoneAmount;
-                    enrollTotal = enrollTotal + nextZoneObject.zoneEnroll;
-                    sqftTotal = sqftTotal + nextZoneObject.zoneSqft;
-                }
-                var minAmount = Math.min.apply(Math, zoneAmountArray);
-                var maxAmount = Math.max.apply(Math, zoneAmountArray);
-                var avgAmount = amountTotal/zonesCollectionObj.aggregatorArray.length;
-                var incAmount = maxAmount/zonesCollectionObj.aggregatorArray.length;
-                var minEnroll = Math.min.apply(Math, zoneEnrollArray);
-                var maxEnroll = Math.max.apply(Math, zoneEnrollArray);
-                var avgEnroll = enrollTotal/zonesCollectionObj.aggregatorArray.length;
-                var incEnroll = maxEnroll/zonesCollectionObj.aggregatorArray.length;
-                var minSqft = Math.min.apply(Math, zoneSqftArray);
-                var maxSqft = Math.max.apply(Math, zoneSqftArray);
-                var avgSqft = sqftTotal/zonesCollectionObj.aggregatorArray.length;
-                var incSqft = maxSqft/zonesCollectionObj.aggregatorArray.length;
-
-                // == check the math
-                console.log("*** amounts ***");
-                console.log("  zoneAmountArray: ", zoneAmountArray);
-                console.log("  minAmount: ", minAmount);
-                console.log("  maxAmount: ", maxAmount);
-                console.log("  avgAmount: ", avgAmount);
-                console.log("  incAmount: ", incAmount);
-                console.log("*** enroll ***");
-                console.log("  zoneEnrollArray: ", zoneEnrollArray);
-                console.log("  minEnroll: ", minEnroll);
-                console.log("  maxEnroll: ", maxEnroll);
-                console.log("  avgEnroll: ", avgEnroll);
-                console.log("  incEnroll: ", incEnroll);
-                console.log("*** sqft ***");
-                console.log("  zoneSqftArray: ", zoneSqftArray);
-                console.log("  minSqft: ", minSqft);
-                console.log("  maxSqft: ", maxSqft);
-                console.log("  avgSqft: ", avgSqft);
-                console.log("  incSqft: ", incSqft);
-
-                // == check arrays for consistency or errors
-                console.log("*** all schools count: ", jsonData.length);
-                console.log("  selectedSchoolsCt: ", selectedSchoolsArray.length);
-                console.log("  selectedCodesCt: ", selectedCodesArray.length);
-                console.log("  rejectedCodesCt: ", rejectedCodesArray.length);
-                console.log("  aggregatorArray: ", zonesCollectionObj.aggregatorArray.length);
-                console.log("  rejectedAggCt: ", rejectedAggregatorArray.length);
+                // checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
 
                 // ======= make map layers ======
                 if (selectedSchoolsArray.length > 0) {
@@ -1467,7 +1413,7 @@ function initApp(presetMode) {
     }
 
     // ======= ======= ======= setFilterSelections ======= ======= =======
-    function setFilterSelections(agency, levels, expend, zones, presetMode) {
+    function setFilterSelections(agency, levels, expend, zones, math, presetMode) {
         console.log("******* setFilterSelections *******");
 
         displayObj.displayMode = presetMode;
@@ -1514,6 +1460,12 @@ function initApp(presetMode) {
             zonesCollectionObj.aggregatorArray = [];
         }
 
+        // == math
+        if (math) {
+            console.log("math filter");
+            displayObj.dataFilters.math = math;
+        }
+
         updateHoverText(null);
         checkFilterSelection(displayObj, zonesCollectionObj);
         zonesCollectionObj.getZoneData();
@@ -1532,6 +1484,7 @@ function initApp(presetMode) {
         displayObj.dataFilters.levels = null;
         displayObj.dataFilters.expend = null;
         displayObj.dataFilters.zones = null;
+        displayObj.dataFilters.math = null;
         zonesCollectionObj.zoneGeojson_A = null;
         zonesCollectionObj.zoneGeojson_B = null;
         zonesCollectionObj.zoneGeojson_AB = null;
