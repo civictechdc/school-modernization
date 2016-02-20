@@ -25,6 +25,7 @@ angular.module("PostModern", ['ngRoute'])
     return filterSelector;
   })
   .factory('navService', function($location) {
+
     var currentIdx = 0;
     var paths = [
       { path: 'intro', text: "Introduction"},
@@ -33,6 +34,13 @@ angular.module("PostModern", ['ngRoute'])
       { path: 'branch-off', text: "Charters Built"},
       { path: 'planned', text: "Future Spend"},
     ];
+
+    var cp = $location.path().split('/')[2]
+    currentIdx = paths.findIndex(x => x.path == cp)
+    if (currentIdx == -1) {
+        currentIdx = 0;
+    }
+    paths[currentIdx].active = true;
 
     return { 
       'SetPath': function(idx) {

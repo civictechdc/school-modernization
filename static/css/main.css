@@ -28,16 +28,29 @@ div.charts img {
 }
 
 div.charts #map {
-    width: 500px;
+    width: 800px;
+    float: left;
 }
 
+#storyMap-container {
+    height: 300px;
+    width: 415px;
+}
+
+#chart-container {
+    float: left;
+    width: 150px;
+}
+
+#map-container {
+    float: left;
+}
 
 #narrative div.words {
     min-height: 175px;
 }
 
 
-div#storyMap-container {
-    height: 400px;
-    width: 315px;
+#chart svg {
+    width: 100px !important;
 }
