@@ -167,8 +167,8 @@ body {
 }
 #chart-container {
     position: relative;
-    height: 100%;
-    width: 100%;
+    width: 140px;
+    height: 300px;
     margin: 8px 0 0 -2px;
 }
 #chart {

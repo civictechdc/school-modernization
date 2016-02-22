@@ -36,9 +36,9 @@ function initApp(presetMode) {
         filterMenu.High = { id:"High", category:"schools", text:"High Schools", column:"Level", value:"HS" };
 
         // == spendPast, spendLifetime, spendPlanned
-        filterMenu.spendPast = { id:"spendPast", category:"expenditures", text:"Past Spending", column:"MajorExp9815", value:null };
-        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", text:"Planned Spending", column:"TotalAllotandPlan1621", value:null };
-        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", text:"Total Spending", column:"LifetimeBudget", value:null };
+        filterMenu.spendPast = { id:"spendPast", category:"expenditures", text:"Past Spend", column:"MajorExp9815", value:null };
+        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", text:"Planned Spend", column:"TotalAllotandPlan1621", value:null };
+        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", text:"Total Spend", column:"LifetimeBudget", value:null };
 
         // == spendSqFt, spendEnroll
         filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"/sqFt", column:"SpentPerSqFt", value:null };
