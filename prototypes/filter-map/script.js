@@ -41,8 +41,8 @@ function initApp(presetMode) {
         filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", text:"Total Spending", column:"LifetimeBudget", value:null };
 
         // == spendSqFt, spendEnroll
-        filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"per sqFt", column:"SpentPerSqFt", value:null };
-        filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", text:"per student", column:"SpentPerEnroll", value:null };
+        filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"/sqFt", column:"SpentPerSqFt", value:null };
+        filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", text:"/student", column:"SpentPerEnroll", value:null };
         filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", text:"dollar amount", column:null, value:null };
 
         // == zones
@@ -846,8 +846,8 @@ function initApp(presetMode) {
                     if (selectSchool == true) {
                         schoolIndex++;
                         schoolData = getDataDetails(nextSchool);
-                        console.log("  nextSchool.Ward: ", nextSchool.Ward);
-                        console.log("  schoolData.schoolWard: ", schoolData.schoolWard);
+                        // console.log("  nextSchool.Ward: ", nextSchool.Ward);
+                        // console.log("  schoolData.schoolWard: ", schoolData.schoolWard);
                         selectedSchoolsArray.push(schoolData)
                         selectedCodesArray.push(schoolData.schoolCode)
                         selectedNamesArray.push(processSchoolName(schoolData.schoolName))
@@ -1155,12 +1155,21 @@ function initApp(presetMode) {
         }
 
         // ======= ======= ======= show rankings chart ======= ======= =======
+        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
+        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+        console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
         if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
             if (displayObj.dataFilters.expend) {
                 if (displayObj.dataFilters.agency != "Charter") {
                     makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount);
                 } else {
                     clearProfileChart();
+                }
+            } else {
+                console.log("  displayObj.displayMode: ", displayObj.displayMode);
+                if (displayObj.displayMode == "storyMap") {
+                    var chartHtml = "<div id='chart'>&nbsp;</div>";
+                    $("#chart-container").append(chartHtml);
                 }
             }
         }

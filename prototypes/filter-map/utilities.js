@@ -191,8 +191,15 @@ function updateChartText(displayObj, expendText, subtitle) {
     } else {
         schoolText = "";
     }
+    console.log("  expendText: ", expendText);
+    console.log("  subtitle: ", subtitle);
+    console.log("  displayObj.displayMode: ", displayObj.displayMode);
+    if (displayObj.displayMode == "storyMap") {
+        $('#chart-label').text("");
+    }
     $("#chart-title").text(expendText + " " + mathText);
     $('#chart-subtitle').text(subtitle);
+
     return [mathText, schoolText, agencyText];
 }
 
@@ -382,7 +389,7 @@ function clearZoneAggregator(zonesCollectionObj) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    console.log("aggregateZoneData");
+    // console.log("aggregateZoneData");
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var nextZone = schoolZoneIndex = null;
@@ -1324,15 +1331,12 @@ function initMap(zonesCollectionObj, displayObj) {
         console.log("*** storyMap ***");
         var zoom = 10;
         var mapContainer = document.getElementById('storyMap-container');
+        // console.log("  mapContainer: ", mapContainer);
         map = new google.maps.Map(mapContainer, {
             center: {lat: 38.89, lng: -77.00},
-            disableDefaultUI: false,
+            disableDefaultUI: true,
             disableDoubleClickZoom: true,
-            zoomControl: true,
-            zoomControlOpt: {
-                style: 'SMALL',
-                position: 'TOP_LEFT'
-            },
+            zoomControl: false,
             draggable: true,
             scrollwheel: false,
             styles: styleArray,     // styles for map tiles

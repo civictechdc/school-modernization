@@ -4,14 +4,16 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     console.log("\n----- makeRankChart -----");
 
     // ======= chart =======
-    var chartHtml = "<table id='chart'>";
-    chartHtml += "<tr><td class='profile-banner' colspan=2>";
-    chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
-    chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
     if (displayObj.displayMode != "storyMap") {
+        var chartHtml = "<table id='chart'>";
+        chartHtml += "<tr><td class='profile-banner' colspan=2>";
+        chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
+        chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
         chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu);
+        chartHtml += "</td></tr></table>";
+    } else {
+        var chartHtml = "<div id='chart'></div>";
     }
-    chartHtml += "</td></tr></table>";
 
     // == remove previous chart or profile html if any
     if ($('#profile-container').find('#profile').length) {
@@ -50,8 +52,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= school data =======
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
-
     var myJsonString = JSON.stringify(dataObjectsArray);
+
+    // ======= ======= ======= calculate min, max ======= ======= =======
     var dataMax = d3.max(dataObjectsArray, function(d) {
         if (displayObj.dataFilters.math == "spendAmount") {
             return d.zoneAmount;
@@ -90,13 +93,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     console.log("  dataMax: ", dataMax);
     console.log("  dataMin: ", dataMin);
 
-    // ======= ======= ======= calculate min, max, increment, average, median ======= ======= =======
-    // displayObj.dataIncrement = doTheMath(zonesCollectionObj, displayObj);
-
     // ======= bar data =======
     var barW = 20;
     var schoolCircleR = 5;
-    var schoolCircleX = 50;
+    if (displayObj.displayMode != "storyMap") {
+        var schoolCircleX = 50;
+    } else {
+        var schoolCircleX = -30;
+    }
+
     var barScaleArray = [];
     var barTicks = zonesCollectionObj.dataBins;
     var barIncrement = dataMax/barTicks;
@@ -191,7 +196,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     var yAxis = d3.svg.axis()
         .scale(yScale)          // specify left scale
-        .orient("left")
+        .orient("right")
         .tickPadding(10)
         .tickValues(barScaleArray);
 
@@ -203,10 +208,17 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
 
     // ======= yAxis =======
+    var yAxisTranslate;
+    if (displayObj.displayMode != "storyMap") {
+        yAxisTranslate = 0;
+    } else {
+        yAxisTranslate = 100;
+    }
+
     svg.append("g")                 // g group element to contain about-to-be-generated axis elements
         .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
         .call(yAxis)                // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
-        .attr("transform", "translate(0, 0)")
+        .attr("transform", "translate(20, 0)")
         .selectAll("text")
             .attr("class", "yLabels")
             .text(function(d) {
@@ -215,17 +227,22 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 // console.log("  d/newD: ", d, " / ", newD);
                 return scaleLabel + " " + newD;
             })
-            .style("text-anchor", "end")
+            .style("text-anchor", "start")
             .style("font-size", "10px");
 
-    // ======= rects for bar graph =======
+    // ======= ======= ======= RECTS ======= ======= =======
     svg.selectAll(".bar")
         .data(barScaleArray)
         .enter()
             .append("rect")
             .attr("class", "bar")
             .attr("x", function(d) {
-                return 2;
+                if (displayObj.displayMode != "storyMap") {
+                    return 2;
+                } else {
+                    return 0;
+                }
+
             })
             .attr("width", barW)
             .attr("y", function(d, i) {
@@ -266,7 +283,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 return schoolCircleX;
             })
             .attr("cy", function(d, i) {
-                console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
+                // console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
                 return yScale(circleValuesArray[i]);
             })
             .attr("r", function(d) {
@@ -298,7 +315,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     } else {
                         labelString = d.zoneName + " " + agencyText + schoolText + "$" + formattedNumber + " " + mathText;
                     }
-                    console.log("  labelString: ", labelString);
+                    // console.log("  labelString: ", labelString);
                     return labelString;
                 })
                 .attr("x", function(d, i) {
@@ -409,13 +426,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 if (lineArray.length > 1) {
                     lineArray.pop();                    // remove too-long word
                     labelTitleArray.push(lineArray.join(" "));
-                    console.log("  labelTitleArray: ", labelTitleArray);
+                    // console.log("  labelTitleArray: ", labelTitleArray);
                     tspan.text(lineArray.join(" "));    // space before adding new tspan element
                     lineArray = [word];                 // add too-long word to line array
                     newX = parseInt(parseInt(x) + 5);   // offset values for new line (must be integer)
                     newY = parseInt(parseInt(y) + 14);
                     labelSubtitleArray.push(word);
-                    console.log("  labelSubtitleArray: ", labelSubtitleArray);
+                    // console.log("  labelSubtitleArray: ", labelSubtitleArray);
                     tspan = text.append("tspan")        // make tspan for line 2
                         .text(word)
                         .attr("x", newX + "px")
@@ -430,7 +447,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= activateChartCircles =======
     function activateChartCircles(labelTitleArray, labelSubtitleArray) {
         console.log("activateChartCircles");
-        console.log("  labelTitleArray: ", labelTitleArray);
+        // console.log("  labelTitleArray: ", labelTitleArray);
 
         $('.dataChartValue').each(function(i) {
 

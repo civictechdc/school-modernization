@@ -3,63 +3,205 @@ body {
     /*font-family:"Ariel", sans-serif;*/
     font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
 #wrap {
     width: 1200px;
     margin: 0 auto;
 }
 
+/* ======= rows columns ======= */
+.row, .column {
+    box-sizing: border-box;
+}
+.row {
+    overflow: visible;
+    height: auto;
+    /*border: 1px solid rebeccapurple;*/
+}
+.column {
+    float: left;
+    /*border: 1px solid Tomato;*/
+}
+
+/* ======= columns ======= */
+.col-md-1 { width: 8.333%; }
+.col-md-2 { width: 16.66%; }
+.col-md-3 { width: 25%; }
+.col-md-4 { width: 33.33%; }
+.col-md-5 { width: 41.66%; }
+.col-md-6 { width: 50%; }
+.col-md-7 { width: 58.33%; }
+.col-md-8 { width: 66.66%; }
+.col-md-9 { width: 75%; }
+.col-md-10 { width: 83.33%; }
+.col-md-11 { width: 91.66%; }
+.col-md-12 { width: 100%; }
+
+.col-map { width: 75%; }
+
+
+/* ======= navigation ======= */
 #navigation {
     float: left;
     width: 175px;
-    height: 300px;
+    height: 700px;
 }
-
 #navigation ol {
     padding-left: 25px;
-}
-
-div.charts #bubble,
-div.charts #map {
-    width: 400px;
-    display: inline-block;
-}
-div.chart {
-    float: left;
-    width: 1025px;
-}
-
-div.charts img {
-    height: 300px;
-}
-
-div.charts #map {
-    width: 800px;
-    float: left;
-}
-
-#storyMap-container {
-    position: relative;
-    left: 0;
-    top: 8px;
-    height: 300px;
-    width: 415px;
 }
 
 #narrative div.words {
     min-height: 175px;
 }
 
+/* ======= content ======= */
+.tool-banner {
+    width: 100%;
+    height: 40px;
+}
+.tool-banner > a {
+    text-decoration: none;
+    line-height: 40px;
+    margin: 10px 20px;
+}
+
+/* ======= bubble ======= */
+#col-bubble {
+    width: 280px;
+    margin: 0 2px;
+}
+
+/* ======= map ======= */
+#col-map {
+    width: 415px;
+    margin: 0 2px;
+}
+.display-title {
+    height: 40px;
+    width: 100%;
+    margin: 0 2px;
+    background-color: firebrick;
+}
+.display-title > p {
+    line-height: 40px;
+}
+.left {
+    width: 60%;
+    float: left;
+    text-align: right;
+    margin: 2px 0 0 2px;
+}
+.left > p {
+    text-align: right;
+    margin-right: 25px;
+}
+.right {
+    position: relative;
+    width: 40%;
+    left: 60%;
+    margin: 2px 2px 0 0;
+}
+#storyMap-container {
+    position: relative;
+    left: 0;
+    top: 8px;
+    height: 300px;
+    width: 415px;
+    margin-bottom: 10px;
+}
+
+/* ======= data chart ======= */
+#col-chart {
+    width: 160px;
+    margin: 0 2px;
+    padding: 0;
+}
+.label-title {
+    margin: 2px 0 0 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 16px;
+    color: white;
+}
+#data-title, #data-subtitle {
+    position: absolute;
+    height: 20px;
+    text-align: right;
+    color: white;
+}
+#data-title {
+    position: absolute;
+    top: 4px;
+    height: 20px;
+    margin: 0;
+    line-height: 14px;
+    font-size: 14px;
+}
+#data-subtitle {
+    position: absolute;
+    top: 24px;
+    height: 20px;
+    margin: 0;
+    line-height: 12px;
+    font-size: 12px;
+}
+#chart-title, #chart-subtitle {
+    position: relative;;
+    height: 20px;
+    text-align: center;
+    color: white;
+}
+#chart-title {
+    position: relative;;
+    top: 4px;
+    height: 20px;
+    margin: 0;
+    line-height: 14px;
+    font-size: 14px;
+}
+#chart-subtitle {
+    position: relative;;
+    top: 4px;
+    height: 20px;
+    margin: 0;
+    line-height: 12px;
+    font-size: 12px;
+}
+#chart-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 8px 0 0 4px;
+}
+#chart {
+    position: relative;
+    width: 160px;
+    height: 300px;
+    background-color: #eee;
+}
+#chart > svg {
+    left: 0;
+}
+
+/* ======= d3 ======= */
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+line,
+path {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+}
+
+
 
 /* ======= chart ======= */
-#chart-container {
+/*#chart-container {
     float: left;
     width: 160px;
     height: auto;
 }
-/*#chart svg {
-    width: 100px !important;
-}*/
 .title-container {
     float: left;
     width: 100%;
@@ -76,9 +218,10 @@ div.charts #map {
     margin: 1px 10px;
     font-size: 12px;
     color: white;
-}
+}*/
+
 /* ======= banners ======= */
-.profile-banner {
+/*.profile-banner {
     width: 100%;
     height: 50px;
     text-align: center;
@@ -109,77 +252,13 @@ div.charts #map {
     font-size: 14px;
 }
 
-/* ======= d3 ======= */
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
-}
-line,
-path {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-}
-/*.submenu-default {
-    margin: 0;
-    padding: 0;
-    line-height: 12px;
-    font-size: 12;
-    color: red;
-    background-color: white;
-}
-#sub-nav-container {
-    position: relative;
-    display: inline-block;
-    float: left;
-    height: 30px;
-    width: 100px;
-    margin-top: 2px;
-    margin-left: 5px;
-    line-height: 16px;
-    font-size: 12;
-    background-color: white;
-    border: solid 2px black;
-}
-#sub-nav-container > .sub-nav-list {
-    display: none;
-	list-style: none;
-	position: relative;
-    width: 100%;
-    height: 95%;
-	margin: 0;
-	padding: 0;
-    z-index: 999;
-}
-#sub-nav-container > .sub-nav-list li {
-    position: relative;
-    width: 100%;
-    height: 90%;
-	margin: 2px 0;
-    background-color: gray;
-}
-#sub-nav-container > .sub-nav-list a {
-    display: inline-block;;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 5px 0;
-    text-align: center;
-	text-decoration: none;
-	font-weight: 400;
-	font-size: 14px;
-    color: purple;
-	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-#sub-nav-container:hover > .sub-nav-list {
-    display: block;
-}
-#sub-nav-container > .sub-nav-list > li:hover > a {
-    color: red;
-	background-color: #ffd9b3;
-}*/
-
 /* ======= ======= ======= ARCHIVE ======= ======= ======= */
+
+/*margin: 2px 0 0 0;
+text-align: center;
+font-size: 16px;
+color: blue;*/
+
 
 /*#chart-container {
     display: none;

@@ -1,16 +1,65 @@
-<div class="words">
-  <h2>{{ story.title }}</h2>
-  <p>{{ story.para }}</p>
-  <button>Onward</button>
+<!-- ======= ======= title/para ======= ======= ======= -->
+<div class="row words">
+    <h2>{{ story.title }}</h2>
+    <p>{{ story.para }}</p>
 </div>
-<div class="charts">
-  <div id="map">
-    <h2><a href='/prototypes/filter-map/'>Tool</a></h2>
-    <div id='chart-container'></div>
-    <div id="data-display">
-        <p id="data-title">Data title</p>
-        <p id="data-subtitle">Data subtitle</p>
+
+<!-- ======= ======= charts ======= ======= ======= -->
+<div class="row charts">
+
+    <!-- ======= ======= bubble ======= ======= ======= -->
+    <div id="col-bubble" class="column">
+
+        <!-- title -->
+        <div class="row">
+            <div class="tool-banner">
+                <a href="#">Bubble Tool</a>
+            </div>
+        </div>
+
+        <!-- bubble -->
+        <div class="row">
+            <div class="column col-md-12">
+                <div class="row display-title">
+                    <p class="label-title">bubble chart</p>
+                </div>
+                <div id="bubble-container" class="row"></div>
+            </div>
+        </div>
     </div>
-    <div id="storyMap-container"></div>
-  </div>
+
+    <!-- ======= ======= map ======= ======= ======= -->
+    <div class="column col-md-8">
+
+        <!-- title -->
+        <div class="row">
+            <div class="tool-banner">
+                <a href="prototypes/filter-map/index.html">Map Tool</a>
+            </div>
+        </div>
+
+        <!-- map -->
+        <div class="row">
+            <div id="col-map" class="column">
+                <div class="row display-title left">
+                    <p class="label-title">map</p>
+                </div>
+                <div class="row display-title right">
+                    <p id="data-title">&nbsp;</p>
+                    <p id="data-subtitle">&nbsp;</p>
+                </div>
+                <div id="storyMap-container"></div>
+            </div>
+            <div id="col-chart" class="column">
+                <div class="row display-title">
+                    <div class="row display-title">
+                        <p id='chart-label' class="label-title">data chart</p>
+                        <p id='chart-title'>&nbsp;</p>
+                        <p id='chart-subtitle'>&nbsp;</p>
+                    </div>
+                </div>
+                <div id='chart-container' class="row"></div>
+            </div>
+        </div>
+    </div>
 </div>

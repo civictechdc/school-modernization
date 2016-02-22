@@ -7,17 +7,36 @@
         <script src="static/angular/lib/angular-route.js"></script>
     </head>
     <body>
-        <div id="wrap">
-            <h1 id="header">The Post Modernization Story</h1>
-            <div id="navigation" ng-controller="navCtrl">
-                <h3>Index</h3>
-                <ol>
-                    <li class="index-item" ng-repeat="path in paths">
-                    <a href="#/story/{{ path.path }}" ng-click="callSetPath($index)">{{ path.text }}</a>
-                    </li>
-                </ol>
+
+        <!-- ======= ======= header ======= ======= =======-->
+        <div class="header row">
+            <div class="column col-md-12">
+                <h1 id="page-title">The Post Modernization Story</h1>
             </div>
-            <div id="narrative" ng-view >
+        </div>
+
+        <!-- ======= ======= header ======= ======= =======-->
+        <div class="content row">
+            <div class="column col-md-2">
+                <div id="navigation" ng-controller="navCtrl">
+                    <h3>Index</h3>
+                    <ol>
+                        <li class="index-item" ng-repeat="path in paths">
+                        <a href="#/story/{{ path.path }}" ng-click="callSetPath($index)">{{ path.text }}</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="column col-md-10">
+                <div id="narrative" ng-view ></div>
+            </div>
+        </div>
+
+
+        <!-- ======= ======= footer ======= ======= =======-->
+        <div class="footer row">
+            <div class="column col-md-12">
+                <p id="footer">footer text goes here</p>
             </div>
         </div>
 
