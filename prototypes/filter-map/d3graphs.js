@@ -48,10 +48,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var fillColors = zonesCollectionObj.dataColorsArray;
     if (displayObj.displayMode != "storyMap") {
         var schoolCircleX = 50;
+        var schoolCircleR = 5;
     } else {
         var schoolCircleX = -30;
+        var schoolCircleR = 2;
     }
-    var schoolCircleR = 5;
 
     // ======= chart formatting =======
     if (displayObj.displayMode != "storyMap") {
