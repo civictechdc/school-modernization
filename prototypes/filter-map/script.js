@@ -110,6 +110,13 @@ function initApp(presetMode) {
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
 
+
+    // ======= ======= ======= initFilterMenus2 ======= ======= =======
+    Display.prototype.initFilterMenus2 = function() {
+        console.log("initFilterMenus2");
+
+    }
+
     // ======= ======= ======= initFilterMenus ======= ======= =======
     Display.prototype.initFilterMenus = function() {
         console.log("initFilterMenus");
@@ -746,9 +753,15 @@ function initApp(presetMode) {
 
         var self = this;
 
+        if ((displayObj.displayMode == "storyMap")  || (displayObj.displayMode == "toolMap")) {
+            var websitePrefix = "prototypes/filter-map/";
+        } else {
+            var websitePrefix = "";
+        }
+
         // ======= get selected data =======
         $.ajax({
-            url: "Data_Schools/DCPS_Master_114_dev.csv",
+            url: "Data_Schools/DC_OpenSchools_Master_214.csv",
             method: "GET",
             dataType: "text"
         }).done(function(textData) {
@@ -788,7 +801,7 @@ function initApp(presetMode) {
         var self = this;
         var presetMode = displayObj.displayMode;
 
-        if (displayObj.displayMode == "storyMap") {
+        if ((displayObj.displayMode == "storyMap")  || (displayObj.displayMode == "toolMap")) {
             var websitePrefix = "prototypes/filter-map/";
         } else {
             var websitePrefix = "";
@@ -1321,7 +1334,7 @@ function initApp(presetMode) {
             }
 
             // == show markers for available data
-            var iconSize = 0.2;
+            var iconSize = 0.15;
             var icon = {
                 path: "M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0",
                 fillColor: fillColor,
@@ -1515,9 +1528,10 @@ function initApp(presetMode) {
     console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
     if (displayObj.displayMode != "storyMap") {
-        displayObj.initFilterMenus();
+        this.jsonData = null;
+        // displayObj.initFilterMenus();
         displayObj.activateClearButton();
-        displayObj.setMenuItem("zones", "Ward");
+        // displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
         initFloatingWindows();

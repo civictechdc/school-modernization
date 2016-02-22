@@ -40,6 +40,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var yAxisTranslate;
     var barW = 20;
     var mathText = null;
+    var schoolCircleR = 6;
     var barScaleArray = [];
     var circleValuesArray = [];
     var labelTitleArray = [];
@@ -48,10 +49,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var fillColors = zonesCollectionObj.dataColorsArray;
     if (displayObj.displayMode != "storyMap") {
         var schoolCircleX = 50;
-        var schoolCircleR = 5;
     } else {
         var schoolCircleX = -30;
-        var schoolCircleR = 2;
     }
 
     // ======= chart formatting =======
