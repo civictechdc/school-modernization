@@ -439,19 +439,19 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 if (displayObj.displayMode != "storyMap") {
                     targetLabel = $('#dataChartLabel_' + i);
                     $(targetLabel).attr("visibility", "visible");
-                    targetMarkerIndex = this.id.split("_")[1];
-                    if (displayObj.dataFilters.zones == null) {
-                        schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                        schoolMarker.icon.fillColor = "white";
-                        schoolMarker.icon.scale = 0.4;
-                        schoolMarker.setMap(map);
-                    } else {
-                        multiLayerOffset = zoneBcount;
-                        toggleFeatureHilite((i + multiLayerOffset), "on");
-                    }
                 } else {
                     $("#data-title").text(labelTitleArray[i]);
                     $("#data-subtitle").text(labelSubtitleArray[i]);
+                }
+                targetMarkerIndex = this.id.split("_")[1];
+                if (displayObj.dataFilters.zones == null) {
+                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                    schoolMarker.icon.fillColor = "white";
+                    schoolMarker.icon.scale = 0.4;
+                    schoolMarker.setMap(map);
+                } else {
+                    multiLayerOffset = zoneBcount;
+                    toggleFeatureHilite((i + multiLayerOffset), "on");
                 }
             });
 
@@ -461,19 +461,19 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 if (displayObj.displayMode != "storyMap") {
                     targetLabel = $('#dataChartLabel_' + i);
                     $(targetLabel).attr("visibility", "hidden");
-                    targetMarkerIndex = this.id.split("_")[1];
-                    if (displayObj.dataFilters.zones == null) {
-                        schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
-                        schoolMarker.icon.fillColor = schoolMarker.defaultColor;
-                        schoolMarker.icon.scale = 0.2;
-                        schoolMarker.setMap(map);
-                    } else {
-                        multiLayerOffset = zoneBcount;
-                        toggleFeatureHilite((i + multiLayerOffset), "off");
-                    }
                 } else {
                     $("#data-title").text("");
                     $("#data-subtitle").text("");
+                }
+                targetMarkerIndex = this.id.split("_")[1];
+                if (displayObj.dataFilters.zones == null) {
+                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
+                    schoolMarker.icon.fillColor = schoolMarker.defaultColor;
+                    schoolMarker.icon.scale = 0.2;
+                    schoolMarker.setMap(map);
+                } else {
+                    multiLayerOffset = zoneBcount;
+                    toggleFeatureHilite((i + multiLayerOffset), "off");
                 }
             });
 
@@ -500,10 +500,16 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
         var zoneName = zoneFeature.getProperty('itemName');
         var zoneIndex = zoneFeature.getProperty('index');
-        var itemColor = zoneFeature.getProperty('itemColor');
+        if (displayObj.displayMode != "storyMap") {
+            var itemColor = zoneFeature.getProperty('itemColor');
+        } else {
+            var itemColor = "white";
+        }
+
         if (onOrOff == "on") {
             map.data.overrideStyle(zoneFeature, {
                 fillOpacity: 1,
+                fillColor: itemColor,
                 strokeColor: "red"
             });
         } else {
