@@ -55,7 +55,7 @@ body {
 
 /* ======= content ======= */
 .tool-banner {
-    width: 100%;
+    /*width: 100%;*/
     height: 40px;
 }
 .tool-banner > a {
@@ -66,13 +66,13 @@ body {
 
 /* ======= bubble ======= */
 #col-bubble {
-    width: 280px;
+    width: 440px;
     margin: 0 2px;
 }
 
 /* ======= map ======= */
 #col-map {
-    width: 415px;
+    width: 300px;
     margin: 0 2px;
 }
 .display-title {
@@ -85,19 +85,18 @@ body {
     line-height: 40px;
 }
 .left {
-    width: 60%;
+    width: 40%;
     float: left;
     text-align: right;
     margin: 2px 0 0 2px;
 }
 .left > p {
-    text-align: right;
-    margin-right: 25px;
+    text-align: left;
 }
 .right {
     position: relative;
-    width: 40%;
-    left: 60%;
+    width: 60%;
+    left: 40%;
     margin: 2px 2px 0 0;
 }
 #storyMap-container {
@@ -105,19 +104,19 @@ body {
     left: 0;
     top: 8px;
     height: 300px;
-    width: 415px;
+    width: 300px;
     margin-bottom: 10px;
 }
 
 /* ======= data chart ======= */
 #col-chart {
-    width: 160px;
+    width: 140px;
     margin: 0 2px;
     padding: 0;
 }
 .label-title {
-    margin: 2px 0 0 0;
-    text-align: center;
+    margin: 2px 0 0 15px;
+    text-align: left;
     font-size: 16px;
     line-height: 16px;
     color: white;
@@ -170,11 +169,11 @@ body {
     position: relative;
     height: 100%;
     width: 100%;
-    margin: 8px 0 0 4px;
+    margin: 8px 0 0 -2px;
 }
 #chart {
     position: relative;
-    width: 160px;
+    width: 140px;
     height: 300px;
     background-color: #eee;
 }
@@ -199,7 +198,7 @@ path {
 /* ======= chart ======= */
 /*#chart-container {
     float: left;
-    width: 160px;
+    width: 140px;
     height: auto;
 }
 .title-container {
@@ -233,9 +232,9 @@ path {
 }
 #data-display {
     position: relative;
-    left: 160px;
+    left: 140px;
     top: 2px;
-    width: 415px;
+    width: 300px;
     height: 52px;
     font-size: 16px;
     color: white;

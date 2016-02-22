@@ -3,7 +3,7 @@
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount) {
     console.log("\n----- makeRankChart -----");
 
-    // ======= chart =======
+    // ======= ======= ======= chart html ======= ======= =======
     if (displayObj.displayMode != "storyMap") {
         var chartHtml = "<table id='chart'>";
         chartHtml += "<tr><td class='profile-banner' colspan=2>";
@@ -15,7 +15,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         var chartHtml = "<div id='chart'></div>";
     }
 
-    // == remove previous chart or profile html if any
+    // ======= remove previous chart or profile html if any =======
     if ($('#profile-container').find('#profile').length) {
         $("#profile").remove();
     }
@@ -34,10 +34,24 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         });
     }
 
-    // ======= formatting variables =======
+    // ======= ======= ======= formatting variables ======= ======= =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber;
+    var circleValue, nextDataObject;
+    var yAxisTranslate;
+    var barW = 20;
     var mathText = null;
+    var barScaleArray = [];
+    var circleValuesArray = [];
+    var labelTitleArray = [];
+    var labelSubtitleArray = [];
+    var barTicks = zonesCollectionObj.dataBins;
     var fillColors = zonesCollectionObj.dataColorsArray;
+    if (displayObj.displayMode != "storyMap") {
+        var schoolCircleX = 50;
+    } else {
+        var schoolCircleX = -30;
+    }
+    var schoolCircleR = 5;
 
     // ======= chart formatting =======
     if (displayObj.displayMode != "storyMap") {
@@ -50,11 +64,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
     }
 
-    // ======= school data =======
+    // ======= ======= ======= data variables ======= ======= =======
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
     var myJsonString = JSON.stringify(dataObjectsArray);
-
-    // ======= ======= ======= calculate min, max ======= ======= =======
     var dataMax = d3.max(dataObjectsArray, function(d) {
         if (displayObj.dataFilters.math == "spendAmount") {
             return d.zoneAmount;
@@ -89,32 +101,44 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             }
         }
     });
-    console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
-    console.log("  dataMax: ", dataMax);
-    console.log("  dataMin: ", dataMin);
 
-    // ======= bar data =======
-    var barW = 20;
-    var schoolCircleR = 5;
-    if (displayObj.displayMode != "storyMap") {
-        var schoolCircleX = 50;
-    } else {
-        var schoolCircleX = -30;
-    }
-
-    var barScaleArray = [];
-    var barTicks = zonesCollectionObj.dataBins;
+    // ======= bar formatting =======
     var barIncrement = dataMax/barTicks;
     for (var i = 1; i < (barTicks + 1); i++) {
         barScaleArray.push(parseInt(barIncrement * i));
     }
 
-    // ======= circle data =======
-    var circleValue;
-    var nextDataObject;
-    var circleValuesArray = [];
-    // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
-    // console.log("  dataObjectsArray: ", dataObjectsArray);
+    // ======= scale formating =======
+    if (dataMax > 1000000) {
+        scaleFactor = 1000000;
+        scaleLabel = "M";
+        scaleRound = 1000;
+        subtitle = " in $millions";
+    } else if ((dataMax > 1000) && (dataMax < 1000000)) {
+        scaleFactor = 1000;
+        scaleLabel = "K";
+        scaleRound = 10;
+        subtitle = " in $thousands";
+    } else {
+        scaleFactor = 1;
+        scaleLabel = "";
+        scaleRound = 0.01;
+        subtitle = " in dollars";
+    }
+
+    // ======= ======= ======= label/title formatting ======= ======= =======
+    labelTextArray = updateChartText(displayObj, filterMenu[displayObj.dataFilters.expend].text, subtitle);
+    mathText = labelTextArray[0];
+    schoolText = labelTextArray[1];
+    agencyText = labelTextArray[2];
+    if (schoolText.length > 0) {
+        schoolText = schoolText + " ";
+    }
+    if (agencyText.length > 0) {
+        agencyText = agencyText + " ";
+    }
+
+    // ======= ======= ======= circle Y positioning ======= ======= =======
     for (var i = 0; i < dataObjectsArray.length; i++) {
         nextDataObject = dataObjectsArray[i];
         if (displayObj.dataFilters.math == "spendAmount") {
@@ -133,51 +157,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             }
         }
         circleValuesArray.push(circleValue);
-        // console.log("  circleValue: ", circleValue);
     }
 
-    // ======= check math =======
+    // ======= ======= ======= check math ======= ======= =======
     console.log("  circleValuesArray: ", circleValuesArray);
     console.log("  barScaleArray: ", barScaleArray);
     console.log("  dataMax: ", dataMax);
     console.log("  dataMin: ", dataMin);
 
-    // ======= scale formating =======
-    if (dataMax > 1000000) {
-        scaleFactor = 1000000;
-        scaleLabel = "$M";
-        scaleRound = 1000;
-        subtitle = " in $millions";
-    } else if ((dataMax > 1000) && (dataMax < 1000000)) {
-        scaleFactor = 1000;
-        scaleLabel = "$K";
-        scaleRound = 10;
-        subtitle = " in $thousands";
-    } else {
-        scaleFactor = 1;
-        scaleLabel = "$";
-        scaleRound = 0.01;
-        subtitle = " in dollars";
-    }
-
-    // == set title/subtitle text to indicate selected expenditure
-    var labelTitleArray = [];
-    var labelSubtitleArray = [];
-    labelTextArray = updateChartText(displayObj, filterMenu[displayObj.dataFilters.expend].text, subtitle);
-    mathText = labelTextArray[0];
-    schoolText = labelTextArray[1];
-    agencyText = labelTextArray[2];
-    console.log("  mathText: ", mathText);
-    console.log("  schoolText: ", schoolText);
-    console.log("  agencyText: ", agencyText);
-    if (schoolText.length > 0) {
-        schoolText = schoolText + " ";
-    }
-    if (agencyText.length > 0) {
-        agencyText = agencyText + " ";
-    }
-
-    // ======= X SCALE =======
+    // ======= ======= ======= X SCALE ======= ======= =======
     var xScaleLabels = ["scale", "amount", "school"];
     var xScale = d3.scale.ordinal()         // maps input domain to output range
         .domain(xScaleLabels.map(function(d) {
@@ -186,7 +174,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         }))
         .range([0, chartW]);
 
-    // ======= Y SCALE =======
+        // ======= ======= ======= Y SCALE ======= ======= =======
     var yScale = d3.scale.linear()      // maps input domain to output range
         .domain([0, d3.max(barScaleArray, function(d, i) {
             // console.log("  d: ", d);
@@ -197,10 +185,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var yAxis = d3.svg.axis()
         .scale(yScale)          // specify left scale
         .orient("right")
-        .tickPadding(10)
+        .tickPadding(4)
+        .tickSize(30, 0)
         .tickValues(barScaleArray);
 
-    // ======= build svg objects =======
+    // ======= ======= ======= SVG ======= ======= =======
     var svg = d3.select("#chart").append("svg")
         .attr("width", chartW + (chartPadding.left + chartPadding.right))
         .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
@@ -208,24 +197,21 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
 
     // ======= yAxis =======
-    var yAxisTranslate;
     if (displayObj.displayMode != "storyMap") {
         yAxisTranslate = 0;
     } else {
-        yAxisTranslate = 100;
+        yAxisTranslate = 0;
     }
 
     svg.append("g")                 // g group element to contain about-to-be-generated axis elements
         .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
         .call(yAxis)                // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
-        .attr("transform", "translate(20, 0)")
+        .attr("transform", "translate(" + yAxisTranslate + ", 0)")
         .selectAll("text")
             .attr("class", "yLabels")
             .text(function(d) {
                 newD = parseInt(d/scaleFactor);
-                // newD2 = Math.ceil(newD/scaleRound)*scaleRound;
-                // console.log("  d/newD: ", d, " / ", newD);
-                return scaleLabel + " " + newD;
+                return "$" + newD + " " + scaleLabel;
             })
             .style("text-anchor", "start")
             .style("font-size", "10px");
@@ -238,15 +224,14 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .attr("class", "bar")
             .attr("x", function(d) {
                 if (displayObj.displayMode != "storyMap") {
-                    return 2;
+                    return 4;
                 } else {
                     return 0;
                 }
-
             })
             .attr("width", barW)
             .attr("y", function(d, i) {
-                if (i < (barTicks + 1)) {
+                if (i < (barTicks)) {
                     return yScale(d);
                 } else {
                     return null;
@@ -426,13 +411,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 if (lineArray.length > 1) {
                     lineArray.pop();                    // remove too-long word
                     labelTitleArray.push(lineArray.join(" "));
-                    // console.log("  labelTitleArray: ", labelTitleArray);
                     tspan.text(lineArray.join(" "));    // space before adding new tspan element
                     lineArray = [word];                 // add too-long word to line array
                     newX = parseInt(parseInt(x) + 5);   // offset values for new line (must be integer)
                     newY = parseInt(parseInt(y) + 14);
                     labelSubtitleArray.push(word);
-                    // console.log("  labelSubtitleArray: ", labelSubtitleArray);
                     tspan = text.append("tspan")        // make tspan for line 2
                         .text(word)
                         .attr("x", newX + "px")
@@ -447,7 +430,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= activateChartCircles =======
     function activateChartCircles(labelTitleArray, labelSubtitleArray) {
         console.log("activateChartCircles");
-        // console.log("  labelTitleArray: ", labelTitleArray);
 
         $('.dataChartValue').each(function(i) {
 
