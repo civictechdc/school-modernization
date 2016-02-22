@@ -496,7 +496,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= toggleFeatureHilite =======
     function toggleFeatureHilite(i, onOrOff) {
-        // console.log("toggleFeatureHilite");
+        console.log("toggleFeatureHilite");
         var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
         var zoneName = zoneFeature.getProperty('itemName');
         var zoneIndex = zoneFeature.getProperty('index');
