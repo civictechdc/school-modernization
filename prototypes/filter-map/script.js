@@ -170,7 +170,7 @@ function initApp(presetMode) {
                     } else if (whichFilter == "Charter") {
                         setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
                     }
-                    // updateFilterSelections(self, menuObject, "add");
+                    // displayFilterMessage(self, menuObject, "add");
                     break;
 
                 // == levels filter (ES, MS, HS)
@@ -189,7 +189,7 @@ function initApp(presetMode) {
                     } else {
                         zonesCollectionObj.zoneA = "Ward";
                     }
-                    // updateFilterSelections(self, menuObject, "add");
+                    // displayFilterMessage(self, menuObject, "add");
                     break;
 
                 // == expenditures filter (past, present, planed, etc.)
@@ -203,7 +203,7 @@ function initApp(presetMode) {
                         setMenuState(displayObj, self.expendMenu, ["A", "A", "S"]);
                     }
                     clearZoneAggregator(zonesCollectionObj);
-                    // updateFilterSelections(self, menuObject, "add");
+                    // displayFilterMessage(self, menuObject, "add");
                     break;
 
                 // == wards or feeder zones for map
@@ -222,12 +222,12 @@ function initApp(presetMode) {
                             self.dataFilters.levels = "ES";
                             setMenuState(displayObj, self.levelsMenu, ["D", "A", "S"]);
                             levelObject = filterMenu["Elem"];
-                            // updateFilterSelections(self, menuObject, levelObject);
+                            // displayFilterMessage(self, menuObject, levelObject);
                         } else if ((tempLevels == "MS") || (tempLevels == "HS") || (tempLevels == null))  {
                             self.dataFilters.levels = "MS";
                             setMenuState(displayObj, self.levelsMenu, ["D", "S", "A"]);
                             levelObject = filterMenu["Middle"];
-                            // updateFilterSelections(self, menuObject, levelObject);
+                            // displayFilterMessage(self, menuObject, levelObject);
                         }
 
                     } else if (whichFilter == "FeederMS") {
@@ -235,20 +235,20 @@ function initApp(presetMode) {
                         setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
                         setMenuState(displayObj, self.levelsMenu, ["D", "D", "S"]);
                         levelObject = filterMenu["Elem"];
-                        // updateFilterSelections(self, menuObject, levelObject);
+                        // displayFilterMessage(self, menuObject, levelObject);
 
                     // == elementarty zone selected
                     } else if (whichFilter == "Elementary") {
                         self.dataFilters.levels = "ES";
                         setMenuState(displayObj, self.zonesMenu, ["A", "A", "A"]);
                         setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
-                        // updateFilterSelections(self, menuObject, "add");
+                        // displayFilterMessage(self, menuObject, "add");
 
                     // == no zone or Ward selected
                     } else {
                         setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
                         setMenuState(displayObj, self.zonesMenu, ["S", "A", "A"]);
-                        // updateFilterSelections(self, menuObject, "add");
+                        // displayFilterMessage(self, menuObject, "add");
                     }
                     break;
             }
@@ -603,20 +603,6 @@ function initApp(presetMode) {
             // == clear menus (html) and filters (displayObj)
             checkFilterSelection(self, zonesCollectionObj);
             clearFilterSelctions();
-            clearMenuCategory("agency");
-            clearMenuCategory("levels");
-            clearMenuCategory("expend");
-            clearMenuCategory("zones");
-            self.filterTitlesArray = [];
-            self.dataFilters.agency = null;
-            self.dataFilters.levels = null;
-            self.dataFilters.expend = null;
-            self.dataFilters.zones = null;
-            zonesCollectionObj.zoneGeojson_A = null;
-            zonesCollectionObj.zoneGeojson_B = null;
-            zonesCollectionObj.zoneGeojson_AB = null;
-            zonesCollectionObj.aggregatorArray = [];
-            zonesCollectionObj.zoneA = "Ward";
 
             // == restore levels menu
             self.modFilterMenu(self.filterMenusArray[1]);
@@ -690,7 +676,7 @@ function initApp(presetMode) {
                     menuHtml += displayObj.makeFilterMenu(nextMenu);
                     filterElement.append(menuHtml);
                     displayObj.activateFilterMenu(nextMenu);
-                    // updateFilterSelections(displayObj, filterText, "remove");
+                    // displayFilterMessage(displayObj, filterText, "remove");
                     break;
                 } else {
                     console.log("No filter in this catagory");
@@ -730,7 +716,7 @@ function initApp(presetMode) {
                 case "agency":
                     self.dataFilters.agency = whichFilter;
                     clearZoneAggregator(zonesCollectionObj);
-                    updateFilterSelections(self, menuObject.text, "add");
+                    displayFilterMessage(self, menuObject.text, "add");
                     break;
 
                 // == levels filter (ES, MS, HS)
@@ -746,7 +732,7 @@ function initApp(presetMode) {
                     } else {
                         zonesCollectionObj.zoneA = "Ward";
                     }
-                    updateFilterSelections(self, menuObject.text, "add");
+                    displayFilterMessage(self, menuObject.text, "add");
                     break;
 
                 // == expenditures filter (past, present, planed, etc.)
@@ -754,7 +740,7 @@ function initApp(presetMode) {
                     self.dataFilters.expend = whichFilter;
                     self.makeSubMenu(self.expendMathMenu);
                     clearZoneAggregator(zonesCollectionObj);
-                    updateFilterSelections(self, menuObject.text, "add");
+                    displayFilterMessage(self, menuObject.text, "add");
                     break;
 
                 // == wards or feeder zones for map
@@ -775,21 +761,21 @@ function initApp(presetMode) {
                             if (tempLevels == "ES") {
                                 self.setMenuItem("levels", "Elem");
                                 self.dataFilters.levels = "ES";
-                                updateFilterSelections(self, filterMenu["Elem"].text, whichFilter);
+                                displayFilterMessage(self, filterMenu["Elem"].text, whichFilter);
                             } else {
                                 self.setMenuItem("levels", "Middle");
                                 self.dataFilters.levels = "MS";
-                                updateFilterSelections(self, filterMenu["Middle"].text, whichFilter);
+                                displayFilterMessage(self, filterMenu["Middle"].text, whichFilter);
                             }
                         } else if (whichFilter == "FeederMS") {
                             self.setMenuItem("levels", "Elem");
                             self.dataFilters.levels = "ES";
-                            updateFilterSelections(self, filterMenu["Elem"].text, whichFilter);
+                            displayFilterMessage(self, filterMenu["Elem"].text, whichFilter);
                         }
                         var modMenuObject = filterMenu["levels"];
                         self.activateFilterMenu(self.filterMenusArray[1]);
                     } else {
-                        updateFilterSelections(self, menuObject.text, "add");
+                        displayFilterMessage(self, menuObject.text, "add");
                     }
                     break;
             }
@@ -1040,7 +1026,7 @@ function initApp(presetMode) {
                     }
                     self.makeSchoolLayer();
                 } else {
-                    updateFilterSelections("Sorry, no schools matched criteria.  Click CLEAR");
+                    displayFilterMessage("Sorry, no schools matched criteria.  Click CLEAR");
                     clearProfileChart();
                 }
 
@@ -1350,7 +1336,7 @@ function initApp(presetMode) {
             // console.log("--- mouseover ---");
             var itemName = event.feature.getProperty('itemName');
             updateHoverText(itemName);
-            updateFilterSelections("Select zone or school");
+            displayFilterMessage("Select zone or school");
             if (map.get('clickedZone')!= event.feature ) {
                 map.data.overrideStyle(event.feature, {
                     fillColor: "white",
@@ -1395,7 +1381,7 @@ function initApp(presetMode) {
             displayObj.dataFilters.selectedZone = zoneName;
 
             updateHoverText(zoneName);
-            updateFilterSelections(displayObj, zoneName, "add");
+            displayFilterMessage(displayObj, zoneName, "add");
             de_activateZoneListeners(self);
 
             // displayObj.activateClearButton();
@@ -1650,10 +1636,10 @@ function initApp(presetMode) {
     function clearFilterSelctions() {
         console.log("clearFilterSelctions");
 
-        clearMenuCategory("agency");
-        clearMenuCategory("levels");
-        clearMenuCategory("expend");
-        clearMenuCategory("zones");
+        setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
+        setMenuState(displayObj, displayObj.levelsMenu, ["A", "A", "A"]);
+        setMenuState(displayObj, displayObj.expendMenu, ["A", "A", "A"]);
+        setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         displayObj.filterTitlesArray = [];
         displayObj.dataFilters.agency = null;
         displayObj.dataFilters.levels = null;
