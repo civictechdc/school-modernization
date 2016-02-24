@@ -101,6 +101,52 @@ noDup<-subset(dcFullNew,!(dcFullNew$Address %in% dupAddress$Address))
 allDup$unqBuilding<-rep(2,36)
 dcFullUpdated<-rbind(noDup,allDup)
 
+### Add in missing LEP
+updateLEP<-subset(dcFullUpdated,is.na(dcFullUpdated$Limited.English.Proficient) & !(is.na(dcFullUpdated$Total.Enrolled)))
+updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(18,20)]
+enroll_LEP_miss<-enroll[c(2,20:24)]
+fixedLEP<-join(updateLEP,enroll_LEP_miss,by="School.ID", type="left")
+fixedLEP$SPED<-fixedLEP$Level.1+fixedLEP$Level.2+fixedLEP$Level.3+fixedLEP$Level.4
+fixedLEP<-fixedLEP[-c(35:38)]
+goodstartLEP<-subset(dcFullUpdated,!(dcFullUpdated$School.ID %in% fixedLEP$School.ID))
+dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
+
+### Clean up school names
+dcFullUpdated$School1<-gsub("PCS","",dcFullUpdated$School)
+dcFullUpdated$School1<-gsub("EC","Education Campus",dcFullUpdated$School1)
+dcFullUpdated$School1<-gsub("ES","Elementary",dcFullUpdated$School1)
+dcFullUpdated$School1<-gsub("MS","Middle",dcFullUpdated$School1)
+dcFullUpdated$School1<-gsub("HS","High",dcFullUpdated$School1)
+dcFullUpdated$School1<-gsub("  "," ",dcFullUpdated$School1)
+dcFullUpdated$School1<-gsub("D C ","DC ",dcFullUpdated$School1)
+dcFullUpdated$School1<-gsub(" -|- ","-",dcFullUpdated$School1)
+dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Online","Community Academy CAPCS Online",
+                      ifelse(dcFullUpdated$School1=="Community Academy CA Online","Community Academy CAPCS Online",
+                        ifelse(dcFullUpdated$School1=="Columbia Heights Education Campus (CHEducation Campus)","Columbia Heights Education Campus (CHEC)",
+                          ifelse(dcFullUpdated$School1=="bowen","Bowen",
+                            ifelse(dcFullUpdated$School1=="brucemonroe-demolished","Bruce Monroe (demolished)",
+                              ifelse(dcFullUpdated$School1=="ferebeehope","Ferebee Hope",
+                                ifelse(dcFullUpdated$School1=="garnettpatterson","Garnett Patterson",
+                                  ifelse(dcFullUpdated$School1=="macfarland","Macfarland",
+                                    ifelse(dcFullUpdated$School1=="Malcolmx","Malcolm X",
+                                      ifelse(dcFullUpdated$School1=="marshall","Marshall",
+                                        ifelse(dcFullUpdated$School1=="mcterrell","Mcterrell",
+                                          ifelse(dcFullUpdated$School1=="mmwashingtion","MM Washington",
+                                            ifelse(dcFullUpdated$School1=="montgomery/kipp","Montgomery/Kipp",
+                                              ifelse(dcFullUpdated$School1=="prharris","PR Harris",
+                                                ifelse(dcFullUpdated$School1=="rhterrell","RH Terrell",
+                                                  ifelse(dcFullUpdated$School1=="ronbrown","Ron Brown",
+                                                    ifelse(dcFullUpdated$School1=="rudolph","Rudolph",
+                                                      ifelse(dcFullUpdated$School1=="shaw","Shaw",
+                                                        ifelse(dcFullUpdated$School1=="wilkinson","Wilkinson",
+                                                               dcFullUpdated$School1)))))))))))))))))))
+dcFullUpdated<-dcFullUpdated[-c(3)]
+colnames(dcFullUpdated)[c(35)]<-c("School")
+
+
+### Remove dots in colnames
+colnames(dcFullUpdated)[c(1,16,17,28)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+
 ### All schools except closed charters
 write.csv(dcFullUpdated,
           "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_214.csv",
@@ -108,13 +154,13 @@ write.csv(dcFullUpdated,
 
 ### All open schools (excluding Incarcerated Youth, Dorothy Haight, CHOICE at Emery and Youth Services Center)
 ### for mapping
-dcFullOpen<-subset(dcFullUpdated,dcFullUpdated$Open.Now==1)
+dcFullOpen<-subset(dcFullUpdated,dcFullUpdated$Open_Now==1)
 write.csv(dcFullOpen,
           "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_OpenSchools_Master_214.csv",
           row.names=FALSE)
 
 ### All schools - open and closed - for bubble
-bubble<-dcFullUpdated[c(2,3,5,8,11:16,21,25,26,29,30:32,35)]
+bubble<-dcFullUpdated[c(2,4,7,10:15,20,24,25,28,29:31,34,35)]
 
 dupSpend<-bubble[duplicated(bubble[,5]),]
 dupSpend<-subset(dupSpend,!(is.na(dupSpend$MajorExp9815)) & dupSpend$MajorExp9815!=0  )
@@ -124,7 +170,7 @@ allDup<-allDup[order(allDup$MajorExp9815),]
 Single<-allDup[!(duplicated(allDup[,2])),]
 bubbleNoDup<-subset(bubble,!(bubble$School %in% Single$School))
 bubbleXCC<-rbind(bubbleNoDup,Single)
-bubbleXCC<-bubbleXCC[-c(8)]
+bubbleXCC<-bubbleXCC[-c(7)]
 
 closedCharter<-closedCharter[c(1,2,6,7)]
 colnames(closedCharter)[c(1)]<-"School"
@@ -146,6 +192,8 @@ closedCharter$AnnualExpenseAverage<-blanks(closedCharter$AnnualExpenseAverage)
 closedCharter$AnnualSpentPerMaxOccupany<-blanks(closedCharter$AnnualSpentPerMaxOccupany)
 closedCharter$AnnualSpentPerSqFt<-blanks(closedCharter$AnnualSpentPerSqFt)
 closedCharter$Ward<-blanks(closedCharter$Ward)
+
+colnames(closedCharter)[c(3)]<-"Open_Now"
 
 bubbleFinal<-rbind(bubbleXCC,closedCharter)
 
