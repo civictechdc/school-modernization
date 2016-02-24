@@ -58,10 +58,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
             chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
             chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+        var yAxisLabel = "left";
     } else {
         var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
             chartW = 150 - chartPadding.left - chartPadding.right,       // outer width of chart
             chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+        var yAxisLabel = "right";
     }
 
     // ======= ======= ======= data variables ======= ======= =======
@@ -184,7 +186,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     var yAxis = d3.svg.axis()
         .scale(yScale)          // specify left scale
-        .orient("right")
+        .orient(yAxisLabel)
         .tickPadding(4)
         .tickSize(30, 0)
         .tickValues(barScaleArray);

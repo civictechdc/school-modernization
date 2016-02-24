@@ -249,13 +249,79 @@ function displayHoverMessage(displayObj, textMessage) {
 }
 
 
-// ======= ======= ======= updateFilterTitles ======= ======= =======
-function updateFilterTitles(displayObj, whichFilterText, addRemove) {
-    console.log("updateFilterTitles");
+// ======= ======= ======= setMenuState ======= ======= =======
+function setMenuState(whichMenu, whichStates) {
+    console.log("setMenuState");
+    console.log("  whichMenu[0]: ", whichMenu[0]);
+    console.log("  whichStates: ", whichStates);
+
+    for (var i = 0; i < whichStates.length; i++) {
+        nextState = whichStates[i];
+        nextMenuItem = whichMenu[i+1];
+        nextElement = $("#" + nextMenuItem.id);
+        console.log("  nextState: ", nextState);
+        console.log("  nextMenuItem: ", nextMenuItem);
+        console.log("  nextMenuItem.id: ", nextMenuItem.id);
+        console.log("  nextElement: ", nextElement);
+        if (nextState == "A") {
+            $(nextElement).addClass("active");
+            $(nextElement).removeClass("selected");
+            $(nextElement).removeClass("deactivated");
+        } else if (nextState == "D") {
+            $(nextElement).removeClass("active");
+            $(nextElement).removeClass("selected");
+            $(nextElement).addClass("deactivated");
+        } else if (nextState == "S") {
+            $(nextElement).removeClass("deactivated");
+            $(nextElement).addClass("active");
+            $(nextElement).addClass("selected");
+        }
+    }
+
+}
+
+// ======= ======= ======= updateFilterItem ======= ======= =======
+function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
+    console.log("updateFilterItem");
+    console.log("  whichCategory: ", whichCategory);
+    console.log("  whichFilter: ", whichFilter);
+    console.log("  onOrOff: ", onOrOff);
+
+    var nextMenu, nextCategory;
+
+    for (var i = 0; i < displayObj.filterMenusArray.length; i++) {
+        nextMenu = displayObj.filterMenusArray[i];
+        nextCategory = nextMenu[0];
+        console.log("  nextCategory: ", nextCategory);
+        if (nextCategory == whichCategory) {
+            for (var j = 1; j < nextMenu.length; j++) {
+                nextFilterObject = nextMenu[j];
+                console.log("  nextFilterObject.id: ", nextFilterObject.id );
+                if ((nextFilterObject.id == whichFilter) && (onOrOff == undefined)) {
+                    $("#" + nextFilterObject.id).addClass("selected");
+                    console.log("  selected: ", nextFilterObject.id );
+                } else if ((nextFilterObject.id == whichFilter) && (onOrOff == "off")) {
+                    $("#" + nextFilterObject.id).addClass("deactivated");
+                    console.log("  deactivated: ", nextFilterObject.id );
+                } else if ((nextFilterObject.id == whichFilter) && (onOrOff == "on")) {
+                    $("#" + nextFilterObject.id).removeClass("deactivated");
+                    console.log("  deactivated: ", nextFilterObject.id );
+                } else {
+                    $("#" + nextFilterObject.id).removeClass("selected");
+                }
+            }
+            break;
+        }
+    }
+}
+
+// ======= ======= ======= updateFilterSelections ======= ======= =======
+function updateFilterSelections(displayObj, whichFilterText, addRemove) {
+    console.log("updateFilterSelections");
     console.log("  whichFilterText: ", whichFilterText);
     console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
 
-    var filterTitleContainer = $("#filters-title").children("h2");
+    var filterTitleContainer = $("#filters-selections").children("h2");
     var filterText = $(filterTitleContainer).html();
     var checkArray;
 
@@ -916,7 +982,7 @@ function makeZoneGeometry(feature) {
 function mouseoverZone(event, itemName) {
     console.log("mouseoverZone");
     updateHoverText(itemName);
-    updateFilterTitles("Select zone or school");
+    updateFilterSelections("Select zone or school");
     if (map.get('clickedZone')!= event.feature ) {
         map.data.overrideStyle(event.feature, {
             fillColor: "white",

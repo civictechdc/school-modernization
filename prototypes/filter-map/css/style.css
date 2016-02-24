@@ -45,8 +45,182 @@ hr {
     border: 1px solid rgba(86,61,124,.2);*/
 }
 
+/* ======= title ======= */
+.page-title > h1 {
+    display: block;
+    margin: 10px;
+    text-align: left;
+    color: black;
+}
+
+/* ======= filter selections ======= */
+#filters-selections {
+    width: 60%;
+    float: left;
+    padding-right: 20px;
+    background-color: darkslateblue;
+}
+#filters-selections > h2 {
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+    font-size: 16px;
+    font-style: italic;
+    text-align: right;
+    color: gray;
+}
+#filters-selections > h2.filterList {
+    display: block;
+    margin: 10px 20px 10px 0;
+    width: 100%;
+    font-size: 16px;
+    text-align: right;
+    color: white;
+}
+.filterLabel {
+    font-style: normal;
+    color: red;
+}
+
 /* ======= filters ======= */
-.filter-container {
+#popup {
+    width: 360px;
+    height: auto;
+    position: absolute;
+    top: 60px;
+    left: 65%;
+    background-color: #fff2e5;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 2px 2px;
+    z-index:99;
+}
+#filters-table {
+    text-align: center;
+    border: 1px solid black;
+}
+.filters-banner {
+    height: 50px;
+    text-align: center;
+    background-color: firebrick;
+}
+#filter-title, #filter-subtitle {
+    margin: 2px 0;
+    color: white;
+}
+#filter-title {
+    display: inline-block;
+    font-size: 16px;
+}
+#clear-button {
+    display: inline-block;
+    height: 22px;
+    width: 70px;
+    left: 90%;
+    margin-left: 60px;
+    border-radius: 2px 2px 2px 2px;
+    background-color: darkviolet;
+    border: solid 2px black;
+    z-index: 99999;
+}
+.btn-text {
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+#clear-button:hover {
+    background-color: orchid ;
+}
+#clear-button:hover > span {
+    /*color: purple;*/
+}
+.filter-row {
+    width: 100%;
+    height: 50px;
+    padding: 2px;
+    background-color: #d8daeb;
+}
+.filter-label {
+    width: 100px;
+    padding-right: 10px;
+    text-align: right;
+}
+.filter {
+    position: relative;
+    width: 50px;
+    height: 36px;
+    margin: 2px;
+    padding: 0 4px;
+    text-align: center;
+    border-radius: 25px;
+    /*background-color: red;*/
+    background-color: #fdb863;
+}
+.filter2 {
+    position: relative;
+    width: 120px;
+    height: 40px;
+    margin: 2px 6px;
+    padding: 0;
+    text-align: center;
+    border-radius: 25px;
+    /*background-color: red;*/
+    background-color: #fdb863;
+}
+.filter4 {
+    position: relative;
+    width: 240px;
+    height: 36px;
+    margin: 2px 12px;
+    padding: 0;
+    text-align: center;
+    border-radius: 25px;
+    /*background-color: red;*/
+    background-color: #fdb863;
+}
+.filter-link {
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    line-height: 36px;
+    margin: 0;
+}
+.active:hover {
+    background-color: #e08214;
+    /*background-color: green;*/
+}
+.active:hover > a {
+    /*color: #d8daeb;*/
+    color: white;
+}
+.selected {
+    background-color: purple;
+}
+.selected > a {
+    /*color: #d8daeb;*/
+    color: white;
+}
+.selected:hover {
+    background-color: #8073ac;
+    /*background-color: purple;*/
+}
+.selected:hover > a {
+    /*color: #d8daeb;*/
+    color: white;
+}
+.deactivated {
+    background-color: #eee;
+}
+.deactivated > a {
+    /*color: #d8daeb;*/
+    color: gray;
+}
+
+
+/* ======= filters ======= */
+/*.filter-container {
     width: 360px;
     height: auto;
     position: absolute;
@@ -74,12 +248,6 @@ table, th, td {
     position: relative;
     width:100%;
 }
-.filter-title {
-
-}
-.filter-subtitle {
-
-}
 .filter-label {
     position: relative;
     width: 80px;
@@ -98,43 +266,7 @@ td > .filter {
 }
 .filter-blank {
     background-color: green;
-}
-
-/* ======= title ======= */
-.page-title > h1 {
-    display: block;
-    margin: 10px;
-    text-align: left;
-    color: black;
-}
-
-/* ======= filters ======= */
-#filters-title {
-    width: 60%;
-    float: left;
-    background-color: darkslateblue;
-}
-#filters-title > h2 {
-    display: block;
-    margin: 10px;
-    width: 100%;
-    font-size: 16px;
-    font-style: italic;
-    text-align: right;
-    color: gray;
-}
-#filters-title > h2.filterList {
-    display: block;
-    margin: 10px;
-    width: 100%;
-    font-size: 16px;
-    text-align: right;
-    color: white;
-}
-.filterLabel {
-    font-style: normal;
-    color: red;
-}
+}*/
 
 /* ======= buttons ======= */
 #zone-school-button {
@@ -194,63 +326,6 @@ td > .filter {
     height: 300px;
     top: 120px;
 }
-
-/* ======= filter window ======= */
-#popup {
-    width: 360px;
-    height: auto;
-    position: absolute;
-    top: 60px;
-    left: 65%;
-    background-color: #fff2e5;
-    box-shadow: 4px 4px 4px #555;
-    border-radius: 6px 6px 2px 2px;
-    z-index:99;
-}
-.title_bar {
-    width: 100%;
-    position: relative;
-    height: 24px;
-    margin 0;
-    padding: 1px 0 16px 0;
-    text-align: center;
-    background-color: firebrick;
-    border-radius: 6px 6px 0 0;
-    cursor:move;
-}
-.title_bar > p {
-    display: inline-block;
-    margin-top: 8px;
-    font-weight: 700;
-	font-size: 16px;
-    color: white;
-}
-#clear-button {
-    /*position: relative;*/
-    display: inline-block;
-    height: 22px;
-    width: 70px;
-    left: 90%;
-    margin-left: 60px;
-    border-radius: 2px 2px 2px 2px;
-    background-color: darkviolet;
-    border: solid 2px black;
-    z-index: 99999;
-}
-.btn-text {
-    line-height: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-}
-#clear-button:hover {
-    background-color: orchid ;
-}
-#clear-button:hover > span {
-    /*color: purple;*/
-}
-
 
 /* ======= navbar ======= */
 /*.labelText {

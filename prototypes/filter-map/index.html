@@ -26,29 +26,59 @@
 		<!-- ======= ======= ======= tabs ======= ======= ======= -->
 		<div class="row header">
 			<div class="page-title"><h1>DCPS School Modernization Tool</h1></div>
-			<div id="filters-title" class="banner"><h2>your filters</h2></div>
-			<div id='zone-school-button'><span class='btn-text'>schools</span></div>
+			<div id="filters-selections"><h2>your filters</h2></div>
 		</div>
 
 		<!-- ======= ======= ======= content ======= ======= ======= -->
 		<div class="row content">
 
-			<!-- ======= map ======= -->
+			<!-- ======= filters ======= -->
 			<div class="column col-md-12 mapCol">
-				<!-- <button id="btn_popup">popup</button> -->
-				<div id="tooltips"></div>
-				<div id="popup">
-					<div id="drag_bar" class="title_bar">
-						<p>filters</p>
-						<div id='clear-button'><span class='btn-text'>clear</span></div>
-					</div>
-					<nav id="main-nav"></nav>
-				</div>
+                <div id="popup" class="filter-container">
+                    <table id="filters-table">
+                        <tr id="drag_bar" class="filters-banner">
+                            <td class="title-text" colspan=5>
+								<p id="filter-title">filters</p>
+								<div id='clear-button'><span class='btn-text'>clear</span></div>
+                            </td>
+                        </tr>
+                        <tr class="filter-row">
+                            <td class="filter-label">who</td>
+                            <td><div id="District" class="filter agency active"><a href="#" class="filter-link">DCPS</a></div></td>
+                            <td><div id="Charter" class="filter agency active"><a href="#" class="filter-link">PCS</a></div></td>
+                            <td class="filter-blank">&nbsp;</td>
+                            <td class="filter-blank">&nbsp;</td>
+                        </tr>
+                        <tr class="filter-row">
+                            <td class="filter-label">what</td>
+                            <td><div id="High" class="filter levels active"><a href="#" class="filter-link">HS</a></div></td>
+                            <td><div id="Middle" class="filter levels active"><a href="#" class="filter-link">MS</a></div></td>
+                            <td><div id="Elem" class="filter levels active"><a href="#" class="filter-link">ES</a></div></td>
+                            <td class="filter-blank"></td>
+                        </tr>
+                        <tr class="filter-row">
+                            <td class="filter-label">where</td>
+                            <td><div id="Ward" class="filter zones active"><a href="#" class="filter-link">W</a></div></td>
+                            <td><div id="FeederHS" class="filter zones active"><a href="#" class="filter-link">HS</a></div></td>
+                            <td><div id="FeederMS" class="filter zones active"><a href="#" class="filter-link">MS</a></div></td>
+                            <td><div id="Elementary" class="filter zones active"><a href="#" class="filter-link">ES</a></div></td>
+                        </tr>
+                        <tr class="filter-row">
+                            <td class="filter-label">money</td>
+                            <td colspan="2"><div id="spendPast" class="filter2 expend active"><a href="#" class="filter-link">past</a></div></td>
+                            <td colspan="2"><div id="spendPlanned" class="filter2 expend active"><a href="#" class="filter-link">future</a></div></td>
+                        </tr>
+                        <tr class="filter-row">
+                            <td class="filter-label">&nbsp;</td>
+                            <td colspan="4"><div id="spendLifetime" class="filter4 expend active"><a href="#" class="filter-link">total budget</a></div></td>
+                        </tr>
+                    </table>
+                </div>
 
 				<div id="toolMap-container"></div>
 				<div id='profile-container'></div>
-				<div id='legend-container'></div>
 		        <div id='chart-container'></div>
+
 			</div>
 		</div>
 
