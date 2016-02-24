@@ -94,7 +94,19 @@ hr {
     border-radius: 6px 6px 2px 2px;
     z-index:99;
 }
+.filter-container {
+    width: 360px;
+    height: auto;
+    position: absolute;
+    top: 60px;
+    left: 65%;
+    background-color: #white;
+    box-shadow: 4px 4px 4px #555;
+    border-radius: 6px 6px 2px 2px;
+    z-index:99;
+}
 #filters-table {
+    width: 100%;
     text-align: center;
     border: 1px solid black;
 }

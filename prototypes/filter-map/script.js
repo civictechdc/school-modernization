@@ -29,6 +29,7 @@ function initApp(presetMode) {
         // == District, Charter
         filterMenu.District = { id:"District", category:"schools", text:"District Schools", column:"Agency", value:"DCPS" };
         filterMenu.Charter = { id:"Charter", category:"schools", text:"Charter Schools", column:"Agency", value:"PCS" };
+        filterMenu.All = { id:"All", category:"schools", text:"All Schools", column:"Agency", value:"All" };
 
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
         filterMenu.Elem = { id:"Elem", category:"schools", text:"Elementary Schools", column:"Level", value:"ES" };
@@ -55,9 +56,9 @@ function initApp(presetMode) {
     function Display() {
         console.log("Display");
         this.displayMode = null;
-        this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter];
+        this.agencyMenu = ["agency", filterMenu.All, filterMenu.District, filterMenu.Charter];
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
-        this.expendMenu = ["expend", filterMenu.spendPast, filterMenu.spendPlanned, filterMenu.spendLifetime];
+        this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.spendPast, filterMenu.spendPlanned];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
         this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
         this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.expendMenu, this.zonesMenu];
@@ -162,8 +163,14 @@ function initApp(presetMode) {
                 case "agency":
                     self.dataFilters.agency = whichFilter;
                     clearZoneAggregator(zonesCollectionObj);
-                    updateFilterItem(self, whichCategory, whichFilter);
-                    updateFilterSelections(self, menuObject.text, "add");
+                    if (whichFilter == "All") {
+                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
+                    } else if (whichFilter == "District") {
+                        setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
+                    } else if (whichFilter == "Charter") {
+                        setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
+                    }
+                    // updateFilterSelections(self, menuObject, "add");
                     break;
 
                 // == levels filter (ES, MS, HS)
@@ -172,29 +179,31 @@ function initApp(presetMode) {
                     zonesCollectionObj.aggregatorArray = [];
                     if (whichValue == "HS") {
                         zonesCollectionObj.zoneA = "FeederHS";
+                        setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
                     } else if (whichValue == "MS") {
                         zonesCollectionObj.zoneA = "FeederMS";
+                        setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
                     } else if (whichValue == "ES") {
                         zonesCollectionObj.zoneA = "Elementary";
+                        setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
                     } else {
                         zonesCollectionObj.zoneA = "Ward";
                     }
-                    updateFilterItem(self, whichCategory, whichFilter);
-                    updateFilterSelections(self, menuObject.text, "add");
+                    // updateFilterSelections(self, menuObject, "add");
                     break;
 
                 // == expenditures filter (past, present, planed, etc.)
                 case "expend":
                     self.dataFilters.expend = whichFilter;
-                    if (whichFilter == "spendPast") {
-                        setMenuState(self.expendMenu, ["S", "A", "A"]);
+                    if (whichFilter == "spendLifetime") {
+                        setMenuState(displayObj, self.expendMenu, ["S", "A", "A"]);
+                    } else if (whichFilter == "spendPast") {
+                        setMenuState(displayObj, self.expendMenu, ["A", "S", "A"]);
                     } else if (whichFilter == "spendPlanned") {
-                        setMenuState(self.expendMenu, ["A", "S", "A"]);
-                    } else if (whichFilter == "spendLifetime") {
-                        setMenuState(self.expendMenu, ["A", "A", "S"]);
+                        setMenuState(displayObj, self.expendMenu, ["A", "A", "S"]);
                     }
                     clearZoneAggregator(zonesCollectionObj);
-                    updateFilterSelections(self, menuObject.text, "add");
+                    // updateFilterSelections(self, menuObject, "add");
                     break;
 
                 // == wards or feeder zones for map
@@ -204,42 +213,42 @@ function initApp(presetMode) {
                     zonesCollectionObj.aggregatorArray = [];
                     zonesCollectionObj.zoneGeojson_AB = null;
 
-                    // == modify levels menu to remove HS and/or MS options for feeders
-                    if ((whichFilter == "FeederHS") || (whichFilter == "FeederMS")) {
-
-                        // == reset levels menu to previously selected level
-                        if (whichFilter == "FeederHS") {
-                            setMenuState(self.zonesMenu, ["A", "S", "A", "A"]);
-                            tempLevels = self.dataFilters.levels;
-                            console.log("  tempLevels: ", tempLevels);
-                            if (tempLevels == "ES") {
-                                self.dataFilters.levels = "ES";
-                                setMenuState(self.levelsMenu, ["D", "A", "S"]);
-                                updateFilterSelections(self, filterMenu["Elem"].text, whichFilter);
-                            } else if ((tempLevels == "MS") || (tempLevels == null))  {
-                                self.dataFilters.levels = "MS";
-                                setMenuState(self.levelsMenu, ["D", "S", "A"]);
-                                updateFilterSelections(self, filterMenu["Middle"].text, whichFilter);
-                            }
-                        } else if (whichFilter == "FeederMS") {
-                            setMenuState(self.zonesMenu, ["A", "A", "S", "A"]);
+                    // == reset levels menu to previously selected level
+                    if (whichFilter == "FeederHS") {
+                        setMenuState(displayObj, self.zonesMenu, ["A", "S", "A"]);
+                        tempLevels = self.dataFilters.levels;
+                        console.log("  tempLevels: ", tempLevels);
+                        if (tempLevels == "ES") {
                             self.dataFilters.levels = "ES";
-                            setMenuState(self.levelsMenu, ["D", "D", "S"]);
-                            updateFilterSelections(self, filterMenu["Elem"].text, whichFilter);
+                            setMenuState(displayObj, self.levelsMenu, ["D", "A", "S"]);
+                            levelObject = filterMenu["Elem"];
+                            // updateFilterSelections(self, menuObject, levelObject);
+                        } else if ((tempLevels == "MS") || (tempLevels == "HS") || (tempLevels == null))  {
+                            self.dataFilters.levels = "MS";
+                            setMenuState(displayObj, self.levelsMenu, ["D", "S", "A"]);
+                            levelObject = filterMenu["Middle"];
+                            // updateFilterSelections(self, menuObject, levelObject);
                         }
 
-                    // == elementarty zone selected
-                    } else if (whichFilter == "Elem") {
-                        setMenuState(self.zonesMenu, ["A", "A", "A", "S"]);
+                    } else if (whichFilter == "FeederMS") {
                         self.dataFilters.levels = "ES";
-                        setMenuState(self.levelsMenu, ["A", "A", "A"]);
-                        updateFilterSelections(self, filterMenu["Elem"].text, whichFilter);
+                        setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
+                        setMenuState(displayObj, self.levelsMenu, ["D", "D", "S"]);
+                        levelObject = filterMenu["Elem"];
+                        // updateFilterSelections(self, menuObject, levelObject);
+
+                    // == elementarty zone selected
+                    } else if (whichFilter == "Elementary") {
+                        self.dataFilters.levels = "ES";
+                        setMenuState(displayObj, self.zonesMenu, ["A", "A", "A"]);
+                        setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
+                        // updateFilterSelections(self, menuObject, "add");
 
                     // == no zone or Ward selected
                     } else {
-                        setMenuState(self.levelsMenu, ["A", "A", "A"]);
-                        setMenuState(self.zonesMenu, ["S", "A", "A", "A"]);
-                        updateFilterSelections(self, menuObject.text, "add");
+                        setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
+                        setMenuState(displayObj, self.zonesMenu, ["S", "A", "A"]);
+                        // updateFilterSelections(self, menuObject, "add");
                     }
                     break;
             }
@@ -681,7 +690,7 @@ function initApp(presetMode) {
                     menuHtml += displayObj.makeFilterMenu(nextMenu);
                     filterElement.append(menuHtml);
                     displayObj.activateFilterMenu(nextMenu);
-                    updateFilterSelections(displayObj, filterText, "remove");
+                    // updateFilterSelections(displayObj, filterText, "remove");
                     break;
                 } else {
                     console.log("No filter in this catagory");
@@ -1676,7 +1685,8 @@ function initApp(presetMode) {
         displayObj.activateFilterMenus();
         // displayObj.initFilterMenus();
         displayObj.activateClearButton();
-        updateFilterItem(displayObj, "zones", "Ward");
+        setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
+        setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         // displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");

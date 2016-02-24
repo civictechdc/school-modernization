@@ -53,6 +53,8 @@ function getZoneUrls(displayObj, zonesCollectionObj) {
             zonesCollectionObj.zoneA = "FeederMS";
             urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
             urlB = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
+        } else if (displayObj.dataFilters.zones == "Elementary") {
+            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
         }
     } else {
         if (displayObj.dataFilters.levels == "HS") {
@@ -136,7 +138,7 @@ function processSchoolName(schoolName) {
 
 // ======= ======= ======= checkFilterSelection ======= ======= =======
 function checkFilterSelection(displayObj, zonesCollectionObj, whichCategory) {
-    console.log("checkFilterSelection");
+    console.log("##### checkFilterSelection #####");
 
     console.log("  whichCategory: ", whichCategory);
     console.log("  zoneA: ", zonesCollectionObj.zoneA);
@@ -249,37 +251,6 @@ function displayHoverMessage(displayObj, textMessage) {
 }
 
 
-// ======= ======= ======= setMenuState ======= ======= =======
-function setMenuState(whichMenu, whichStates) {
-    console.log("setMenuState");
-    console.log("  whichMenu[0]: ", whichMenu[0]);
-    console.log("  whichStates: ", whichStates);
-
-    for (var i = 0; i < whichStates.length; i++) {
-        nextState = whichStates[i];
-        nextMenuItem = whichMenu[i+1];
-        nextElement = $("#" + nextMenuItem.id);
-        console.log("  nextState: ", nextState);
-        console.log("  nextMenuItem: ", nextMenuItem);
-        console.log("  nextMenuItem.id: ", nextMenuItem.id);
-        console.log("  nextElement: ", nextElement);
-        if (nextState == "A") {
-            $(nextElement).addClass("active");
-            $(nextElement).removeClass("selected");
-            $(nextElement).removeClass("deactivated");
-        } else if (nextState == "D") {
-            $(nextElement).removeClass("active");
-            $(nextElement).removeClass("selected");
-            $(nextElement).addClass("deactivated");
-        } else if (nextState == "S") {
-            $(nextElement).removeClass("deactivated");
-            $(nextElement).addClass("active");
-            $(nextElement).addClass("selected");
-        }
-    }
-
-}
-
 // ======= ======= ======= updateFilterItem ======= ======= =======
 function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
     console.log("updateFilterItem");
@@ -315,106 +286,234 @@ function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
     }
 }
 
-// ======= ======= ======= updateFilterSelections ======= ======= =======
-function updateFilterSelections(displayObj, whichFilterText, addRemove) {
-    console.log("updateFilterSelections");
-    console.log("  whichFilterText: ", whichFilterText);
-    console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
+// ======= ======= ======= setMenuState ======= ======= =======
+function setMenuState(displayObj, whichMenu, whichStates) {
+    console.log("\nsetMenuState");
+    console.log("  whichMenu[0]: ", whichMenu[0]);
+    console.log("  whichStates: ", whichStates);
+    console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
 
-    var filterTitleContainer = $("#filters-selections").children("h2");
-    var filterText = $(filterTitleContainer).html();
-    var checkArray;
+    var selectedFilterContainer = $("#filters-selections").children("h2");
+    var selectedFilterText = $(selectedFilterContainer).html();
 
-    // == add message for user (not filter selections)
-    if (typeof displayObj == "string") {
-        filterText = "<span class='filterLabel'>Message: </span>";
-        filterText += displayObj;
-        $(filterTitleContainer).addClass("filterList");
-
-    // == add filter selections
-    } else {
-
-        // == selected zone filter
-        if ((displayObj.dataFilters.selectedZone != null) && (addRemove == "add")) {
-            displayObj.filterTitlesArray = [];
-            displayObj.filterTitlesArray.push(whichFilterText);
-            filterText = "<span class='filterLabel'>Selected Zone: </span>" + whichFilterText;
-            $(filterTitleContainer).addClass("filterList");
-
-        // == no selected zone (normal filter processing)
-        } else {
-            if ((addRemove == "add") || (addRemove == "FeederHS") || (addRemove == "FeederMS")) {
-                console.log("  addRemove: ", addRemove);
-                // if (displayObj.filterTitlesArray.length == 1) {
-                //     console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
-                //     filterText = "<span class='filterLabel'>Data for: </span>" + whichFilterText;
-                // } else {
-
-                    // == remove previously selected levels filters (added back based on zone selection)
-                    if ((addRemove == "FeederHS") || (addRemove == "FeederMS")) {
-                        console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
-                        removeItemsArray = ["High Schools", "Middle Schools", "Elementary Schools", "FeederHS", "FeederMS"];
-                        for (var i = 0; i < removeItemsArray.length; i++) {
-                            checkItem = removeItemsArray[i];
-                            checkArray = $.inArray(checkItem, displayObj.filterTitlesArray);
-                            if (checkArray > -1) {
-                                displayObj.filterTitlesArray.splice(checkArray, 1);
-                            }
-                        }
-                        displayObj.filterTitlesArray.push(addRemove);
-                    }
-                    displayObj.filterTitlesArray.push(whichFilterText);
-                    console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
-
-                    // == build new filter text html from filterTitlesArray
-                    filterText = "<span class='filterLabel'>Data for: </span>";
-                    if (displayObj.filterTitlesArray.length > 0) {
-                        for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                            nextFilter = displayObj.filterTitlesArray[i];
-                            if (i == (displayObj.filterTitlesArray.length - 1)) {
-                                filterText += whichFilterText;
-                            } else {
-                                filterText += nextFilter + ", ";
-                            }
-                        }
-                    }
-                // }
-                $(filterTitleContainer).addClass("filterList");
-
-            // == removing previous filters
-            } else {
-
-                // == find selected filter (whichFilterText) in array and remove it
-                for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                    checkFilter = displayObj.filterTitlesArray[i];
-                    if (checkFilter == whichFilterText) {
-                        displayObj.filterTitlesArray.splice(i, 1);
-                        break;
-                    }
-                }
-
-                // == all filters have been removed; return to init state
-                if (displayObj.filterTitlesArray.length == 0) {
-                    filterText = "your filters";
-                    $(filterTitleContainer).removeClass("filterList");
-
-                // == display remaining filters after removing selected filter
-                } else {
-                    filterText = "<span class='filterLabel'>Data for: </span>";
-                    for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
-                        nextFilter = displayObj.filterTitlesArray[i];
-                        if (i == (displayObj.filterTitlesArray.length - 1)) {
-                            filterText += nextFilter;
-                        } else {
-                            filterText += nextFilter + ", ";
-                        }
-                    }
-                    $(filterTitleContainer).addClass("filterList");
+    if (whichMenu[0] == "zones") {
+        if ((whichStates[1] == "S") || (whichStates[2] == "S")) {
+            // == remove previous level filters from list if any
+            removeItemsArray = ["High Schools", "Middle Schools", "Elementary Schools", "FeederHS", "FeederMS"];
+            for (var i = 0; i < removeItemsArray.length; i++) {
+                checkItem = removeItemsArray[i];
+                console.log("  checkItem: ", checkItem);
+                checkIndex = $.inArray(checkItem, displayObj.filterTitlesArray);
+                console.log("  checkIndex: ", checkIndex);
+                if (checkIndex > -1) {
+                    displayObj.filterTitlesArray.splice(checkIndex, 1);
+                    console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
+                    break;
                 }
             }
         }
     }
-    $(filterTitleContainer).html(filterText);
+
+    console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
+
+    for (var i = 0; i < whichStates.length; i++) {
+        nextState = whichStates[i];
+        nextMenuItem = whichMenu[i+1];
+        nextMenuText = nextMenuItem.text;
+        nextElement = $("#" + nextMenuItem.id);
+        checkIndex = $.inArray(nextMenuText, displayObj.filterTitlesArray);
+        console.log("*** nextMenuItem.id: ", nextMenuItem.id);
+        console.log("  whichStates: ", whichStates);
+        console.log("  checkIndex: ", checkIndex);
+        console.log("  nextState: ", nextState);
+        console.log("  nextElement: ", nextElement);
+        if (nextState == "A") {
+            if (checkIndex > -1) {
+                displayObj.filterTitlesArray.splice(checkIndex, 1);
+                console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+            }
+            $(nextElement).addClass("active");
+            $(nextElement).removeClass("selected");
+            $(nextElement).removeClass("deactivated");
+        } else if (nextState == "D") {
+            if (checkIndex > -1) {
+                displayObj.filterTitlesArray.splice(checkIndex, 1);
+                console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+            }
+            $(nextElement).removeClass("active");
+            $(nextElement).removeClass("selected");
+            $(nextElement).addClass("deactivated");
+        } else if (nextState == "S") {
+            displayObj.filterTitlesArray.push(nextMenuText);
+            $(nextElement).removeClass("deactivated");
+            $(nextElement).addClass("active");
+            $(nextElement).addClass("selected");
+            console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+        }
+    }
+    console.log("  displayObj.filterTitlesArray4: ", displayObj.filterTitlesArray);
+
+    // == build new filter text html from filterTitlesArray
+    selectedFilterText = "<span class='filterLabel'>Data for: </span>";
+    for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+        nextFilter = displayObj.filterTitlesArray[i];
+        console.log("  nextFilter: ", nextFilter);
+        if (i == (displayObj.filterTitlesArray.length - 1)) {
+            selectedFilterText += nextFilter;
+        } else {
+            selectedFilterText += nextFilter + ", ";
+        }
+    }
+    console.log("  displayObj.filterTitlesArray5: ", displayObj.filterTitlesArray);
+    $(selectedFilterContainer).addClass("filterList");
+    $(selectedFilterContainer).html(selectedFilterText);
+}
+
+// ======= ======= ======= updateFilterSelections ======= ======= =======
+function updateFilterSelections(displayObj, menuObject, whichAction) {
+    console.log("updateFilterSelections");
+    console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
+//
+//     var selectedFilterContainer = $("#filters-selections").children("h2");
+//     var selectedFilterText = $(selectedFilterContainer).html();
+//     var newFilterText = menuObject.text;
+//     var newFilterId = menuObject.id;
+//     var checkArray;
+//
+    // == add message for user (not filter selections)
+    if (typeof displayObj == "string") {
+        filterText = "<span class='filterLabel'>Message: </span>";
+        filterText += displayObj;
+        $(selectedFilterContainer).addClass("filterList");
+        $(selectedFilterContainer).html(filterText);
+    }
+//     // == add filter selections
+//     } else {
+//
+//         // == selected zone filter
+//         if ((displayObj.dataFilters.selectedZone != null) && (whichAction == "add")) {
+//             displayObj.filterTitlesArray = [];
+//             displayObj.filterTitlesArray.push(newFilterText);
+//             selectedFilterText = "<span class='filterLabel'>Selected Zone: </span>" + newFilterText;
+//             $(selectedFilterContainer).addClass("filterList");
+//
+//         // == no selected zone (normal filter processing)
+//         } else {
+//
+//             if ((newFilterId == "FeederHS") || (newFilterId == "FeederMS")) {
+//
+//                 // == remove previous level filters from list if any
+//                 removeItemsArray = ["High Schools", "Middle Schools", "Elementary Schools", "FeederHS", "FeederMS"];
+//                 for (var i = 0; i < removeItemsArray.length; i++) {
+//                     checkItem = removeItemsArray[i];
+//                     console.log("  checkItem: ", checkItem);
+//                     checkIndex = $.inArray(checkItem, displayObj.filterTitlesArray);
+//                     console.log("  checkIndex: ", checkIndex);
+//                     if (checkIndex > -1) {
+//                         displayObj.filterTitlesArray.splice(checkIndex, 1);
+//                         console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
+//                         break;
+//                     }
+//                 }
+//
+//             }
+//             console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+//
+//             // == build new filter text html from filterTitlesArray
+//             displayObj.filterTitlesArray.push(newFilterText);
+//             selectedFilterText = "<span class='filterLabel'>Data for: </span>";
+//             for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+//                 nextFilter = displayObj.filterTitlesArray[i];
+//                 console.log("  nextFilter: ", nextFilter);
+//                 if (i == (displayObj.filterTitlesArray.length - 1)) {
+//                     selectedFilterText += newFilterText;
+//                 } else {
+//                     selectedFilterText += nextFilter + ", ";
+//                 }
+//             }
+//
+//             if (typeof whichAction == "object") {
+//                 displayObj.filterTitlesArray.push(whichAction.text);
+//                 selectedFilterText += ", " + whichAction.text;
+//             }
+//             console.log("  displayObj.filterTitlesArray4: ", displayObj.filterTitlesArray);
+//
+//             $(selectedFilterContainer).addClass("filterList");
+//
+            // if ((addRemove == "add") || (addRemove == "FeederHS") || (addRemove == "FeederMS")) {
+            //     console.log("  addRemove: ", addRemove);
+            //     // if (displayObj.filterTitlesArray.length == 1) {
+            //     //     console.log("  displayObj.filterTitlesArray.length: ", displayObj.filterTitlesArray.length);
+            //     //     filterText = "<span class='filterLabel'>Data for: </span>" + newFilterText;
+            //     // } else {
+            //
+            //         // == remove previously selected levels filters (added back based on zone selection)
+            //         if ((addRemove == "FeederHS") || (addRemove == "FeederMS")) {
+            //             console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
+            //             removeItemsArray = ["High Schools", "Middle Schools", "Elementary Schools", "FeederHS", "FeederMS"];
+            //             for (var i = 0; i < removeItemsArray.length; i++) {
+            //                 checkItem = removeItemsArray[i];
+            //                 console.log("  checkItem: ", checkItem);
+            //                 checkIndex = $.inArray(checkItem, displayObj.filterTitlesArray);
+            //                 console.log("  checkIndex: ", checkIndex);
+            //                 if (checkIndex > -1) {
+            //                     displayObj.filterTitlesArray.splice(checkIndex, 1);
+            //                     console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
+            //                     break;
+            //                 }
+            //             }
+            //         }
+            //         displayObj.filterTitlesArray.push(newFilterText);
+            //         console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+            //
+            //         // == build new filter text html from filterTitlesArray
+            //         filterText = "<span class='filterLabel'>Data for: </span>";
+            //         if (displayObj.filterTitlesArray.length > 0) {
+            //             for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+            //                 nextFilter = displayObj.filterTitlesArray[i];
+            //                 if (i == (displayObj.filterTitlesArray.length - 1)) {
+            //                     filterText += newFilterText;
+            //                 } else {
+            //                     filterText += nextFilter + ", ";
+            //                 }
+            //             }
+            //         }
+            //     // }
+            //     $(selectedFilterContainer).addClass("filterList");
+            //
+            // // == removing previous filters
+            // } else {
+            //
+            //     // == find selected filter (newFilterText) in array and remove it
+            //     for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+            //         checkFilter = displayObj.filterTitlesArray[i];
+            //         if (checkFilter == newFilterText) {
+            //             displayObj.filterTitlesArray.splice(i, 1);
+            //             break;
+            //         }
+            //     }
+            //
+            //     // == all filters have been removed; return to init state
+            //     if (displayObj.filterTitlesArray.length == 0) {
+            //         filterText = "your filters";
+            //         $(selectedFilterContainer).removeClass("filterList");
+            //
+            //     // == display remaining filters after removing selected filter
+            //     } else {
+            //         filterText = "<span class='filterLabel'>Data for: </span>";
+            //         for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
+            //             nextFilter = displayObj.filterTitlesArray[i];
+            //             if (i == (displayObj.filterTitlesArray.length - 1)) {
+            //                 filterText += nextFilter;
+            //             } else {
+            //                 filterText += nextFilter + ", ";
+            //             }
+            //         }
+            //         $(selectedFilterContainer).addClass("filterList");
+            //     }
+            // }
+//         }
+//     }
 }
 
 
