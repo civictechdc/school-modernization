@@ -72,8 +72,6 @@ var Bubble = (function(dataset){
     };
 }());
 
-
-
 d3.csv('data/data_master.csv', function(d){
     Bubble(d);
 });

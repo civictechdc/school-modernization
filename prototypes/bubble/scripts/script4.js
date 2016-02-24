@@ -1,5 +1,4 @@
 'use strict';
-
 //*********************************
 // public class Bubble
 //*********************************
@@ -72,11 +71,12 @@ Bubble.prototype.add_info_to_data = function(set){
         }());
         this.nodes.push(current);
     }
+    this.nodes.sort(function(a,b){ return b.MajorExp9815 - a.MajorExp9815});
+    // console.log(this.nodes);
 };
 
-Bubble.prototype.update = function(set){
-    var that = this;
-    this.circles = this.svg.selectAll('circle')
+Bubble.prototympe.update = function(set){
+     this.circles = this.svg.selectAll('circle')
         .data(set)
         .enter()
         .append('circle')
@@ -97,35 +97,43 @@ Bubble.prototype.update = function(set){
 };
 
 Bubble.prototype.set_force = function() {
-    return this.force = d3.layout.force()
-        .nodes(this.nodes)
-        .size(this.sizes.width, this.sizes.height);
+    // var that = this;
+    // this.force = d3.layout.force()
+    //     .nodes(function(){return that.nodes;})
+    //     .size([that.sizes.width, that.sizes.height]);
+    // return this.force;
+    return this.force = d3.layout.force().nodes(this.nodes).size([this.sizes.width, this.sizes.height])
 };
 
 Bubble.prototype.charge = function(d) {
-    var chrg = -Math.pow(d.radius, 2.0) * 100;
-    console.log(chrg);
-    return chrg;
+    return -Math.pow(d.radius, 2.0) * 100;
 };
 
 
-Bubble.prototype.together = function(){
+Bubble.prototype.together = function(d){
     var that = this;
-    this.force.gravity(this.force_gravity)
-        .charge(this.charge)
-        .friction(0.9)
-        .on('tick', function(e){
-            that.circles.each(that.move_towards_center(e.alpha))
-                .attr('cx', function(d){ return d.myx;}) //d.x
-                .attr('cy', function(d){ return d.myy;}); //d.y
+    this.force.gravity(that.force_gravity)
+        .charge(function(d){
+            // that.charge
+            return -Math.pow(d.radius, 2.0) * 100;
         })
-        ;
+        .friction(0.9)
+        .on('tick', function(){
+            var those = this;
+            return function(e){
+                return those.circles.each(those.move_towards_center(e.alpha))
+                    .attr('cx', function(d){ console.log(d); return d.myx;}) //d.x
+                    .attr('cy', function(d){ return d.myy;}); //d.y
+            }
+        })
+        ;   
     this.force.start();
+    console.log('start');
 };
 
 Bubble.prototype.move_towards_center = function(alpha){
     var that = this;
-    return function(d,i){
+    return function(d){
         d.myx = d.myx + (that.center.x - d.myx) * (that.damper + 0.02) * alpha;
         d.myy = d.myy + (that.center.y - d.myy) * (that.damper + 0.02) * alpha;    
     };
