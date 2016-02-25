@@ -27,30 +27,30 @@ function initApp(presetMode) {
         filterMenu = new Menu("filterMenu");
 
         // == District, Charter
-        filterMenu.District = { id:"District", category:"schools", text:"District Schools", column:"Agency", value:"DCPS" };
-        filterMenu.Charter = { id:"Charter", category:"schools", text:"Charter Schools", column:"Agency", value:"PCS" };
-        filterMenu.All = { id:"All", category:"schools", text:"All Schools", column:"Agency", value:"All" };
+        filterMenu.District = { id:"District", category:"schools", label:"DCPS Schools", text:"DCPS Schools", column:"Agency", value:"DCPS" };
+        filterMenu.Charter = { id:"Charter", category:"schools", label:"Charter Schools", text:"Charter Schools", column:"Agency", value:"PCS" };
+        filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"All school types", column:"Agency", value:"All" };
 
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
-        filterMenu.Elem = { id:"Elem", category:"schools", text:"Elementary Schools", column:"Level", value:"ES" };
-        filterMenu.Middle = { id:"Middle", category:"schools", text:"Middle Schools", column:"Level", value:"MS" };
-        filterMenu.High = { id:"High", category:"schools", text:"High Schools", column:"Level", value:"HS" };
+        filterMenu.Elem = { id:"Elem", category:"schools", label:"Elementary Schools", text:"Elementary Schools", column:"Level", value:"ES" };
+        filterMenu.Middle = { id:"Middle", category:"schools", label:"Middle Schools", text:"Middle Schools", column:"Level", value:"MS" };
+        filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools", column:"Level", value:"HS" };
 
         // == spendPast, spendLifetime, spendPlanned
-        filterMenu.spendPast = { id:"spendPast", category:"expenditures", text:"Past Spend", column:"MajorExp9815", value:null };
-        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", text:"Planned Spend", column:"TotalAllotandPlan1621", value:null };
-        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", text:"Total Spend", column:"LifetimeBudget", value:null };
+        filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Past Spending 1998-2015", column:"MajorExp9815", value:null };
+        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Future Spending 2016-2021", column:"TotalAllotandPlan1621", value:null };
+        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total Spending", column:"LifetimeBudget", value:null };
 
         // == spendSqFt, spendEnroll
-        filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", text:"/sqFt", column:"SpentPerSqFt", value:null };
-        filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", text:"/student", column:"SpentPerEnroll", value:null };
-        filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", text:"dollar amount", column:null, value:null };
+        filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", label:"/sqft", text:"per sqFt", column:"SpentPerSqFt", value:null };
+        filterMenu.spendEnroll = { id:"spendEnroll", category:"expenditures", label:"/student", text:"per student", column:"SpentPerMaxOccupancy", value:null };
+        filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", label:"", text:"dollar amount", column:null, value:null };
 
         // == zones
-        filterMenu.Ward = { id:"Ward", category:"zone", text:"Wards", column:"Ward", value:null };
-        filterMenu.FeederHS = { id:"FeederHS", category:"zone", text:"HS Feeders", column:"FeederHS", value:null };
-        filterMenu.FeederMS = { id:"FeederMS", category:"zone", text:"MS Feeders", column:"FeederMS", value:null };
-        filterMenu.Elementary = { id:"Elementary", category:"zone", text:"Elementary Zones", column:null, value:null };
+        filterMenu.Ward = { id:"Ward", category:"zone", label:"Wards", text:"Wards", column:"Ward", value:null };
+        filterMenu.FeederHS = { id:"FeederHS", category:"zone", label:"HSfeeders", text:"High School feeder zones", column:"FeederHS", value:null };
+        filterMenu.FeederMS = { id:"FeederMS", category:"zone", label:"MSfeeders", text:"Middle School feeder zones", column:"FeederMS", value:null };
+        filterMenu.Elementary = { id:"Elementary", category:"zone", label:"Elementary zones", text:"Elementary zones", column:null, value:null };
 
     }
     function Display() {
@@ -144,6 +144,21 @@ function initApp(presetMode) {
         var self = this;
         var nextId = nextItem.id;
         var nextElement = $("#" + nextId);
+
+        // ======= ======= ======= mouseover ======= ======= =======
+        $(nextElement).off("mouseover").on("mouseover", function(event){
+            // console.log("\n======= mouseover ======= ");
+            var whichFilter = this.id;
+            var menuObject = filterMenu[whichFilter];
+            var whichText = menuObject.text;
+            updateHoverText(whichText);
+        });
+
+        // ======= ======= ======= mouseout ======= ======= =======
+        $(nextElement).off("mouseout").on("mouseout", function(event){
+            // console.log("\n======= mouseout ======= ");
+            updateHoverText("");
+        });
 
         // ======= ======= ======= selectFilter ======= ======= =======
         $(nextElement).off("click").on("click", function(event){
@@ -950,15 +965,15 @@ function initApp(presetMode) {
                 textMessage = "Expenditure data for DCPS schools only."
                 displayHoverMessage(displayObj, textMessage);
             } else {
-                if (displayObj.dataFilters.expend) {
-
-                    // == calculate increments, min, max, avg, median
-                    textMessage = "Expenditure data for DCPS schools only."
-                    displayHoverMessage(displayObj, textMessage);
-                } else {
-                    textMessage = "Select an expenditure type."
-                    displayHoverMessage(displayObj, textMessage);
-                }
+                // if (displayObj.dataFilters.expend) {
+                //
+                //     // == calculate increments, min, max, avg, median
+                //     textMessage = "Expenditure data for DCPS schools only."
+                //     displayHoverMessage(displayObj, textMessage);
+                // } else {
+                //     textMessage = "Select an expenditure type."
+                //     displayHoverMessage(displayObj, textMessage);
+                // }
             }
         }
 

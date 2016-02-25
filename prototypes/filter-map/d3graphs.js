@@ -129,7 +129,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
 
     // ======= ======= ======= label/title formatting ======= ======= =======
-    labelTextArray = updateChartText(displayObj, filterMenu[displayObj.dataFilters.expend].text, subtitle);
+    labelTextArray = updateChartText(displayObj, subtitle);
     mathText = labelTextArray[0];
     schoolText = labelTextArray[1];
     agencyText = labelTextArray[2];
