@@ -162,6 +162,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
 
     // ======= ======= ======= check math ======= ======= =======
+    console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    console.log("  dataObjectsArray: ", dataObjectsArray);
     console.log("  circleValuesArray: ", circleValuesArray);
     console.log("  barScaleArray: ", barScaleArray);
     console.log("  dataMax: ", dataMax);

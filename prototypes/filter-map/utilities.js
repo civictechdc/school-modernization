@@ -187,15 +187,15 @@ function updateChartText(displayObj, expendText, subtitle) {
         }if (displayObj.dataFilters.levels == "ES") {
             whichLevel = "Elem";
         }
-        console.log("  filterMenu: ", filterMenu);
-        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
+        // console.log("  filterMenu: ", filterMenu);
+        // console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
         schoolText = filterMenu[whichLevel].text;
     } else {
         schoolText = "";
     }
-    console.log("  expendText: ", expendText);
-    console.log("  subtitle: ", subtitle);
-    console.log("  displayObj.displayMode: ", displayObj.displayMode);
+    // console.log("  expendText: ", expendText);
+    // console.log("  subtitle: ", subtitle);
+    // console.log("  displayObj.displayMode: ", displayObj.displayMode);
     if (displayObj.displayMode == "storyMap") {
         $('#chart-label').text("");
     }
@@ -288,10 +288,10 @@ function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
 
 // ======= ======= ======= setMenuState ======= ======= =======
 function setMenuState(displayObj, whichMenu, whichStates) {
-    console.log("\nsetMenuState");
-    console.log("  whichMenu[0]: ", whichMenu[0]);
-    console.log("  whichStates: ", whichStates);
-    console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
+    console.log("setMenuState");
+    // console.log("  whichMenu[0]: ", whichMenu[0]);
+    // console.log("  whichStates: ", whichStates);
+    // console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
 
     var selectedFilterContainer = $("#filters-selections").children("h2");
     var selectedFilterText = $(selectedFilterContainer).html();
@@ -307,7 +307,7 @@ function setMenuState(displayObj, whichMenu, whichStates) {
                 console.log("  checkIndex: ", checkIndex);
                 if (checkIndex > -1) {
                     displayObj.filterTitlesArray.splice(checkIndex, 1);
-                    console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
+                    // console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
                     break;
                 }
             }
@@ -322,15 +322,15 @@ function setMenuState(displayObj, whichMenu, whichStates) {
         nextMenuText = nextMenuItem.text;
         nextElement = $("#" + nextMenuItem.id);
         checkIndex = $.inArray(nextMenuText, displayObj.filterTitlesArray);
-        console.log("*** nextMenuItem.id: ", nextMenuItem.id);
-        console.log("  whichStates: ", whichStates);
-        console.log("  checkIndex: ", checkIndex);
-        console.log("  nextState: ", nextState);
-        console.log("  nextElement: ", nextElement);
+        // console.log("*** nextMenuItem.id: ", nextMenuItem.id);
+        // console.log("  whichStates: ", whichStates);
+        // console.log("  checkIndex: ", checkIndex);
+        // console.log("  nextState: ", nextState);
+        // console.log("  nextElement: ", nextElement);
         if (nextState == "A") {
             if (checkIndex > -1) {
                 displayObj.filterTitlesArray.splice(checkIndex, 1);
-                console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+                // console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
             }
             $(nextElement).addClass("active");
             $(nextElement).removeClass("selected");
@@ -338,7 +338,7 @@ function setMenuState(displayObj, whichMenu, whichStates) {
         } else if (nextState == "D") {
             if (checkIndex > -1) {
                 displayObj.filterTitlesArray.splice(checkIndex, 1);
-                console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+                // console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
             }
             $(nextElement).removeClass("active");
             $(nextElement).removeClass("selected");
@@ -348,10 +348,10 @@ function setMenuState(displayObj, whichMenu, whichStates) {
             $(nextElement).removeClass("deactivated");
             $(nextElement).addClass("active");
             $(nextElement).addClass("selected");
-            console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
+            // console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
         }
     }
-    console.log("  displayObj.filterTitlesArray4: ", displayObj.filterTitlesArray);
+    // console.log("  displayObj.filterTitlesArray4: ", displayObj.filterTitlesArray);
 
     // == build new filter text html from filterTitlesArray
     selectedFilterText = "<span class='filterLabel'>Data for: </span>";
@@ -364,7 +364,7 @@ function setMenuState(displayObj, whichMenu, whichStates) {
             selectedFilterText += nextFilter + ", ";
         }
     }
-    console.log("  displayObj.filterTitlesArray5: ", displayObj.filterTitlesArray);
+    // console.log("  displayObj.filterTitlesArray5: ", displayObj.filterTitlesArray);
     $(selectedFilterContainer).addClass("filterList");
     $(selectedFilterContainer).html(selectedFilterText);
 }
