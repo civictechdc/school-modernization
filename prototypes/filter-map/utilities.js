@@ -1205,7 +1205,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         });
     }
     displayObj.activateCloseButton();
-    makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, schoolIndex);
+    // makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, schoolIndex);
 }
 
 // ======= ======= ======= validateSchoolData ======= ======= =======

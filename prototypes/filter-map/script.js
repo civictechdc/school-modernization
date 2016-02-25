@@ -118,6 +118,8 @@ function initApp(presetMode) {
         console.log("activateFilterMenus");
 
         var nextMenu, nextFilter;
+        var popupContainer = ("#popup");
+        var menuHtml = "";
 
         for (var i = 0; i < this.filterMenusArray.length; i++) {
             nextMenu = this.filterMenusArray[i];
@@ -126,8 +128,13 @@ function initApp(presetMode) {
                 this.activateFilterLink(nextFilter);
             }
         }
-    }
 
+        menuHtml += this.makeSearchBar();
+        menuHtml += this.makeHoverDisplay();
+        $(popupContainer).append(menuHtml);
+        this.activateSearchButton("searchButton");
+        this.activateSearchWindow("searchWindow");
+    }
 
     // ======= ======= ======= activateFilterLink ======= ======= =======
     Display.prototype.activateFilterLink = function(nextItem) {
@@ -258,130 +265,26 @@ function initApp(presetMode) {
             }
 
             updateHoverText(null);
-            // self.setMenuItem(whichCategory, whichFilter);
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             zonesCollectionObj.getZoneData();
         });
     }
 
-    // ======= ======= ======= initFilterMenus ======= ======= =======
-    Display.prototype.initFilterMenus = function() {
-        console.log("initFilterMenus");
-
-        // == popup bar container
-        var popupContainer = $("#main-nav");
-
-        // == build filter menu (by category)
-        var menuHtml = "<ul class='nav-list'>";
-        for (var i = 0; i < this.filterMenusArray.length; i++) {
-            nextMenu = this.filterMenusArray[i];
-            menuHtml += this.makeCategoryMenu(nextMenu, i);
-            menuHtml += "<hr>";
-        }
-        menuHtml += "</ul>";
-        menuHtml += this.makeSearchBar();
-        menuHtml += this.makeHoverDisplay();
-        $(popupContainer).append(menuHtml);
-
-        // == activate individual filter selectors after appended to DOM
-        for (var i = 0; i < this.filterMenusArray.length; i++) {
-            nextMenu = this.filterMenusArray[i];
-            this.activateFilterMenu(nextMenu);
-        }
-        this.activateSearchButton("searchButton");
-        this.activateSearchWindow("searchWindow");
+    // ======= ======= ======= makeSearchBar ======= ======= =======
+    Display.prototype.makeSearchBar = function() {
+        // console.log("makeSearchBar");
+        // var searchHtml = "<div id='search' class='category'><span class='labelText searchText'>search</span>";
+        var searchHtml = "<div id='search' class='category'>";
+        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
+        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
+        return searchHtml;
     }
 
-    // ======= ======= ======= setMenuItem ======= ======= =======
-    Display.prototype.setMenuItem = function(whichCategory, whichFilter) {
-        console.log("setMenuItem");
-
-        // == menu text creates user-friendly menu item
-        var menuObject = filterMenu[whichFilter];
-        var menuText = menuObject.text;
-
-
-
-        // == modify selected filter menu item to show selection
-        // htmlString = "<li><a id='" + whichFilter + "' href='#'>" + menuText + "</a></li>";
-        // selectedFilterElement = $("#" + whichCategory);
-        // selectedFilterElement.children("ul").empty();
-        // selectedFilterElement.children("ul").html(htmlString);
-        // selectedFilterElement.children("ul").css("display", "block");
-        // this.activateFilterRelease(selectedFilterElement);
-    }
-
-    // ======= ======= ======= makeCategoryMenu ======= ======= =======
-    Display.prototype.makeCategoryMenu = function(whichMenu, index) {
-        // console.log("makeCategoryMenu");
-
-        var nextCatLabel = this.categoryLabels[index];
-        var nextGrpLabel = this.groupLabels[index];
-        var nextCategory = whichMenu[0];
-        var menuHtml = "<p class='all-filters'>[ all ]</p>";
-        menuHtml += "<li id='" + nextCategory + "' class='category'><span class='labelText'>" + nextGrpLabel + "</span><a href='#'>" + nextCatLabel + "</a>";
-        menuHtml += "<ul>";
-        menuHtml += this.makeFilterMenu(whichMenu);
-        menuHtml += "</ul>";
-        menuHtml += "</li>";
-        return menuHtml;
-    }
-
-    // ======= ======= ======= makeFilterMenu ======= ======= =======
-    Display.prototype.makeFilterMenu = function(whichMenu, skipFlags) {
-        console.log("makeFilterMenu");
-
-        // == category name is the first item in whichMenu
-        var whichCategory = whichMenu[0];
-        var whichClass = whichCategory;
-        console.log("  whichCategory: ", whichCategory);
-
-        if ((skipFlags == null) || (skipFlags == undefined)) {
-            var skipFlags = [];
-        }
-
-        // == build html string for filter lists
-        filterHtml = "";
-        for (var i = 1; i < whichMenu.length; i++) {
-            if ($.inArray(i, skipFlags) < 0) {
-                nextItem = whichMenu[i];
-                nextId = nextItem.id;
-                nextText = nextItem.text;
-                filterHtml += "<li id='" + nextId + "' class='filter " + whichClass + "'><a class='filterText' href='#'>" + nextText + "</a></li>";
-            } else {
-                continue;
-            }
-        }
-        return filterHtml;
-    }
-
-    // ======= ======= ======= modFilterMenu ======= ======= =======
-    Display.prototype.modFilterMenu = function(whichMenu) {
-        console.log("modFilterMenu");
-
-        // == category name is the first item in whichMenu
-        var menuContainer = $("#" + whichMenu[0]);
-        var whichCategory = whichMenu[0];
-        var whichClass = whichCategory;
-        var skipFlags = [];
-        // console.log("  whichCategory: ", whichCategory);
-
-        if (whichCategory == "levels") {
-            if (this.dataFilters.zones == "FeederHS") {
-                skipFlags = [1];
-            } else if (this.dataFilters.zones == "FeederMS") {
-                skipFlags = [1, 2];
-            } else {
-                skipFlags = [];
-            }
-        }
-
-        $(menuContainer).children("ul").remove();
-        var menuHtml = "<ul>";
-        menuHtml += this.makeFilterMenu(whichMenu, skipFlags);
-        menuHtml += "</ul>";
-
-        $(menuContainer).children("a").after(menuHtml);
+    // ======= ======= ======= makeHoverDisplay ======= ======= =======
+    Display.prototype.makeHoverDisplay = function() {
+        // console.log("makeHoverDisplay");
+        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
+        return hoverHtml;
     }
 
     // ======= ======= ======= makeSubMenu ======= ======= =======
@@ -409,29 +312,13 @@ function initApp(presetMode) {
         return subMenuHtml;
     }
 
-    // ======= ======= ======= makeSearchBar ======= ======= =======
-    Display.prototype.makeSearchBar = function() {
-        // console.log("makeSearchBar");
-        var searchHtml = "<div id='search' class='category'><span class='labelText searchText'>search</span>";
-        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
-        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
-        return searchHtml;
-    }
-
-    // ======= ======= ======= makeHoverDisplay ======= ======= =======
-    Display.prototype.makeHoverDisplay = function() {
-        // console.log("makeHoverDisplay");
-        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
-        return hoverHtml;
-    }
-
     // ======= ======= ======= findSearchSchool ======= ======= =======
     Display.prototype.findSearchSchool = function(buttonId) {
         console.log("findSearchSchool");
 
         var self = this;
         var searchSchoolName = $("#searchWindow").val();
-        var url = "Data_Schools/DCPS_Master_114_dev.csv";
+        var url = "Data_Schools/DC_OpenSchools_Master_214.csv";
 
         // ======= get map geojson data =======
         $.ajax({
@@ -473,7 +360,7 @@ function initApp(presetMode) {
                     self.activateClearButton();
                     $(filterTitleContainer).css("font-size", "16px");
                     schoolText = "<span class='filterLabel'>Your school: </span>";
-                    makeSchoolProfile(foundDataArray[0], displayObj);
+                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0]);
                     $("#profile-container").css("display", "table");
                     console.log("*** display profile-container ***");
                     updateHoverText(null);
@@ -1564,11 +1451,12 @@ function initApp(presetMode) {
         if (mouseClick == true) {
             google.maps.event.addListener(schoolMarker, 'click', function (event) {
                 console.log("--- click ---");
+                var schoolIndex = this.schoolIndex;
                 var schoolName = this.schoolName;
                 var schoolCode = this.schoolCode;
                 console.log("  schoolCode: ", schoolCode);
 
-                makeSchoolProfile(schoolsCollectionObj, displayObj, this.schoolIndex);
+                makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
             });
         }
     }
@@ -1684,8 +1572,130 @@ function initApp(presetMode) {
     return setFilterSelections;
 }
 
+// ======= ======= ======= ARCHIVE ======= ======= =======
+
 // agency -- "District", "Charter"
 // levels -- "ES", "MS", "HS"
 // expend -- "spendPast", "spendLifetime", "spendPlanned", "spendSqFt", "spendEnroll"
 // zone -- "Ward", "FeederHS", "FeederMS"
 //
+
+// ======= ======= ======= initFilterMenus ======= ======= =======
+// Display.prototype.initFilterMenus = function() {
+//     console.log("initFilterMenus");
+//
+//     // == popup bar container
+//     var popupContainer = $("#main-nav");
+//
+//     // == build filter menu (by category)
+//     var menuHtml = "<ul class='nav-list'>";
+//     for (var i = 0; i < this.filterMenusArray.length; i++) {
+//         nextMenu = this.filterMenusArray[i];
+//         menuHtml += this.makeCategoryMenu(nextMenu, i);
+//         menuHtml += "<hr>";
+//     }
+//     menuHtml += "</ul>";
+//     menuHtml += this.makeSearchBar();
+//     menuHtml += this.makeHoverDisplay();
+//     $(popupContainer).append(menuHtml);
+//
+//     // == activate individual filter selectors after appended to DOM
+//     for (var i = 0; i < this.filterMenusArray.length; i++) {
+//         nextMenu = this.filterMenusArray[i];
+//         this.activateFilterMenu(nextMenu);
+//     }
+//     this.activateSearchButton("searchButton");
+//     this.activateSearchWindow("searchWindow");
+// }
+
+// ======= ======= ======= setMenuItem ======= ======= =======
+// Display.prototype.setMenuItem = function(whichCategory, whichFilter) {
+//     console.log("setMenuItem");
+//
+//     // == menu text creates user-friendly menu item
+//     var menuObject = filterMenu[whichFilter];
+//     var menuText = menuObject.text;
+//
+//
+//
+//     // == modify selected filter menu item to show selection
+//     htmlString = "<li><a id='" + whichFilter + "' href='#'>" + menuText + "</a></li>";
+//     selectedFilterElement = $("#" + whichCategory);
+//     selectedFilterElement.children("ul").empty();
+//     selectedFilterElement.children("ul").html(htmlString);
+//     selectedFilterElement.children("ul").css("display", "block");
+//     this.activateFilterRelease(selectedFilterElement);
+// }
+
+// ======= ======= ======= makeCategoryMenu ======= ======= =======
+// Display.prototype.makeCategoryMenu = function(whichMenu, index) {
+//     // console.log("makeCategoryMenu");
+//
+//     var nextCatLabel = this.categoryLabels[index];
+//     var nextGrpLabel = this.groupLabels[index];
+//     var nextCategory = whichMenu[0];
+//     var menuHtml = "<p class='all-filters'>[ all ]</p>";
+//     menuHtml += "<li id='" + nextCategory + "' class='category'><span class='labelText'>" + nextGrpLabel + "</span><a href='#'>" + nextCatLabel + "</a>";
+//     menuHtml += "<ul>";
+//     menuHtml += this.makeFilterMenu(whichMenu);
+//     menuHtml += "</ul>";
+//     menuHtml += "</li>";
+//     return menuHtml;
+// }
+
+// ======= ======= ======= makeFilterMenu ======= ======= =======
+// Display.prototype.makeFilterMenu = function(whichMenu, skipFlags) {
+//     console.log("makeFilterMenu");
+//
+//     // == category name is the first item in whichMenu
+//     var whichCategory = whichMenu[0];
+//     var whichClass = whichCategory;
+//     console.log("  whichCategory: ", whichCategory);
+//
+//     if ((skipFlags == null) || (skipFlags == undefined)) {
+//         var skipFlags = [];
+//     }
+//
+//     // == build html string for filter lists
+//     filterHtml = "";
+//     for (var i = 1; i < whichMenu.length; i++) {
+//         if ($.inArray(i, skipFlags) < 0) {
+//             nextItem = whichMenu[i];
+//             nextId = nextItem.id;
+//             nextText = nextItem.text;
+//             filterHtml += "<li id='" + nextId + "' class='filter " + whichClass + "'><a class='filterText' href='#'>" + nextText + "</a></li>";
+//         } else {
+//             continue;
+//         }
+//     }
+//     return filterHtml;
+// }
+
+// ======= ======= ======= modFilterMenu ======= ======= =======
+// Display.prototype.modFilterMenu = function(whichMenu) {
+//     console.log("modFilterMenu");
+//
+//     // == category name is the first item in whichMenu
+//     var menuContainer = $("#" + whichMenu[0]);
+//     var whichCategory = whichMenu[0];
+//     var whichClass = whichCategory;
+//     var skipFlags = [];
+//     // console.log("  whichCategory: ", whichCategory);
+//
+//     if (whichCategory == "levels") {
+//         if (this.dataFilters.zones == "FeederHS") {
+//             skipFlags = [1];
+//         } else if (this.dataFilters.zones == "FeederMS") {
+//             skipFlags = [1, 2];
+//         } else {
+//             skipFlags = [];
+//         }
+//     }
+//
+//     $(menuContainer).children("ul").remove();
+//     var menuHtml = "<ul>";
+//     menuHtml += this.makeFilterMenu(whichMenu, skipFlags);
+//     menuHtml += "</ul>";
+//
+//     $(menuContainer).children("a").after(menuHtml);
+// }

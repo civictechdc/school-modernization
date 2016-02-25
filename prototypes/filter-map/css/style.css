@@ -55,7 +55,9 @@ hr {
 
 /* ======= filter selections ======= */
 #filters-selections {
+    top: 60px;
     width: 60%;
+    height: 36px;
     float: left;
     padding-right: 20px;
     background-color: darkslateblue;
@@ -98,7 +100,7 @@ hr {
     width: 360px;
     height: auto;
     position: absolute;
-    top: 60px;
+    top: 57px;
     left: 65%;
     background-color: #white;
     box-shadow: 4px 4px 4px #555;
@@ -108,10 +110,10 @@ hr {
 #filters-table {
     width: 100%;
     text-align: center;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 .filters-banner {
-    height: 50px;
+    height: 36px;
     text-align: center;
     background-color: firebrick;
 }
@@ -149,7 +151,7 @@ hr {
 }
 .filter-row {
     width: 100%;
-    height: 50px;
+    height: 40px;
     padding: 2px;
     background-color: #d8daeb;
 }
@@ -161,31 +163,9 @@ hr {
 .filter {
     position: relative;
     width: 50px;
-    height: 36px;
+    height: 30px;
     margin: 2px;
     padding: 0 4px;
-    text-align: center;
-    border-radius: 25px;
-    /*background-color: red;*/
-    background-color: #fdb863;
-}
-.filter2 {
-    position: relative;
-    width: 120px;
-    height: 40px;
-    margin: 2px 6px;
-    padding: 0;
-    text-align: center;
-    border-radius: 25px;
-    /*background-color: red;*/
-    background-color: #fdb863;
-}
-.filter4 {
-    position: relative;
-    width: 240px;
-    height: 36px;
-    margin: 2px 12px;
-    padding: 0;
     text-align: center;
     border-radius: 25px;
     /*background-color: red;*/
@@ -196,7 +176,7 @@ hr {
     width: 100%;
     height: 100%;
     font-size: 14px;
-    line-height: 36px;
+    line-height: 30px;
     margin: 0;
 }
 .active:hover {
@@ -472,7 +452,7 @@ hr {
 #search {
     position: relative;
     width: 100%;
-    height: 36px;
+    height: 24px;
 	margin: 0;
 	padding: 0;
     z-index: 99;
@@ -483,7 +463,7 @@ hr {
 #searchWindow {
     display: inline-block;;
     position: relative;
-    width: 60%;
+    width: 75%;
     height: 20px;
     margin-top: 4px;
     left: 2%;
@@ -619,10 +599,10 @@ hr {
     border-radius: 6px 6px 2px 2px;
     background-color: rgba(255, 255, 255, 0.9);
 }
-/*.title-container {
+.title-container {
     float: left;
     width: 65%;
-}*/
+}
 #chart-title {
     padding: 1px 0;
     margin: 1px 10px;
@@ -722,6 +702,29 @@ label {
 .overflow {
     height: 100px;
 }
+
+/*.filter2 {
+    position: relative;
+    width: 120px;
+    height: 40px;
+    margin: 2px 6px;
+    padding: 0;
+    text-align: center;
+    border-radius: 25px;
+    background-color: red;
+    background-color: #fdb863;
+}
+.filter4 {
+    position: relative;
+    width: 240px;
+    height: 36px;
+    margin: 2px 12px;
+    padding: 0;
+    text-align: center;
+    border-radius: 25px;
+    background-color: red;
+    background-color: #fdb863;
+}*/
 
 
 /* ======= mapLegend ======= */
