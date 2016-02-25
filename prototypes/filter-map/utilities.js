@@ -1271,7 +1271,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<p class='profile-title'>" + itemName + "</p>";
     htmlString += "<p class='profile-subtitle'>" + cleanedSchoolData.schoolAddress + "</p>";
     htmlString += "<p class='profile-subtitle2'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + "</p>";
-    htmlString += displayObj.makeSubMenu(displayObj.expendMathMenu);
+    htmlString += displayObj.makeSubMenu(displayObj.expendMathMenu, "profile");
     htmlString += "</td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>project type</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
@@ -1320,7 +1320,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
         $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
     } else if (nextMath == "spendSqFt") {
-        $("#profileSpendLifetime").html("$" + spendEnroll + " <span class='value-label'>per sqft</span>");
+        $("#profileSpendLifetime").html("$" + spendSqFt + " <span class='value-label'>per sqft</span>");
         $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
         $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
     } else if (nextMath == "spendAmount") {
@@ -1342,7 +1342,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
 function activateProfileSubmenu(displayObj, zonesCollectionObj, schoolsCollectionObj) {
     console.log("activateProfileSubmenu");
 
-    $('#expendMath').on({
+    $('#expendMathP').on({
         change: function() {
             console.log("\n------- setSubMenu -------");
             nextMath = $("select[name='expendMath'] option:selected").val()
@@ -1370,17 +1370,21 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     spendSqFt = cleanedSchoolData.spendSqFt;
 
     if (nextMath == "spendEnroll") {
-        $("#profileSpendLifetime").text("$" + spendEnroll + " per student");
-        $("#profileSpendPlanned").text("no future per student data");
-        $("#profileSpendPast").text("no past per student data");
+        $("#profileSpendLifetime").html("$" + spendEnroll + " <span class='value-label'>per student</span>");
+        $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
+        $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
     } else if (nextMath == "spendSqFt") {
-        $("#profileSpendLifetime").text("$" + spendEnroll + " per sqft");
-        $("#profileSpendPlanned").text("no future per sqft data");
-        $("#profileSpendPast").text("no past per sqft data");
+        $("#profileSpendLifetime").html("$" + spendSqFt + " <span class='value-label'>per sqft</span>");
+        $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
+        $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
     } else if (nextMath == "spendAmount") {
-        $("#profileSpendLifetime").text("$" + spendLifetime);
-        $("#profileSpendPlanned").text("$" + spendPlanned);
-        $("#profileSpendPast").text("$" + spendPast);
+        $("#profileSpendLifetime").html("$" + spendLifetime);
+        $("#profileSpendPlanned").html("$" + spendPlanned);
+        $("#profileSpendPast").html("$" + spendPast);
+    } else {
+        $("#profileSpendLifetime").html("$" + spendLifetime);
+        $("#profileSpendPlanned").html("$" + spendPlanned);
+        $("#profileSpendPast").html("$" + spendPast);
     }
 }
 

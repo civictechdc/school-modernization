@@ -595,7 +595,7 @@ hr {
     font-size: 12px;
     color: white;
 }
-#expendMath {
+#expendMathP {
     /*float: right;*/
     width: 100px;
     height: 30px;
@@ -664,6 +664,7 @@ hr {
 .title-container {
     float: left;
     width: 65%;
+    text-align: center;
 }
 #chart-title {
     padding: 1px 0;
@@ -676,6 +677,13 @@ hr {
     margin: 1px 10px;
     font-size: 12px;
     color: white;
+}
+#expendMathC {
+    /*float: right;*/
+    width: 100px;
+    height: 30px;
+    margin-top: 20px;
+    /*margin-right: 10px;*/
 }
 .submenu-default {
     margin: 0;

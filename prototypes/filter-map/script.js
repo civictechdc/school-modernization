@@ -131,7 +131,7 @@ function initApp(presetMode) {
     }
 
     // ======= ======= ======= makeSubMenu ======= ======= =======
-    Display.prototype.makeSubMenu = function(whichMenu) {
+    Display.prototype.makeSubMenu = function(whichMenu, chartOrProfile) {
         console.log("makeSubMenu");
 
         // == popup bar container
@@ -139,7 +139,11 @@ function initApp(presetMode) {
 
         // == build sub-menu
         var nextCategory = whichMenu[0];
-        var subMenuHtml = "<select id='expendMath' name='expendMath'>";
+        if (chartOrProfile == "chart") {
+            var subMenuHtml = "<select id='expendMathC' name='expendMath'>";
+        } else if (chartOrProfile == "profile") {
+            var subMenuHtml = "<select id='expendMathP' name='expendMath'>";
+        }
         for (var i = 1; i < whichMenu.length; i++) {
             nextItem = whichMenu[i];
             nextId = nextItem.id;

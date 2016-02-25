@@ -9,7 +9,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         chartHtml += "<tr><td class='profile-banner' colspan=2>";
         chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
         chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
-        chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu);
+        chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu, "chart");
         chartHtml += "</td></tr></table>";
     } else {
         var chartHtml = "<div id='chart'></div>";
@@ -345,7 +345,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     function activateSubmenu() {
         console.log("activateSubmenu");
 
-        $('#expendMath').on({
+        $('#expendMathC').on({
             change: function() {
                 console.log("\n------- setSubMenu -------");
                 nextMath = $("select[name='expendMath'] option:selected").val()
