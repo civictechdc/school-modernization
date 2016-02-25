@@ -5,20 +5,16 @@
 function Bubble(data, column){
     this.column = column;
     this.data = data;
-    this.sizes = {width: 900, height: 1200};
+    this.sizes = {width: 600, height: 600};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.01;
-    this.damper = 0.1;
+    this.damper = 0.4;
     this.center = {x: this.sizes.width / 2, y: this.sizes.width / 2};
     this.maxAmount = function(){
         var that = this;
         // console.log(this.column);
         d3.max(this.data, function(d){
-            console.log(d[that.column]);
-            // console.log(that.data);
-            // console.log(that.column);
-            // console.log(+d[that.column]);
             return parseInt(d[that.column]);
         });
     };
@@ -29,14 +25,10 @@ function Bubble(data, column){
         });
     };
     // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, (this.maxAmount())]).range([2, 85]);
-    this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, 10000000]).range([2, 12]);
+    this.radius_scale = d3.scale.pow().exponent(0.3).domain([0, 115000000]).range([2, 11]);
     this.nodes = [];
 
 }
-
-Bubble.prototype.printData = function(set){
-    console.log(set);
-};
 
 Bubble.prototype.make_svg = function(){
     if(document.querySelector('svg')){
@@ -54,14 +46,15 @@ Bubble.prototype.add_info_to_data = function(set){
     for(var i = 0, j = set.length; i < j; i++){
         var that = this;
         var current = set[i];
-        var randH = parseInt(Math.random() * that.sizes.width),
-            randW = parseInt(Math.random() * that.sizes.height);
+        var randH = parseInt(Math.random() * this.sizes.width),
+            randW = parseInt(Math.random() * this.sizes.height);
 
         current.myx = randH;
         current.myy = randW;
         current.color = '#2956B2';
         current.radius = (function(){
             if(current.MajorExp9815 && current.MajorExp9815 !== 'NA'){
+               // return (that.radius_scale(parseInt(current.MajorExp9815)));
                return (that.radius_scale(parseInt(current.MajorExp9815)));
             } else { 
                 console.log('not ready', current);
@@ -75,7 +68,7 @@ Bubble.prototype.add_info_to_data = function(set){
     // console.log(this.nodes);
 };
 
-Bubble.prototympe.update = function(set){
+Bubble.prototype.update = function(set){
      this.circles = this.svg.selectAll('circle')
         .data(set)
         .enter()
@@ -91,61 +84,53 @@ Bubble.prototympe.update = function(set){
             return set[i].myy;
         })
         .attr('r', function(d,i){ 
-            // console.log(set[i].radius);
             return set[i].radius;})
         ;
 };
 
 Bubble.prototype.set_force = function() {
-    // var that = this;
-    // this.force = d3.layout.force()
-    //     .nodes(function(){return that.nodes;})
-    //     .size([that.sizes.width, that.sizes.height]);
-    // return this.force;
-    return this.force = d3.layout.force().nodes(this.nodes).size([this.sizes.width, this.sizes.height])
+    var that = this;
+    this.force = d3.layout.force()
+        .nodes(this.data)
+        .links([])
+        .size([this.sizes.width, this.sizes.height])
+        .gravity(-0.05)
+        .charge(function(d){ return that.charge(d); })
+        .friction(0.9);
+
 };
 
 Bubble.prototype.charge = function(d) {
-    return -Math.pow(d.radius, 2.0) * 100;
+    return -Math.pow(d.radius, 2.0);
 };
 
 
 Bubble.prototype.together = function(d){
     var that = this;
-    this.force.gravity(that.force_gravity)
-        .charge(function(d){
-            // that.charge
-            return -Math.pow(d.radius, 2.0) * 100;
-        })
-        .friction(0.9)
-        .on('tick', function(){
-            var those = this;
-            return function(e){
-                return those.circles.each(those.move_towards_center(e.alpha))
-                    .attr('cx', function(d){ console.log(d); return d.myx;}) //d.x
-                    .attr('cy', function(d){ return d.myy;}); //d.y
-            }
+    this.force.on('tick', function(e){
+        that.circles.each(that.move_towards_center(e.alpha/2))
+            .attr('cx', function(d){ return d.x;}) //d.x
+            .attr('cy', function(d){ return d.y;}); //d.y
         })
         ;   
     this.force.start();
-    console.log('start');
 };
 
 Bubble.prototype.move_towards_center = function(alpha){
+    var already_done = false;
     var that = this;
     return function(d){
-        d.myx = d.myx + (that.center.x - d.myx) * (that.damper + 0.02) * alpha;
-        d.myy = d.myy + (that.center.y - d.myy) * (that.damper + 0.02) * alpha;    
+        d.x = d.x + (that.center.x - d.x) * (that.damper + 0.02) * alpha;
+        d.y = d.y + (that.center.y - d.y) * (that.damper + 0.02) * alpha;    
     };
 }
 
-
-
 Bubble.prototype.runit = function(set){
     this.make_svg();
+    this.set_force();
     this.add_info_to_data(set);
     this.update(this.nodes);
-    this.set_force();
+
     
     // this.printData(set);
 };
@@ -153,7 +138,6 @@ Bubble.prototype.runit = function(set){
 // MAIN()
 function main(params){
     d3.csv('data/data_master.csv', function(d){
-        var test = params;
         // Make datasets
         // returns data = {all, public, charter}
         var data = (function makeData(){
@@ -190,7 +174,7 @@ function main(params){
         var public_schools = document.getElementById('past'),
             charter = document.getElementById('future');        
         public_schools.addEventListener('click', function(){ bubble.together(); });
-        charter.addEventListener('click', function(){ bubble.runit(data.charter); });
+        charter.addEventListener('click', function(){ bubble.together(); });
             
     });
 }
