@@ -91,6 +91,7 @@ function initApp(presetMode) {
         this.schoolColorsArray = [];
         this.schoolMarkersArray = [];
         this.selectedSchoolsArray = [];
+        this.selectedSchool = null;
         this.jsonData = null;         // geojson data
         this.active = false;
     }
@@ -113,6 +114,77 @@ function initApp(presetMode) {
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
 
 
+    // ======= ======= ======= makeSearchBar ======= ======= =======
+    Display.prototype.makeSearchBar = function() {
+        // console.log("makeSearchBar");
+        var searchHtml = "<div id='search' class='category'>";
+        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
+        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
+        return searchHtml;
+    }
+
+    // ======= ======= ======= makeHoverDisplay ======= ======= =======
+    Display.prototype.makeHoverDisplay = function() {
+        // console.log("makeHoverDisplay");
+        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
+        return hoverHtml;
+    }
+
+    // ======= ======= ======= makeSubMenu ======= ======= =======
+    Display.prototype.makeSubMenu = function(whichMenu) {
+        console.log("makeSubMenu");
+
+        // == popup bar container
+        var subMenuContainer = $("#sub-nav-container");
+
+        // == build sub-menu
+        var nextCategory = whichMenu[0];
+        var subMenuHtml = "<select id='expendMath' name='expendMath'>";
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            nextId = nextItem.id;
+            nextText = nextItem.text;
+            if (displayObj.dataFilters.math == nextId) {
+                subMenuHtml += "<option selected='selected' value='" + nextId + "'>" + nextText + "</option>";
+            } else {
+                subMenuHtml += "<option value='" + nextId + "'>" + nextText + "</option>";
+            }
+        }
+        subMenuHtml += "</select>";
+        return subMenuHtml;
+    }
+
+    // ======= ======= ======= activateClearButton ======= ======= =======
+    Display.prototype.activateClearButton = function() {
+        console.log("activateClearButton");
+
+        var self = this;
+        $("#clear-button").fadeIn( "slow", function() {
+            console.log("*** FADEIN ***");
+        });
+
+        // ======= ======= ======= selectFilter ======= ======= =======
+        $("#clear-button").off("click").on("click", function(event){
+            console.log("\n======= clear ======= ");
+
+            // == clear menus (html) and filters (displayObj)
+            checkFilterSelection(self, zonesCollectionObj);
+            clearFilterSelctions();
+            clearProfileChart();
+            checkFilterSelection(self, zonesCollectionObj);
+
+            // == clear filter window
+            filterText = "your filters";
+            var filterTitleContainer = $("#filters-selections").children("h2");
+            $(filterTitleContainer).removeClass("filterList");
+            $(filterTitleContainer).text(filterText);
+            updateHoverText(null);
+
+            // == load default map
+            zonesCollectionObj.getZoneData();
+        });
+    }
+
     // ======= ======= ======= activateFilterMenus ======= ======= =======
     Display.prototype.activateFilterMenus = function() {
         console.log("activateFilterMenus");
@@ -134,6 +206,74 @@ function initApp(presetMode) {
         $(popupContainer).append(menuHtml);
         this.activateSearchButton("searchButton");
         this.activateSearchWindow("searchWindow");
+    }
+
+    // ======= ======= ======= activateFilterMenu ======= ======= =======
+    Display.prototype.activateFilterMenu = function(whichMenu) {
+        console.log("activateFilterMenu");
+
+        // == activate filter click events
+        for (var i = 1; i < whichMenu.length; i++) {
+            nextItem = whichMenu[i];
+            this.activateFilterSelect(nextItem);
+        }
+    }
+
+    // ======= ======= ======= activateSearchWindow ======= ======= =======
+    Display.prototype.activateSearchWindow = function(windowId) {
+        console.log("activateSearchWindow");
+
+        $("#" + windowId).on('input',function(e){
+            clearProfileChart();
+        });
+    }
+
+    // ======= ======= ======= activateCloseButton ======= ======= =======
+    Display.prototype.activateCloseButton = function(buttonId) {
+        console.log("activateCloseButton");
+
+        var self = this;
+        var buttonElement = $("#close-X");
+
+        // ======= selectFilter =======
+        $(buttonElement).off("click").on("click", function(event){
+            console.log("\n======= close =======");
+
+            // == remove previous chart or profile html if any
+            $("#profile-container").fadeOut( "fast", function() {
+                    console.log("*** FADEOUT profile-container ***");
+                    $("#profile").remove();
+            });
+            if ($('#chart-container').find('#chart').length) {
+                $("#chart-container").fadeIn( "slow", function() {
+                    console.log("*** FADEIN chart-container ***");
+                });
+            }
+            if ($('#legend-container').find('#legend').length) {
+                $("#legend").remove();
+            }
+        });
+    }
+
+    // ======= ======= ======= activateSearchButton ======= ======= =======
+    Display.prototype.activateSearchButton = function(buttonId) {
+        console.log("activateSearchButton");
+
+        var self = this;
+        var buttonElement = $("#" + buttonId);
+
+        // ======= selectFilter =======
+        $(buttonElement).off("click").on("click", function(event){
+            console.log("\n======= search =======");
+            self.findSearchSchool();
+        });
+        // ======= selectFilter =======
+        $( window ).bind('keypress', function(event){
+            if ( event.keyCode == 13 ) {
+                console.log("\n======= search =======");
+                self.findSearchSchool();
+            }
+        });
     }
 
     // ======= ======= ======= activateFilterLink ======= ======= =======
@@ -285,37 +425,6 @@ function initApp(presetMode) {
         });
     }
 
-    // ======= ======= ======= activateClearButton ======= ======= =======
-    Display.prototype.activateClearButton = function() {
-        console.log("activateClearButton");
-
-        var self = this;
-        $("#clear-button").fadeIn( "slow", function() {
-            console.log("*** FADEIN ***");
-        });
-
-        // ======= ======= ======= selectFilter ======= ======= =======
-        $("#clear-button").off("click").on("click", function(event){
-            console.log("\n======= clear ======= ");
-
-            // == clear menus (html) and filters (displayObj)
-            checkFilterSelection(self, zonesCollectionObj);
-            clearFilterSelctions();
-            clearProfileChart();
-            checkFilterSelection(self, zonesCollectionObj);
-
-            // == clear filter window
-            filterText = "your filters";
-            var filterTitleContainer = $("#filters-selections").children("h2");
-            $(filterTitleContainer).removeClass("filterList");
-            $(filterTitleContainer).text(filterText);
-            updateHoverText(null);
-
-            // == load default map
-            zonesCollectionObj.getZoneData();
-        });
-    }
-
     // ======= ======= ======= clearFilterSelctions ======= ======= =======
     function clearFilterSelctions() {
         console.log("clearFilterSelctions");
@@ -336,47 +445,6 @@ function initApp(presetMode) {
         zonesCollectionObj.aggregatorArray = [];
         zonesCollectionObj.zoneA = "Ward";
 
-    }
-
-    // ======= ======= ======= makeSearchBar ======= ======= =======
-    Display.prototype.makeSearchBar = function() {
-        // console.log("makeSearchBar");
-        // var searchHtml = "<div id='search' class='category'><span class='labelText searchText'>search</span>";
-        var searchHtml = "<div id='search' class='category'>";
-        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
-        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
-        return searchHtml;
-    }
-
-    // ======= ======= ======= makeHoverDisplay ======= ======= =======
-    Display.prototype.makeHoverDisplay = function() {
-        // console.log("makeHoverDisplay");
-        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
-        return hoverHtml;
-    }
-
-    // ======= ======= ======= makeSubMenu ======= ======= =======
-    Display.prototype.makeSubMenu = function(whichMenu, index) {
-        console.log("makeSubMenu");
-
-        // == popup bar container
-        var subMenuContainer = $("#sub-nav-container");
-
-        // == build sub-menu
-        var nextCategory = whichMenu[0];
-        var subMenuHtml = "<select id='expendMath' name='expendMath'>";
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            nextId = nextItem.id;
-            nextText = nextItem.text;
-            if (displayObj.dataFilters.math == nextId) {
-                subMenuHtml += "<option selected='selected' value='" + nextId + "'>" + nextText + "</option>";
-            } else {
-                subMenuHtml += "<option value='" + nextId + "'>" + nextText + "</option>";
-            }
-        }
-        subMenuHtml += "</select>";
-        return subMenuHtml;
     }
 
     // ======= ======= ======= findSearchSchool ======= ======= =======
@@ -461,146 +529,6 @@ function initApp(presetMode) {
         });
     }
 
-    // ======= ======= ======= activateSubfilterMenu ======= ======= =======
-    Display.prototype.activateSubfilterMenu = function(whichMenu) {
-        console.log("activateSubfilterMenu");
-
-        // == activate filter click events
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            this.activateSubfilterSelect(nextItem);
-        }
-    }
-
-    // ======= ======= ======= activateFilterMenu ======= ======= =======
-    Display.prototype.activateFilterMenu = function(whichMenu) {
-        console.log("activateFilterMenu");
-
-        // == activate filter click events
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            this.activateFilterSelect(nextItem);
-        }
-    }
-
-    // ======= ======= ======= activateSearchWindow ======= ======= =======
-    Display.prototype.activateSearchWindow = function(windowId) {
-        console.log("activateSearchWindow");
-
-        $("#" + windowId).on('input',function(e){
-            clearProfileChart();
-        });
-    }
-
-
-    // ======= ======= ======= activateCloseButton ======= ======= =======
-    Display.prototype.activateCloseButton = function(buttonId) {
-        console.log("activateCloseButton");
-
-        var self = this;
-        var buttonElement = $("#close-X");
-
-        // ======= selectFilter =======
-        $(buttonElement).off("click").on("click", function(event){
-            console.log("\n======= close =======");
-
-            // == remove previous chart or profile html if any
-            $("#profile-container").fadeOut( "fast", function() {
-                    console.log("*** FADEOUT profile-container ***");
-                    $("#profile").remove();
-            });
-            if ($('#chart-container').find('#chart').length) {
-                $("#chart-container").fadeIn( "slow", function() {
-                    console.log("*** FADEIN chart-container ***");
-                });
-            }
-            if ($('#legend-container').find('#legend').length) {
-                $("#legend").remove();
-            }
-        });
-    }
-
-    // ======= ======= ======= activateSearchButton ======= ======= =======
-    Display.prototype.activateSearchButton = function(buttonId) {
-        console.log("activateSearchButton");
-
-        var self = this;
-        var buttonElement = $("#" + buttonId);
-
-        // ======= selectFilter =======
-        $(buttonElement).off("click").on("click", function(event){
-            console.log("\n======= search =======");
-            self.findSearchSchool();
-        });
-        // ======= selectFilter =======
-        $( window ).bind('keypress', function(event){
-            if ( event.keyCode == 13 ) {
-                console.log("\n======= search =======");
-                self.findSearchSchool();
-            }
-        });
-    }
-
-    // ======= ======= ======= activateFilterRelease ======= ======= =======
-    Display.prototype.activateFilterRelease = function(selectedFilterElement) {
-        console.log("activateFilterRelease");
-
-        var self = this;
-        var menuHtml;
-
-        // ======= ======= ======= releaseFilter ======= ======= =======
-        $(selectedFilterElement).off("click").on("click", function(event){
-            console.log("\n======= releaseFilter ======= ");
-
-            var whichCategory = this.id;
-            checkFilterSelection(self, zonesCollectionObj, whichCategory);
-            clearMenuCategory(whichCategory);
-
-            if (whichCategory == "levels") {
-                self.modFilterMenu(self.filterMenusArray[1]);
-                displayObj.activateFilterMenu(self.filterMenusArray[1]);
-            }
-            checkFilterSelection(self, zonesCollectionObj, whichCategory);
-            zonesCollectionObj.getZoneData();
-        });
-    }
-
-    // ======= ======= ======= clearMenuCategory ======= ======= =======
-    function clearMenuCategory(whichCategory) {
-        console.log("clearMenuCategory");
-        console.log("  whichCategory: ", whichCategory);
-
-        // == find menu for selected category
-        for (var i = 0; i < displayObj.filterMenusArray.length; i++) {
-            nextMenu = displayObj.filterMenusArray[i];
-            checkCategory = displayObj.filterMenusArray[i][0];
-            console.log("  * checkCategory: ", checkCategory);
-            if (checkCategory == whichCategory) {
-                displayObj.dataFilters[whichCategory] = null;
-
-                // == get category parent element
-                filterElement = $("#" + whichCategory);
-
-                // == get filter parent element
-                var whichFilter = $(filterElement).children("ul").children("li").children("a").attr('id');
-
-                // == clear filter html (previous selection) and build new menu html
-                if (whichFilter) {
-                    var menuObject = filterMenu[whichFilter];
-                    var filterText = menuObject.text;
-                    filterElement.children("ul").remove();
-                    var menuHtml = "<ul>";
-                    menuHtml += displayObj.makeFilterMenu(nextMenu);
-                    filterElement.append(menuHtml);
-                    displayObj.activateFilterMenu(nextMenu);
-                    // displayFilterMessage(displayObj, filterText, "remove");
-                    break;
-                } else {
-                    console.log("No filter in this catagory");
-                }
-            }
-        }
-    }
 
 
 
@@ -1606,6 +1534,17 @@ function initApp(presetMode) {
 //     $(menuContainer).children("a").after(menuHtml);
 // }
 
+// // ======= ======= ======= activateSubfilterMenu ======= ======= =======
+// Display.prototype.activateSubfilterMenu = function(whichMenu) {
+//     console.log("activateSubfilterMenu");
+//
+//     // == activate filter click events
+//     for (var i = 1; i < whichMenu.length; i++) {
+//         nextItem = whichMenu[i];
+//         this.activateSubfilterSelect(nextItem);
+//     }
+// }
+
 // ======= ======= ======= activateFilterSelect ======= ======= =======
 // Display.prototype.activateFilterSelect = function(nextItem) {
 //     console.log("activateFilterSelect");
@@ -1710,4 +1649,65 @@ function initApp(presetMode) {
 //         checkFilterSelection(self, zonesCollectionObj, whichCategory);
 //         zonesCollectionObj.getZoneData();
 //     });
+// }
+
+// ======= ======= ======= activateFilterRelease ======= ======= =======
+// Display.prototype.activateFilterRelease = function(selectedFilterElement) {
+//     console.log("activateFilterRelease");
+//
+//     var self = this;
+//     var menuHtml;
+//
+//     // ======= ======= ======= releaseFilter ======= ======= =======
+//     $(selectedFilterElement).off("click").on("click", function(event){
+//         console.log("\n======= releaseFilter ======= ");
+//
+//         var whichCategory = this.id;
+//         checkFilterSelection(self, zonesCollectionObj, whichCategory);
+//         clearMenuCategory(whichCategory);
+//
+//         if (whichCategory == "levels") {
+//             self.modFilterMenu(self.filterMenusArray[1]);
+//             displayObj.activateFilterMenu(self.filterMenusArray[1]);
+//         }
+//         checkFilterSelection(self, zonesCollectionObj, whichCategory);
+//         zonesCollectionObj.getZoneData();
+//     });
+// }
+
+// ======= ======= ======= clearMenuCategory ======= ======= =======
+// function clearMenuCategory(whichCategory) {
+//     console.log("clearMenuCategory");
+//     console.log("  whichCategory: ", whichCategory);
+//
+//     // == find menu for selected category
+//     for (var i = 0; i < displayObj.filterMenusArray.length; i++) {
+//         nextMenu = displayObj.filterMenusArray[i];
+//         checkCategory = displayObj.filterMenusArray[i][0];
+//         console.log("  * checkCategory: ", checkCategory);
+//         if (checkCategory == whichCategory) {
+//             displayObj.dataFilters[whichCategory] = null;
+//
+//             // == get category parent element
+//             filterElement = $("#" + whichCategory);
+//
+//             // == get filter parent element
+//             var whichFilter = $(filterElement).children("ul").children("li").children("a").attr('id');
+//
+//             // == clear filter html (previous selection) and build new menu html
+//             if (whichFilter) {
+//                 var menuObject = filterMenu[whichFilter];
+//                 var filterText = menuObject.text;
+//                 filterElement.children("ul").remove();
+//                 var menuHtml = "<ul>";
+//                 menuHtml += displayObj.makeFilterMenu(nextMenu);
+//                 filterElement.append(menuHtml);
+//                 displayObj.activateFilterMenu(nextMenu);
+//                 // displayFilterMessage(displayObj, filterText, "remove");
+//                 break;
+//             } else {
+//                 console.log("No filter in this catagory");
+//             }
+//         }
+//     }
 // }

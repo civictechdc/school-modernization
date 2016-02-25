@@ -1159,40 +1159,52 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         var cleanedSchoolData = validateSchoolData(selectedSchoolData);
     }
 
+    schoolsCollectionObj.selectedSchool = cleanedSchoolData;
+    console.log("  schoolsCollectionObj.selectedSchool: ", schoolsCollectionObj.selectedSchool);
+
     schoolEnroll = cleanedSchoolData.schoolEnroll;
     schoolMaxOccupancy = cleanedSchoolData.schoolMaxOccupancy;
     schoolSqft = cleanedSchoolData.schoolSqft;
     schoolSqFtPerEnroll = cleanedSchoolData.schoolSqFtPerEnroll;
     spendLifetime = cleanedSchoolData.spendLifetime;
-    console.log("  spendLifetime: ", spendLifetime);
+    spendPlanned = cleanedSchoolData.spendPlanned;
+    spendPast = cleanedSchoolData.spendPast;
     spendEnroll = cleanedSchoolData.spendEnroll;
-    console.log("  spendEnroll: ", spendEnroll);
     spendSqFt = cleanedSchoolData.spendSqFt;
 
+    // == school sqft
     if (schoolSqft == "") {
         schoolSqft = "No data for school sqft.";
         schoolSqftSpan = "";
     } else {
         schoolSqftSpan = "<span class='value-label'>sqft</span>";
     }
+
+    // == capacity
     if (schoolMaxOccupancy == "") {
         schoolMaxOccupancy = "No data for school capacity.";
         schoolMaxOccupancySpan = "";
     } else {
         schoolMaxOccupancySpan = "<span class='value-label'>students</span>";
     }
+
+    // == enrollment
     if (schoolEnroll == "") {
         schoolEnroll = "No data for enrollment.";
         schoolEnrollSpan = "";
     } else {
         schoolEnrollSpan = "<span class='value-label'>students</span>";
     }
+
+    // == sqft per enrolled student
     if (schoolSqFtPerEnroll == "") {
         schoolSqFtPerEnroll = "No data for sqFt/student.";
         schoolSqFtPerEnrollSpan = "";
     } else {
         schoolSqFtPerEnrollSpan = "<span class='value-label'>sqft per student</span>";
     }
+
+    // == spending for lifetime
     if (spendLifetime == "") {
         spendLifetime = "No data for lifetime spending";
         spendLifetimeSpan = "";
@@ -1200,6 +1212,26 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         spendLifetime = "$" + spendLifetime;
         spendLifetimeSpan = "";
     }
+
+    // == planned spending
+    if (spendPlanned == "") {
+        spendPlanned = "No data for planned spending";
+        spendPlannedSpan = "";
+    } else {
+        spendPlanned = "$" + spendPlanned;
+        spendPlannedSpan = "";
+    }
+
+    // == past spending
+    if (spendPast == "") {
+        spendPast = "No data for past spending";
+        spendPastSpan = "";
+    } else {
+        spendPast = "$" + spendPast;
+        spendPastSpan = "";
+    }
+
+    // == spending per student
     if (spendEnroll == "") {
         spendEnroll = "No data for spending/student.";
         spendEnrollSpan = "";
@@ -1207,6 +1239,8 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         spendEnroll = "$" + spendEnroll;
         spendEnrollSpan = "<span class='value-label'>per student</span>";
     }
+
+    // == spending per sqft
     if (spendSqFt == "") {
         spendSqFt = "No data for spending/sqFt.";
         spendSqFtSpan = "";
@@ -1232,9 +1266,12 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     }
 
     var htmlString = "<table id='profile'>";
-    htmlString += "<tr><td class='profile-banner' colspan=2><div id='close-X'>X</div>";
-    htmlString += "<p class='profile-title'>" + itemName + "</p><p class='profile-subtitle'>" + cleanedSchoolData.schoolAddress + "</p>";
-    htmlString += "<p class='profile-subtitle'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + "</p>";
+    htmlString += "<tr><td class='profile-banner' colspan=2>";
+    htmlString += "<div id='close-X'><p>X</p></div>";
+    htmlString += "<p class='profile-title'>" + itemName + "</p>";
+    htmlString += "<p class='profile-subtitle'>" + cleanedSchoolData.schoolAddress + "</p>";
+    htmlString += "<p class='profile-subtitle2'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + "</p>";
+    htmlString += displayObj.makeSubMenu(displayObj.expendMathMenu);
     htmlString += "</td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>project type</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
@@ -1249,11 +1286,11 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<tr><td class='data-key'><p class='key-text'>sqft/enrolled</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + schoolSqFtPerEnroll + " " + schoolSqFtPerEnrollSpan + "</p></td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime Spending</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + spendLifetime + " " + spendLifetimeSpan + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Spending/student</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + spendEnroll + " " + spendEnrollSpan + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Spending/sqft</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + spendSqFt + " " + spendSqFtSpan + "</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future Spending</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Past Spending</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>&nbsp;</p></td></tr>";
     htmlString += "</table>";
 
     // == remove previous chart or profile html if any
@@ -1275,8 +1312,76 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
             console.log("*** FADEIN profile-container ***");
         });
     }
+
+    nextMath = $("select[name='expendMath'] option:selected").val()
+    console.log("  nextMath1: ", nextMath);
+    if (nextMath == "spendEnroll") {
+        $("#profileSpendLifetime").html("$" + spendEnroll + " <span class='value-label'>per student</span>");
+        $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
+        $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
+    } else if (nextMath == "spendSqFt") {
+        $("#profileSpendLifetime").html("$" + spendEnroll + " <span class='value-label'>per sqft</span>");
+        $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
+        $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
+    } else if (nextMath == "spendAmount") {
+        $("#profileSpendLifetime").html(spendLifetime + " " + spendLifetimeSpan);
+        $("#profileSpendPlanned").html(spendPlanned + " " + spendPlannedSpan);
+        $("#profileSpendPast").html(spendPast + " " + spendPastSpan);
+    } else {
+        $("#profileSpendLifetime").html(spendLifetime + " " + spendLifetimeSpan);
+        $("#profileSpendPlanned").html(spendPlanned + " " + spendPlannedSpan);
+        $("#profileSpendPast").html(spendPast + " " + spendPastSpan);
+    }
+
     displayObj.activateCloseButton();
-    // makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, schoolIndex);
+    activateProfileSubmenu(displayObj, zonesCollectionObj, schoolsCollectionObj);
+    console.log("  schoolsCollectionObj.selectedSchool: ", schoolsCollectionObj.selectedSchool);
+}
+
+// ======= ======= ======= activateProfileSubmenu ======= ======= =======
+function activateProfileSubmenu(displayObj, zonesCollectionObj, schoolsCollectionObj) {
+    console.log("activateProfileSubmenu");
+
+    $('#expendMath').on({
+        change: function() {
+            console.log("\n------- setSubMenu -------");
+            nextMath = $("select[name='expendMath'] option:selected").val()
+            console.log("  event: ", event);
+            console.log("  nextMath: ", nextMath);
+            displayObj.dataFilters.math = nextMath;
+            checkFilterSelection(displayObj, zonesCollectionObj, "math");
+
+            getSubProfileData(schoolsCollectionObj, nextMath);
+        }
+    });
+}
+
+// ======= ======= ======= getSubProfileData ======= ======= =======
+function getSubProfileData(schoolsCollectionObj, nextMath) {
+    console.log("getSubProfileData");
+
+    var cleanedSchoolData = schoolsCollectionObj.selectedSchool;
+    console.dir(cleanedSchoolData);
+
+    spendLifetime = cleanedSchoolData.spendLifetime;
+    spendPlanned = cleanedSchoolData.spendPlanned;
+    spendPast = cleanedSchoolData.spendPast;
+    spendEnroll = cleanedSchoolData.spendEnroll;
+    spendSqFt = cleanedSchoolData.spendSqFt;
+
+    if (nextMath == "spendEnroll") {
+        $("#profileSpendLifetime").text("$" + spendEnroll + " per student");
+        $("#profileSpendPlanned").text("no future per student data");
+        $("#profileSpendPast").text("no past per student data");
+    } else if (nextMath == "spendSqFt") {
+        $("#profileSpendLifetime").text("$" + spendEnroll + " per sqft");
+        $("#profileSpendPlanned").text("no future per sqft data");
+        $("#profileSpendPast").text("no past per sqft data");
+    } else if (nextMath == "spendAmount") {
+        $("#profileSpendLifetime").text("$" + spendLifetime);
+        $("#profileSpendPlanned").text("$" + spendPlanned);
+        $("#profileSpendPast").text("$" + spendPast);
+    }
 }
 
 // ======= ======= ======= validateSchoolData ======= ======= =======
@@ -1337,6 +1442,24 @@ function validateSchoolData(selectedSchoolData) {
         selectedSchoolData.spendLifetime = spendLifetime;
     } else {
         selectedSchoolData.spendLifetime = "";
+    }
+
+    var spendPlanned = isNumber(selectedSchoolData.spendPlanned);
+    if (spendPlanned == true) {
+        spendPlanned = numberWithCommas(selectedSchoolData.spendPlanned)
+        console.log("  spendPlanned: ", spendPlanned);
+        selectedSchoolData.spendPlanned = spendPlanned;
+    } else {
+        selectedSchoolData.spendPlanned = "";
+    }
+
+    var spendPast = isNumber(selectedSchoolData.spendPast);
+    if (spendPast == true) {
+        spendPast = numberWithCommas(selectedSchoolData.spendPast)
+        console.log("  spendPast: ", spendPast);
+        selectedSchoolData.spendPast = spendPast;
+    } else {
+        selectedSchoolData.spendPast = "";
     }
 
     var spendEnroll = isNumber(selectedSchoolData.spendEnroll);
