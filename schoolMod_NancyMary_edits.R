@@ -58,8 +58,8 @@ OpenFuture<-OpenFuture[c(14:15)]
 
 charterFull<-subset(dcFull, dcFull$Agency=="PCS")[c(2)]
 charter<-unique(charterFull)
-charter$School<-gsub("  "," ",charter$School)
-charter<-charter[order(charter$School),]
+charter$School2<-gsub("  "," ",charter$School)
+charter<-charter[order(charter$School2),]
 
 futureBind<-cbind(OpenFuture,charter)[c(1,3)]
 colnames(futureBind)[c(2)]<-c("School")
