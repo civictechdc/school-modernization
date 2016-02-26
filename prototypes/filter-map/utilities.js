@@ -18,6 +18,13 @@
 // ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
 // ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
 
+// ======= ======= ======= polyfill for Safari ======= ======= =======
+Number.isInteger = Number.isInteger || function(value) {
+    return typeof value === "number" &&
+           isFinite(value) &&
+           Math.floor(value) === value;
+};
+
 // ======= ======= ======= getZoneUrls ======= ======= =======
 function getZoneUrls(displayObj, zonesCollectionObj) {
     console.log("getZoneUrls");

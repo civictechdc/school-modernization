@@ -78,7 +78,6 @@ function initApp(presetMode) {
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
         this.indexColorsArray = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
-        // this.dataColorsArray = ["#0000ff", "#2200cc", "#4400aa", "#660088", "#880066", "#aa0044", "#cc0022", "#ff0000"];
         this.dataColorsArray = ["#b35806","#e08214","#fdb863","#fee0b6","#d8daeb","#b2abd2","#8073ac","#542788"];
         this.defaultColor = "white";
         this.dataIncrement = 0;
@@ -137,7 +136,7 @@ function initApp(presetMode) {
         // == popup bar container
         var subMenuContainer = $("#sub-nav-container");
 
-        // == build sub-menu
+        // == build sub-menu; attach to chart or profile div
         var nextCategory = whichMenu[0];
         if (chartOrProfile == "chart") {
             var subMenuHtml = "<select id='expendMathC' name='expendMath'>";
@@ -336,7 +335,6 @@ function initApp(presetMode) {
                     } else if (whichFilter == "Charter") {
                         setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
                     }
-                    // displayFilterMessage(self, menuObject, "add");
                     break;
 
                 // == levels filter (ES, MS, HS)
@@ -355,7 +353,6 @@ function initApp(presetMode) {
                     } else {
                         zonesCollectionObj.zoneA = "Ward";
                     }
-                    // displayFilterMessage(self, menuObject, "add");
                     break;
 
                 // == expenditures filter (past, present, planed, etc.)
@@ -369,7 +366,6 @@ function initApp(presetMode) {
                         setMenuState(displayObj, self.expendMenu, ["A", "A", "S"]);
                     }
                     clearZoneAggregator(zonesCollectionObj);
-                    // displayFilterMessage(self, menuObject, "add");
                     break;
 
                 // == wards or feeder zones for map
@@ -388,12 +384,10 @@ function initApp(presetMode) {
                             self.dataFilters.levels = "ES";
                             setMenuState(displayObj, self.levelsMenu, ["D", "A", "S"]);
                             levelObject = filterMenu["Elem"];
-                            // displayFilterMessage(self, menuObject, levelObject);
                         } else if ((tempLevels == "MS") || (tempLevels == "HS") || (tempLevels == null))  {
                             self.dataFilters.levels = "MS";
                             setMenuState(displayObj, self.levelsMenu, ["D", "S", "A"]);
                             levelObject = filterMenu["Middle"];
-                            // displayFilterMessage(self, menuObject, levelObject);
                         }
 
                     } else if (whichFilter == "FeederMS") {
@@ -401,20 +395,17 @@ function initApp(presetMode) {
                         setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
                         setMenuState(displayObj, self.levelsMenu, ["D", "D", "S"]);
                         levelObject = filterMenu["Elem"];
-                        // displayFilterMessage(self, menuObject, levelObject);
 
                     // == elementarty zone selected
                     } else if (whichFilter == "Elementary") {
                         self.dataFilters.levels = "ES";
                         setMenuState(displayObj, self.zonesMenu, ["A", "A", "A"]);
                         setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
-                        // displayFilterMessage(self, menuObject, "add");
 
                     // == no zone or Ward selected
                     } else {
                         setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
                         setMenuState(displayObj, self.zonesMenu, ["S", "A", "A"]);
-                        // displayFilterMessage(self, menuObject, "add");
                     }
                     break;
             }
@@ -737,8 +728,6 @@ function initApp(presetMode) {
                     if (selectSchool == true) {
                         schoolIndex++;
                         schoolData = getDataDetails(nextSchool);
-                        // console.log("  nextSchool.Ward: ", nextSchool.Ward);
-                        // console.log("  schoolData.schoolWard: ", schoolData.schoolWard);
                         selectedSchoolsArray.push(schoolData)
                         selectedCodesArray.push(schoolData.schoolCode)
                         selectedNamesArray.push(processSchoolName(schoolData.schoolName))
@@ -835,8 +824,8 @@ function initApp(presetMode) {
             var selectedZoneMatch = true;
         }
         // console.log("  levels/agency/zone: ", levelsMatch, "/", agencyMatch, "/", selectedZoneMatch);
-        // if ((levelsMatch == true) && (expendMatch == true) && (agencyMatch == true) && (selectedZoneMatch == true)) {
 
+        // if ((levelsMatch == true) && (expendMatch == true) && (agencyMatch == true) && (selectedZoneMatch == true)) {
         if ((levelsMatch == true) && (agencyMatch == true) && (selectedZoneMatch == true)) {
             // console.log("******* selected: ", shortName);
             return true;
@@ -896,16 +885,6 @@ function initApp(presetMode) {
             if (displayObj.dataFilters.agency == "Charter") {
                 textMessage = "Expenditure data for DCPS schools only."
                 displayHoverMessage(displayObj, textMessage);
-            } else {
-                // if (displayObj.dataFilters.expend) {
-                //
-                //     // == calculate increments, min, max, avg, median
-                //     textMessage = "Expenditure data for DCPS schools only."
-                //     displayHoverMessage(displayObj, textMessage);
-                // } else {
-                //     textMessage = "Select an expenditure type."
-                //     displayHoverMessage(displayObj, textMessage);
-                // }
             }
         }
 
@@ -934,11 +913,12 @@ function initApp(presetMode) {
         });
         console.log("*** new features Ct ", self.zoneFeaturesArray.length);
 
-        // ======= FEATURES FORMATTING LOOP =======
+        // ======= FEATURES FORMATTING LOOPS =======
         var featureIndex = -1;
         var dataDelayCount = 0;
         if (zoneBcount > 0) {
 
+            // == elementary or middle school zones in feeder areas
             console.log("*** LOWER ZONES ***");
             for (var i = 0; i < zoneBcount; i++) {
                 var start = new Date().getTime();
@@ -968,6 +948,7 @@ function initApp(presetMode) {
             console.log(" featureCount: ", featureIndex + 1);
             console.log(" dataDelayCount: ", dataDelayCount);
 
+            // == feeder zones or wards
             console.log("*** UPPER ZONES ***");
             for (var i = zoneBcount; i < self.zoneFeaturesArray.length; i++) {
                 var start = new Date().getTime();
@@ -1050,9 +1031,9 @@ function initApp(presetMode) {
         }
 
         // ======= ======= ======= show rankings chart ======= ======= =======
-        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
-        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
-        console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
+        // console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
+        // console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+        // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
         if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
             if (displayObj.dataFilters.expend) {
                 if (displayObj.dataFilters.agency != "Charter") {
@@ -1325,8 +1306,8 @@ function initApp(presetMode) {
     function setFilterSelections(agency, levels, expend, zones, math, presetMode) {
         console.log("******* setFilterSelections *******");
 
+        // == pre-defined filter settings for introductory map displays
         displayObj.displayMode = presetMode;
-
         clearFilterSelctions();
         updateHoverText(null);
         initMap(zonesCollectionObj, displayObj);
@@ -1395,11 +1376,9 @@ function initApp(presetMode) {
     if (displayObj.displayMode != "storyMap") {
         this.jsonData = null;
         displayObj.activateFilterMenus();
-        // displayObj.initFilterMenus();
         displayObj.activateClearButton();
         setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
-        // displayObj.setMenuItem("zones", "Ward");
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
         initFloatingWindows();
