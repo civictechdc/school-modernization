@@ -11,6 +11,11 @@ $cerulean: #2956B2;
    margin: 0 auto;
 }
 
+circle {
+   // stroke: #cerulean;
+   // stroke-width: 3px;
+}
+
 text {
    &.label {
       font-size: 10px;

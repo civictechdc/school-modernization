@@ -146,6 +146,12 @@ class BubbleChart
     this.display_years()
 
   # move all circles to their associated @year_centers 
+    
+  # @year_centers = {
+  #   "2008": {x: @width / 3, y: @height / 2},
+  #   "2009": {x: @width / 2, y: @height / 2},
+  #   "2010": {x: 2 * @width / 3, y: @height / 2}
+  # }
   move_towards_year: (alpha) =>
     (d) =>
       target = @year_centers[d.year]

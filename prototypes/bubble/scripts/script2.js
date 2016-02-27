@@ -1,5 +1,11 @@
 'use strict';
-
+var done = false;
+function do_once(func){
+  if(!done){
+    func();
+    done = true;
+  }
+}
 // CUSTOM
 var $ = function(sel){return document.querySelector(sel);},
     $_all = function(sel){return document.querySelectorAll(sel);},
@@ -132,7 +138,7 @@ d3.csv('data/data_master.csv', function (error, data) {
         .gravity(-0.01)
         .friction(0.9)
         .charge(function(d){
-            return -Math.pow(d.radius, 2.0) / 8;    
+            return -Math.pow(d.radius, 1.8);    
         })
         ;
     // var force = d3.layout.force().alpha(10);
@@ -251,17 +257,17 @@ d3.csv('data/data_master.csv', function (error, data) {
           centers = _.uniq(_.pluck(data, vname)).map(function (d) {
             return {name: d, value: 1};
           });
-
           map = d3.layout.pack().size(size);
           map.nodes({children: centers});
 
           return centers;
-        };
+      };
 
     function tick (centers, varname) {
       var foci = {};
       for (var i = 0; i < centers.length; i++) {
         foci[centers[i].name] = centers[i];
+        // do_once(function(){ console.log(foci); });
       }
       // LOOK HERE
       return function (e) {

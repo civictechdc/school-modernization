@@ -5,7 +5,7 @@
 function Bubble(data, column){
     this.column = column;
     this.data = data;
-    this.sizes = {width: 600, height: 600};
+    this.sizes = {width: 900, height: 600, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.01;
@@ -25,7 +25,7 @@ function Bubble(data, column){
         });
     };
     // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, (this.maxAmount())]).range([2, 85]);
-    this.radius_scale = d3.scale.pow().exponent(0.3).domain([0, 115000000]).range([2, 11]);
+    this.radius_scale = d3.scale.pow().exponent(0.3).domain([0, 115000000]).range([4, 15]);
     this.nodes = [];
 
 }
@@ -39,33 +39,29 @@ Bubble.prototype.make_svg = function(){
         .attr('height', this.sizes.height);
 };
 
-Bubble.prototype.add_info_to_data = function(set){
+Bubble.prototype.create_nodes = function(set){
     if(this.nodes.length){
         this.nodes = [];
     }
     for(var i = 0, j = set.length; i < j; i++){
-        var that = this;
-        var current = set[i];
-        var randH = parseInt(Math.random() * this.sizes.width),
-            randW = parseInt(Math.random() * this.sizes.height);
+        var that = this,
+            current = set[i];
 
-        current.myx = randH;
-        current.myy = randW;
+        // current.myx = parseInt(Math.random() * this.sizes.width);
+        // current.myy = parseInt(Math.random() * this.sizes.height);
+        current.myx = this.center.x;
+        current.myy = this.center.y;
         current.color = '#2956B2';
         current.radius = (function(){
             if(current.MajorExp9815 && current.MajorExp9815 !== 'NA'){
-               // return (that.radius_scale(parseInt(current.MajorExp9815)));
                return (that.radius_scale(parseInt(current.MajorExp9815)));
             } else { 
                 console.log('not ready', current);
-                console.log(current.MajorExp9815); 
-                return 5;
             }        
         }());
         this.nodes.push(current);
     }
     this.nodes.sort(function(a,b){ return b.MajorExp9815 - a.MajorExp9815});
-    // console.log(this.nodes);
 };
 
 Bubble.prototype.update = function(set){
@@ -100,24 +96,26 @@ Bubble.prototype.set_force = function() {
 
 };
 
+
 Bubble.prototype.charge = function(d) {
-    return -Math.pow(d.radius, 2.0);
+    return -Math.pow(d.radius, 1.8);
 };
 
 
-Bubble.prototype.together = function(d){
+Bubble.prototype.group_bubbles = function(d){
     var that = this;
     this.force.on('tick', function(e){
-        that.circles.each(that.move_towards_center(e.alpha/2))
-            .attr('cx', function(d){ return d.x;}) //d.x
-            .attr('cy', function(d){ return d.y;}); //d.y
+        that.circles.each(that.move_towards_centers(e.alpha/2, 'FeederHS'))
+            .attr('cx', function(d){ return d.x;})
+            .attr('cy', function(d){ return d.y;});
         })
         ;   
     this.force.start();
 };
 
+
+// Tick functions
 Bubble.prototype.move_towards_center = function(alpha){
-    var already_done = false;
     var that = this;
     return function(d){
         d.x = d.x + (that.center.x - d.x) * (that.damper + 0.02) * alpha;
@@ -125,14 +123,57 @@ Bubble.prototype.move_towards_center = function(alpha){
     };
 }
 
-Bubble.prototype.runit = function(set){
+Bubble.prototype.move_towards_centers = function(alpha, column) {
+    // Make an array of unique items
+    var that = this,
+        items = _.uniq(_.pluck(this.nodes, column)),
+        unique = [];
+    for (var i = 0; i < items.length; i++) { 
+        unique.push({name: items[i]}); 
+    }
+
+    // Assign unique_item a point to occupy
+    var width = this.sizes.width,
+        height = this.sizes.height,
+        padding = this.sizes.padding;
+    for (var i in unique){
+        // Make the grid here
+        unique[i].x = (i) * (width / unique.length) + padding * alpha;
+        unique[i].y = (i) * (height / unique.length) + padding * alpha;
+        // unique[i].y = this.center.y * alpha;
+    }
+    // Attach the target coordinates to each node
+    _.each(this.nodes, function(node){
+        for (var i = 0; i < unique.length; i++) {
+            if (node[column] === unique[i].name){
+                node.target = {
+                    x: unique[i].x,
+                    y: unique[i].y
+                };
+            }
+        }
+    });
+
+    // Send the nodes the their corresponding point
+    var done = false;
+    return function(d){
+        d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
+        d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
+    }
+
+    // var pack = d3.layout.pack()
+    //     .size([this.sizes.width, this.sizes.height])
+    //     .nodes(unique_items)
+    //     ;
+};
+
+Bubble.prototype.graph = function(set){
     this.make_svg();
     this.set_force();
-    this.add_info_to_data(set);
+    this.create_nodes(set);
     this.update(this.nodes);
-
+    this.group_bubbles(); 
     
-    // this.printData(set);
 };
 
 // MAIN()
@@ -141,7 +182,7 @@ function main(params){
         // Make datasets
         // returns data = {all, public, charter}
         var data = (function makeData(){
-            var both = [], public_schools = [], charter = [];
+            var both = [], public_schools = [], charter_schools = [];
             // Cache all data into one dataset
             for (var i = 0, j = d.length; i < j; i++){
                 both.push(d[i]);
@@ -155,28 +196,38 @@ function main(params){
             // Separate d for CHARTER schools
             for (var i = 0, j = both.length; i < j; i++){
                 if (d[i].Agency === 'PCS'){
-                    charter.push(d[i]);
+                    charter_schools.push(d[i]);
                 }
             }      
 
            return {
               both : both, // total data
               public_schools : public_schools, // only public schools
-              charter: charter // only charter schools
+              charter_schools: charter_schools // only charter schools
            };
         }());
 
         // Run the graph
         var bubble = new Bubble(data.both, 'MajorExp9815');
-        bubble.runit(data.both); 
+        bubble.graph(data.both); 
         
-        // Make the buttons interactive
+        // Get buttons from the DOM
         var public_schools = document.getElementById('past'),
             charter = document.getElementById('future');        
-        public_schools.addEventListener('click', function(){ bubble.together(); });
-        charter.addEventListener('click', function(){ bubble.together(); });
-            
+        
+        // Make the buttons interactive
+        public_schools.addEventListener('click', function(){ 
+            bubble.graph(data.public_schools); });
+
+        charter.addEventListener('click', function(){ 
+            bubble.graph(data.charter_schools); });    
     });
 }
 main('test');
 
+
+
+// Utility
+function print(x){console.log(x);}
+function get(sel){return document.querySelector(sel);}
+function getAll(sel){return document.querySelectorAll(sel);}
