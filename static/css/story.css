@@ -1,0 +1,17 @@
+/* Custom CSS for styling each story page. */
+
+/* ======= dig-in ======== */
+
+.dig-in img {
+  height: 300px;
+  margin: 0 auto;
+  display: inline; 
+}
+
+/* ====== branch-off ======= */
+
+.branch-off img {
+  width: 80%;
+  display: block;
+  margin: 30px auto 0 auto;
+}

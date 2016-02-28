@@ -1,63 +1,48 @@
-<!-- ======= ======= title/para ======= ======= ======= -->
-<div class="row words">
-    <h2>{{ story.title }}</h2>
-    <p>{{ story.para }}</p>
+<!-- ======= ======= Title&Para ======= ======= ======= -->
+
+<div class="row words" ng-if="includeTop">
+  <ng-include src="titlePara">
+  </ng-include>
 </div>
 
-<!-- ======= ======= charts ======= ======= ======= -->
-<div class="row charts">
+<div class="row words" ng-if="!includeTop">
+  <h2>{{ story.title }}</h2>
+  <p>{{ story.para }}</p>
+</div>
 
-    <!-- ======= ======= bubble ======= ======= ======= -->
-    <div id="col-bubble" class="column">
+<!-- ======= ======= bubble ======= ======= ======= -->
+<div id="col-bubble">
+  <p class="text">
+  Multi-School Spending <a class="text" href="#">Tool</a>
+  </p>
+  <!-- ======= svg of chart goes below here. ======= -->
+  <img class="center" id="bubble-img" src="/static/images/bubble-chart.png"></div>
+  <!-- ======= svg of chart goes above here. ======= -->
+  </div>
+</div>
 
-        <!-- title -->
-        <div class="row">
-            <div class="tool-banner">
-                <a href="#">Bubble Tool</a>
-            </div>
-        </div>
+<!-- ======= ======= map ======= ======= -->
+<div id="map-chart">
+  <p class="tool-link"><a href="/prototypes/filter-map/" class="label-title">
+    District Schools Mapping tool
+  </a></p>
+  <!-- labels -->
+  <div class="display-title">
+    <span id="data-title">&nbsp;</span>
+    <span id="data-subtitle">&nbsp;</span>
+    <span id='chart-label' class="label-title">data chart</span>
+    <span id='chart-title'>&nbsp;</span>
+    <span id='chart-subtitle'>&nbsp;</span>
+  </div>
+  <!-- map + chart -->
+  <div class="wrapper">
+    <div id="storyMap-container"></div>
+    <div id='chart-container'></div>
+  </div>
+</div>
 
-        <!-- bubble -->
-        <div class="row">
-            <div class="column col-md-12">
-                <div class="row display-title">
-                    <p class="label-title">bubble chart</p>
-                </div>
-                <div id="bubble-container" class="row"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ======= ======= map ======= ======= ======= -->
-    <div class="column">
-
-        <!-- title -->
-        <div class="row">
-            <div class="tool-banner">
-                <a href="prototypes/filter-map/index.html">Map Tool</a>
-            </div>
-        </div>
-
-        <!-- map -->
-        <div class="row">
-            <div id="col-map" class="column">
-                <div class="row display-title left">
-                    <p class="label-title">map</p>
-                </div>
-                <div class="row display-title right">
-                    <p id="data-title">&nbsp;</p>
-                    <p id="data-subtitle">&nbsp;</p>
-                </div>
-                <div id="storyMap-container"></div>
-            </div>
-            <div id="col-chart" class="column">
-                <div class="row display-title">
-                    <p id='chart-label' class="label-title">data chart</p>
-                    <p id='chart-title'>&nbsp;</p>
-                    <p id='chart-subtitle'>&nbsp;</p>
-                </div>
-                <div id='chart-container' class="row"></div>
-            </div>
-        </div>
-    </div>
+<!-- ======= ======= Below Fold Content ======= ======= -->
+<div class="row" ng-class="storyName">
+  <ng-include src="belowFold">
+  </ng-include>
 </div>
