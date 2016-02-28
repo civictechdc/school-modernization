@@ -3,6 +3,7 @@
 // public class Bubble
 //*********************************
 function Bubble(data, column){
+    this.asMoney = d3.format('$,');
     this.column = column;
     this.data = data;
     this.sizes = {width: 900, height: 600, padding: 100};
@@ -83,6 +84,48 @@ Bubble.prototype.update = function(set){
             return set[i].radius;})
         ;
 };
+
+Bubble.prototype.add_tootltips = function(d){
+    var that = this;
+    this.circles.on('mouseenter', function(d){
+
+        // GET THE X/Y COOD OF OBJECT
+        var tooltipPadding = 30,
+            xPosition = d3.select(this)[0][0]['cx'].animVal.value - tooltipPadding,
+            yPosition = d3.select(this)[0][0]['cy'].animVal.value - tooltipPadding;
+        
+        // TOOLTIP INFO
+        d3.select('#school').text('School: ' + camel(d.School));
+        d3.select('#agency').text('Agency: ' + d.Agency);
+        d3.select('#ward').text('Ward: ' + d.Ward);
+        if(d.ProjectType && d.ProjectType !== 'NA'){
+            d3.select('#project').text('Project: ' + d.ProjectType);
+        } else {
+            d3.select('#project').text('');
+        }
+        if(d.YrComplete && d.YrComplete !== 'NA'){
+            d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
+        } else {
+            d3.select('#yearComplete').text('');
+        }
+        d3.select('#majorexp').text('Total Spent: ' + that.asMoney(d.MajorExp9815));
+        d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.asMoney(d.SpentPerSqFt) + '/sq. ft.');
+        d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.asMoney(d.SpentPerMaxOccupancy));
+        if(d.FeederHS && d.FeederHS !== "NA"){
+            d3.select('#hs').text('High School: ' + d.FeederHS);
+        } else {
+            d3.select('#hs').text('');
+        }
+        
+        // d3.select(this)[0][0].style.fill = 'gray';
+        d3.select(this).classed('color', true);
+      })
+      .on('mouseleave', function(){
+        d3.select(this).classed('color', false);
+
+      })
+      ;
+}
 
 Bubble.prototype.set_force = function() {
     var that = this;
@@ -172,6 +215,7 @@ Bubble.prototype.graph = function(set){
     this.set_force();
     this.create_nodes(set);
     this.update(this.nodes);
+    this.add_tootltips();
     this.group_bubbles(); 
     
 };
@@ -231,3 +275,20 @@ main('test');
 function print(x){console.log(x);}
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){return document.querySelectorAll(sel);}
+function camel(str){
+  var camelStr = [],
+      strSplit = str.split(' '),
+      i =0, j = strSplit.length;
+  for (; i < j; i++){
+    var splitWord = strSplit[i].split('');
+    for(var m = 0, n = splitWord.length; m<n; m++){
+      var letter = splitWord[0],
+          upperLetter = letter.toUpperCase();
+      splitWord.shift();
+      splitWord.unshift(upperLetter);
+    }
+    camelStr.push(splitWord.join(''));
+  }
+  
+  return camelStr.join(' ');
+}
