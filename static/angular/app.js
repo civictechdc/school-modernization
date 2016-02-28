@@ -5,23 +5,24 @@ angular.module("PostModern", ['ngRoute'])
       console.log("ang:routeProvider");
       $routeProvider.when("/story/:name", {
           controller: 'storyCtrl',
-          templateUrl: '/static/angular/story.html',
+          templateUrl: 'static/angular/story.html',
       })
       .when("/intro", {
-          templateUrl: '/static/angular/intro.html',
+          templateUrl: 'static/angular/intro.html',
       })
       .when('/appendix', {
-          templateUrl: '/static/angular/appendix.html',
+          templateUrl: 'static/angular/appendix.html',
       })
       .when('/about', {
-          templateUrl: '/static/angular/about.html',
+          templateUrl: 'static/angular/about.html',
       })
+      .otherwise('/intro')
   }])
   .controller('storyCtrl', function($scope, navService, storyService, mapService) {
     console.log("ang:storyCtrl");
     var navObj = navService.GetPath();
     var story = storyService[navObj.path];
-    var templatePath = '/static/angular/' + navObj.path;
+    var templatePath = 'static/angular/' + navObj.path;
     $scope.story = story
     $scope.storyName = navObj.path;
     $scope.belowFold = templatePath + '.html';
