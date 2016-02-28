@@ -148,12 +148,13 @@ Bubble.prototype.charge = function(d) {
 Bubble.prototype.group_bubbles = function(d){
     var that = this;
     this.force.on('tick', function(e){
-        that.circles.each(that.move_towards_centers(e.alpha/2, 'FeederHS'))
+        that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
             .attr('cx', function(d){ return d.x;})
             .attr('cy', function(d){ return d.y;});
         })
         ;   
     this.force.start();
+    console.log(this.column);
 };
 
 
@@ -174,7 +175,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
     }
-
     // Assign unique_item a point to occupy
     var width = this.sizes.width,
         height = this.sizes.height,
@@ -183,7 +183,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         // Make the grid here
         unique[i].x = (i) * (width / unique.length) + padding * alpha;
         unique[i].y = (i) * (height / unique.length) + padding * alpha;
-        // unique[i].y = this.center.y * alpha;
     }
     // Attach the target coordinates to each node
     _.each(this.nodes, function(node){
@@ -252,7 +251,7 @@ function main(params){
         }());
 
         // Run the graph
-        var bubble = new Bubble(data.both, 'MajorExp9815');
+        var bubble = new Bubble(data.both, 'Agency');
         bubble.graph(data.both); 
         
         // Get buttons from the DOM
