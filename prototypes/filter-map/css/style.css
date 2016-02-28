@@ -150,14 +150,10 @@ td {
 #clear-button:hover {
     background-color: orchid ;
 }
-#clear-button:hover > span {
-    /*color: purple;*/
-}
 .filter-row {
     width: 100%;
     height: 40px;
     padding: 2px;
-    /*background-color: #d8daeb;*/
     background-color: #fff2e5;
 }
 .filter-label {
@@ -185,84 +181,28 @@ td {
 }
 .active:hover {
     background-color: #e08214;
-    /*background-color: green;*/
 }
 .active:hover > a {
-    /*color: #d8daeb;*/
     color: white;
 }
 .selected {
     background-color: purple;
 }
 .selected > a {
-    /*color: #d8daeb;*/
     color: white;
 }
 .selected:hover {
     background-color: #8073ac;
-    /*background-color: purple;*/
 }
 .selected:hover > a {
-    /*color: #d8daeb;*/
     color: white;
 }
 .deactivated {
     background-color: #eee;
 }
 .deactivated > a {
-    /*color: #d8daeb;*/
     color: gray;
 }
-
-
-/* ======= filters ======= */
-/*.filter-container {
-    width: 360px;
-    height: auto;
-    position: absolute;
-    top: 60px;
-    left: 65%;
-    background-color: #white;
-    box-shadow: 4px 4px 4px #555;
-    border-radius: 6px 6px 2px 2px;
-    z-index:99;
-}
-#filters-table {
-    position: relative;
-    width:100%;
-    border: 1px solid black;
-}
-table, th, td {
-   border: 1px solid black;
-}
-.banner {
-    height: 40px;
-    padding: 0 20px 0 0;
-    border: solid 2px #eee;
-}
-.title-text {
-    position: relative;
-    width:100%;
-}
-.filter-label {
-    position: relative;
-    width: 80px;
-    height: 50px;
-}
-.filters {
-    position: relative;
-    width: 100%;
-}
-td > .filter {
-    position: relative;
-    display: block;
-    width: 50px;
-    height: 50px;
-    background-color: green;
-}
-.filter-blank {
-    background-color: green;
-}*/
 
 /* ======= buttons ======= */
 #zone-school-button {
@@ -282,10 +222,14 @@ td > .filter {
 
 /* ======= mapCol ======= */
 .mapCol {
-    display: -webkit-flex || -webkit-inline-flex;
-    display: -webkit-box || -webkit-inline-box;
-    display: -ms-flexbox || -ms-inline-flexbox;
-    display: -moz-box || -moz-inline-box;
+    display: -webkit-flex;
+    display: -webkit-inline-flex;
+    display: -webkit-box;
+    display: -webkit-inline-box;
+    display: -ms-flexbox;
+    display: -ms-inline-flexbox;
+    display: -moz-box;
+    display: -moz-inline-box;
     display: inline-flex;
     display: flex;
     flex-direction: -webkit-column;
@@ -561,17 +505,17 @@ hr {
     width: 14px;
     margin-top: 4px;
     margin-left: 4px;
+    padding: 0 0 6px 0;
     text-align: center;
-    vertical-align: middle;
     background-color: white;
     border: solid 2px black;
 }
 #close-X > p {
     display: inline-block;
     margin: 0;
-    margin-bottom: 2px;
-    line-height: 12px;
-    font-size: 10;
+    padding: 0;
+    vertical-align: middle;
+    font-size: 12px;
     color: purple;
 }
 .profile-title {
@@ -689,7 +633,7 @@ hr {
     margin: 0;
     padding: 0;
     line-height: 12px;
-    font-size: 12;
+    font-size: 12px;
     color: red;
     background-color: white;
 }
@@ -702,7 +646,7 @@ hr {
     margin-top: 2px;
     margin-left: 5px;
     line-height: 16px;
-    font-size: 12;
+    font-size: 12px;
     background-color: white;
     border: solid 2px black;
 }

@@ -567,6 +567,8 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
         // console.log("    aggregatedEnroll: ", aggregatedEnroll);
 
         return null;
+
+    // == rejected schools
     } else {
         return schoolData.schoolCode;
     }
