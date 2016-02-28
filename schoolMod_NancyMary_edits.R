@@ -17,15 +17,62 @@ enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernizati
 closedCharter<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/Output%20Data/Old/PCS_MasterClosed_210.csv",
                  stringsAsFactors=FALSE, strip.white=TRUE)
 
-### update lat long and calculated fields to account for updated fields ###
-### update lat long and calculated fields to account for updated fields ###
-### update lat long and calculated fields to account for updated fields ###
+charterFuture<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/FAc%20Allowance%201999-2021-Table%201.csv",
+                        stringsAsFactors=FALSE, strip.white=TRUE)[c(1,3:8)]
+charterFuture<-subset(charterFuture,charterFuture$Master.PCS.List.1998.2014.15!="")
+### Functions ###
 money<-function(x) {
   x<-(sub("\\$","",x))
 }
 numeric<- function(x) {
   x<-as.numeric(gsub(",","",x))
 }
+
+
+### Add in Future Spending for Charters ###
+### Add in Future Spending for Charters ###
+### Add in Future Spending for Charters ###
+charterFuture$FY16<-numeric(charterFuture$FY2016.FA)
+charterFuture$FY17<-numeric(charterFuture$FY2017.FA)
+charterFuture$FY18<-numeric(charterFuture$FY2018.FA)
+charterFuture$FY19<-numeric(charterFuture$FY2019.FA)
+charterFuture$FY20<-numeric(charterFuture$FY2020.FA)
+charterFuture$FY21<-numeric(charterFuture$FY2021.FA)
+charterFuture$TotalAllotandPlan1621<-charterFuture$FY21 + charterFuture$FY20 + charterFuture$FY19 +
+  charterFuture$FY18 + charterFuture$FY17 + charterFuture$FY16
+
+OpenFuture<-subset(charterFuture,charterFuture$TotalAllotandPlan1621!=0)
+OpenFuture$SchoolName<-gsub("  "," ",OpenFuture$Master.PCS.List.1998.2014.15)
+OpenFuture$SchoolName<-ifelse(OpenFuture$SchoolName=="AppleTree Douglass/Savannah Terr.","AppleTree Southeast",
+                        ifelse(OpenFuture$SchoolName=="Capital City Upper School","Capital City High School",
+                          ifelse(OpenFuture$SchoolName=="Cesar Chavez Bruce Prep","Cesar Chavez PCS Chavez Prep",
+                            ifelse(OpenFuture$SchoolName=="DCI, District of Columbia International School","District of Columbia International School",
+                             ifelse(OpenFuture$SchoolName=="E.L. Haynes Kansas Ave Elementary","E.L. Haynes PCS Kansas Avenue (Elementary School)",
+                               ifelse(OpenFuture$SchoolName=="E.W. Stokes","Elsie Whitlow Stokes Community Freedom PCS",
+                                 ifelse(OpenFuture$SchoolName=="Friendship Collegiate","Friendship Woodson Collegiate Academy",
+                                   ifelse(OpenFuture$SchoolName=="Next Step","The Next Step",OpenFuture$SchoolName ))))))))
+
+
+OpenFuture<-OpenFuture[order(OpenFuture$SchoolName),]
+OpenFuture<-OpenFuture[c(14:15)]
+
+charterFull<-subset(dcFull, dcFull$Agency=="PCS")[c(2)]
+charter<-unique(charterFull)
+charter$School2<-gsub("  "," ",charter$School)
+charter<-charter[order(charter$School2),]
+
+futureBind<-cbind(OpenFuture,charter)[c(1,3)]
+colnames(futureBind)[c(2)]<-c("School")
+
+charterJoin<-subset(dcFull, dcFull$Agency=="PCS")[-c(11)]
+charterFull<-join(charterJoin,futureBind,by="School")
+
+DCPS<-subset(dcFull, dcFull$Agency !="PCS")
+dcFull<-rbind(DCPS,charterFull)
+
+### update lat long and calculated fields to account for updated fields ###
+### update lat long and calculated fields to account for updated fields ###
+### update lat long and calculated fields to account for updated fields ###
 dcFull$MajorExp9815<-money(dcFull$MajorExp9815)
 dcFull$MajorExp9815<-numeric(dcFull$MajorExp9815)
 dcFull$totalSQFT<-numeric(dcFull$totalSQFT)
