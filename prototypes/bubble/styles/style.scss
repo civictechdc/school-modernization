@@ -12,8 +12,15 @@ $cerulean: #2956B2;
 }
 
 circle {
-   // stroke: #cerulean;
-   // stroke-width: 3px;
+   fill: $cerulean;
+   stroke: darken($cerulean , 10%);
+   stroke-width: 3px;
+   cursor: pointer;
+
+   &:hover {
+      fill: lighten($cerulean , 50%);
+      stroke: lighten($cerulean , 30%);
+   }
 }
 
 text {
@@ -32,11 +39,9 @@ text {
 }
 
 #tooltip {
-   position: fixed;
-   left: 950px;
-   top: 200px;
+   position: absolute;
    width: 200px;
-   height: 250px;
+   height: 175px;
    padding: 10px;
    background-color: $cerulean;
    border-radius: 5px;
@@ -44,12 +49,12 @@ text {
    
    p {
       font-size: 12px;
-      line-height: 1.2em;
+      line-height: 1.1em;
       color: #fff;
    }
 
    &.hidden {
-      // display: none;
+      display: none;
    }
 }
 
@@ -60,9 +65,3 @@ text {
 #budget_state {
    margin-top: -20px;
 }
-// #school {
-//    font-size: 12px;
-// }
-// #school {
-//    font-size: 12px;
-// }

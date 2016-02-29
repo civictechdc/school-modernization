@@ -3,6 +3,7 @@
 // public class Bubble
 //*********************************
 function Bubble(data, column){
+    var that = this;
     this.asMoney = d3.format('$,');
     this.column = column;
     this.data = data;
@@ -12,13 +13,11 @@ function Bubble(data, column){
     this.force_gravity = -0.01;
     this.damper = 0.4;
     this.center = {x: this.sizes.width / 2, y: this.sizes.width / 2};
-    this.maxAmount = function(){
-        var that = this;
-        // console.log(this.column);
-        d3.max(this.data, function(d){
-            return parseInt(d[that.column]);
-        });
-    };
+    this.maxAmount = (function(d){
+            d3.max(that.data, function(d){
+                return parseInt(d[that.column]);
+            });
+        }());
     this.minAmount = function(){
         d3.min(this.data, function(d){
             console.log(+d[this.column]);
@@ -28,7 +27,7 @@ function Bubble(data, column){
     // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, (this.maxAmount())]).range([2, 85]);
     this.radius_scale = d3.scale.pow().exponent(0.3).domain([0, 115000000]).range([4, 15]);
     this.nodes = [];
-
+    console.log(this.maxAmount);
 }
 
 Bubble.prototype.make_svg = function(){
@@ -52,7 +51,7 @@ Bubble.prototype.create_nodes = function(set){
         // current.myy = parseInt(Math.random() * this.sizes.height);
         current.myx = this.center.x;
         current.myy = this.center.y;
-        current.color = '#2956B2';
+        // current.color = '#2956B2';
         current.radius = (function(){
             if(current.MajorExp9815 && current.MajorExp9815 !== 'NA'){
                return (that.radius_scale(parseInt(current.MajorExp9815)));
@@ -90,9 +89,9 @@ Bubble.prototype.add_tootltips = function(d){
     this.circles.on('mouseenter', function(d){
 
         // GET THE X/Y COOD OF OBJECT
-        var tooltipPadding = 30,
-            xPosition = d3.select(this)[0][0]['cx'].animVal.value - tooltipPadding,
-            yPosition = d3.select(this)[0][0]['cy'].animVal.value - tooltipPadding;
+        var tooltipPadding = 160,
+            xPosition = d3.select(this)[0][0]['cx'].animVal.value + tooltipPadding,
+            yPosition = d3.select(this)[0][0]['cy'].animVal.value;
         
         // TOOLTIP INFO
         d3.select('#school').text('School: ' + camel(d.School));
@@ -116,15 +115,16 @@ Bubble.prototype.add_tootltips = function(d){
         } else {
             d3.select('#hs').text('');
         }
-        
-        // d3.select(this)[0][0].style.fill = 'gray';
-        d3.select(this).classed('color', true);
-      })
-      .on('mouseleave', function(){
-        d3.select(this).classed('color', false);
 
-      })
-      ;
+        // Make the tooltip visisble
+        d3.select('#tooltip')
+            .style('left', xPosition + 'px')
+            .style('top', yPosition + 'px');
+        d3.select('#tooltip').classed('hidden', false);
+    })
+    .on('mouseleave', function(){
+        d3.select('#tooltip').classed('hidden', true);
+    });
 }
 
 Bubble.prototype.set_force = function() {
@@ -274,20 +274,6 @@ main('test');
 function print(x){console.log(x);}
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){return document.querySelectorAll(sel);}
-function camel(str){
-  var camelStr = [],
-      strSplit = str.split(' '),
-      i =0, j = strSplit.length;
-  for (; i < j; i++){
-    var splitWord = strSplit[i].split('');
-    for(var m = 0, n = splitWord.length; m<n; m++){
-      var letter = splitWord[0],
-          upperLetter = letter.toUpperCase();
-      splitWord.shift();
-      splitWord.unshift(upperLetter);
-    }
-    camelStr.push(splitWord.join(''));
-  }
-  
-  return camelStr.join(' ');
-}
+function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
+
+
