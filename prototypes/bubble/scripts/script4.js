@@ -10,22 +10,23 @@ function Bubble(data, column){
     this.sizes = {width: 900, height: 600, padding: 100};
     this.force = null;
     this.circles = null;
-    this.force_gravity = -0.01;
-    this.damper = 0.4;
-    this.center = {x: this.sizes.width / 2, y: this.sizes.width / 2};
-    this.maxAmount = (function(d){
-            d3.max(that.data, function(d){
-                return parseInt(d[that.column]);
-            });
-        }());
-    this.minAmount = function(){
-        d3.min(this.data, function(d){
-            console.log(+d[this.column]);
-            return +d[this.column];
-        });
-    };
-    // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, (this.maxAmount())]).range([2, 85]);
-    this.radius_scale = d3.scale.pow().exponent(0.3).domain([0, 115000000]).range([4, 15]);
+    this.force_gravity = -0.05; // -0.01
+    this.damper = 0.4; // 0.4
+    this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
+    // this.maxAmount = (function(d){
+    //         d3.max(that.data, function(d){
+    //             console.log((d[that.column]));
+    //             return parseInt(d[that.column]);
+    //         });
+    //     }());
+    // this.minAmount = function(){
+    //     d3.min(this.data, function(d){
+    //         console.log(+d[this.column]);
+    //         return +d[this.column];
+    //     });
+    // };
+    // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, this.maxAmount]).range([2, 85]);
+    this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([2, 25]); // 15
     this.nodes = [];
     console.log(this.maxAmount);
 }
@@ -133,22 +134,22 @@ Bubble.prototype.set_force = function() {
         .nodes(this.data)
         .links([])
         .size([this.sizes.width, this.sizes.height])
-        .gravity(-0.05)
+        .gravity(this.force_gravity) // -0.01
         .charge(function(d){ return that.charge(d); })
-        .friction(0.9);
+        .friction(0.9); // 0.9
 
 };
 
 
 Bubble.prototype.charge = function(d) {
-    return -Math.pow(d.radius, 1.8);
+    return -Math.pow(d.radius, 1.8) / 2; // 1.3
 };
 
 
 Bubble.prototype.group_bubbles = function(d){
     var that = this;
     this.force.on('tick', function(e){
-        that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
+        that.circles.each(that.move_towards_center(e.alpha/2, that.column))
             .attr('cx', function(d){ return d.x;})
             .attr('cy', function(d){ return d.y;});
         })
@@ -223,7 +224,7 @@ Bubble.prototype.graph = function(set){
 function main(params){
     d3.csv('data/data_master.csv', function(d){
         // Make datasets
-        // returns data = {all, public, charter}
+        // returns data = {both, public, charter}
         var data = (function makeData(){
             var both = [], public_schools = [], charter_schools = [];
             // Cache all data into one dataset
@@ -264,16 +265,24 @@ function main(params){
 
         charter.addEventListener('click', function(){ 
             bubble.graph(data.charter_schools); });    
+
+
+
     });
 }
 main('test');
+
+// var public_schools = document.getElementById('past');
+// public_schools.addEventListener('click', function(){ 
+//     // bubble.graph(data.public_schools); });
+//     column = 
+//     main([dataset, column]); });
 
 
 
 // Utility
 function print(x){console.log(x);}
 function get(sel){return document.querySelector(sel);}
-function getAll(sel){return document.querySelectorAll(sel);}
+function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
-
 

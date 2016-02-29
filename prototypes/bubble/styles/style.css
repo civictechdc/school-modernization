@@ -8,7 +8,7 @@
 circle {
   fill: #2956B2;
   stroke: #1f4289;
-  stroke-width: 3px;
+  stroke-width: 2px;
   cursor: pointer; }
   circle:hover {
     fill: #e2e9f8;

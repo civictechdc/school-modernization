@@ -14,7 +14,7 @@ $cerulean: #2956B2;
 circle {
    fill: $cerulean;
    stroke: darken($cerulean , 10%);
-   stroke-width: 3px;
+   stroke-width: 2px;
    cursor: pointer;
 
    &:hover {
