@@ -475,7 +475,7 @@ function initApp(presetMode) {
                 // == name (school) from json is long; name (checkGeo) from geojson is short
                 var checkSchool = schoolName.indexOf(searchSchoolName);
                 if (checkSchool > -1) {
-                    foundDataArray.push(nextSchool);
+                    foundDataArray.push([i, nextSchool]);
                 }
             }
 
@@ -484,13 +484,32 @@ function initApp(presetMode) {
                 if (foundDataArray.length > 1) {
                     schoolText = "<span class='filterLabel'>Multiple schools: </span>";
                     $(filterTitleContainer).css("font-size", "14px");
-                    var hoverText = "Re-enter correct name (from list)"
+                    var hoverText = "Re-enter detailed name (from list)"
                     updateHoverText(hoverText);
                 } else {
                     self.activateClearButton();
                     $(filterTitleContainer).css("font-size", "16px");
                     schoolText = "<span class='filterLabel'>Your school: </span>";
-                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0]);
+                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0][1]);
+                    console.log("foundDataArray[0][1].school: ", foundDataArray[0][1].School);
+
+                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[foundDataArray[0][0]];
+                    schoolMarker.icon.fillColor = "white";
+                    schoolMarker.icon.strikeColor = "black";
+                    schoolMarker.icon.strokeWeight = 6;
+                    schoolMarker.icon.scale = 0.4;
+                    schoolMarker.setMap(map);
+
+                    setTimeout(resetMarker, 3000);
+
+                    function resetMarker() {
+                        schoolMarker.icon.fillColor = schoolMarker.defaultColor;
+                        schoolMarker.icon.scale = 0.2;
+                        schoolMarker.icon.strikeColor = "purple";
+                        schoolMarker.icon.strokeWeight = 2;
+                        schoolMarker.setMap(map);
+                    }
+
                     $("#profile-container").css("display", "table");
                     console.log("*** display profile-container ***");
                     updateHoverText(null);
@@ -557,6 +576,7 @@ function initApp(presetMode) {
             if (self.aggregatorArray.length == 0) {
                 makeZoneAggregator(self, self.zoneGeojson_A);
             }
+            console.log("  self.aggregatorArray: ", self.aggregatorArray);
 
             // == get secondary map data for urlB
             if (feederFlag == true) {
@@ -737,7 +757,8 @@ function initApp(presetMode) {
                             captureSchoolData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
 
                         // == aggregate multiple school data for selected zone type (e.g all-school totals for Ward 3)
-                        } else if (displayObj.dataFilters.zones != null)  {
+                        // } else if (displayObj.dataFilters.zones != null)  {
+                        } else {
                             rejectedAggregatorCode = aggregateZoneData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
                             if (rejectedAggregatorCode) {
                                 rejectedAggregatorArray.push(rejectedAggregatorCode);
