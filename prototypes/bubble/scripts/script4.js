@@ -11,7 +11,7 @@ function Bubble(data, column){
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.05; // -0.01
-    this.damper = 0.4; // 0.4
+    this.damper = 0.7; // 0.4
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
     // this.maxAmount = (function(d){
     //         d3.max(that.data, function(d){
@@ -26,7 +26,7 @@ function Bubble(data, column){
     //     });
     // };
     // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, this.maxAmount]).range([2, 85]);
-    this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([2, 25]); // 15
+    this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([3, 25]); // 15
     this.nodes = [];
     console.log(this.maxAmount);
 }
@@ -47,12 +47,8 @@ Bubble.prototype.create_nodes = function(set){
     for(var i = 0, j = set.length; i < j; i++){
         var that = this,
             current = set[i];
-
-        // current.myx = parseInt(Math.random() * this.sizes.width);
-        // current.myy = parseInt(Math.random() * this.sizes.height);
         current.myx = this.center.x;
         current.myy = this.center.y;
-        // current.color = '#2956B2';
         current.radius = (function(){
             if(current.MajorExp9815 && current.MajorExp9815 !== 'NA'){
                return (that.radius_scale(parseInt(current.MajorExp9815)));
@@ -149,7 +145,7 @@ Bubble.prototype.charge = function(d) {
 Bubble.prototype.group_bubbles = function(d){
     var that = this;
     this.force.on('tick', function(e){
-        that.circles.each(that.move_towards_center(e.alpha/2, that.column))
+        that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
             .attr('cx', function(d){ return d.x;})
             .attr('cy', function(d){ return d.y;});
         })
@@ -176,15 +172,24 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
     }
+
+
     // Assign unique_item a point to occupy
     var width = this.sizes.width,
         height = this.sizes.height,
         padding = this.sizes.padding;
+
+        // console.log(width, height, unique.length);
     for (var i in unique){
+
         // Make the grid here
-        unique[i].x = (i) * (width / unique.length) + padding * alpha;
-        unique[i].y = (i) * (height / unique.length) + padding * alpha;
+        unique[i].x = (i * width / unique.length) * 0.6 + 200; // * alpha
+        // unique[i].x = this.center.x;
+        unique[i].y = this.center.y - 75; // * alpha
+        // unique[i].y = this.center.y;
     }
+
+    console.log(unique.length);
     // Attach the target coordinates to each node
     _.each(this.nodes, function(node){
         for (var i = 0; i < unique.length; i++) {
@@ -202,6 +207,8 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     return function(d){
         d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
         d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
+        // d.x = node.target.x;
+        // d.y = node.target.y;
     }
 
     // var pack = d3.layout.pack()
@@ -252,7 +259,7 @@ function main(params){
         }());
 
         // Run the graph
-        var bubble = new Bubble(data.both, 'Agency');
+        var bubble = new Bubble(data.both, 'FeederHS');
         bubble.graph(data.both); 
         
         // Get buttons from the DOM
