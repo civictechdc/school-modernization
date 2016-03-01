@@ -1401,25 +1401,6 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         $("#profileSpendPast").html(spendPast);
     }
 
-    // console.log("  nextMath1: ", nextMath);
-    // if (nextMath == "spendEnroll") {
-    //     $("#profileSpendLifetime").html("$" + spendEnroll + " <span class='value-label'>per student</span>");
-    //     $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
-    //     $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
-    // } else if (nextMath == "spendSqFt") {
-    //     $("#profileSpendLifetime").html("$" + spendSqFt + " <span class='value-label'>per sqft</span>");
-    //     $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
-    //     $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
-    // } else if (nextMath == "spendAmount") {
-    //     $("#profileSpendLifetime").html(spendLifetime + " " + spendLifetimeSpan);
-    //     $("#profileSpendPlanned").html(spendPlanned + " " + spendPlannedSpan);
-    //     $("#profileSpendPast").html(spendPast + " " + spendPastSpan);
-    // } else {
-    //     $("#profileSpendLifetime").html(spendLifetime + " " + spendLifetimeSpan);
-    //     $("#profileSpendPlanned").html(spendPlanned + " " + spendPlannedSpan);
-    //     $("#profileSpendPast").html(spendPast + " " + spendPastSpan);
-    // }
-
     displayObj.activateCloseButton();
     activateProfileSubmenu(displayObj, zonesCollectionObj, schoolsCollectionObj);
     console.log("  schoolsCollectionObj.selectedSchool: ", schoolsCollectionObj.selectedSchool);
@@ -1558,34 +1539,6 @@ function cleanupSchoolData(schoolData) {
     } else {
         cleanedData.spendPlanned = "";
     }
-    // var SpentPerSqFtFlag = isNumber(schoolData.SpentPerSqFt);
-    // if (SpentPerSqFtFlag == true) {
-    //     SpentPerSqFt = parseInt(schoolData.SpentPerSqFt);
-    //     cleanedData.SpentPerSqFt = numberWithCommas(SpentPerSqFt);
-    // } else {
-    //     cleanedData.SpentPerSqFt = "";
-    // }
-    // var LTBudgetPerSqFtFlag = isNumber(schoolData.LTBudgetPerSqFt);
-    // if (LTBudgetPerSqFtFlag == true) {
-    //     LTBudgetPerSqFt = parseInt(schoolData.LTBudgetPerSqFt);
-    //     cleanedData.LTBudgetPerSqFt = numberWithCommas(LTBudgetPerSqFt);
-    // } else {
-    //     cleanedData.LTBudgetPerSqFt = "";
-    // }
-    // var SpentPerMaxOccupancyFlag = isNumber(schoolData.SpentPerMaxOccupancy);
-    // if (SpentPerMaxOccupancyFlag == true) {
-    //     SpentPerMaxOccupancy = parseInt(schoolData.SpentPerMaxOccupancy);
-    //     cleanedData.SpentPerMaxOccupancy = numberWithCommas(SpentPerMaxOccupancy);
-    // } else {
-    //     cleanedData.SpentPerMaxOccupancy = "";
-    // }
-    // var LTBudgetPerEnrollFlag = isNumber(schoolData.LTBudgetPerEnroll);
-    // if (LTBudgetPerEnrollFlag == true) {
-    //     LTBudgetPerEnroll = parseInt(schoolData.LTBudgetPerEnroll);
-    //     cleanedData.LTBudgetPerEnroll = numberWithCommas(LTBudgetPerEnroll);
-    // } else {
-    //     cleanedData.LTBudgetPerEnroll = "";
-    // }
 
     return cleanedData;
 
@@ -1720,28 +1673,66 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     var cleanedSchoolData = schoolsCollectionObj.selectedSchool;
     console.dir(cleanedSchoolData);
 
+    // == lifetime spending
     spendLifetime = cleanedSchoolData.spendLifetime;
+    if (spendLifetime == "") {
+        spendLifetime = "<span class='value-label'>No data for lifetime spending</span>";
+    } else {
+        spendLifetime = "$" + spendLifetime;
+    }
+
+    // == future spending
     spendPlanned = cleanedSchoolData.spendPlanned;
+    if (spendPlanned == "") {
+        spendPlanned = "<span class='value-label'>No data for future spending</span>";
+    } else {
+        spendPlanned = "$" + spendPlanned;
+    }
+
+    // == past spending
     spendPast = cleanedSchoolData.spendPast;
-    spendEnroll = parseInt(cleanedSchoolData.spendEnroll);
+    if (spendPast == "") {
+        spendPast = "<span class='value-label'>No data for past spending</span>";
+    } else {
+        spendPast = "$" + spendPast;
+    }
+
+    // == spending per student
+    spendEnroll = cleanedSchoolData.spendEnroll;
+    if ((spendEnroll == "") || (spendEnroll == 0)) {
+        spendEnroll = "<span class='value-label'>No spending per student data</span>";
+        spendEnrollSpan = "";
+    } else {
+        spendEnroll = "$" + parseInt(spendEnroll);
+        spendEnrollSpan = " <span class='value-label'>per student</span>";
+    }
+
+    // == spending per sqft
     spendSqFt = parseInt(cleanedSchoolData.spendSqFt);
+    if ((spendSqFt == "") || (spendSqFt == 0)) {
+        spendSqFt = "<span class='value-label'>No spending per sqft data</span>";
+        spendSqFtSpan = "";
+    } else {
+        spendSqFt = "$" + parseInt(spendSqFt);
+        spendSqFtSpan = " <span class='value-label'>per sqft</span>";
+    }
 
     if (nextMath == "spendEnroll") {
-        $("#profileSpendLifetime").html("$" + spendEnroll + " <span class='value-label'>per student</span>");
+        $("#profileSpendLifetime").html(spendEnroll + spendEnrollSpan);
         $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
         $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
     } else if (nextMath == "spendSqFt") {
-        $("#profileSpendLifetime").html("$" + spendSqFt + " <span class='value-label'>per sqft</span>");
+        $("#profileSpendLifetime").html(spendSqFt + spendSqFtSpan);
         $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
         $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
     } else if (nextMath == "spendAmount") {
-        $("#profileSpendLifetime").html("$" + spendLifetime);
-        $("#profileSpendPlanned").html("$" + spendPlanned);
-        $("#profileSpendPast").html("$" + spendPast);
+        $("#profileSpendLifetime").html(spendLifetime);
+        $("#profileSpendPlanned").html(spendPlanned);
+        $("#profileSpendPast").html(spendPast);
     } else {
-        $("#profileSpendLifetime").html("$" + spendLifetime);
-        $("#profileSpendPlanned").html("$" + spendPlanned);
-        $("#profileSpendPast").html("$" + spendPast);
+        $("#profileSpendLifetime").html(spendLifetime);
+        $("#profileSpendPlanned").html(spendPlanned);
+        $("#profileSpendPast").html(spendPast);
     }
 }
 
