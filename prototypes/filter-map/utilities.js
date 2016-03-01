@@ -1167,7 +1167,7 @@ function CSV2JSON(csv) {
 }
 
 // ======= ======= ======= getDataDetails ======= ======= =======
-function getDataDetails(nextSchool) {
+function getDataDetails(nextSchool, nextIndex) {
     // console.log("getDataDetails");
 
     // schoolCode, schoolName, schoolWard, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel:, schoolAgency
@@ -1177,6 +1177,7 @@ function getDataDetails(nextSchool) {
 
     var schoolData = {
         // school identity data
+        "schoolIndex": nextIndex,
         "schoolCode": nextSchool.School_ID,
         "schoolName": nextSchool.School,
         "schoolWard": nextSchool.Ward,
@@ -1191,8 +1192,9 @@ function getDataDetails(nextSchool) {
         // school building data
         "schoolProject": nextSchool.ProjectType,
         "schoolSqft": nextSchool.totalSQFT,
-        "schoolMaxOccupancy": nextSchool.maxOccupancy,
+        "schoolMaxOccupancy": nextSchool.schoolMaxOccupancy,
         "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
+        "unqBuilding": nextSchool.unqBuilding,
 
         // student population data
         "schoolEnroll": nextSchool.Total_Enrolled,
@@ -1215,11 +1217,98 @@ function getDataDetails(nextSchool) {
    return schoolData;
 }
 
+// ======= ======= ======= multiSchoolProfile ======= ======= =======
+function multiSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolIndex) {
+    console.log("multiSchoolProfile");
+    console.log("  schoolIndex: ", schoolIndex);
+
+    var checkSchool, checkAddress, multiSchool, schoolIndex, schoolName, listIndex;
+    var selectedSchoolData = schoolsCollectionObj.selectedSchoolsArray[schoolIndex];
+    var schoolAddress = selectedSchoolData.schoolAddress;
+    var multiSchoolsArray = [];
+    var schoolNamesString = "";
+
+    for (var i = 0; i < schoolsCollectionObj.selectedSchoolsArray.length; i++) {
+        checkSchool = schoolsCollectionObj.selectedSchoolsArray[i];
+        checkAddress = checkSchool.schoolAddress;
+        if (checkAddress == schoolAddress) {
+            multiSchoolsArray.push(checkSchool);
+        }
+    }
+
+    for (var i = 0; i < multiSchoolsArray.length; i++) {
+        multiSchool = multiSchoolsArray[i];
+        schoolIndex = multiSchool.schoolIndex;
+        schoolName = multiSchool.schoolName;
+        listIndex = i + 1;
+
+        schoolNamesString += "<tr><td class='data-key'><p class='key-text'>school " + listIndex + "</p></td>";
+        schoolNamesString += "<td class='data-value'><a id='" + schoolIndex + "' class='value-text' href='#'>" + schoolName + "</a></td></tr>";
+    }
+
+    var htmlString = "<table id='profile'>";
+    htmlString += "<tr><td class='profile-banner' colspan=2>";
+    htmlString += "<div id='close-X'><p>X</p></div>";
+    htmlString += "<p class='profile-title'>Shared address schools</p>";
+    htmlString += "<p class='profile-subtitle'>" + schoolAddress + "</p>";
+    htmlString += "<p class='profile-subtitle2'>&nbsp;</p>";
+    htmlString += "</td></tr>";
+    htmlString += schoolNamesString;
+    htmlString += "</table>";
+
+    // == remove previous chart or profile html if any
+    if ($('#chart-container').find('#chart').length) {
+        $("#chart-container").fadeOut( "fast", function() {
+            console.log("*** FADEOUT chart-container ***");
+        });
+        // $("#chart").remove();
+    }
+    if ($('#legend-container').find('#legend').length) {
+        $("#legend").remove();
+    }
+    if ($('#profile-container').find('#profile').length) {
+        $("#profile").remove();
+        $("#profile-container").append(htmlString);
+    } else {
+        $("#profile-container").append(htmlString);
+        $("#profile-container").fadeIn( "slow", function() {
+            console.log("*** FADEIN profile-container ***");
+        });
+    }
+
+    for (var i = 0; i < multiSchoolsArray.length; i++) {
+        multiSchool = multiSchoolsArray[i];
+        schoolIndex = multiSchool.schoolIndex;
+        activateMultiSchoolLink(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolIndex);
+    }
+}
+
+// ======= ======= ======= activateMultiSchoolLink ======= ======= =======
+function activateMultiSchoolLink(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolId) {
+    console.log("activateMultiSchoolLink");
+
+    // ======= selectSchool =======
+    $("#" + schoolId).off("mouseover").on("mouseover", function(event){
+        console.log("\n======= mouseover =======");
+        console.log("  this: ", this);
+
+    });
+
+    // ======= selectSchool =======
+    $("#" + schoolId).off("click").on("click", function(event){
+        console.log("\n======= click =======");
+        console.log("  this.id: ", this.id);
+        schoolData = schoolsCollectionObj.selectedSchoolsArray[this.id];
+        makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, this.id);
+    });
+}
+
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
 function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolIndex) {
     console.log("makeSchoolProfile");
     console.log("  schoolIndex: ", schoolIndex);
-    console.log("  zonesCollectionObj: ", zonesCollectionObj);
+
+    var nextValue;
 
     if ((typeof schoolIndex === 'undefined') || (typeof schoolIndex === 'null')) {
         console.log("*** TRUE ***");
@@ -1231,7 +1320,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     }
 
     schoolsCollectionObj.selectedSchool = cleanedSchoolData;
-    console.log("  schoolsCollectionObj.selectedSchool: ", schoolsCollectionObj.selectedSchool);
+    console.log("  cleanedSchoolData: ", cleanedSchoolData);
 
     schoolEnroll = cleanedSchoolData.schoolEnroll;
     schoolMaxOccupancy = cleanedSchoolData.schoolMaxOccupancy;
@@ -1331,8 +1420,8 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
                 itemName = splitZoneName[0];
             }
         }
-        if (itemName.length > 45) {
-            itemName = itemName.substring(0, 42) + "...";
+        if (itemName.length > 38) {
+            itemName = itemName.substring(0, 35) + "...";
         }
     }
 
@@ -1411,6 +1500,124 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     console.log("  schoolsCollectionObj.selectedSchool: ", schoolsCollectionObj.selectedSchool);
 }
 
+// ======= ======= ======= validateSchoolData ======= ======= =======
+function validateSchoolData(selectedSchoolData) {
+    console.log("validateSchoolData");
+    console.log("  selectedSchoolData: ", selectedSchoolData);
+
+    // school data: schoolCode, schoolName, schoolWard, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel:, schoolAgency
+    // building data: schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll
+    // student data: schoolEnroll, studentEng, studentAtRisk, studentSpecEd, studentESLPer, studentAtRiskPer, studentSPEDPer
+    // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll
+    if (selectedSchoolData.schoolLevel == "ES") {
+        selectedSchoolData.schoolLevel = "elementary school";
+    }
+    if (selectedSchoolData.schoolLevel == "MS") {
+        selectedSchoolData.schoolLevel = "middle school";
+    }
+    if (selectedSchoolData.schoolLevel == "HS") {
+        selectedSchoolData.schoolLevel = "high school";
+    }
+    if (selectedSchoolData.schoolLevel == "ES/MS") {
+        selectedSchoolData.schoolLevel = "elementary/middle school";
+    }
+    if (selectedSchoolData.schoolLevel == "ALT") {
+        selectedSchoolData.schoolLevel = "alternative school";
+    }
+    if (selectedSchoolData.schoolLevel == "NA") {
+        selectedSchoolData.schoolLevel = "&nbsp;";
+    }
+    if (selectedSchoolData.schoolFeederHS == "NA") {
+        selectedSchoolData.schoolFeederHS = "&nbsp;";
+    }
+    if (selectedSchoolData.schoolFeederMS == "NA") {
+        selectedSchoolData.schoolFeederMS = "&nbsp;";
+    }
+
+    selectedSchoolData.schoolProject =  selectedSchoolData.schoolProject.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+
+    selectedSchoolData.schoolSqft = numberWithCommas(selectedSchoolData.schoolSqft);
+
+    var schoolMaxOccupancy = isNumber(selectedSchoolData.schoolMaxOccupancy);
+    if (schoolMaxOccupancy == true) {
+        schoolMaxOccupancy = parseInt(selectedSchoolData.schoolMaxOccupancy);
+        selectedSchoolData.schoolMaxOccupancy = schoolMaxOccupancy;
+    } else {
+        selectedSchoolData.schoolMaxOccupancy = "";
+    }
+
+    var schoolEnroll = isNumber(selectedSchoolData.schoolEnroll);
+    if (schoolEnroll == true) {
+        schoolEnroll = parseInt(selectedSchoolData.schoolEnroll);
+        selectedSchoolData.schoolEnroll = schoolEnroll;
+    } else {
+        selectedSchoolData.schoolEnroll = "";
+    }
+
+    var schoolSqFtPerEnroll = isNumber(selectedSchoolData.schoolSqFtPerEnroll);
+    if (schoolSqFtPerEnroll == true) {
+        schoolSqFtPerEnroll = parseInt(selectedSchoolData.schoolSqFtPerEnroll);
+        selectedSchoolData.schoolSqFtPerEnroll = schoolSqFtPerEnroll;
+    } else {
+        selectedSchoolData.schoolSqFtPerEnroll = "";
+    }
+
+    var spendLifetime = isNumber(selectedSchoolData.spendLifetime);
+    if (spendLifetime == true) {
+        spendLifetime = numberWithCommas(selectedSchoolData.spendLifetime)
+        selectedSchoolData.spendLifetime = spendLifetime;
+    } else {
+        selectedSchoolData.spendLifetime = "";
+    }
+
+    var spendPlanned = isNumber(selectedSchoolData.spendPlanned);
+    if (spendPlanned == true) {
+        spendPlanned = numberWithCommas(selectedSchoolData.spendPlanned)
+        selectedSchoolData.spendPlanned = spendPlanned;
+    } else {
+        selectedSchoolData.spendPlanned = "";
+    }
+
+    var spendPast = isNumber(selectedSchoolData.spendPast);
+    if (spendPast == true) {
+        spendPast = numberWithCommas(selectedSchoolData.spendPast)
+        selectedSchoolData.spendPast = spendPast;
+    } else {
+        selectedSchoolData.spendPast = "";
+    }
+
+    var spendEnroll = isNumber(selectedSchoolData.spendEnroll);
+    if (spendEnroll == true) {
+        spendEnroll = parseInt(selectedSchoolData.spendEnroll);
+        spendEnroll = numberWithCommas(spendEnroll);
+        spendEnrollStr = spendEnroll;
+        selectedSchoolData.spendEnroll = spendEnrollStr;
+    } else {
+        selectedSchoolData.spendEnroll = "";
+    }
+
+    var spendSqFt = isNumber(selectedSchoolData.spendSqFt);
+    if (spendSqFt == true) {
+        spendSqFt = parseInt(selectedSchoolData.spendSqFt);
+        spendSqFtStr = spendSqFt;
+        selectedSchoolData.spendSqFt = spendSqFtStr;
+    } else {
+        selectedSchoolData.spendSqFt = "";
+    }
+
+    // == validation and formatting functions
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function isNumber (o) {
+        return ! isNaN (o-0) && o !== null && o !== "" && o !== false;
+    }
+
+    return selectedSchoolData;
+}
+
 // ======= ======= ======= makeProfileChart ======= ======= =======
 function makeProfileChart(zonesCollectionObj, displayObj, schoolData) {
     console.log("makeProfileChart");
@@ -1470,115 +1677,6 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
         $("#profileSpendPlanned").html("$" + spendPlanned);
         $("#profileSpendPast").html("$" + spendPast);
     }
-}
-
-// ======= ======= ======= validateSchoolData ======= ======= =======
-function validateSchoolData(selectedSchoolData) {
-    console.log("validateSchoolData");
-    // console.log("  selectedSchoolData: ", selectedSchoolData);
-
-    // school data: schoolCode, schoolName, schoolWard, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel:, schoolAgency
-    // building data: schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll
-    // student data: schoolEnroll, studentEng, studentAtRisk, studentSpecEd, studentESLPer, studentAtRiskPer, studentSPEDPer
-    // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll
-    if (selectedSchoolData.schoolLevel == "ES") {
-        selectedSchoolData.schoolLevel = "elementary school";
-    }
-    if (selectedSchoolData.schoolLevel == "MS") {
-        selectedSchoolData.schoolLevel = "middle school";
-    }
-    if (selectedSchoolData.schoolLevel == "HS") {
-        selectedSchoolData.schoolLevel = "high school";
-    }
-    if (selectedSchoolData.schoolLevel == "ES/MS") {
-        selectedSchoolData.schoolLevel = "elementary/middle school";
-    }
-    if (selectedSchoolData.schoolLevel == "ALT") {
-        selectedSchoolData.schoolLevel = "alternative school";
-    }
-    if (selectedSchoolData.schoolLevel == "NA") {
-        selectedSchoolData.schoolLevel = "&nbsp;";
-    }
-    if (selectedSchoolData.schoolFeederHS == "NA") {
-        selectedSchoolData.schoolFeederHS = "&nbsp;";
-    }
-    if (selectedSchoolData.schoolFeederMS == "NA") {
-        selectedSchoolData.schoolFeederMS = "&nbsp;";
-    }
-
-    selectedSchoolData.schoolProject =  selectedSchoolData.schoolProject.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-
-    selectedSchoolData.schoolSqft = numberWithCommas(selectedSchoolData.schoolSqft);
-    selectedSchoolData.schoolMaxOccupancy = selectedSchoolData.schoolMaxOccupancy;
-    selectedSchoolData.schoolEnroll = selectedSchoolData.schoolEnroll;
-
-    var schoolSqFtPerEnroll = isNumber(selectedSchoolData.schoolSqFtPerEnroll);
-    if (schoolSqFtPerEnroll == true) {
-        // schoolSqFtPerEnroll = Math.round(selectedSchoolData.schoolSqFtPerEnroll * 100)/100;
-        schoolSqFtPerEnroll = parseInt(selectedSchoolData.schoolSqFtPerEnroll);
-        selectedSchoolData.schoolSqFtPerEnroll = schoolSqFtPerEnroll;
-    } else {
-        selectedSchoolData.schoolSqFtPerEnroll = "";
-    }
-
-    var spendLifetime = isNumber(selectedSchoolData.spendLifetime);
-    if (spendLifetime == true) {
-        spendLifetime = numberWithCommas(selectedSchoolData.spendLifetime)
-        console.log("  spendLifetime: ", spendLifetime);
-        selectedSchoolData.spendLifetime = spendLifetime;
-    } else {
-        selectedSchoolData.spendLifetime = "";
-    }
-
-    var spendPlanned = isNumber(selectedSchoolData.spendPlanned);
-    if (spendPlanned == true) {
-        spendPlanned = numberWithCommas(selectedSchoolData.spendPlanned)
-        console.log("  spendPlanned: ", spendPlanned);
-        selectedSchoolData.spendPlanned = spendPlanned;
-    } else {
-        selectedSchoolData.spendPlanned = "";
-    }
-
-    var spendPast = isNumber(selectedSchoolData.spendPast);
-    if (spendPast == true) {
-        spendPast = numberWithCommas(selectedSchoolData.spendPast)
-        console.log("  spendPast: ", spendPast);
-        selectedSchoolData.spendPast = spendPast;
-    } else {
-        selectedSchoolData.spendPast = "";
-    }
-
-    var spendEnroll = isNumber(selectedSchoolData.spendEnroll);
-    if (spendEnroll == true) {
-        spendEnroll = parseInt(selectedSchoolData.spendEnroll);
-        spendEnroll = numberWithCommas(spendEnroll);
-        console.log("  spendEnroll: ", spendEnroll);
-        spendEnrollStr = spendEnroll;
-        selectedSchoolData.spendEnroll = spendEnrollStr;
-    } else {
-        selectedSchoolData.spendEnroll = "";
-    }
-
-    var spendSqFt = isNumber(selectedSchoolData.spendSqFt);
-    if (spendSqFt == true) {
-        spendSqFt = parseInt(selectedSchoolData.spendSqFt);
-        spendSqFtStr = spendSqFt;
-        selectedSchoolData.spendSqFt = spendSqFtStr;
-    } else {
-        selectedSchoolData.spendSqFt = "";
-    }
-
-    // == validation and formatting functions
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-    function isNumber (o) {
-        return ! isNaN (o-0) && o !== null && o !== "" && o !== false;
-    }
-
-    return selectedSchoolData;
 }
 
 // ======= ======= ======= initMap ======= ======= =======

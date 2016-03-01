@@ -578,6 +578,16 @@ hr {
     text-align: left;
     color: purple;
 }
+a.value-text {
+    text-decoration: none;
+    text-align: left;
+    font-size: 12px;
+    color: black;
+}
+a.value-text:hover {
+    color: purple;
+}
+
 .value-label {
     color: black;
 }

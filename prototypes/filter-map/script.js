@@ -88,6 +88,7 @@ function initApp(presetMode) {
         this.dataSource = null;
         this.aggregatorArray = [];
         this.schoolColorsArray = [];
+        this.sharedAddressArray = [];
         this.schoolMarkersArray = [];
         this.selectedSchoolsArray = [];
         this.selectedSchool = null;
@@ -491,7 +492,6 @@ function initApp(presetMode) {
                     $(filterTitleContainer).css("font-size", "16px");
                     schoolText = "<span class='filterLabel'>Your school: </span>";
                     makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0][1]);
-                    console.log("foundDataArray[0][1].school: ", foundDataArray[0][1].School);
 
                     schoolMarker = schoolsCollectionObj.schoolMarkersArray[foundDataArray[0][0]];
                     schoolMarker.icon.fillColor = "white";
@@ -521,7 +521,7 @@ function initApp(presetMode) {
                 // == create autoComplete array, save on display object
                 var schoolNamesArray = [];
                 for (var i = 0; i < foundDataArray.length; i++) {
-                    nextSchool = foundDataArray[i];
+                    nextSchool = foundDataArray[i][1];
                     nextSchoolName = nextSchool.School;
                     schoolText += nextSchoolName + ", ";
                     schoolNamesArray.push(nextSchoolName);
@@ -728,6 +728,7 @@ function initApp(presetMode) {
 
             // ======= variables and temp arrays =======
             var schoolIndex = -1;
+            var sharedAddressArray = [];
             var selectedCodesArray = [];
             var selectedNamesArray = [];
             var rejectedCodesArray = [];
@@ -747,7 +748,7 @@ function initApp(presetMode) {
                     // == build arrays of selected/not selected schools
                     if (selectSchool == true) {
                         schoolIndex++;
-                        schoolData = getDataDetails(nextSchool);
+                        schoolData = getDataDetails(nextSchool, schoolIndex);
                         selectedSchoolsArray.push(schoolData)
                         selectedCodesArray.push(schoolData.schoolCode)
                         selectedNamesArray.push(processSchoolName(schoolData.schoolName))
@@ -764,10 +765,17 @@ function initApp(presetMode) {
                                 rejectedAggregatorArray.push(rejectedAggregatorCode);
                             }
                         }
+
+                        // == handle multiple schools at same Address
+                        if (schoolData.unqBuilding == 2) {
+                            sharedAddressArray.push(schoolData.schoolAddress);
+                        }
+
                     } else {
                         rejectedCodesArray.push(nextSchool.School_ID);
                     }
                 }
+                self.sharedAddressArray = sharedAddressArray;
                 self.selectedSchoolsArray = selectedSchoolsArray;
                 checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
 
@@ -1204,6 +1212,7 @@ function initApp(presetMode) {
             nextSchoolCode = nextSchoolData.schoolCode;
             nextSchoolType = nextSchoolData.schoolAgency;
             nextSchoolAddress = nextSchoolData.schoolAddress;
+            unqBuilding = nextSchoolData.unqBuilding;
             nextLat = nextSchoolData.schoolLAT;
             nextLng = nextSchoolData.schoolLON;
             schoolLoc = new google.maps.LatLng(nextLat, nextLng);
@@ -1242,6 +1251,7 @@ function initApp(presetMode) {
                 schoolName: nextSchool,
                 schoolCode: nextSchoolCode,
                 schoolType: nextSchoolType,
+                unqBuilding: unqBuilding,
                 schoolAddress: nextSchoolAddress,
                 defaultColor: fillColor
             });
@@ -1300,6 +1310,11 @@ function initApp(presetMode) {
             var schoolIndex = this.schoolIndex;
             var schoolName = this.schoolName;
             var schoolType = this.schoolType;
+            var unqBuilding = this.unqBuilding;
+            if (unqBuilding == 2) {
+                schoolName = "multiple schools/shared address";
+                schoolType = "";
+            }
             updateHoverText(schoolName, schoolType);
         });
 
@@ -1316,9 +1331,13 @@ function initApp(presetMode) {
                 var schoolIndex = this.schoolIndex;
                 var schoolName = this.schoolName;
                 var schoolCode = this.schoolCode;
+                var unqBuilding = this.unqBuilding;
                 console.log("  schoolCode: ", schoolCode);
-
-                makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
+                if (unqBuilding == 2) {
+                    multiSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
+                } else {
+                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
+                }
             });
         }
     }
