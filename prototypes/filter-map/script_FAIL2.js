@@ -1428,3 +1428,309 @@ function initApp(presetMode) {
     // == see getZoneData for parameter values
     return setFilterSelections;
 }
+
+// ======= ======= ======= ARCHIVE ======= ======= =======
+
+// agency -- "District", "Charter"
+// levels -- "ES", "MS", "HS"
+// expend -- "spendPast", "spendLifetime", "spendPlanned", "spendSqFt", "spendEnroll"
+// zone -- "Ward", "FeederHS", "FeederMS"
+//
+
+// ======= ======= ======= initFilterMenus ======= ======= =======
+// Display.prototype.initFilterMenus = function() {
+//     console.log("initFilterMenus");
+//
+//     // == popup bar container
+//     var popupContainer = $("#main-nav");
+//
+//     // == build filter menu (by category)
+//     var menuHtml = "<ul class='nav-list'>";
+//     for (var i = 0; i < this.filterMenusArray.length; i++) {
+//         nextMenu = this.filterMenusArray[i];
+//         menuHtml += this.makeCategoryMenu(nextMenu, i);
+//         menuHtml += "<hr>";
+//     }
+//     menuHtml += "</ul>";
+//     menuHtml += this.makeSearchBar();
+//     menuHtml += this.makeHoverDisplay();
+//     $(popupContainer).append(menuHtml);
+//
+//     // == activate individual filter selectors after appended to DOM
+//     for (var i = 0; i < this.filterMenusArray.length; i++) {
+//         nextMenu = this.filterMenusArray[i];
+//         this.activateFilterMenu(nextMenu);
+//     }
+//     this.activateSearchButton("searchButton");
+//     this.activateSearchWindow("searchWindow");
+// }
+
+// ======= ======= ======= setMenuItem ======= ======= =======
+// Display.prototype.setMenuItem = function(whichCategory, whichFilter) {
+//     console.log("setMenuItem");
+//
+//     // == menu text creates user-friendly menu item
+//     var menuObject = filterMenu[whichFilter];
+//     var menuText = menuObject.text;
+//
+//
+//
+//     // == modify selected filter menu item to show selection
+//     htmlString = "<li><a id='" + whichFilter + "' href='#'>" + menuText + "</a></li>";
+//     selectedFilterElement = $("#" + whichCategory);
+//     selectedFilterElement.children("ul").empty();
+//     selectedFilterElement.children("ul").html(htmlString);
+//     selectedFilterElement.children("ul").css("display", "block");
+//     this.activateFilterRelease(selectedFilterElement);
+// }
+
+// ======= ======= ======= makeCategoryMenu ======= ======= =======
+// Display.prototype.makeCategoryMenu = function(whichMenu, index) {
+//     // console.log("makeCategoryMenu");
+//
+//     var nextCatLabel = this.categoryLabels[index];
+//     var nextGrpLabel = this.groupLabels[index];
+//     var nextCategory = whichMenu[0];
+//     var menuHtml = "<p class='all-filters'>[ all ]</p>";
+//     menuHtml += "<li id='" + nextCategory + "' class='category'><span class='labelText'>" + nextGrpLabel + "</span><a href='#'>" + nextCatLabel + "</a>";
+//     menuHtml += "<ul>";
+//     menuHtml += this.makeFilterMenu(whichMenu);
+//     menuHtml += "</ul>";
+//     menuHtml += "</li>";
+//     return menuHtml;
+// }
+
+// ======= ======= ======= makeFilterMenu ======= ======= =======
+// Display.prototype.makeFilterMenu = function(whichMenu, skipFlags) {
+//     console.log("makeFilterMenu");
+//
+//     // == category name is the first item in whichMenu
+//     var whichCategory = whichMenu[0];
+//     var whichClass = whichCategory;
+//     console.log("  whichCategory: ", whichCategory);
+//
+//     if ((skipFlags == null) || (skipFlags == undefined)) {
+//         var skipFlags = [];
+//     }
+//
+//     // == build html string for filter lists
+//     filterHtml = "";
+//     for (var i = 1; i < whichMenu.length; i++) {
+//         if ($.inArray(i, skipFlags) < 0) {
+//             nextItem = whichMenu[i];
+//             nextId = nextItem.id;
+//             nextText = nextItem.text;
+//             filterHtml += "<li id='" + nextId + "' class='filter " + whichClass + "'><a class='filterText' href='#'>" + nextText + "</a></li>";
+//         } else {
+//             continue;
+//         }
+//     }
+//     return filterHtml;
+// }
+
+// ======= ======= ======= modFilterMenu ======= ======= =======
+// Display.prototype.modFilterMenu = function(whichMenu) {
+//     console.log("modFilterMenu");
+//
+//     // == category name is the first item in whichMenu
+//     var menuContainer = $("#" + whichMenu[0]);
+//     var whichCategory = whichMenu[0];
+//     var whichClass = whichCategory;
+//     var skipFlags = [];
+//     // console.log("  whichCategory: ", whichCategory);
+//
+//     if (whichCategory == "levels") {
+//         if (this.dataFilters.zones == "FeederHS") {
+//             skipFlags = [1];
+//         } else if (this.dataFilters.zones == "FeederMS") {
+//             skipFlags = [1, 2];
+//         } else {
+//             skipFlags = [];
+//         }
+//     }
+//
+//     $(menuContainer).children("ul").remove();
+//     var menuHtml = "<ul>";
+//     menuHtml += this.makeFilterMenu(whichMenu, skipFlags);
+//     menuHtml += "</ul>";
+//
+//     $(menuContainer).children("a").after(menuHtml);
+// }
+
+// // ======= ======= ======= activateSubfilterMenu ======= ======= =======
+// Display.prototype.activateSubfilterMenu = function(whichMenu) {
+//     console.log("activateSubfilterMenu");
+//
+//     // == activate filter click events
+//     for (var i = 1; i < whichMenu.length; i++) {
+//         nextItem = whichMenu[i];
+//         this.activateSubfilterSelect(nextItem);
+//     }
+// }
+
+// ======= ======= ======= activateFilterSelect ======= ======= =======
+// Display.prototype.activateFilterSelect = function(nextItem) {
+//     console.log("activateFilterSelect");
+//
+//     // == id ties DOM element to menu object
+//     var self = this;
+//     var nextId = nextItem.id;
+//     var nextElement = $("#" + nextId);
+//
+//     // ======= ======= ======= selectFilter ======= ======= =======
+//     $(nextElement).off("click").on("click", function(event){
+//         console.log("\n======= selectFilter ======= ");
+//
+//         var classList = $(this).attr('class').split(/\s+/);
+//         var whichCategory = classList[1];
+//         var whichFilter = this.id;
+//         var menuObject = filterMenu[whichFilter];
+//         var whichColumn = menuObject.column;
+//         var whichValue = menuObject.value;
+//         var whichText = menuObject.text;
+//         var htmlString;
+//         checkFilterSelection(self, zonesCollectionObj, whichCategory);
+//         event.stopImmediatePropagation();
+//
+//         // == store selected filter value on display object (levels, expend, zone, agency, students)
+//         switch(whichCategory) {
+//
+//             // == agency filter (district, charter)
+//             case "agency":
+//                 self.dataFilters.agency = whichFilter;
+//                 clearZoneAggregator(zonesCollectionObj);
+//                 displayFilterMessage(self, menuObject.text, "add");
+//                 break;
+//
+//             // == levels filter (ES, MS, HS)
+//             case "levels":
+//                 self.dataFilters.levels = whichValue;
+//                 zonesCollectionObj.aggregatorArray = [];
+//                 if (whichValue == "HS") {
+//                     zonesCollectionObj.zoneA = "FeederHS";
+//                 } else if (whichValue == "MS") {
+//                     zonesCollectionObj.zoneA = "FeederMS";
+//                 } else if (whichValue == "ES") {
+//                     zonesCollectionObj.zoneA = "Elementary";
+//                 } else {
+//                     zonesCollectionObj.zoneA = "Ward";
+//                 }
+//                 displayFilterMessage(self, menuObject.text, "add");
+//                 break;
+//
+//             // == expenditures filter (past, present, planed, etc.)
+//             case "expend":
+//                 self.dataFilters.expend = whichFilter;
+//                 self.makeSubMenu(self.expendMathMenu);
+//                 clearZoneAggregator(zonesCollectionObj);
+//                 displayFilterMessage(self, menuObject.text, "add");
+//                 break;
+//
+//             // == wards or feeder zones for map
+//             case "zones":
+//                 self.dataFilters.zones = whichFilter;
+//                 zonesCollectionObj.zoneA = whichFilter;
+//                 zonesCollectionObj.aggregatorArray = [];
+//                 zonesCollectionObj.zoneGeojson_AB = null;
+//                 console.log("  whichFilter: ", whichFilter);
+//
+//                 // == modify levels menu to remove HS and/or MS options for feeders
+//                 if ((whichFilter == "FeederHS") || (whichFilter == "FeederMS")) {
+//                     tempLevels = self.dataFilters.levels;
+//                     self.modFilterMenu(self.filterMenusArray[1]);
+//
+//                     // == reset levels menu to previously selected level
+//                     if (whichFilter == "FeederHS") {
+//                         if (tempLevels == "ES") {
+//                             self.setMenuItem("levels", "Elem");
+//                             self.dataFilters.levels = "ES";
+//                             displayFilterMessage(self, filterMenu["Elem"].text, whichFilter);
+//                         } else {
+//                             self.setMenuItem("levels", "Middle");
+//                             self.dataFilters.levels = "MS";
+//                             displayFilterMessage(self, filterMenu["Middle"].text, whichFilter);
+//                         }
+//                     } else if (whichFilter == "FeederMS") {
+//                         self.setMenuItem("levels", "Elem");
+//                         self.dataFilters.levels = "ES";
+//                         displayFilterMessage(self, filterMenu["Elem"].text, whichFilter);
+//                     }
+//                     var modMenuObject = filterMenu["levels"];
+//                     self.activateFilterMenu(self.filterMenusArray[1]);
+//                 } else {
+//                     displayFilterMessage(self, menuObject.text, "add");
+//                 }
+//                 break;
+//         }
+//
+//         if (self.dataFilters.expend == null) {
+//             clearProfileChart();
+//         }
+//
+//         updateHoverText(null);
+//         self.setMenuItem(whichCategory, whichFilter);
+//         checkFilterSelection(self, zonesCollectionObj, whichCategory);
+//         zonesCollectionObj.getZoneData();
+//     });
+// }
+
+// ======= ======= ======= activateFilterRelease ======= ======= =======
+// Display.prototype.activateFilterRelease = function(selectedFilterElement) {
+//     console.log("activateFilterRelease");
+//
+//     var self = this;
+//     var menuHtml;
+//
+//     // ======= ======= ======= releaseFilter ======= ======= =======
+//     $(selectedFilterElement).off("click").on("click", function(event){
+//         console.log("\n======= releaseFilter ======= ");
+//
+//         var whichCategory = this.id;
+//         checkFilterSelection(self, zonesCollectionObj, whichCategory);
+//         clearMenuCategory(whichCategory);
+//
+//         if (whichCategory == "levels") {
+//             self.modFilterMenu(self.filterMenusArray[1]);
+//             displayObj.activateFilterMenu(self.filterMenusArray[1]);
+//         }
+//         checkFilterSelection(self, zonesCollectionObj, whichCategory);
+//         zonesCollectionObj.getZoneData();
+//     });
+// }
+
+// ======= ======= ======= clearMenuCategory ======= ======= =======
+// function clearMenuCategory(whichCategory) {
+//     console.log("clearMenuCategory");
+//     console.log("  whichCategory: ", whichCategory);
+//
+//     // == find menu for selected category
+//     for (var i = 0; i < displayObj.filterMenusArray.length; i++) {
+//         nextMenu = displayObj.filterMenusArray[i];
+//         checkCategory = displayObj.filterMenusArray[i][0];
+//         console.log("  * checkCategory: ", checkCategory);
+//         if (checkCategory == whichCategory) {
+//             displayObj.dataFilters[whichCategory] = null;
+//
+//             // == get category parent element
+//             filterElement = $("#" + whichCategory);
+//
+//             // == get filter parent element
+//             var whichFilter = $(filterElement).children("ul").children("li").children("a").attr('id');
+//
+//             // == clear filter html (previous selection) and build new menu html
+//             if (whichFilter) {
+//                 var menuObject = filterMenu[whichFilter];
+//                 var filterText = menuObject.text;
+//                 filterElement.children("ul").remove();
+//                 var menuHtml = "<ul>";
+//                 menuHtml += displayObj.makeFilterMenu(nextMenu);
+//                 filterElement.append(menuHtml);
+//                 displayObj.activateFilterMenu(nextMenu);
+//                 // displayFilterMessage(displayObj, filterText, "remove");
+//                 break;
+//             } else {
+//                 console.log("No filter in this catagory");
+//             }
+//         }
+//     }
+// }
