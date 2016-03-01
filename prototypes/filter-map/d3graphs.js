@@ -14,6 +14,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     } else {
         var chartHtml = "<div id='chart'></div>";
     }
+    console.log("  $('#profile-container'): ", $('#profile-container'));
 
     // ======= remove previous chart or profile html if any =======
     if ($('#profile-container').find('#profile').length) {
@@ -22,17 +23,26 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     if ($('#legend-container').find('#legend').length) {
         $("#legend").remove();
     }
+
+    console.log("  $('#chart-container'):1 ", $('#chart-container'));
+
     if ($('#chart-container').find('#chart').length) {
         $("#chart").remove();
         $("#chart-container").append(chartHtml);
-        updateChartStyle();
-    } else {
-        $("#chart-container").append(chartHtml);
+        console.log("  $('#chart-container'):2 ", $('#chart-container'));
         updateChartStyle();
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
         });
+    } else {
+        $("#chart-container").append(chartHtml);
+        updateChartStyle();
+        console.log("  $('#chart-container'):3 ", $('#chart-container'));
+        $("#chart-container").fadeIn( "slow", function() {
+            console.log("*** FADEIN chart-container ***");
+        });
     }
+    console.log("  $('#chart-container'):4 ", $('#chart-container'));
 
     // ======= ======= ======= formatting variables ======= ======= =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber;
