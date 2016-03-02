@@ -18,8 +18,7 @@
         });
 
         // To change the bubble radii
-        var dataChange = Array.prototype.slice.call(getAll('.dataChange'));
-        dataChange.forEach(function(item, e){
+        (Array.prototype.slice.call(getAll('.dataChange'))).forEach(function(item, e){
             item.addEventListener('click', function(e){  
                 bubble.setBudget(e.target.id);
                 bubble.graph(bubble.data);
@@ -33,19 +32,3 @@
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
-
-        // Split up the data
-        // var schools = (function(d){
-        //     var temp = {};
-
-        //     temp.both = d;
-        //     temp.public = d.filter(function(item){
-        //         if(item.Agency === 'DCPS'){ return item; }
-        //     });
-        //     temp.charter = d.filter(function(item){
-        //         if(item.Agency === 'PCS'){ return item; }
-        //     });
-
-        //     return temp;
-
-        // }(data));

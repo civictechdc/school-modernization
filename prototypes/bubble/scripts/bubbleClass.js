@@ -163,11 +163,12 @@ Bubble.prototype.move_towards_center = function(alpha){
 Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Make an array of unique items
     var that = this,
-        items = _.uniq(_.pluck(this.nodes, column)),
+        items = _.uniq(_.pluck(this.nodes, column)).sort(),
         unique = [];
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
     }
+    console.log(items);
 
     // Assign unique_item a point to occupy
     var width = this.sizes.width,
