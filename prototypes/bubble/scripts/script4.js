@@ -2,16 +2,16 @@
 //*********************************
 // public class Bubble
 //*********************************
-function Bubble(data, column){
+function Bubble(data){
     var that = this;
     this.asMoney = d3.format('$,');
-    this.column = column;
+    this.column = null;
     this.data = data;
-    this.sizes = {width: 900, height: 600, padding: 100};
+    this.sizes = {width: 950, height: 600, padding: 100};
     this.force = null;
     this.circles = null;
-    this.force_gravity = -0.05; // -0.01
-    this.damper = 0.7; // 0.4
+    this.force_gravity = -0.05; // -0.018
+    this.damper = 0.6; // 0.4 tightness of the bubbles
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
     // this.maxAmount = (function(d){
     //         d3.max(that.data, function(d){
@@ -28,7 +28,6 @@ function Bubble(data, column){
     // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, this.maxAmount]).range([2, 85]);
     this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([3, 25]); // 15
     this.nodes = [];
-    console.log(this.maxAmount);
 }
 
 Bubble.prototype.make_svg = function(){
@@ -38,6 +37,13 @@ Bubble.prototype.make_svg = function(){
     this.svg = d3.select('#chart').append('svg')
         .attr('width', this.sizes.width)
         .attr('height', this.sizes.height);
+};
+
+Bubble.prototype.setColumn = function(column){
+    // if (this.column !== null) {
+    //     this.column = column;
+    // } 
+    this.column = column;
 };
 
 Bubble.prototype.create_nodes = function(set){
@@ -61,7 +67,7 @@ Bubble.prototype.create_nodes = function(set){
     this.nodes.sort(function(a,b){ return b.MajorExp9815 - a.MajorExp9815});
 };
 
-Bubble.prototype.update = function(set){
+Bubble.prototype.add_bubbles = function(set){
      this.circles = this.svg.selectAll('circle')
         .data(set)
         .enter()
@@ -80,6 +86,34 @@ Bubble.prototype.update = function(set){
             return set[i].radius;})
         ;
 };
+
+// Bubble.prototype.update = function(set){
+//      this.circles = this.svg.selectAll('circle')    
+//         .data(set);
+
+//     this.circles.transition()
+//         .duration(500)
+//         .
+
+
+//         .enter()
+//         .append('circle')
+//         .attr('class', 'circle')
+//         .style('fill', function(d,i){
+//             return set[i].color;
+//         })
+//         .attr('cx', function(d,i){
+//             return set[i].myx;
+//         })
+//         .attr('cy', function(d,i){
+//             return set[i].myy;
+//         })
+//         .attr('r', function(d,i){ 
+//             return set[i].radius;})
+//         ;
+// };
+
+
 
 Bubble.prototype.add_tootltips = function(d){
     var that = this;
@@ -107,8 +141,8 @@ Bubble.prototype.add_tootltips = function(d){
         d3.select('#majorexp').text('Total Spent: ' + that.asMoney(d.MajorExp9815));
         d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.asMoney(d.SpentPerSqFt) + '/sq. ft.');
         d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.asMoney(d.SpentPerMaxOccupancy));
-        if(d.FeederHS && d.FeederHS !== "NA"){
-            d3.select('#hs').text('High School: ' + d.FeederHS);
+        if(d.FeederHS && d.FeederHS !== "NA"){ 
+            d3.select('#hs').text('High School: ' + camel(d.FeederHS));
         } else {
             d3.select('#hs').text('');
         }
@@ -136,11 +170,9 @@ Bubble.prototype.set_force = function() {
 
 };
 
-
 Bubble.prototype.charge = function(d) {
     return -Math.pow(d.radius, 1.8) / 2; // 1.3
 };
-
 
 Bubble.prototype.group_bubbles = function(d){
     var that = this;
@@ -154,8 +186,6 @@ Bubble.prototype.group_bubbles = function(d){
     console.log(this.column);
 };
 
-
-// Tick functions
 Bubble.prototype.move_towards_center = function(alpha){
     var that = this;
     return function(d){
@@ -173,23 +203,16 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         unique.push({name: items[i]}); 
     }
 
-
     // Assign unique_item a point to occupy
     var width = this.sizes.width,
         height = this.sizes.height,
         padding = this.sizes.padding;
-
-        // console.log(width, height, unique.length);
     for (var i in unique){
-
         // Make the grid here
-        unique[i].x = (i * width / unique.length) * 0.6 + 200; // * alpha
-        // unique[i].x = this.center.x;
+        unique[i].x = (i * width / unique.length) * 0.6 + 215; // * alpha
         unique[i].y = this.center.y - 75; // * alpha
-        // unique[i].y = this.center.y;
     }
 
-    console.log(unique.length);
     // Attach the target coordinates to each node
     _.each(this.nodes, function(node){
         for (var i = 0; i < unique.length; i++) {
@@ -207,77 +230,87 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     return function(d){
         d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
         d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
-        // d.x = node.target.x;
-        // d.y = node.target.y;
     }
-
-    // var pack = d3.layout.pack()
-    //     .size([this.sizes.width, this.sizes.height])
-    //     .nodes(unique_items)
-    //     ;
 };
 
 Bubble.prototype.graph = function(set){
     this.make_svg();
     this.set_force();
     this.create_nodes(set);
-    this.update(this.nodes);
+    this.add_bubbles(this.nodes);
     this.add_tootltips();
     this.group_bubbles(); 
     
 };
 
-// MAIN()
-function main(params){
-    d3.csv('data/data_master.csv', function(d){
-        // Make datasets
-        // returns data = {both, public, charter}
-        var data = (function makeData(){
-            var both = [], public_schools = [], charter_schools = [];
-            // Cache all data into one dataset
-            for (var i = 0, j = d.length; i < j; i++){
-                both.push(d[i]);
-            }
-            // Separate d for PUBLIC schools
-            for (var i = 0, j = both.length; i < j; i++){
-                if (d[i].Agency === 'DCPS'){
-                    public_schools.push(d[i]);
-                }
-            }
-            // Separate d for CHARTER schools
-            for (var i = 0, j = both.length; i < j; i++){
-                if (d[i].Agency === 'PCS'){
-                    charter_schools.push(d[i]);
-                }
-            }      
-
-           return {
-              both : both, // total data
-              public_schools : public_schools, // only public schools
-              charter_schools: charter_schools // only charter schools
-           };
-        }());
-
-        // Run the graph
-        var bubble = new Bubble(data.both, 'FeederHS');
-        bubble.graph(data.both); 
-        
-        // Get buttons from the DOM
-        var public_schools = document.getElementById('past'),
-            charter = document.getElementById('future');        
-        
-        // Make the buttons interactive
-        public_schools.addEventListener('click', function(){ 
-            bubble.graph(data.public_schools); });
-
-        charter.addEventListener('click', function(){ 
-            bubble.graph(data.charter_schools); });    
 
 
 
+var bubble;
+d3.csv('data/data_master.csv', function(data){
+    bubble = new Bubble(data);
+
+    // Set column
+    // run bubble.graph(this.data)
+    var btns = Array.prototype.slice.call(getAll('.btn'));
+    btns.forEach(function(item, e){
+        item.addEventListener('click', function(e){
+            bubble.setColumn(e.target.id);
+            bubble.graph(bubble.data);
+        });
     });
-}
-main('test');
+
+
+});
+
+// MAIN()
+// function main(params){
+//     d3.csv('data/data_master.csv', function(d){
+//         // Make datasets
+//         // returns data = {both, public, charter}
+//         var data = (function makeData(){
+//             var both = [], public_schools = [], charter_schools = [];
+//             // Cache all data into one dataset
+//             for (var i = 0, j = d.length; i < j; i++){
+//                 both.push(d[i]);
+//             }
+//             // Separate d for PUBLIC schools
+//             for (var i = 0, j = both.length; i < j; i++){
+//                 if (d[i].Agency === 'DCPS'){
+//                     public_schools.push(d[i]);
+//                 }
+//             }
+//             // Separate d for CHARTER schools
+//             for (var i = 0, j = both.length; i < j; i++){
+//                 if (d[i].Agency === 'PCS'){
+//                     charter_schools.push(d[i]);
+//                 }
+//             }      
+
+//            return {
+//               both : both, // total data
+//               public_schools : public_schools, // only public schools
+//               charter_schools: charter_schools // only charter schools
+//            };
+//         }());
+
+//         // Run the graph
+//         var bubble = new Bubble(data.both, 'Agency');
+//         bubble.graph(data.both); 
+        
+//         // Get buttons from the DOM
+//         var public_schools = document.getElementById('past'),
+//             charter = document.getElementById('future');        
+        
+//         // Make the buttons interactive
+//         public_schools.addEventListener('click', function(){ 
+//             bubble.graph(data.public_schools); });
+
+//         charter.addEventListener('click', function(){ 
+//             bubble.graph(data.charter_schools); });    
+//     });
+// }
+// main('test');
 
 // var public_schools = document.getElementById('past');
 // public_schools.addEventListener('click', function(){ 
@@ -288,7 +321,6 @@ main('test');
 
 
 // Utility
-function print(x){console.log(x);}
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
