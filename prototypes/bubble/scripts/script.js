@@ -1,85 +1,51 @@
-var diameter = 760,
-    format = d3.format(",d"),
-    color = d3.scale.category20c();
+'use strict';
 
-var bubble = d3.layout.pack()
-    .sort(null)
-    .size([diameter, diameter])
-    // .radius(function(){return '20';})
-    .padding(25)
-    ;
+(function(that){
+    d3.csv('data/data_master.csv', function(data){
 
-var svg = d3.select("#chart").append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-    .attr("class", "bubble");
+        // Run the graph
+        var bubble = new Bubble('MajorExp9815'); // data
+        bubble.setData(data);
+        bubble.graph(bubble.data);
 
-d3.json("scripts/json/data.json", function(error, root) {
-  if (error) throw error;
+        // To change the subdivides
+        var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
+        subdivides.forEach(function(item, e){
+            item.addEventListener('click', function(e){
+                bubble.setColumn(e.target.id);
+                bubble.graph(bubble.data);
+            });
+        });
 
-  var node = svg.selectAll(".node")
-      .data(bubble.nodes(classes(root))
-      .filter(function(d) { return !d.children; }))
-    .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+        // To change the bubble radii
+        var dataChange = Array.prototype.slice.call(getAll('.dataChange'));
+        dataChange.forEach(function(item, e){
+            item.addEventListener('click', function(e){  
+                bubble.setBudget(e.target.id);
+                bubble.graph(bubble.data);
+            });
+        });
+    });
+}(this))
 
-  node.append("title")
-      .text(function(d) { return d.className + ": " + format(d.value); });
 
-  node.append("circle")
-      // .transition()
-      // .duration(500)
-      .attr("r", function(d) { 
-        var r_scale = d3.scale.linear().domain([0, 117015598]).rangeRound([10,100]);
-        return r_scale(d.value);
-      })
-      .style("fill", function(d) {
-        return getColor(d.value);
-      })
-      .on('mouseenter', function(){
-        this.style.fill = 'gray';
-      })
-      .on('mouseleave', function(d){
-        this.style.fill = getColor(d.value);
-      })
+// Utility functions
+function get(sel){return document.querySelector(sel);}
+function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
+function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
 
-      ;
+        // Split up the data
+        // var schools = (function(d){
+        //     var temp = {};
 
-  node.append("text")
-      .attr("dy", ".3em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.className.substring(0, d.r / 3); });
+        //     temp.both = d;
+        //     temp.public = d.filter(function(item){
+        //         if(item.Agency === 'DCPS'){ return item; }
+        //     });
+        //     temp.charter = d.filter(function(item){
+        //         if(item.Agency === 'PCS'){ return item; }
+        //     });
 
-});
+        //     return temp;
 
-// Returns a flattened hierarchy containing all leaf nodes under the root.
-function classes(root) {
-  var classes = [];
-
-  function recurse(name, node) {
-    if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-    else classes.push({packageName: name, className: node.name, value: node.size});
-  }
-
-  recurse(null, root);
-  return {children: classes};
-}
-
-// Returns the appropriate color for the value passed into it
-function getColor(the_data){
-    var value = the_data;
-    if(value > 10000000){ // 10 MILLION
-        return '#77cc00';
-    } else if(value < 10000000 && value > 1000000){
-        return '#779900';
-    } else if (value < 1000000 && value > 100000){
-        return '#774400';
-    } else if (value < 100000 && value > 0){
-        return '#771100';
-    } else {
-        return '#aa0000';
-    }
-}
-
-d3.select(self.frameElement).style("height", diameter + "px");
+        // }(data));

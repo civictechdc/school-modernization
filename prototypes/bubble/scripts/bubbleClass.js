@@ -1,33 +1,32 @@
-'use strict';
-//*********************************
-// public class Bubble
-//*********************************
-function Bubble(data){
+function Bubble(b){ // data
     var that = this;
+    this.budget = b;
     this.asMoney = d3.format('$,');
     this.column = null;
-    this.data = data;
-    this.sizes = {width: 950, height: 600, padding: 100};
+    this.data = null;
+    this.sizes = {width: 950, height: 500, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.05; // -0.018
     this.damper = 0.6; // 0.4 tightness of the bubbles
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
-    // this.maxAmount = (function(d){
-    //         d3.max(that.data, function(d){
-    //             console.log((d[that.column]));
-    //             return parseInt(d[that.column]);
-    //         });
-    //     }());
-    // this.minAmount = function(){
-    //     d3.min(this.data, function(d){
-    //         console.log(+d[this.column]);
-    //         return +d[this.column];
-    //     });
-    // };
-    // this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, this.maxAmount]).range([2, 85]);
     this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([3, 25]); // 15
     this.nodes = [];
+}
+
+Bubble.prototype.setColumn = function(column){
+    // if (this.column !== null) {
+    //     this.column = column;
+    // } 
+    this.column = column;
+};
+
+Bubble.prototype.setData = function(newData){
+    this.data = newData;
+};
+
+Bubble.prototype.setBudget = function(budget){
+    this.budget = budget;
 }
 
 Bubble.prototype.make_svg = function(){
@@ -37,13 +36,6 @@ Bubble.prototype.make_svg = function(){
     this.svg = d3.select('#chart').append('svg')
         .attr('width', this.sizes.width)
         .attr('height', this.sizes.height);
-};
-
-Bubble.prototype.setColumn = function(column){
-    // if (this.column !== null) {
-    //     this.column = column;
-    // } 
-    this.column = column;
 };
 
 Bubble.prototype.create_nodes = function(set){
@@ -56,19 +48,20 @@ Bubble.prototype.create_nodes = function(set){
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.radius = (function(){
-            if(current.MajorExp9815 && current.MajorExp9815 !== 'NA'){
-               return (that.radius_scale(parseInt(current.MajorExp9815)));
+            if(current[that.budget] && current[that.budget] !== 'NA'){
+               return (that.radius_scale(parseInt(current[that.budget])));
             } else { 
                 console.log('not ready', current);
             }        
         }());
         this.nodes.push(current);
     }
-    this.nodes.sort(function(a,b){ return b.MajorExp9815 - a.MajorExp9815});
+    //this.nodes.sort(function(a,b){ return b[budget] - a[budget]});
 };
 
 Bubble.prototype.add_bubbles = function(set){
-     this.circles = this.svg.selectAll('circle')
+     this.circles = this.svg.append('g').attr('id', 'groupCircles')
+        .selectAll('circle')
         .data(set)
         .enter()
         .append('circle')
@@ -86,34 +79,6 @@ Bubble.prototype.add_bubbles = function(set){
             return set[i].radius;})
         ;
 };
-
-// Bubble.prototype.update = function(set){
-//      this.circles = this.svg.selectAll('circle')    
-//         .data(set);
-
-//     this.circles.transition()
-//         .duration(500)
-//         .
-
-
-//         .enter()
-//         .append('circle')
-//         .attr('class', 'circle')
-//         .style('fill', function(d,i){
-//             return set[i].color;
-//         })
-//         .attr('cx', function(d,i){
-//             return set[i].myx;
-//         })
-//         .attr('cy', function(d,i){
-//             return set[i].myy;
-//         })
-//         .attr('r', function(d,i){ 
-//             return set[i].radius;})
-//         ;
-// };
-
-
 
 Bubble.prototype.add_tootltips = function(d){
     var that = this;
@@ -138,7 +103,7 @@ Bubble.prototype.add_tootltips = function(d){
         } else {
             d3.select('#yearComplete').text('');
         }
-        d3.select('#majorexp').text('Total Spent: ' + that.asMoney(d.MajorExp9815));
+        d3.select('#majorexp').text('Total Spent: ' + that.asMoney(d[this.budget]));
         d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.asMoney(d.SpentPerSqFt) + '/sq. ft.');
         d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.asMoney(d.SpentPerMaxOccupancy));
         if(d.FeederHS && d.FeederHS !== "NA"){ 
@@ -183,7 +148,8 @@ Bubble.prototype.group_bubbles = function(d){
         })
         ;   
     this.force.start();
-    console.log(this.column);
+
+
 };
 
 Bubble.prototype.move_towards_center = function(alpha){
@@ -209,8 +175,8 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         padding = this.sizes.padding;
     for (var i in unique){
         // Make the grid here
-        unique[i].x = (i * width / unique.length) * 0.6 + 215; // * alpha
-        unique[i].y = this.center.y - 75; // * alpha
+        unique[i].x = (i * width / unique.length) * 0.6 + 250; //+ 500; // * alpha
+        unique[i].y = this.center.y; // * alpha
     }
 
     // Attach the target coordinates to each node
@@ -226,8 +192,8 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     });
 
     // Send the nodes the their corresponding point
-    var done = false;
     return function(d){
+        // d3.select('#groupCircles').attr('transform', 'translate(' + that.center.x + ', ' + that.center.y + ')');
         d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
         d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
     }
@@ -243,85 +209,7 @@ Bubble.prototype.graph = function(set){
     
 };
 
-
-
-
-var bubble;
-d3.csv('data/data_master.csv', function(data){
-    bubble = new Bubble(data);
-
-    // Set column
-    // run bubble.graph(this.data)
-    var btns = Array.prototype.slice.call(getAll('.btn'));
-    btns.forEach(function(item, e){
-        item.addEventListener('click', function(e){
-            bubble.setColumn(e.target.id);
-            bubble.graph(bubble.data);
-        });
-    });
-
-
-});
-
-// MAIN()
-// function main(params){
-//     d3.csv('data/data_master.csv', function(d){
-//         // Make datasets
-//         // returns data = {both, public, charter}
-//         var data = (function makeData(){
-//             var both = [], public_schools = [], charter_schools = [];
-//             // Cache all data into one dataset
-//             for (var i = 0, j = d.length; i < j; i++){
-//                 both.push(d[i]);
-//             }
-//             // Separate d for PUBLIC schools
-//             for (var i = 0, j = both.length; i < j; i++){
-//                 if (d[i].Agency === 'DCPS'){
-//                     public_schools.push(d[i]);
-//                 }
-//             }
-//             // Separate d for CHARTER schools
-//             for (var i = 0, j = both.length; i < j; i++){
-//                 if (d[i].Agency === 'PCS'){
-//                     charter_schools.push(d[i]);
-//                 }
-//             }      
-
-//            return {
-//               both : both, // total data
-//               public_schools : public_schools, // only public schools
-//               charter_schools: charter_schools // only charter schools
-//            };
-//         }());
-
-//         // Run the graph
-//         var bubble = new Bubble(data.both, 'Agency');
-//         bubble.graph(data.both); 
-        
-//         // Get buttons from the DOM
-//         var public_schools = document.getElementById('past'),
-//             charter = document.getElementById('future');        
-        
-//         // Make the buttons interactive
-//         public_schools.addEventListener('click', function(){ 
-//             bubble.graph(data.public_schools); });
-
-//         charter.addEventListener('click', function(){ 
-//             bubble.graph(data.charter_schools); });    
-//     });
-// }
-// main('test');
-
-// var public_schools = document.getElementById('past');
-// public_schools.addEventListener('click', function(){ 
-//     // bubble.graph(data.public_schools); });
-//     column = 
-//     main([dataset, column]); });
-
-
-
-// Utility
+// Utility functions
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
-
