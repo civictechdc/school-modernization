@@ -13,7 +13,7 @@ var bubble = d3.layout.pack()
     .size([width, height])
     .padding(1.5);
 
-d3.json('data/multi_school.json', function(d){
+d3.json('scripts/multi_school.json', function(d){
    var node = svg.selectAll(".node")
       .data(bubble.nodes(d)
       .filter(function(d) { return !d.children; }))

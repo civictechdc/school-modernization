@@ -9,11 +9,11 @@ var svg = d3.select('#chart')
    .append('svg').attr('height', height).attr('width', width);
 
 var bubble = d3.layout.pack()
-    .sort(function(a,b){return b-a;})
+    .sort(function(a,b){return b.value - a.value;})
     .size([width, height])
     .padding(1.5);
 
-d3.json('data/multi_school.json', function(d){
+d3.json('scripts/phase2.json', function(d){
    var node = svg.selectAll(".node")
       .data(bubble.nodes(d)
       .filter(function(d) { return !d.children; }))

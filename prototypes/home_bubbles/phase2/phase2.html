@@ -8,15 +8,28 @@
    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
+
+   <!-- THE STYLING -->
+   <style>
+      #container {
+         width: 80%;
+         margin: 0 auto;
+      }
+      #description {
+         margin-top: -15px;
+      }
+   </style>
+
+   <!-- THE CHART -->
    <div id="container">
    
-      <h1 id='title'>Phase 2</h1>
+      <h1 id='title'>Phase 2:</h1>
+      <p id='description'>DCPS Past Spending</p>
       <div id="chart"></div>
 
    </div>
 
-   <!-- TOOLTIP -->
-   <!-- ************************** -->
+   <!-- THE TOOLTIP -->
    <div id="tooltip" class='hidden'>
       <p id='ProjectType'></p>
       <p id='Amount'></p>
