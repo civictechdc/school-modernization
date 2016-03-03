@@ -1,0 +1,44 @@
+$green: #84ae6a;
+$dark_green: darken($green, 20%);
+$cerulean: #f7f7f7;
+$dark_cerulean: darken($cerulean, 50%);
+
+* {
+   font-family: sans-serif;
+}
+
+circle {
+   fill: $green;
+   stroke: darken($green, 20%);
+   stroke-width: 3px;
+   opacity: 0.75;
+
+   &:hover {
+      // fill: $dark_green;
+      opacity: 1.0;
+   }
+}
+
+.hidden {
+   display: none;
+}
+
+#tooltip {
+   position: absolute;
+   width: 250px;
+   height: 75px;
+   padding: 3px 5px;
+   background-color: $cerulean;
+   border-radius: 5px;
+   border: 3px solid $dark_cerulean;
+   
+   p {
+      font-size: 12px;
+      line-height: 1.1em;
+      color: darken($dark_green, 5%);
+   }
+
+   &.hidden {
+      // display: none;
+   }
+}

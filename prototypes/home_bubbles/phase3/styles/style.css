@@ -1,0 +1,28 @@
+* {
+  font-family: sans-serif; }
+
+circle {
+  fill: #84ae6a;
+  stroke: #53733f;
+  stroke-width: 3px;
+  opacity: 0.75; }
+  circle:hover {
+    opacity: 1.0; }
+
+.hidden {
+  display: none; }
+
+#tooltip {
+  position: absolute;
+  width: 250px;
+  height: 75px;
+  padding: 3px 5px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  border: 3px solid #787878; }
+  #tooltip p {
+    font-size: 12px;
+    line-height: 1.1em;
+    color: #476336; }
+
+/*# sourceMappingURL=style.css.map */
