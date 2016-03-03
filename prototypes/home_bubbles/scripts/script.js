@@ -9,7 +9,7 @@ var svg = d3.select('#chart')
    .append('svg').attr('height', height).attr('width', width);
 
 var bubble = d3.layout.pack()
-    .sort(null)
+    .sort(function(a,b){return b-a;})
     .size([width, height])
     .padding(1.5);
 

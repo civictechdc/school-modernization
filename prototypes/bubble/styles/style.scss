@@ -4,11 +4,25 @@ $cerulean: #2956B2;
 // GLOBALS
 * {
    font-family: sans-serif;
+   margin: 0;
+   padding: 0;
 }
 
 #container {
    width: 80%;
    margin: 0 auto;
+}
+
+circle {
+   fill: $cerulean;
+   stroke: darken($cerulean , 10%);
+   stroke-width: 2px;
+   cursor: pointer;
+
+   &:hover {
+      fill: lighten($cerulean , 50%);
+      stroke: lighten($cerulean , 30%);
+   }
 }
 
 text {
@@ -27,11 +41,9 @@ text {
 }
 
 #tooltip {
-   position: fixed;
-   left: 950px;
-   top: 200px;
+   position: absolute;
    width: 200px;
-   height: 250px;
+   height: 205px;
    padding: 10px;
    background-color: $cerulean;
    border-radius: 5px;
@@ -39,12 +51,12 @@ text {
    
    p {
       font-size: 12px;
-      line-height: 1.2em;
+      line-height: 1.1em;
       color: #fff;
    }
 
    &.hidden {
-      // display: none;
+      display: none;
    }
 }
 
@@ -52,12 +64,14 @@ text {
    fill: 'grey';
 }
 
-#budget_state {
-   margin-top: -20px;
+.btn_state {
+   line-height: 0.5em;
 }
-// #school {
-//    font-size: 12px;
-// }
-// #school {
-//    font-size: 12px;
-// }
+
+#show_state_cont {
+   margin: 5px 0px;
+}
+
+.show_state {
+   line-height: 1.5em;
+}

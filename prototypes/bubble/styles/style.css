@@ -1,9 +1,20 @@
 * {
-  font-family: sans-serif; }
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0; }
 
 #container {
   width: 80%;
   margin: 0 auto; }
+
+circle {
+  fill: #2956B2;
+  stroke: #1f4289;
+  stroke-width: 2px;
+  cursor: pointer; }
+  circle:hover {
+    fill: #e2e9f8;
+    stroke: #8fabe5; }
 
 text.label {
   font-size: 10px; }
@@ -15,24 +26,30 @@ text#tooltip_label {
   background-color: 'white'; }
 
 #tooltip {
-  position: fixed;
-  left: 950px;
-  top: 200px;
+  position: absolute;
   width: 200px;
-  height: 250px;
+  height: 205px;
   padding: 10px;
   background-color: #2956B2;
   border-radius: 5px;
   border: 3px solid #1f4289; }
   #tooltip p {
     font-size: 12px;
-    line-height: 1.2em;
+    line-height: 1.1em;
     color: #fff; }
+  #tooltip.hidden {
+    display: none; }
 
 .color {
   fill: 'grey'; }
 
-#budget_state {
-  margin-top: -20px; }
+.btn_state {
+  line-height: 0.5em; }
+
+#show_state_cont {
+  margin: 5px 0px; }
+
+.show_state {
+  line-height: 1.5em; }
 
 /*# sourceMappingURL=style.css.map */
