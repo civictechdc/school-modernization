@@ -114,6 +114,19 @@ function initApp(presetMode) {
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
 
 
+    // ======= ======= ======= makeSearchHover ======= ======= =======
+    Display.prototype.makeSearchHover = function() {
+        console.log("makeSearchHover");
+
+        var popupContainer = ("#popup");
+        var menuHtml = "";
+        menuHtml += this.makeSearchBar();
+        menuHtml += this.makeHoverDisplay();
+        $(popupContainer).append(menuHtml);
+        this.activateSearchButton("searchButton");
+        this.activateSearchWindow("searchWindow");
+    }
+
     // ======= ======= ======= makeSearchBar ======= ======= =======
     Display.prototype.makeSearchBar = function() {
         // console.log("makeSearchBar");
@@ -158,6 +171,21 @@ function initApp(presetMode) {
         return subMenuHtml;
     }
 
+    // ======= ======= ======= activateFilterMenus ======= ======= =======
+    Display.prototype.activateFilterMenus = function() {
+        console.log("activateFilterMenus");
+
+        var nextMenu, nextFilter;
+
+        for (var i = 0; i < this.filterMenusArray.length; i++) {
+            nextMenu = this.filterMenusArray[i];
+            for (var j = 1; j < nextMenu.length; j++) {
+                nextFilter = nextMenu[j];
+                this.activateFilterLink(nextFilter);
+            }
+        }
+    }
+
     // ======= ======= ======= activateClearButton ======= ======= =======
     Display.prototype.activateClearButton = function() {
         console.log("activateClearButton");
@@ -187,40 +215,6 @@ function initApp(presetMode) {
             // == load default map
             zonesCollectionObj.getZoneData();
         });
-    }
-
-    // ======= ======= ======= activateFilterMenus ======= ======= =======
-    Display.prototype.activateFilterMenus = function() {
-        console.log("activateFilterMenus");
-
-        var nextMenu, nextFilter;
-        var popupContainer = ("#popup");
-        var menuHtml = "";
-
-        for (var i = 0; i < this.filterMenusArray.length; i++) {
-            nextMenu = this.filterMenusArray[i];
-            for (var j = 1; j < nextMenu.length; j++) {
-                nextFilter = nextMenu[j];
-                this.activateFilterLink(nextFilter);
-            }
-        }
-
-        menuHtml += this.makeSearchBar();
-        menuHtml += this.makeHoverDisplay();
-        $(popupContainer).append(menuHtml);
-        this.activateSearchButton("searchButton");
-        this.activateSearchWindow("searchWindow");
-    }
-
-    // ======= ======= ======= activateFilterMenu ======= ======= =======
-    Display.prototype.activateFilterMenu = function(whichMenu) {
-        console.log("activateFilterMenu");
-
-        // == activate filter click events
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            this.activateFilterSelect(nextItem);
-        }
     }
 
     // ======= ======= ======= activateSearchWindow ======= ======= =======
@@ -312,7 +306,6 @@ function initApp(presetMode) {
             var whichCategory = classList[1];
             var whichFilter = this.id;
             var menuObject = filterMenu[whichFilter];
-            var whichColumn = menuObject.column;
             var whichValue = menuObject.value;
             var whichText = menuObject.text;
             var htmlString;
@@ -440,7 +433,6 @@ function initApp(presetMode) {
         zonesCollectionObj.zoneGeojson_AB = null;
         zonesCollectionObj.aggregatorArray = [];
         zonesCollectionObj.zoneA = "Ward";
-
     }
 
     // ======= ======= ======= findSearchSchool ======= ======= =======
@@ -460,59 +452,25 @@ function initApp(presetMode) {
             console.dir(textData);
             jsonData = CSV2JSON(textData);
 
-            var nextSchool, schoolName, schoolCode;
-            var foundDataArray = [];
+            var foundDataArray = buildSearchArray(jsonData, searchSchoolName);
             var filterTitleContainer = $("#filters-selections").children("h2");
-
-            // ======= search school data by name =======
-            for (var i = 0; i < jsonData.length; i++) {
-                var filterFlagCount = 0;
-
-                // == zone (geography), level, agency flags
-                nextSchool = jsonData[i];
-                schoolName = nextSchool.School;
-                schoolCode = nextSchool.School_ID;
-
-                // == name (school) from json is long; name (checkGeo) from geojson is short
-                var checkSchool = schoolName.indexOf(searchSchoolName);
-                if (checkSchool > -1) {
-                    foundDataArray.push([i, nextSchool]);
-                }
-            }
+            console.log("  foundDataArray: ", foundDataArray);
 
             // == display found school name or "no data" message
             if (foundDataArray.length > 0) {
                 if (foundDataArray.length > 1) {
-                    schoolText = "<span class='filterLabel'>Multiple schools: </span>";
-                    $(filterTitleContainer).css("font-size", "14px");
-                    var hoverText = "Re-enter detailed name (from list)"
                     updateHoverText(hoverText);
+                    $(filterTitleContainer).css("font-size", "14px");
+                    schoolText = "<span class='filterLabel'>Multiple schools: </span>";
+                    var hoverText = "Re-enter detailed name (from list)"
                 } else {
                     self.activateClearButton();
+                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0][1]);
+                    hiliteSchoolMarker(foundDataArray);
+                    updateHoverText(null);
                     $(filterTitleContainer).css("font-size", "16px");
                     schoolText = "<span class='filterLabel'>Your school: </span>";
-                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0][1]);
-
-                    schoolMarker = schoolsCollectionObj.schoolMarkersArray[foundDataArray[0][0]];
-                    schoolMarker.icon.fillColor = "white";
-                    schoolMarker.icon.strikeColor = "black";
-                    schoolMarker.icon.strokeWeight = 6;
-                    schoolMarker.icon.scale = 0.4;
-                    schoolMarker.setMap(map);
-
-                    setTimeout(resetMarker, 3000);
-
-                    function resetMarker() {
-                        schoolMarker.icon.fillColor = schoolMarker.defaultColor;
-                        schoolMarker.icon.scale = 0.2;
-                        schoolMarker.icon.strikeColor = "purple";
-                        schoolMarker.icon.strokeWeight = 2;
-                        schoolMarker.setMap(map);
-                    }
-
                     $("#profile-container").css("display", "table");
-                    console.log("*** display profile-container ***");
-                    updateHoverText(null);
                 }
 
                 // == change to display mode
@@ -541,6 +499,47 @@ function initApp(presetMode) {
         }).error(function() {
             console.log("*** ajax error ***");
         });
+    }
+
+    // ======= ======= ======= hiliteSchoolMarker ======= ======= =======
+    function hiliteSchoolMarker(foundDataArray) {
+        console.log("hiliteSchoolMarker");
+
+        schoolMarker = schoolsCollectionObj.schoolMarkersArray[foundDataArray[0][0]];
+        schoolMarker.icon.fillColor = "white";
+        schoolMarker.icon.strikeColor = "black";
+        schoolMarker.icon.strokeWeight = 6;
+        schoolMarker.icon.scale = 0.4;
+        schoolMarker.setMap(map);
+
+        setTimeout(resetMarker, 3000);
+
+        function resetMarker() {
+            schoolMarker.icon.fillColor = schoolMarker.defaultColor;
+            schoolMarker.icon.scale = 0.2;
+            schoolMarker.icon.strikeColor = "purple";
+            schoolMarker.icon.strokeWeight = 2;
+            schoolMarker.setMap(map);
+        }
+    }
+
+    // ======= ======= ======= buildSearchArray ======= ======= =======
+    function buildSearchArray(jsonData, searchSchoolName) {
+        console.log("buildSearchArray");
+
+        var nextSchool, schoolName;
+        var foundDataArray = [];
+
+        // ======= search school data by name =======
+        for (var i = 0; i < jsonData.length; i++) {
+            nextSchool = jsonData[i];
+            schoolName = nextSchool.School;
+            var checkSchool = schoolName.indexOf(searchSchoolName);
+            if (checkSchool > -1) {
+                foundDataArray.push([i, nextSchool]);
+            }
+        }
+        return foundDataArray;
     }
 
 
@@ -671,6 +670,7 @@ function initApp(presetMode) {
                 displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
             }
             initAutoComplete(displayObj);
+            console.log("  displayObj.schoolNamesArray: ", displayObj.schoolNamesArray);
 
         // == errors/fails
         }).fail(function(){
@@ -1416,6 +1416,7 @@ function initApp(presetMode) {
     if (displayObj.displayMode != "storyMap") {
         this.jsonData = null;
         displayObj.activateFilterMenus();
+        displayObj.makeSearchHover();
         displayObj.activateClearButton();
         setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);

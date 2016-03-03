@@ -1,4 +1,101 @@
 
+// ======= ======= ======= makeProfileChart ======= ======= =======
+function makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, schoolIndex) {
+    console.log("makeProfileChart");
+    console.log("  schoolIndex: ", schoolIndex);
+
+    // nextZoneObject = { zoneIndex:i, zoneName:nextZoneName, schoolCount:0, zoneAmount:0, zoneSqft:0, zoneEnroll:0, amountMin:0, amountMax:0, amountAvg:0, amountMed:0 }
+
+    var schoolData = schoolsCollectionObj.selectedSchoolsArray[schoolIndex];
+    var schoolZoneIndex = getZoneIndex(zonesCollectionObj, displayObj, schoolData);
+    var zoneDataObject = zonesCollectionObj.aggregatorArray[schoolZoneIndex];
+
+    var zoneAvg = zoneDataObject.amountAvg;
+    var zoneMax = zoneDataObject.amountMax;
+    var zoneMed = zoneDataObject.amountMed;
+    var zoneMin = zoneDataObject.amountMin;
+
+    if (displayObj.dataFilters.expend) {
+        var schoolAmount = parseInt(schoolData[displayObj.dataFilters.expend]);
+    } else {
+        var schoolAmount = parseInt(schoolData.spendLifetime);
+    }
+
+    var schoolContextArray = [zoneMin, zoneMax, zoneAvg, zoneMed, schoolAmount];
+    console.log("  zoneMin: ", zoneMin);
+    console.log("  zoneMax: ", zoneMax);
+    console.log("  zoneAvg: ", zoneAvg);
+    console.log("  zoneMed: ", zoneMed);
+    console.log("  schoolAmount: ", schoolAmount);
+
+    // ======= chart formatting =======
+    yAxisTranslate = 0;
+    var yAxisLabel = "left";
+    var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
+        chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
+        chartH = 120 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+
+    var dataMax = d3.max(schoolContextArray, function(d) {
+            console.log("  d: ", d);
+            return parseInt(d);
+        });
+        console.log("  dataMax: ", dataMax);
+    var dataMin = d3.min(schoolContextArray, function(d) {
+        console.log("  d: ", d);
+        return parseInt(d);
+    });
+
+    // ======= ======= ======= X SCALE ======= ======= =======
+    var xScaleLabels = ["scale", "amount", "school"];
+    var xScale = d3.scale.ordinal()         // maps input domain to output range
+        .domain(xScaleLabels.map(function(d) {
+            // console.log("  d: ", d);
+            return d;;
+        }))
+        .range([0, chartW]);
+
+    // ======= ======= ======= Y SCALE ======= ======= =======
+    var yScale = d3.scale.linear()      // maps input domain to output range
+        .domain([0, d3.max(schoolContextArray, function(d, i) {
+            // console.log("  d: ", d);
+            return d;
+        })])
+        .range([chartH + 20, 0]);
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)          // specify left scale
+        .orient(yAxisLabel)
+        .tickPadding(4)
+        .tickSize(30, 0)
+        .tickValues(schoolContextArray);
+
+
+    // ======= ======= ======= SVG ======= ======= =======
+    var svg = d3.select("#profile").append("svg")
+        .attr("width", chartW + (chartPadding.left + chartPadding.right))
+        .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
+        .append("g")
+            .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
+
+    // ======= svg =======
+    svg.append("g")                 // g group element to contain about-to-be-generated axis elements
+        .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
+        .call(yAxis)                // call axis function; generate SVG elements of axis; takes selection as input; hands selection to function
+        .attr("transform", "translate(" + yAxisTranslate + ", 0)")
+        .selectAll("text")
+            .attr("class", "yLabels")
+            .text(function(d) {
+                return d;
+            })
+            .style("text-anchor", "start")
+            .style("font-size", "10px");
+
+
+}
+
+
+
+
 // ======= ======= ======= makeRankChart ======= ======= =======
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount) {
     console.log("\n----- makeRankChart -----");

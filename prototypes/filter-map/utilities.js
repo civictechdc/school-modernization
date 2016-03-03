@@ -431,7 +431,7 @@ function clearZoneAggregator(zonesCollectionObj) {
 
 // ======= ======= ======= getZoneIndex ======= ======= =======
 function getZoneIndex(zonesCollectionObj, displayObj, schoolData) {
-    // console.log("getZoneIndex");
+    console.log("getZoneIndex");
 
     var nextZone, schoolWard, nextZoneNumber, schoolZoneIndex, rootFeederHS, rootFeederMS;
 
@@ -518,10 +518,10 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
 
     // == identify column holding selected expend filter data
     if (schoolZoneIndex != null) {
-        console.log("******* schoolZoneIndex: ", schoolZoneIndex);
-        console.log("  .schoolCount: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount);
-        console.log("  .amountMax1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax);
-        console.log("  .amountMin1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMin);
+        // console.log("******* schoolZoneIndex: ", schoolZoneIndex);
+        // console.log("  .schoolCount: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount);
+        // console.log("  .amountMax1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax);
+        // console.log("  .amountMin1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMin);
 
         // == defaults to lifetime budget expenditure if no expenditure selected
         if (displayObj.dataFilters.expend == null) {
@@ -547,7 +547,6 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 if (nextSchoolExpend > zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax) {
                     zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax = nextSchoolExpend;
                 }
-                console.log("  .amountMax2: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax);
 
                 // ======= record min =======
                 if (zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount == 1) {
@@ -557,7 +556,6 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                         zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMin = nextSchoolExpend;
                     }
                 }
-                console.log("  .amountMin2: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMin);
 
                 // ======= calculate average =======
                 zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountAvg = aggregatedAmount/zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount;
@@ -610,7 +608,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
             console.log("ERROR: nextSchoolEnroll NaN " + schoolData.schoolName);
             nextSchoolEnroll = 0;
         }
-        showAggratedData(schoolData, currentAmount, nextSchoolExpend, aggregatedAmount, currentSqft, nextSchoolSqft, aggregatedSqft, currentEnroll, nextSchoolEnroll, aggregatedEnroll);
+        // showAggratedData(schoolData, currentAmount, nextSchoolExpend, aggregatedAmount, currentSqft, nextSchoolSqft, aggregatedSqft, currentEnroll, nextSchoolEnroll, aggregatedEnroll);
         return null;
 
     // == rejected schools
@@ -1227,7 +1225,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     schoolsCollectionObj.selectedSchool = null;
 
     if ((typeof schoolIndex === 'undefined') || (typeof schoolIndex === 'null')) {
-        console.log("*** TRUE ***");
+        console.log("*** SCHOOL SEARCH ***");
         var tempSchoolData = getDataDetails(schoolData, null)
         var cleanedSchoolData = cleanupSchoolData(schoolsCollectionObj, tempSchoolData);
     } else {
@@ -1281,7 +1279,6 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     } else {
         spendLifetime = "$" + spendLifetime;
     }
-    console.log("  schoolsCollectionObj.selectedSchoolsArray[schoolIndex]3: ", schoolsCollectionObj.selectedSchoolsArray[schoolIndex]);
 
     // == future spending
     spendPlanned = cleanedSchoolData.spendPlanned;
@@ -1363,7 +1360,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>&nbsp;</p></td></tr>";
     htmlString += "</table>";
 
-    makeProfileChart(zonesCollectionObj, displayObj, cleanedSchoolData);
+    // makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, schoolIndex);
 
     // == remove previous chart or profile html if any
     if ($('#chart-container').find('#chart').length) {
@@ -1675,17 +1672,6 @@ function activateMultiSchoolLink(schoolsCollectionObj, zonesCollectionObj, displ
         schoolData = schoolsCollectionObj.selectedSchoolsArray[this.id];
         makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, this.id);
     });
-}
-
-// ======= ======= ======= makeProfileChart ======= ======= =======
-function makeProfileChart(zonesCollectionObj, displayObj, schoolData) {
-    console.log("makeProfileChart");
-    // console.log("  schoolData: ", schoolData);
-
-    var schoolZoneIndex = getZoneIndex(zonesCollectionObj, displayObj, schoolData);
-    var zoneDataObject = zonesCollectionObj.aggregatorArray[schoolZoneIndex];
-    console.log("  zoneDataObject: ", zoneDataObject);
-
 }
 
 // ======= ======= ======= activateProfileSubmenu ======= ======= =======
