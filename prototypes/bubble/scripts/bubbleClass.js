@@ -12,6 +12,7 @@ function Bubble(b){ // data
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
     this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([3, 25]); // 15
     this.nodes = [];
+    this.unique = null;
 }
 
 Bubble.prototype.setColumn = function(column){
@@ -177,7 +178,7 @@ Bubble.prototype.move_towards_center = function(alpha){
 Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Make an array of unique items
     var that = this,
-        items = _.uniq(_.pluck(this.nodes, column)).sort(),
+        items = _.uniq(_.pluck(this.nodes, column)).sort();
         unique = [];
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
@@ -205,6 +206,18 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         }
     });
 
+    // Add Text
+    this.svg.selectAll('text')
+        .data(unique)
+        .enter()
+        .append('text')
+        .attr('class', 'sub_titles')
+        .attr('x', function(d){return d.x *1.8 - 450;})
+        .attr('y', function(d){return d.y - 150;})
+        .text(function(d){
+            return d.name;
+        })
+        ;
     // Send the nodes the their corresponding point
     return function(d){
         // d3.select('#groupCircles').attr('transform', 'translate(' + that.center.x + ', ' + that.center.y + ')');
