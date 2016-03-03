@@ -4,6 +4,8 @@ $cerulean: #2956B2;
 // GLOBALS
 * {
    font-family: sans-serif;
+   margin: 0;
+   padding: 0;
 }
 
 #container {
@@ -62,6 +64,14 @@ text {
    fill: 'grey';
 }
 
-#budget_state {
-   margin-top: -20px;
+.btn_state {
+   line-height: 0.5em;
+}
+
+#show_state_cont {
+   margin: 5px 0px;
+}
+
+.show_state {
+   line-height: 1.5em;
 }

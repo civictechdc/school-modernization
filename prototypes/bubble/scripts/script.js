@@ -2,26 +2,64 @@
 
 (function(that){
     d3.csv('data/data_master.csv', function(data){
+        var bubble = new Bubble('MajorExp9815'); // data
+        var schools = {
+            both: data,
+            public: (function(d){
+                return d.filter(function(item){
+                    if (item.Agency === 'DCPS'){
+                        return item;
+                    }
+                });
+            }(data)),
+            charter: (function(d){
+                return d.filter(function(item){
+                    if (item.Agency === 'PCS'){
+                        return item;
+                    }
+                });
+            }(data))};
 
         // Run the graph
-        var bubble = new Bubble('MajorExp9815'); // data
-        bubble.setData(data);
+        bubble.setData(schools.both);
         bubble.graph(bubble.data);
 
-        // To change the subdivides
+        // To change the subdivides, SUBDIVIDES
         var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
         subdivides.forEach(function(item, e){
             item.addEventListener('click', function(e){
                 bubble.setColumn(e.target.id);
                 bubble.graph(bubble.data);
+                // bubble.group_bubbles();
+
+                // Change the title
+                get('#sub_state').innerHTML = 'Split By:  ' + e.target.dataset.title;
             });
         });
 
-        // To change the bubble radii
-        (Array.prototype.slice.call(getAll('.dataChange'))).forEach(function(item, e){
+        // To change the bubble radii, BUDGET COLUMNS
+        var dataChange = Array.prototype.slice.call(getAll('.dataChange'));
+        dataChange.forEach(function(item, e){
             item.addEventListener('click', function(e){  
                 bubble.setBudget(e.target.id);
                 bubble.graph(bubble.data);
+                // bubble.group_bubbles();
+
+                // Change the title
+                get('#budget_state').innerHTML = e.target.dataset.title;
+            });
+        });
+
+        // To change the bubble radii, SCHOOL SET
+        var schoolChange = Array.prototype.slice.call(getAll('.school'));
+        schoolChange.forEach(function(item, e){
+            item.addEventListener('click', function(e){  
+                bubble.setData(schools[e.target.id]);
+                bubble.graph(bubble.data);
+                // bubble.group_bubbles();
+
+                // Change the title
+                get('#school_state').innerHTML = e.target.dataset.title + ' Schools';
             });
         });
     });

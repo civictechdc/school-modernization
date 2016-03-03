@@ -48,10 +48,17 @@ Bubble.prototype.create_nodes = function(set){
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.radius = (function(){
-            if(current[that.budget] && current[that.budget] !== 'NA'){
-               return (that.radius_scale(parseInt(current[that.budget])));
+            if(current[that.budget] && current[that.budget] !== 'NA' && current[that.budget] !== ''){
+               // return (that.radius_scale(parseInt(current[that.budget])));
+               return Math.pow(parseInt(current[that.budget]), 0.157);
             } else { 
-                console.log('not ready', current);
+                if (current[that.budget] === 'NA'){
+                    console.log('NA', current);
+                    return 5;
+                } else {   
+                    console.log('not ready', current);
+                    return 3;
+                }
             }        
         }());
         this.nodes.push(current);
@@ -76,6 +83,9 @@ Bubble.prototype.add_bubbles = function(set){
             return set[i].myy;
         })
         .attr('r', function(d,i){ 
+            //console.log(set[i].radius);
+            //console.log(set[i]);
+
             return set[i].radius;})
         ;
 };
@@ -130,13 +140,17 @@ Bubble.prototype.set_force = function() {
         .links([])
         .size([this.sizes.width, this.sizes.height])
         .gravity(this.force_gravity) // -0.01
-        .charge(function(d){ return that.charge(d); })
+        .charge(function(d){ return that.charge(d) || -15; })
         .friction(0.9); // 0.9
 
 };
 
 Bubble.prototype.charge = function(d) {
-    return -Math.pow(d.radius, 1.8) / 2; // 1.3
+    var charge = (-Math.pow(d.radius, 1.8) / 2.2); // 1.3
+    if(charge == NaN){
+        charge = -25;
+    }
+    return charge;
 };
 
 Bubble.prototype.group_bubbles = function(d){
@@ -168,7 +182,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
     }
-    console.log(items);
 
     // Assign unique_item a point to occupy
     var width = this.sizes.width,

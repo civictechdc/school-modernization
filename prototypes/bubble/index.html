@@ -12,23 +12,34 @@
    
       <!-- Header -->
       <h1 id='title'>DCPS Capital Spending</h1>
-      <p id='budget_state'>Expenditures from 1985 - 2015</p>
+      <div id="show_state_cont">
+         <p class='show_state' id='budget_state'>Expenditures from 1985 - 2015</p>
+         <p class='show_state' id="sub_state">Split By: None</p>
+         <p class='show_state' id="school_state">Both Public and Charter Schools</p>
+      </div>
       
       <!-- Change Dataset Buttons -->
       <div id="dataset">
-         <button class="dataChange" id='MajorExp9815'>Past</button>
-         <button class="dataChange" id='TotalAllotandPlan1621'>Future</button>
-         <button class="dataChange" id='LifetimeBudget'>Lifetime</button>
-         <button class="dataChange" id='AnnualSpentPerSqFt'>Per Sq. Ft.</button>
+         <button class="btn_state dataChange" id='MajorExp9815' data-title='Expenditures from 1985 - 2015'>Past</button>
+         <button class="btn_state dataChange" id='TotalAllotandPlan1621' data-title='Future Expenditures for 2016 - 2021'>Future</button>
+         <button class="btn_state dataChange" id='LifetimeBudget' data-title='Expenditures from 1985 - 2021'>Lifetime</button>
+         <button class="btn_state dataChange" id='AnnualSpentPerSqFt' data-title='Annual Spent Per SqFt. from 1985 - 2015'>Per Sq. Ft.</button>
       </div>
    
       <!-- Change Subdivision Buttons -->
       <div id="subdivides">
-         <button class="subdivides" id='Agency'>Agency</button>
-         <button class="subdivides" id='Level'>Levels</button>
-         <button class="subdivides" id='Ward'>Ward</button>
-         <button class="subdivides" id='FeederHS'>Feeders: High</button>
-         <button class="subdivides" id='ProjectType'>Project Type</button>
+         <button class="btn_state subdivides" id='Agency' data-title='Agency'>Agency</button>
+         <button class="btn_state subdivides" id='Level' data-title='School Level'>Levels</button>
+         <button class="btn_state subdivides" id='Ward' data-title='Ward'>Ward</button>
+         <button class="btn_state subdivides" id='FeederHS' data-title='High School Feeder'>Feeders: High</button>
+         <button class="btn_state subdivides" id='ProjectType' data-title='Project Type'>Project Type</button>
+      </div>
+
+      <!-- Change School Datasets Buttons -->
+      <div id="subdivides">
+         <button class="btn_state school" id='both' data-title='Both Public and Charter'>Both</button>
+         <button class="btn_state school" id='public' data-title='Only Public'>Public</button>
+         <button class="btn_state school" id='charter' data-title='Only Charter'>Charter</button>
       </div>
    
       <!-- The Chart -->
