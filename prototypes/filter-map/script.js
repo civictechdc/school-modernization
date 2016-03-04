@@ -324,12 +324,23 @@ function initApp(presetMode) {
                     clearZoneAggregator(zonesCollectionObj);
                     if (whichFilter == "All") {
                         setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
-                        setMenuState(displayObj, self.zonesMenu, ["A", "A", "A"]);
+                        resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "District") {
                         setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
-                        setMenuState(displayObj, self.zonesMenu, ["A", "A", "A"]);
+                        resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "Charter") {
+                        self.dataFilters.zones = "Ward";
+                        zonesCollectionObj.zoneA = "Ward";
+                        zonesCollectionObj.zoneGeojson_AB = null;
+                        zonesCollectionObj.aggregatorArray = [];
                         setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
+                        if (self.dataFilters.levels == "HS") {
+                            setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
+                        } else if (self.dataFilters.levels == "MS") {
+                            setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
+                        } else if (self.dataFilters.levels == "ES") {
+                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
+                        }
                         setMenuState(displayObj, self.zonesMenu, ["S", "D", "D"]);
                     }
                     break;
@@ -340,13 +351,13 @@ function initApp(presetMode) {
                     zonesCollectionObj.aggregatorArray = [];
                     if (whichValue == "HS") {
                         zonesCollectionObj.zoneA = "FeederHS";
-                        setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
+                        resetMenuState(displayObj, "levels");
                     } else if (whichValue == "MS") {
                         zonesCollectionObj.zoneA = "FeederMS";
-                        setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
+                        resetMenuState(displayObj, "levels");
                     } else if (whichValue == "ES") {
                         zonesCollectionObj.zoneA = "Elementary";
-                        setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
+                        resetMenuState(displayObj, "levels");
                     } else {
                         zonesCollectionObj.zoneA = "Ward";
                     }
@@ -419,6 +430,52 @@ function initApp(presetMode) {
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             zonesCollectionObj.getZoneData();
         });
+    }
+
+    // ======= ======= ======= resetMenuState ======= ======= =======
+    function resetMenuState(displayObj, whichMenu) {
+        console.log("resetMenuState");
+        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+
+        if (whichMenu == "zones") {
+            if (displayObj.dataFilters.zones == "Ward") {
+                setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
+            } else if (displayObj.dataFilters.zones == "FeederHS") {
+                if ((displayObj.dataFilters.levels == "HS") || (displayObj.dataFilters.levels == "MS")) {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "S", "A"]);
+                } else if (displayObj.dataFilters.levels == "ES") {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "A", "S"]);
+                }
+                setMenuState(displayObj, displayObj.zonesMenu, ["A", "S", "A"]);
+            } else if (displayObj.dataFilters.zones == "FeederMS") {
+                setMenuState(displayObj, displayObj.levelsMenu, ["D", "D", "S"]);
+                setMenuState(displayObj, displayObj.zonesMenu, ["A", "A", "S"]);
+            } else {
+                setMenuState(displayObj, displayObj.zonesMenu, ["A", "A", "A"]);
+            }
+        } else if (whichMenu == "levels") {
+            if (displayObj.dataFilters.levels == "HS") {
+                if (displayObj.dataFilters.zones == "Ward") {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["S", "A", "A"]);
+                } else if ((displayObj.dataFilters.zones == "FeederHS") || (displayObj.dataFilters.zones == "FeederMS")) {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "S", "A"]);
+                }
+            } else if (displayObj.dataFilters.levels == "MS") {
+                if (displayObj.dataFilters.zones == "Ward") {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["A", "S", "A"]);
+                } else if ((displayObj.dataFilters.zones == "FeederHS") || (displayObj.dataFilters.zones == "FeederMS")) {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "S", "A"]);
+                }
+            } else if (displayObj.dataFilters.levels == "ES") {
+                if (displayObj.dataFilters.zones == "Ward") {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["A", "A", "S"]);
+                } else if (displayObj.dataFilters.zones == "FeederHS") {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "A", "S"]);
+                } else if (displayObj.dataFilters.zones == "FeederMS") {
+                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "D", "S"]);
+                }
+            }
+        }
     }
 
     // ======= ======= ======= clearFilterSelctions ======= ======= =======
@@ -721,7 +778,6 @@ function initApp(presetMode) {
                     if (selectSchool == true) {
                         schoolIndex++;
                         schoolData = getDataDetails(nextSchool, schoolIndex);
-                        console.log("  schoolData: ", schoolData.schoolName);
 
                         selectedSchoolsArray.push(schoolData)
                         selectedCodesArray.push(schoolData.schoolCode)
@@ -871,7 +927,6 @@ function initApp(presetMode) {
                 displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
             }
             initAutoComplete(displayObj);
-            console.log("  displayObj.schoolNamesArray: ", displayObj.schoolNamesArray);
 
         // == errors/fails
         }).fail(function(){
