@@ -93,9 +93,6 @@ function makeProfileChart(zonesCollectionObj, schoolsCollectionObj, displayObj, 
 
 }
 
-
-
-
 // ======= ======= ======= makeRankChart ======= ======= =======
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount) {
     console.log("\n----- makeRankChart -----");
@@ -106,7 +103,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         chartHtml += "<tr><td class='profile-banner' colspan=2>";
         chartHtml += "<div class='title-container'><p id='chart-title'>data chart</p>";
         chartHtml += "<p id='chart-subtitle'>&nbsp;</p></div>";
-        chartHtml += displayObj.makeSubMenu(displayObj.expendMathMenu, "chart");
+        chartHtml += displayObj.makeMathSelect(displayObj.expendMathMenu, "chart");
         chartHtml += "</td></tr></table>";
     } else {
         var chartHtml = "<div id='chart'></div>";

@@ -1,22 +1,9 @@
 
 
-// ======= ======= ======= CSV FILES ======= ======= =======
-// ======= ======= ======= CSV FILES ======= ======= =======
-// ======= ======= ======= CSV FILES ======= ======= =======
 
-
-// ======= ======= ======= DCPS_Master_114 ======= ======= =======
-// Agency, School, SCHOOLCODE, Address, maxOccupancy, Enroll.Cap, ProjectPhase, YrComplete, Level, totalSQFT, ProjectType, MajorExp9815, TotalAllotandPlan1621, LifetimeBudget, LON, LAT, WARD, FeederMS, FeederHS, Total.Enrolled, Limited.English.Proficient, At_Risk, AtRiskPer, SPEDPer, ESLPer, SqFtPerEnroll, SpentPerEnroll, SpentPerSqFt
-
-// ======= ======= ======= DCPS_Master_114_dev ======= ======= =======
-// Agency, School, SCHOOLCODE, Address, Level, WARD, FeederMS, FeederHS, LON, LAT, totalSQFT, maxOccupancy, Enroll_Cap, Total_Enrolled, Limited_English, At_Risk, ProjectPhase, YrComplete, ProjectType, MajorExp9815, TotalAllotandPlan1621, LifetimeBudget ... AtRiskPer, SPEDPer, ESLPer, SqFtPerEnroll, SpentPerEnroll, SpentPerSqFt
-
-
-
-
-// ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
-// ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
-// ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
+// ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
+// ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
+// ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
 
 // ======= ======= ======= polyfill for Safari ======= ======= =======
 Number.isInteger = Number.isInteger || function(value) {
@@ -24,6 +11,18 @@ Number.isInteger = Number.isInteger || function(value) {
            isFinite(value) &&
            Math.floor(value) === value;
 };
+
+// ======= ======= ======= initAutoComplete ======= ======= =======
+function initAutoComplete(displayObj) {
+    console.log('initAutoComplete');
+    $(function() {
+        console.log("autocomplete");
+        $("#searchWindow").autocomplete({
+            source: displayObj.schoolNamesArray
+        });
+    });
+    $('#searchWindow').css('z-index', 999);
+}
 
 // ======= ======= ======= getZoneUrls ======= ======= =======
 function getZoneUrls(displayObj, zonesCollectionObj) {
@@ -82,67 +81,6 @@ function getZoneUrls(displayObj, zonesCollectionObj) {
     return [urlA, urlB, feederFlag];
 }
 
-// ======= ======= ======= initAutoComplete ======= ======= =======
-function initAutoComplete(displayObj) {
-    console.log('initAutoComplete');
-    $(function() {
-        console.log("autocomplete");
-        $("#searchWindow").autocomplete({
-            source: displayObj.schoolNamesArray
-        });
-    });
-    $('#searchWindow').css('z-index', 999);
-}
-
-// ======= ======= ======= removeAbbreviations ======= ======= =======
-function removeAbbreviations(longName) {
-    // console.log("removeAbbreviations");
-    var nameNoiseIndex = longName.indexOf(", ");
-    if (nameNoiseIndex > -1) {
-        splitZoneName = longName.split(", ");
-        shortName = splitZoneName[0];
-        return shortName;
-    } else {
-        return longName;
-    }
-}
-
-// ======= ======= ======= processSchoolName ======= ======= =======
-function processSchoolName(schoolName) {
-    // console.log("processSchoolName");
-    // console.log("  schoolName: ", schoolName);
-
-    var shortName;
-
-    if (schoolName) {
-        shortName = schoolName.replace("Elementary School", "");
-        shortName = shortName.replace("High School", "");
-        shortName = shortName.replace("Middle School", "");
-        shortName = shortName.replace("Education Campus", "");
-        shortName = shortName.replace("ES", "");
-
-        checkName1 = shortName.indexOf(", ");
-        if (checkName1 > -1) {
-            splitZoneName = shortName.split(", ");
-            shortName = splitZoneName[0];
-        }
-        checkName2 = shortName.indexOf(". ");
-        if (checkName2 > -1) {
-            splitZoneName = shortName.split(". ");
-            shortName = splitZoneName[1];
-        }
-        checkName3 = shortName.indexOf(" ");
-        if (checkName3 > -1) {
-            splitZoneName = shortName.split(" ");
-            shortName = splitZoneName[0];
-        }
-    } else {
-        shortName = null;
-    }
-
-    return shortName;
-}
-
 // ======= ======= ======= checkFilterSelection ======= ======= =======
 function checkFilterSelection(displayObj, zonesCollectionObj, whichCategory) {
     console.log("##### checkFilterSelection #####");
@@ -155,123 +93,6 @@ function checkFilterSelection(displayObj, zonesCollectionObj, whichCategory) {
     console.log("  * zones: ", displayObj.dataFilters.zones);
     console.log("  * math: ", displayObj.dataFilters.math);
 }
-
-// ======= ======= ======= updateChartText ======= ======= =======
-function updateChartText(displayObj, subtitle) {
-    console.log("updateChartText");
-
-    var words, agencyText, mathText, whichLevel, schoolText;
-
-    // == agency label
-    if (displayObj.dataFilters.agency) {
-        if (displayObj.dataFilters.levels) {
-            agencyText = filterMenu[displayObj.dataFilters.agency].text;
-            words = agencyText.split(/\s+/);
-            agencyText = words[0];
-        } else {
-            agencyText = filterMenu[displayObj.dataFilters.agency].text;
-        }
-    } else {
-        agencyText = "";
-    }
-
-    // == math label
-    if (displayObj.dataFilters.math) {
-        if (displayObj.displayMode != "storyMap") {
-            mathText = filterMenu[displayObj.dataFilters.math].text;
-        } else {
-            mathText = filterMenu[displayObj.dataFilters.math].label;
-        }
-        if (mathText == "dollar amount") {
-            mathText = "";
-        }
-    } else {
-        mathText = "";
-    }
-
-    // == expend label
-    if (displayObj.dataFilters.expend) {
-        if (displayObj.displayMode != "storyMap") {
-            expendText = filterMenu[displayObj.dataFilters.expend].text;
-        } else {
-            expendText = filterMenu[displayObj.dataFilters.expend].label;
-        }
-    } else {
-        expendText = "";
-    }
-
-    // == levels label
-    if (displayObj.dataFilters.levels) {
-        if (displayObj.dataFilters.levels == "HS") {
-            whichLevel = "High";
-        } else if (displayObj.dataFilters.levels == "MS") {
-            whichLevel = "Middle";
-        }if (displayObj.dataFilters.levels == "ES") {
-            whichLevel = "Elem";
-        }
-        // console.log("  filterMenu: ", filterMenu);
-        // console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
-        schoolText = filterMenu[whichLevel].label;
-    } else {
-        schoolText = "";
-    }
-    // console.log("  expendText: ", expendText);
-    // console.log("  subtitle: ", subtitle);
-    // console.log("  displayObj.displayMode: ", displayObj.displayMode);
-    if (displayObj.displayMode == "storyMap") {
-        $('#chart-label').text("");
-    }
-    $("#chart-title").text(expendText + " " + mathText);
-    $('#chart-subtitle').text(subtitle);
-
-    return [mathText, schoolText, agencyText];
-}
-
-// ======= ======= ======= updateHoverText ======= ======= =======
-function updateHoverText(itemName, schoolType) {
-    // console.log("updateHoverText");
-
-    var filterTitleContainer = $("#mouseover-text").children("h2");
-    // console.log("  $(filterTitleContainer).css(): ", $(filterTitleContainer).css());
-    var filterText = $(filterTitleContainer).text();
-    if (itemName) {
-        if (itemName.length > 35) {
-            var checkName = itemName.indexOf(", ");
-            if (checkName > -1) {
-                splitZoneName = itemName.split(", ");
-                if (splitZoneName.length > 2) {
-                    itemName = splitZoneName[0] + ", " + splitZoneName[1];
-                } else {
-                    itemName = splitZoneName[0];
-                }
-            }
-            if (itemName.length > 35) {
-                itemName = itemName.substring(0, 32) + "...";
-            }
-        }
-        $("#mouseover-text").children("h2").css("visibility", "visible");
-        if (schoolType == "DCPS") {
-            $("#mouseover-text").children("h2").css("color", "red");
-        } else if (schoolType == "PCS") {
-            $("#mouseover-text").children("h2").css("color", "orange");
-        }
-        $(filterTitleContainer).text(itemName);
-    } else {
-        $("#mouseover-text").children("h2").css("visibility", "hidden");
-        $(filterTitleContainer).text("&nbsp;");
-    }
-}
-
-// ======= ======= ======= displayHoverMessage ======= ======= =======
-function displayHoverMessage(displayObj, textMessage) {
-    console.log("displayHoverMessage");
-
-    $("#mouseover-text").children("h2").text("");
-    $("#mouseover-text").children("h2").text(textMessage);
-    $("#mouseover-text").children("h2").css("visibility", "visible");
-    $("#mouseover-text").children("h2").css("color", "purple");
-}
-
 
 // ======= ======= ======= updateFilterItem ======= ======= =======
 function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
@@ -311,12 +132,10 @@ function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
 // ======= ======= ======= setMenuState ======= ======= =======
 function setMenuState(displayObj, whichMenu, whichStates) {
     console.log("setMenuState");
-    // console.log("  whichMenu[0]: ", whichMenu[0]);
-    // console.log("  whichStates: ", whichStates);
-    // console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
 
     var selectedFilterContainer = $("#filters-selections").children("h2");
     var selectedFilterText = $(selectedFilterContainer).html();
+
 
     if (whichMenu[0] == "zones") {
         if ((whichStates[1] == "S") || (whichStates[2] == "S")) {
@@ -336,44 +155,37 @@ function setMenuState(displayObj, whichMenu, whichStates) {
         }
     }
 
-    console.log("  displayObj.filterTitlesArray2: ", displayObj.filterTitlesArray);
-
     for (var i = 0; i < whichStates.length; i++) {
         nextState = whichStates[i];
         nextMenuItem = whichMenu[i+1];
         nextMenuText = nextMenuItem.text;
         nextElement = $("#" + nextMenuItem.id);
         checkIndex = $.inArray(nextMenuText, displayObj.filterTitlesArray);
-        // console.log("*** nextMenuItem.id: ", nextMenuItem.id);
-        // console.log("  whichStates: ", whichStates);
-        // console.log("  checkIndex: ", checkIndex);
-        // console.log("  nextState: ", nextState);
-        // console.log("  nextElement: ", nextElement);
+
         if (nextState == "A") {
             if (checkIndex > -1) {
                 displayObj.filterTitlesArray.splice(checkIndex, 1);
-                // console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
             }
             $(nextElement).addClass("active");
             $(nextElement).removeClass("selected");
             $(nextElement).removeClass("deactivated");
+            displayObj.activateFilterLink(nextMenuItem);
         } else if (nextState == "D") {
             if (checkIndex > -1) {
                 displayObj.filterTitlesArray.splice(checkIndex, 1);
-                // console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
             }
             $(nextElement).removeClass("active");
             $(nextElement).removeClass("selected");
             $(nextElement).addClass("deactivated");
+            $(nextElement).off("click");
+
         } else if (nextState == "S") {
             displayObj.filterTitlesArray.push(nextMenuText);
             $(nextElement).removeClass("deactivated");
             $(nextElement).addClass("active");
             $(nextElement).addClass("selected");
-            // console.log("  displayObj.filterTitlesArray3: ", displayObj.filterTitlesArray);
         }
     }
-    // console.log("  displayObj.filterTitlesArray4: ", displayObj.filterTitlesArray);
 
     // == build new filter text html from filterTitlesArray
     selectedFilterText = "<span class='filterLabel'>Data for: </span>";
@@ -386,25 +198,9 @@ function setMenuState(displayObj, whichMenu, whichStates) {
             selectedFilterText += nextFilter + ", ";
         }
     }
-    // console.log("  displayObj.filterTitlesArray5: ", displayObj.filterTitlesArray);
+
     $(selectedFilterContainer).addClass("filterList");
     $(selectedFilterContainer).html(selectedFilterText);
-}
-
-// ======= ======= ======= displayFilterMessage ======= ======= =======
-function displayFilterMessage(displayObj, menuObject, whichAction) {
-    console.log("displayFilterMessage");
-    console.log("  displayObj.filterTitlesArray1: ", displayObj.filterTitlesArray);
-
-    var selectedFilterContainer = $("#filters-selections").children("h2");
-
-    // == add message for user (not filter selections)
-    if (typeof displayObj == "string") {
-        filterText = "<span class='filterLabel'>Message: </span>";
-        filterText += displayObj;
-        $(selectedFilterContainer).addClass("filterList");
-        $(selectedFilterContainer).html(filterText);
-    }
 }
 
 
@@ -431,7 +227,7 @@ function clearZoneAggregator(zonesCollectionObj) {
 
 // ======= ======= ======= getZoneIndex ======= ======= =======
 function getZoneIndex(zonesCollectionObj, displayObj, schoolData) {
-    console.log("getZoneIndex");
+    // console.log("getZoneIndex");
 
     var nextZone, schoolWard, nextZoneNumber, schoolZoneIndex, rootFeederHS, rootFeederMS;
 
@@ -505,11 +301,11 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
     var nextSchoolSqft, nextSchoolEnroll;
     var nextZone = schoolZoneIndex = null;
-    // console.log("*** .schoolName: ", schoolData.schoolName);
-    // console.log("  .schoolFeederHS: ", schoolData.schoolFeederHS);
-    // console.log("  .schoolFeederMS: ", schoolData.schoolFeederMS);
-    // console.log("  .schoolWard: ", schoolData.schoolWard);
-    // console.log("  .schoolAgency: ", schoolData.schoolAgency);
+    console.log("*** .schoolName: ", schoolData.schoolName);
+    console.log("  .schoolFeederHS: ", schoolData.schoolFeederHS);
+    console.log("  .schoolFeederMS: ", schoolData.schoolFeederMS);
+    console.log("  .schoolWard: ", schoolData.schoolWard);
+    console.log("  .schoolAgency: ", schoolData.schoolAgency);
 
     // == match school name from geojson file with school name from csv file
     if (displayObj.dataFilters.zones) {
@@ -518,22 +314,49 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
 
     // == identify column holding selected expend filter data
     if (schoolZoneIndex != null) {
-        // console.log("******* schoolZoneIndex: ", schoolZoneIndex);
-        // console.log("  .schoolCount: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount);
-        // console.log("  .amountMax1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax);
-        // console.log("  .amountMin1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMin);
+        console.log("******* schoolZoneIndex: ", schoolZoneIndex);
+        console.log("  .schoolCount: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount);
+        console.log("  .amountMax1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax);
+        console.log("  .amountMin1: ", zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMin);
+
 
         // == defaults to lifetime budget expenditure if no expenditure selected
+        nextSchoolExpend = schoolData.spendLifetime;
+        console.log("  nextSchoolExpend1: ", nextSchoolExpend);
         if (displayObj.dataFilters.expend == null) {
-            nextSchoolExpend = parseInt(schoolData.spendLifetime);
+            if ((nextSchoolExpend == "NA") || (nextSchoolExpend == null)) {
+                nextSchoolExpend = 0;
+            } else {
+                nextSchoolExpend = parseInt(schoolData.spendLifetime);
+            }
         } else {
-            nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
+            if ((nextSchoolExpend == "NA") || (nextSchoolExpend == null)) {
+                nextSchoolExpend = 0;
+            } else {
+                nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
+            }
         }
-        nextSchoolSqft = parseInt(schoolData.schoolSqft);
-        nextSchoolEnroll = parseInt(schoolData.schoolEnroll);
-        // console.log("  nextSchoolExpend: ", nextSchoolExpend);
-        // console.log("  nextSchoolSqft: ", nextSchoolSqft);
-        // console.log("  nextSchoolEnroll: ", nextSchoolEnroll);
+
+        nextSchoolSqft = schoolData.schoolSqft;
+        console.log("  nextSchoolSqft1: ", nextSchoolSqft);
+        if ((nextSchoolSqft == "NA") || (nextSchoolSqft == null)) {
+            nextSchoolSqft = 0;
+        } else {
+            nextSchoolSqft = parseInt(schoolData.schoolSqft);
+        }
+
+        nextSchoolEnroll = schoolData.schoolEnroll;
+        console.log("  nextSchoolEnroll1: ", nextSchoolEnroll);
+        if ((nextSchoolEnroll == "NA") || (nextSchoolEnroll == null)) {
+            nextSchoolEnroll = 0;
+        } else {
+            nextSchoolEnroll = parseInt(schoolData.schoolEnroll);
+        }
+
+        console.log("  schoolData.schoolName: ", schoolData.schoolName);
+        console.log("  nextSchoolExpend: ", nextSchoolExpend);
+        console.log("  nextSchoolSqft: ", nextSchoolSqft);
+        console.log("  nextSchoolEnroll: ", nextSchoolEnroll);
 
         // == aggregate new value into zone total
         if (Number.isInteger(nextSchoolExpend)) {
@@ -559,15 +382,6 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
 
                 // ======= calculate average =======
                 zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountAvg = aggregatedAmount/zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount;
-                // var medianIndex = (zonesCollectionObj.aggregatorArray.length/2) - 1;
-                // if (medianIndex % 2 == 0) {
-                //     var median = (zonesCollectionObj.aggregatorArray[Math.floor(medianIndex)].zoneAmount + zonesCollectionObj.aggregatorArray[Math.ceil(medianIndex)].zoneAmount)/2;
-                // } else {
-                //     var median = zonesCollectionObj.aggregatorArray[medianIndex].zoneAmount;
-                // }
-                // console.log("  medianIndex: ", medianIndex);
-                // console.log("  median: ", median);
-                // zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMed = median;
 
             } else {
                 console.log("ERROR: negative values for " + schoolData.schoolName);
@@ -810,41 +624,37 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
             itemColor = "white";
         }
     } else {
-        if (displayObj.dataFilters.agency != "Charter") {
-            if (whichLayer == "lower") {
+        if (whichLayer == "lower") {
+            itemColor = "white";
+            strokeColor = "purple";
+            strokeWeight = 1;
+            itemOpacity = 0.6;
+        } else if (whichLayer == "upper") {
+            if (displayObj.dataFilters.expend) {
+                colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
+                itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                strokeColor = "black";
+                strokeWeight = 4;
+            } else {
                 itemColor = "white";
                 strokeColor = "purple";
-                strokeWeight = 1;
-                itemOpacity = 0.6;
-            } else if (whichLayer == "upper") {
+                strokeWeight = 2;
+            }
+            itemOpacity = 0.7;
+        } else if (whichLayer == "single") {
+            if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
                 if (displayObj.dataFilters.expend) {
                     colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
                     itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                     strokeColor = "black";
-                    strokeWeight = 4;
-                } else {
-                    itemColor = "white";
-                    strokeColor = "purple";
                     strokeWeight = 2;
-                }
-                itemOpacity = 0.7;
-            } else if (whichLayer == "single") {
-                if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
-                    if (displayObj.dataFilters.expend) {
-                        colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
-                        itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
-                        strokeColor = "black";
-                        strokeWeight = 2;
-                        itemOpacity = 0.8;
-                    } else {
-                        return [itemColor, strokeColor, strokeWeight, itemOpacity];
-                    }
+                    itemOpacity = 0.8;
                 } else {
                     return [itemColor, strokeColor, strokeWeight, itemOpacity];
                 }
+            } else {
+                return [itemColor, strokeColor, strokeWeight, itemOpacity];
             }
-        } else {
-            return [itemColor, strokeColor, strokeWeight, itemOpacity];
         }
     }
     return [itemColor, strokeColor, strokeWeight, itemOpacity];
@@ -1045,126 +855,6 @@ function mouseoverZone(event, itemName) {
     }
 }
 
-// ======= ======= ======= geoJsonToPolygon ======= ======= =======
-function geoJsonToPolygon(geoCoordinates) {
-    console.log("geoJsonToPolygon");
-    console.log("  geoCoordinates.length: " + geoCoordinates.length);
-
-    var opts = {};
-    var paths = [];
-    var exteriorDirection;
-    var interiorDirection;
-
-    // == check if each path isCCW (T/F)?
-    var _ccw = function(path) {
-        var isCCW;
-        var a = 0;
-        for (var i = 0; i < path.length-2; i++) {
-            a += ((path[i+1].lat() - path[i].lat()) * (path[i+2].lng() - path[i].lng()) - (path[i+2].lat() - path[i].lat()) * (path[i+1].lng() - path[i].lng()));
-        }
-        if (a > 0) {
-            isCCW = true;
-        } else {
-            isCCW = false;
-        }
-        return isCCW;
-    };
-
-    // == loop through LatLng coodinate pairs to define paths between pair
-    for (var i = 0; i < geoCoordinates.length; i++){
-        var path = [];
-        for (var j = 0; j < geoCoordinates[i].length; j++) {
-            var ll = new google.maps.LatLng(geoCoordinates[i][j], geoCoordinates[i][j]);
-            // console.log("  ll: " + ll);
-            path.push(ll);
-        }
-        if (!i) {
-            exteriorDirection = _ccw(path);
-            paths.push(path);
-        } else if (i == 1) {
-            interiorDirection = _ccw(path);
-            if (exteriorDirection == interiorDirection) {
-                paths.push(path.reverse());
-            } else {
-                paths.push(path);
-            }
-        } else {
-            if (exteriorDirection == interiorDirection) {
-                paths.push(path.reverse());
-            } else {
-                paths.push(path);
-            }
-        }
-    }
-    opts.paths = paths;
-    googleObj = new google.maps.Polygon(opts);
-    return googleObj;
-}
-
-// ======= ======= ======= CSVToArray ======= ======= =======
-function CSVToArray(strData, strDelimiter) {
-    console.log("CSVToArray");
-    // Check to see if the delimiter is defined. If not, then default to comma.
-    strDelimiter = (strDelimiter || ",");
-    // Create a regular expression to parse the CSV values.
-    var objPattern = new RegExp((
-        // Delimiters.
-        "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-        // Quoted fields.
-        "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-        // Standard fields.
-        "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi");
-    // Create an array to hold our data with default empty first row.
-    var arrData = [[]];
-    // Create an array to hold our individual pattern matching groups.
-    var arrMatches = null;
-    // Loop over regular expression matches until we can no longer find a match.
-    while (arrMatches = objPattern.exec(strData)) {
-        // Get the delimiter that was found.
-        var strMatchedDelimiter = arrMatches[1];
-        // Check to see if the given delimiter has a length
-        // (is not the start of string) and if it matches
-        // field delimiter. If id does not, then we know
-        // that this delimiter is a row delimiter.
-        if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
-            // Since new row of data, add empty row to data array.
-            arrData.push([]);
-        }
-        // Check kind of value captured (quoted or unquoted).
-        if (arrMatches[2]) {
-            // Quoted value: unescape any double quotes.
-            var strMatchedValue = arrMatches[2].replace(
-            new RegExp("\"\"", "g"), "\"");
-        } else {
-            // Non-quoted value.
-            var strMatchedValue = arrMatches[3];
-        }
-        // Add value string to the data array.
-        // console.log("  strMatchedValue: " + strMatchedValue);
-        arrData[arrData.length - 1].push(strMatchedValue);
-    }
-    // Return the parsed data.
-    return (arrData);
-}
-
-// ======= ======= ======= CSV2JSON ======= ======= =======
-function CSV2JSON(csv) {
-    console.log("CSV2JSON");
-    var array = CSVToArray(csv);
-    var objArray = [];
-    for (var i = 1; i < array.length; i++) {
-        objArray[i - 1] = {};
-        for (var k = 0; k < array[0].length && k < array[i].length; k++) {
-            var key = array[0][k];
-            objArray[i - 1][key] = array[i][k]
-        }
-    }
-
-    var json = JSON.stringify(objArray);
-    var json2 = JSON.parse(json)
-    return json2;
-}
-
 // ======= ======= ======= getDataDetails ======= ======= =======
 function getDataDetails(nextSchool, nextIndex) {
     // console.log("getDataDetails");
@@ -1338,7 +1028,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<p class='profile-title'>" + itemName + "</p>";
     htmlString += "<p class='profile-subtitle'>" + cleanedSchoolData.schoolAddress + "</p>";
     htmlString += "<p class='profile-subtitle2'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + "</p>";
-    htmlString += displayObj.makeSubMenu(displayObj.expendMathMenu, "profile");
+    htmlString += displayObj.makeMathSelect(displayObj.expendMathMenu, "profile");
     htmlString += "</td></tr>";
     htmlString += "<tr><td class='data-key'><p class='key-text'>project type</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
@@ -1403,189 +1093,6 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
 
     displayObj.activateCloseButton();
     activateProfileSubmenu(displayObj, zonesCollectionObj, schoolsCollectionObj);
-}
-
-// ======= ======= ======= cleanupSchoolData ======= ======= =======
-function cleanupSchoolData(schoolsCollectionObj, schoolData) {
-    console.log("cleanupSchoolData");
-
-    var cleanedData = {};
-
-    // schoolIndex, schoolName, schoolWard, schoolCode, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, schoolAgency
-    cleanedData.schoolIndex = schoolData.schoolIndex;
-    cleanedData.schoolName = schoolData.schoolName;
-    cleanedData.schoolWard = schoolData.schoolWard;
-
-    if ((schoolData.schoolCode == "NA") || (schoolData.schoolCode == null)) {
-        cleanedData.schoolCode = "";
-    } else {
-        cleanedData.schoolCode = schoolData.schoolCode;
-    }
-    if ((schoolData.schoolFeederMS == "NA") || (schoolData.schoolFeederMS == null)) {
-        cleanedData.schoolFeederMS = "";
-    } else {
-        cleanedData.schoolFeederMS = schoolData.schoolFeederMS;
-    }
-    if ((schoolData.schoolFeederHS == "NA") || (schoolData.schoolFeederHS == null)) {
-        cleanedData.schoolFeederHS = "";
-    } else {
-        cleanedData.schoolFeederHS = schoolData.schoolFeederHS;
-    }
-    if ((schoolData.schoolAddress == "NA") || (schoolData.schoolAddress == null)) {
-        cleanedData.schoolAddress = "";
-    } else {
-        cleanedData.schoolAddress = schoolData.schoolAddress;
-    }
-    if ((schoolData.schoolLAT == "NA") || (schoolData.schoolLAT == null)) {
-        cleanedData.schoolLAT = "";
-    } else {
-        cleanedData.schoolLAT = schoolData.schoolLAT;
-    }
-    if ((schoolData.schoolLON == "NA") || (schoolData.schoolLON == null)) {
-        cleanedData.schoolLON = "";
-    } else {
-        cleanedData.schoolLON = schoolData.schoolLON;
-    }
-    if ((schoolData.schoolLevel == "NA") || (schoolData.schoolLevel == null)) {
-        cleanedData.schoolLevel = "";
-    } else {
-        cleanedData.schoolLevel = schoolData.schoolLevel;
-    }
-    if ((schoolData.schoolAgency == "NA") || (schoolData.schoolAgency == null)) {
-        cleanedData.schoolAgency = "";
-    } else {
-        cleanedData.schoolLevel = schoolData.schoolLevel;
-    }
-
-    // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
-    if ((schoolData.schoolProject == "NA") || (schoolData.schoolProject == null)) {
-        tempSchoolProject = schoolData.schoolProject.replace(/\w\S*/g, function(txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
-        cleanedData.schoolProject = tempSchoolProject;
-    } else {
-        cleanedData.schoolProject = schoolData.schoolProject;
-    }
-    var schoolSqftflag = isNumber(schoolData.schoolSqft);
-    if (schoolSqftflag == true) {
-        schoolSqft = parseInt(schoolData.schoolSqft);
-        cleanedData.schoolSqft = numberWithCommas(schoolSqft);
-    } else {
-        cleanedData.schoolSqft = "";
-    }
-    var schoolMaxOccupancyFlag = isNumber(schoolData.schoolMaxOccupancy);
-    if (schoolMaxOccupancyFlag == true) {
-        schoolMaxOccupancy = parseInt(schoolData.schoolMaxOccupancy);
-        cleanedData.schoolMaxOccupancy = numberWithCommas(schoolMaxOccupancy);
-    } else {
-        cleanedData.schoolMaxOccupancy = "";
-    }
-    var schoolSqFtPerEnrollFlag = isNumber(schoolData.schoolSqFtPerEnroll);
-    if (schoolSqFtPerEnrollFlag == true) {
-        schoolSqFtPerEnroll = parseInt(schoolData.schoolSqFtPerEnroll);
-        cleanedData.schoolSqFtPerEnroll = numberWithCommas(schoolSqFtPerEnroll);
-    } else {
-        cleanedData.schoolSqFtPerEnroll = "";
-    }
-    cleanedData.unqBuilding = schoolData.unqBuilding;
-
-    // schoolEnroll, studentEng, studentAtRisk, studentSpecEd, studentESLPer, studentAtRiskPer, studentSPEDPer
-    var schoolEnrollFlag = isNumber(schoolData.schoolEnroll);
-    if (schoolEnrollFlag == true) {
-        schoolEnroll = parseInt(schoolData.schoolEnroll);
-        cleanedData.schoolEnroll = numberWithCommas(schoolEnroll);
-    } else {
-        cleanedData.schoolEnroll = "";
-    }
-    var studentEngFlag = isNumber(schoolData.studentEng);
-    if (studentEngFlag == true) {
-        studentEng = parseInt(schoolData.studentEng);
-        cleanedData.studentEng = numberWithCommas(studentEng);
-    } else {
-        cleanedData.studentEng = "";
-    }
-    var studentAtRiskFlag = isNumber(schoolData.studentAtRisk);
-    if (studentAtRiskFlag == true) {
-        studentAtRisk = parseInt(schoolData.studentAtRisk);
-        cleanedData.studentAtRisk = numberWithCommas(studentAtRisk);
-    } else {
-        cleanedData.studentAtRisk = "";
-    }
-    var studentSpecEdFlag = isNumber(schoolData.studentSpecEd);
-    if (studentSpecEdFlag == true) {
-        studentSpecEd = parseInt(schoolData.studentSpecEd);
-        cleanedData.studentSpecEd = numberWithCommas(studentSpecEd);
-    } else {
-        cleanedData.studentSpecEd = "";
-    }
-    var studentESLPerFlag = isNumber(schoolData.studentESLPer);
-    if (studentESLPerFlag == true) {
-        studentESLPer = parseInt(schoolData.studentESLPer);
-        cleanedData.studentESLPer = numberWithCommas(studentESLPer);
-    } else {
-        cleanedData.studentESLPer = "";
-    }
-    var studentAtRiskPerFlag = isNumber(schoolData.studentAtRiskPer);
-    if (studentAtRiskPerFlag == true) {
-        studentAtRiskPer = parseInt(schoolData.studentAtRiskPer);
-        cleanedData.studentAtRiskPer = numberWithCommas(studentAtRiskPer);
-    } else {
-        cleanedData.studentAtRiskPer = "";
-    }
-    var studentSPEDPerFlag = isNumber(schoolData.studentSPEDPer);
-    if (studentSPEDPerFlag == true) {
-        studentSPEDPer = parseInt(schoolData.studentSPEDPer);
-        cleanedData.studentSPEDPer = numberWithCommas(studentSPEDPer);
-    } else {
-        cleanedData.studentSPEDPer = "";
-    }
-
-    // spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
-    var spendPastFlag = isNumber(schoolData.spendPast);
-    if (spendPastFlag == true) {
-        spendPast = parseInt(schoolData.spendPast);
-        cleanedData.spendPast = numberWithCommas(spendPast);
-    } else {
-        cleanedData.spendPast = "";
-    }
-    var spendLifetimeFlag = isNumber(schoolData.spendLifetime);
-    if (spendLifetimeFlag == true) {
-        spendLifetime = parseInt(schoolData.spendLifetime);
-        cleanedData.spendLifetime = numberWithCommas(spendLifetime);
-    } else {
-        cleanedData.spendLifetime = "";
-    }
-    var spendPlannedFlag = isNumber(schoolData.spendPlanned);
-    if (spendPlannedFlag == true) {
-        spendPlanned = parseInt(schoolData.spendPlanned);
-        cleanedData.spendPlanned = numberWithCommas(spendPlanned);
-    } else {
-        cleanedData.spendPlanned = "";
-    }
-    var spendSqFtFlag = isNumber(schoolData.spendSqFt);
-    if (spendSqFtFlag == true) {
-        spendSqFt = parseInt(schoolData.spendSqFt);
-        cleanedData.spendSqFt = numberWithCommas(spendSqFt);
-    } else {
-        cleanedData.spendSqFt = "";
-    }
-    var spendEnrollFlag = isNumber(schoolData.spendEnroll);
-    if (spendEnrollFlag == true) {
-        spendEnroll = parseInt(schoolData.spendEnroll);
-        cleanedData.spendEnroll = numberWithCommas(spendEnroll);
-    } else {
-        cleanedData.spendEnroll = "";
-    }
-
-    return cleanedData;
-
-    // == validation and formatting functions
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-    function isNumber (o) {
-        return ! isNaN (o-0) && o !== null && o !== "" && o !== false;
-    }
 }
 
 // ======= ======= ======= multiSchoolProfile ======= ======= =======
