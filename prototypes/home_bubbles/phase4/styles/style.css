@@ -25,4 +25,14 @@ circle {
     line-height: 1.1em;
     color: #476336; }
 
+#container {
+  width: 80%;
+  margin: 0 auto; }
+
+#description {
+  margin-top: -15px; }
+
+.svg {
+  display: inline; }
+
 /*# sourceMappingURL=style.css.map */

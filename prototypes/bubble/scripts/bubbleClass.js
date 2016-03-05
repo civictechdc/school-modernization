@@ -10,7 +10,7 @@ function Bubble(b){ // data
     this.force_gravity = -0.05; // -0.018
     this.damper = 0.6; // 0.4 tightness of the bubbles
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
-    this.radius_scale = d3.scale.pow().exponent(0.4).domain([0, 115000000]).range([3, 25]); // 15
+    this.radius_scale = d3.scale.pow().exponent(0.4).domain([-25190, 115000000]).range([3, 25]); // 15
     this.nodes = [];
     this.unique = null;
 }
@@ -49,15 +49,17 @@ Bubble.prototype.create_nodes = function(){
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.radius = (function(){
-            if(current[that.budget] && current[that.budget] !== 'NA' && current[that.budget] !== ''){
-               // return (that.radius_scale(parseInt(current[that.budget])));
-               return Math.pow(parseInt(current[that.budget]), 0.157);
+            var amount= current[that.budget].trim();
+            if(amount && amount !== 'NA' 
+                && amount !== '' && typeof +amount === 'number'){
+               // return (that.radius_scale(parseInt(amount)));
+               return Math.pow(parseInt(amount), 0.157);
             } else { 
-                if (current[that.budget] === 'NA'){
+                if (amount === 'NA'){
                     console.log('NA', current);
                     return 5;
                 } else {   
-                    console.log('not ready', current);
+                    console.log('not ready', amount);
                     return 3;
                 }
             }        
@@ -91,7 +93,11 @@ Bubble.prototype.add_bubbles = function(set){
 };
 
 Bubble.prototype.update = function() {
-    d3.selectAll('.circle').data(this.data).exit().remove();
+    d3.selectAll('.circle').data(this.data).exit()
+    .transition()
+    .duration(3000)
+    .style('opacity', '0')
+    .remove();
 };
 
 Bubble.prototype.add_tootltips = function(d){
@@ -217,7 +223,13 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .append('text')
         .attr('class', 'sub_titles')
         .attr('x', function(d){return d.x *1.8 - 450;})
-        .attr('y', function(d){return d.y - 150;})
+        .attr('y', function(d,i){
+            if(i%2 === 0){
+                return d.y - 100;
+            } else {
+                return d.y - 150;
+            }
+        })
         .text(function(d){
             return d.name;
         })
@@ -228,6 +240,11 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
         d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
     }
+};
+
+Bubble.prototype.reset_svg = function() {
+    d3.selectAll('.circle').remove();
+    d3.selectAll('.sub_titles').remove();
 };
 
 Bubble.prototype.graph = function(){
@@ -242,8 +259,7 @@ Bubble.prototype.graph = function(){
 };
 
 Bubble.prototype.change = function(){
-    d3.selectAll('.circle').remove();
-
+    this.reset_svg();
     this.create_nodes();
     this.add_bubbles(this.nodes);
     this.add_tootltips();
