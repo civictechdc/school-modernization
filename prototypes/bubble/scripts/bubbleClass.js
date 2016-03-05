@@ -39,13 +39,13 @@ Bubble.prototype.make_svg = function(){
         .attr('height', this.sizes.height);
 };
 
-Bubble.prototype.create_nodes = function(set){
+Bubble.prototype.create_nodes = function(){
     if(this.nodes.length){
         this.nodes = [];
     }
-    for(var i = 0, j = set.length; i < j; i++){
+    for(var i = 0, j = this.data.length; i < j; i++){
         var that = this,
-            current = set[i];
+            current = this.data[i];
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.radius = (function(){
@@ -70,8 +70,7 @@ Bubble.prototype.create_nodes = function(set){
 Bubble.prototype.add_bubbles = function(set){
      this.circles = this.svg.append('g').attr('id', 'groupCircles')
         .selectAll('circle')
-        .data(set)
-        .enter()
+        .data(set).enter()
         .append('circle')
         .attr('class', 'circle')
         .style('fill', function(d,i){
@@ -89,6 +88,10 @@ Bubble.prototype.add_bubbles = function(set){
 
             return set[i].radius;})
         ;
+};
+
+Bubble.prototype.update = function() {
+    d3.selectAll('.circle').data(this.data).exit().remove();
 };
 
 Bubble.prototype.add_tootltips = function(d){
@@ -156,6 +159,7 @@ Bubble.prototype.charge = function(d) {
 
 Bubble.prototype.group_bubbles = function(d){
     var that = this;
+
     this.force.on('tick', function(e){
         that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
             .attr('cx', function(d){ return d.x;})
@@ -226,10 +230,21 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     }
 };
 
-Bubble.prototype.graph = function(set){
+Bubble.prototype.graph = function(){
     this.make_svg();
     this.set_force();
-    this.create_nodes(set);
+    this.create_nodes();
+    this.add_bubbles(this.nodes);
+    this.update();
+    this.add_tootltips();
+    this.group_bubbles(); 
+    
+};
+
+Bubble.prototype.change = function(){
+    d3.selectAll('.circle').remove();
+
+    this.create_nodes();
     this.add_bubbles(this.nodes);
     this.add_tootltips();
     this.group_bubbles(); 

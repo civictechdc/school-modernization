@@ -22,14 +22,14 @@
 
         // Run the graph
         bubble.setData(schools.both);
-        bubble.graph(bubble.data);
+        bubble.graph();
 
         // To change the subdivides, SUBDIVIDES
         var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
         subdivides.forEach(function(item, e){
             item.addEventListener('click', function(e){
                 bubble.setColumn(e.target.id);
-                bubble.graph(bubble.data);
+                bubble.change();
                 // bubble.group_bubbles();
 
                 // Change the title
@@ -42,7 +42,7 @@
         dataChange.forEach(function(item, e){
             item.addEventListener('click', function(e){  
                 bubble.setBudget(e.target.id);
-                bubble.graph(bubble.data);
+                bubble.change();
                 // bubble.group_bubbles();
 
                 // Change the title
@@ -55,7 +55,7 @@
         schoolChange.forEach(function(item, e){
             item.addEventListener('click', function(e){  
                 bubble.setData(schools[e.target.id]);
-                bubble.graph(bubble.data);
+                bubble.change();
                 // bubble.group_bubbles();
 
                 // Change the title
