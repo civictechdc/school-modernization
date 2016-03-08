@@ -21,9 +21,6 @@ hr {
     float: left;
     /*border: 1px solid Tomato;*/
 }
-.column:before {
-    content: "\00a0";
-}
 
 /* ======= columns ======= */
 .col-md-1 { width: 8.333%; }

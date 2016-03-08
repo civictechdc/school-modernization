@@ -69,51 +69,65 @@ div.global-wrap {
 }
 
 /* ======= bubble ======= */
-#col-bubble .text {
-  margin: 0 auto;
-  text-align: center;
+#col-bubble {
+    display: inline-block;;
+    float: left;
+    margin: 0 auto;
+    width: 38%;
+    left: 0;
+    text-align: center;
 }
-
 #bubble-img {
-  height: 300px;
-  margin: 0 auto;
-  display: block;
+    display: block;;
+    height: 260px;
+    margin: 0 auto;
 }
 
 /* ======= map structure ======= */
-
-#map-chart {
-  margin: 40px 0;
+#col-map {
+    display: inline-block;;
+    margin: 0 auto;
+    width: 58%;
+    left: 40%;
+    text-align: center;
+}
+#storyMap-container {
+    position: relative;
+    top: 0;
+    left: 50px;
+    height: 300px;
+    width: 300px;
+    border: 1px solid Tomato;
+    border-radius: 4px;
+}
+#chart-container {
+    position: relative;
+    top: 0;
+    left: 310px;
+    width: 150px;
+    background-color: red;
+    border: 1px solid Tomato;
+    z-index: 999;
 }
 
-#map-chart .display-title {
-  width: 500px;
-  margin: 0px auto;
-  position: relative;
+/*#col-map .display-title {
+    width: 500px;
+    margin: 0px auto;
+    position: relative;
 }
-
-#map-chart .wrapper {
-  width: 500px;
-  margin: 0px auto;
-  position: relative;
-  padding-left: 40px;
+#col-map .wrapper {
+    width: 500px;
+    margin: 0px auto;
+    position: relative;
+    padding-left: 40px;
 }
-
-#map-chart #storyMap-container {
-  display: inline-block;
-  height: 300px;
-  width: 300px;
-  border-radius: 4px;
+#col-map #chart-container {
+    display: inline-block;
+    width: 150px;
 }
-
-#map-chart #chart-container {
-  display: inline-block;
-  width: 150px;
-}
-
-#map-chart p.tool-link {
-  text-align: center;
-}
+#col-map p.tool-link {
+    text-align: center;
+}*/
 
 /* ======= d3 ======= */
 .axis text {
@@ -127,4 +141,7 @@ path {
       shape-rendering: crispEdges;
 }
 
-
+/* ======= timeline ======= */
+.storyName {
+    display: block;
+}
