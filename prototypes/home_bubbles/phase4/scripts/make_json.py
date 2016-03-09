@@ -11,13 +11,12 @@ with open('../../data/data_master_214.csv', 'rU') as file:
       else:
          charter.append(row)
 
-   json_template = {
-      'name': 'Schools',
-      'children': []
-   }
-
    def make_obj(set):
-      json_template['children'] = []
+      json_template = {
+         'name': 'Schools',
+         'children': []
+      }
+      
       for datum in set:
          tempObj = {}
          tempObj['name'] = datum['School'].title()
@@ -28,12 +27,15 @@ with open('../../data/data_master_214.csv', 'rU') as file:
                tempObj['value'] = str(int(float(datum['TotalAllotandPlan1621'])))
             else:
                tempObj['value'] = '3'
+               tempObj['real_value'] = float(datum['TotalAllotandPlan1621'])
          else:
             tempObj['value'] = '5'
+            tempObj['real_value'] = datum['TotalAllotandPlan1621']
             tempObj['value_available'] = False
 
          tempObj['agency'] = datum['Agency']
          json_template['children'].append(tempObj)
+
       return json_template
 
 

@@ -3,18 +3,27 @@
   margin: 0;
   padding: 0; }
 
+h1 {
+  display: block;
+  font-size: 2em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold; }
+
 #container {
   width: 80%;
   margin: 0 auto; }
 
 circle {
-  fill: #2956B2;
-  stroke: #1f4289;
+  fill: #001c2b;
+  stroke: black;
   stroke-width: 2px;
   cursor: pointer; }
   circle:hover {
-    fill: #e2e9f8;
-    stroke: #8fabe5; }
+    fill: #2bb5ff;
+    stroke: #0080c4; }
 
 text.label {
   font-size: 10px; }
@@ -30,9 +39,9 @@ text#tooltip_label {
   width: 200px;
   height: 205px;
   padding: 10px;
-  background-color: #2956B2;
+  background-color: #001c2b;
   border-radius: 5px;
-  border: 3px solid #1f4289; }
+  border: 3px solid black; }
   #tooltip p {
     font-size: 12px;
     line-height: 1.1em;

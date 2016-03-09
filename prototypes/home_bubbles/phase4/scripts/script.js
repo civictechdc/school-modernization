@@ -51,15 +51,15 @@ function graph(where, data){
   d3.select('#circle_0').remove();
 
   // Add tooltips
-  node.on('mouseenter', function(info){  
+  node.on('mouseenter', function(d){  
     document.querySelector('#tooltip').classList.remove('hidden'); 
     d3.select('#tooltip')
-      .style('left', function(){ return (info.x + tooltipPadding) + 'px';})
-      .style('top', function(){ return (info.y - tooltipPadding) + 'px';})
+      .style('left', function(){ return (d.x + tooltipPadding) + 'px';})
+      .style('top', function(){ return (d.y - tooltipPadding) + 'px';})
       .select('#School')
-      .text('School: ' + info.name);
+      .text('School: ' + d.name);
     d3.select('#Amount')
-      .text('Amount: ' + money(info.value));
+      .text('Amount: ' + money(d.value));
   });
 }
 

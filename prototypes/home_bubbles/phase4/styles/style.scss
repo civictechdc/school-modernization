@@ -11,16 +11,12 @@ circle {
    fill: $green;
    stroke: darken($green, 20%);
    stroke-width: 3px;
-   opacity: 0.75;
+   // opacity: 0.75;
 
    &:hover {
       // fill: $dark_green;
       opacity: 0.25;
    }
-}
-
-.hidden {
-   display: none;
 }
 
 #tooltip {
@@ -39,7 +35,7 @@ circle {
    }
 
    &.hidden {
-      // display: none;
+      display: none;
    }
 }
 

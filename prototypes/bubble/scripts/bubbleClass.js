@@ -7,7 +7,7 @@ function Bubble(b){ // data
     this.sizes = {width: 950, height: 500, padding: 100};
     this.force = null;
     this.circles = null;
-    this.force_gravity = -0.05; // -0.018
+    this.force_gravity = -0.03; // -0.018
     this.damper = 0.6; // 0.4 tightness of the bubbles
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
     this.radius_scale = d3.scale.pow().exponent(0.4).domain([-25190, 115000000]).range([3, 25]); // 15
@@ -85,9 +85,6 @@ Bubble.prototype.add_bubbles = function(set){
             return set[i].myy;
         })
         .attr('r', function(d,i){ 
-            //console.log(set[i].radius);
-            //console.log(set[i]);
-
             return set[i].radius;})
         ;
 };
@@ -156,7 +153,7 @@ Bubble.prototype.set_force = function() {
 };
 
 Bubble.prototype.charge = function(d) {
-    var charge = (-Math.pow(d.radius, 1.8) / 2.2); // 1.3
+    var charge = (-Math.pow(d.radius, 1.8) / 2.05); // 1.3
     if(charge == NaN){
         charge = -25;
     }
@@ -200,7 +197,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         padding = this.sizes.padding;
     for (var i in unique){
         // Make the grid here
-        unique[i].x = (i * width / unique.length) * 0.6 + 250; //+ 500; // * alpha
+        unique[i].x = (i * width / unique.length) * 0.55 + 250; // + 250; //+ 500; // * alpha
         unique[i].y = this.center.y; // * alpha
     }
 
@@ -210,11 +207,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
             if (node[column] === unique[i].name){
                 node.target = {
                     x: unique[i].x,
-                    y: unique[i].y
-                };
-            }
-        }
-    });
+                    y: unique[i].y};}}});
 
     // Add Text
     this.svg.selectAll('text')

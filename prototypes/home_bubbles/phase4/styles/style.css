@@ -4,13 +4,9 @@
 circle {
   fill: #001c2b;
   stroke: black;
-  stroke-width: 3px;
-  opacity: 0.75; }
+  stroke-width: 3px; }
   circle:hover {
     opacity: 0.25; }
-
-.hidden {
-  display: none; }
 
 #tooltip {
   position: absolute;
@@ -24,6 +20,8 @@ circle {
     font-size: 12px;
     line-height: 1.1em;
     color: black; }
+  #tooltip.hidden {
+    display: none; }
 
 #container {
   width: 80%;
