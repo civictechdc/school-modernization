@@ -1,4 +1,4 @@
-$green: #84ae6a;
+$green: #001c2b;
 $dark_green: darken($green, 20%);
 $cerulean: #f7f7f7;
 $dark_cerulean: darken($cerulean, 50%);
@@ -15,7 +15,7 @@ circle {
 
    &:hover {
       // fill: $dark_green;
-      opacity: 1.0;
+      opacity: 0.25;
    }
 }
 
@@ -51,6 +51,6 @@ circle {
    margin-top: -15px;
 }
 
-.svg {
+.svgdiv {
    display: inline;
 }

@@ -1,0 +1,1175 @@
+{
+    "name": "Schools", 
+    "children": [
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Cesar Chavez Parkside Middle ", 
+            "value": "5679432"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Community Academy Amos I", 
+            "value": "11058960"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Community Academy Butler Global", 
+            "value": "9803112"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Community Academy Capcs Online", 
+            "value": "2305512"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Cesar Chavez Parkside Upper", 
+            "value": "6672864"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Southeast Academy", 
+            "value": "10796544"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Hope Community Tolson Campus", 
+            "value": "9690648"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Howard University Middle School Of Math And Science ", 
+            "value": "5510736"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Potomac Preparatory ", 
+            "value": "7966200"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Washington Latin Middle", 
+            "value": "5698176"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Cesar Chavez Chavez Prep", 
+            "value": "6204264"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Youthbuild ", 
+            "value": "2099328"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Dc Preparatory Edgewood Elementary Campus ", 
+            "value": "8097408"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Hope Community Lamond Campus", 
+            "value": "6710352"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Ideal Academy North Capitol Street Campus Elementary", 
+            "value": "5566968"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Mary Mcleod Bethune Day Academy Slowe Campus", 
+            "value": "7141464"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Appletree Early Learning Center Columbia Heights", 
+            "value": "3055272"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Appletree Early Learning Center Southwest", 
+            "value": "1611984"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "E L Haynes Georgia Avenue", 
+            "value": "7066488"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Community Academy Amos Ii", 
+            "value": "6166776"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Elsie Whitlow Stokes Community Freedom ", 
+            "value": "6560400"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Idea ", 
+            "value": "4067448"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Meridian ", 
+            "value": "11977416"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Options ", 
+            "value": "5023392"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Roots ", 
+            "value": "1780680"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Roots ", 
+            "value": "1780680"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "School For Educational Evolution And Development (Seed) ", 
+            "value": "16924320"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Washington Math Science Tech ", 
+            "value": "6279240"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Capital City Middle School", 
+            "value": "5998080"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Tree Of Life Community ", 
+            "value": "5360784"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Capital City Lower ", 
+            "value": "6035568"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Woodson Collegiate Academy", 
+            "value": "16550952"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Somerset ", 
+            "value": "4498560"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Thurgood Marshall Academy ", 
+            "value": "7403880"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Eagle Academy- Eagle Center At Mcgogney", 
+            "value": "14507856"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Sela ", 
+            "value": "1611984"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "William E. Doar Jr ", 
+            "value": "8228616"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Community College Preparatory Academy ", 
+            "value": "5117112"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Achievement Preparatory-Elementary", 
+            "value": "5004648"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Dc Preparatory Benning Middle Campus", 
+            "value": "2849088"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Lee Montessori ", 
+            "value": "1387056"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Democracy Prep-Congress Heights", 
+            "value": "11621280"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Harmony Dc-School Of Excellence", 
+            "value": "1237104"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "District Of Columbia International School", 
+            "value": "3936240"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Woodridge Elementary", 
+            "value": "5323296"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Woodridge Middle", 
+            "value": "3148992"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "St. Coletta Special Education ", 
+            "value": "4723488"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Center City Brightwood Campus ", 
+            "value": "4648512"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Center City Capitol Hill Campus ", 
+            "value": "4479816"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Center City Congress Heights Campus ", 
+            "value": "4817208"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Center City Petworth Campus ", 
+            "value": "4910928"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Center City Shaw Campus ", 
+            "value": "4517304"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Center City Trinidad Campus ", 
+            "value": "4423584"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Dc Preparatory Benning Campus ", 
+            "value": "8284848"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Excel Academy ", 
+            "value": "10665336"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Washington Yu Ying ", 
+            "value": "9896832"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Washington Latin High", 
+            "value": "6860304"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc College Prep ", 
+            "value": "8509776"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Tech Prep", 
+            "value": "9353256"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Eagle Academy New Jersey Avenue Campus", 
+            "value": "2736624"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Appletree Early Learning Center Oklahoma", 
+            "value": "3017784"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "E.L. Haynes Kansas Avenue- High School", 
+            "value": "7909968"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "E.L. Haynes Kansas Avenue (Elementary School)", 
+            "value": "6710352"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Capital City High School ", 
+            "value": "6166776"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Excel Academy Lead", 
+            "value": "2905320"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Inspired Teaching Demonstration ", 
+            "value": "5941848"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Mundo Verde Bilingual ", 
+            "value": "7572576"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Shining Stars Montessori ", 
+            "value": "2211792"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Richard Wright For Journalism And Media Arts", 
+            "value": "5716920"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Basis Dc ", 
+            "value": "10327944"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Creative Minds International ", 
+            "value": "3392664"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Dc Scholars ", 
+            "value": "7291416"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Appletree Early Learning Center Lincoln Park", 
+            "value": "1124640"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Latin American Youth Center Career Academy", 
+            "value": "3561360"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Aim Academy ", 
+            "value": "6016824"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Will Academy ", 
+            "value": "6447936"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Leap Academy ", 
+            "value": "5698176"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Maya Angelou Young Adult Learning Center", 
+            "value": "2755368"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Perry Street Prep ", 
+            "value": "11602536"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "The Next Step ", 
+            "value": "6804072"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Paul Public Charter School- Middle School", 
+            "value": "7047744"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Key Academy ", 
+            "value": "6260496"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Lead Academy", 
+            "value": "5660688"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Ingenuity Prep ", 
+            "value": "3767544"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Connect Academy", 
+            "value": "5641944"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Spring Academy", 
+            "value": "1911888"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Paul Public Charter School- International High School", 
+            "value": "6091800"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Arts & Technology Academy ", 
+            "value": "3973728"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Quest Academy ", 
+            "value": "5285808"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Northeast Academy ", 
+            "value": "2361744"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Blow Pierce Elementary", 
+            "value": "7103976"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Blow-Pierce Middle", 
+            "value": "3992472"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Chamberlain Elementary", 
+            "value": "7029000"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Friendship Chamberlain Middle", 
+            "value": "6429192"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "National Collegiate Prep ", 
+            "value": "5735664"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Promise ", 
+            "value": "7497600"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Discover ", 
+            "value": "6185520"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Grow Academy ", 
+            "value": "5848128"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Kipp Dc Heights Academy ", 
+            "value": "7778760"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Academy Of Hope Adult ", 
+            "value": "4798464"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Appletree Early Learning Southeast", 
+            "value": "3336432"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Cedar Tree Academy ", 
+            "value": "6710352"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Achievement Preparatory-Middle School", 
+            "value": "7141464"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Bridges ", 
+            "value": "5098368"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Early Childhood Academy ", 
+            "value": "4854696"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Early Childhood Academy ", 
+            "value": "4854696"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Latin American Montessori Bilingual (Lamb) ", 
+            "value": "6410448"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Dc Preparatory Edgewood Middle Campus ", 
+            "value": "5510736"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Maya Angelou Evans Campus ", 
+            "value": "4723488"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Briya Public Charter School", 
+            "value": "9222048"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Two Rivers ", 
+            "value": "9709392"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Dc Bilingual ", 
+            "value": "6822816"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Cesar Chavez Capitol Hill ", 
+            "value": "6710352"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": true, 
+            "name": "Carlos Rosario International Harvard Street Campus", 
+            "value": "36981912"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Academia Bilingue", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Alta Associates For Learning Through The Arts", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Apple Tree (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Appletree Amidon", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Are Academy For Renewal In Education", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Arts And Technology Academy", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Barbara Jordan", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Booker T. Washington (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Booker T. Washington Evening", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Booker T. Washington For Technical Arts", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Booker T. Washington Virtual", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Capital City (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Center City Brentwood", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Cesar Chavez (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Children'S Studio School", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "City Collegiate", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "City Lights", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Community Academy (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Dc Prep (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "E.L. Haynes (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Eagle Academy (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Early Childhood Academy Johenning", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Early Childhood Academy Walter Washington", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Friendship Pcs (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Hope Community (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Howard Road (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Howard Road Academy", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Howard Road Academy G St.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Howard Road Academy Penn. Ave.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Howard Road Adademy Mlk Ave.  Middle", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Ideal Academy Peabody St.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Imagine Southeast", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Jo-Arz Academy", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Kamit Institute", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Kipp (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Lamb  Taylor St.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Layc Career Academy Alt. School", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Mary Mcleod Bethune 42Nd St.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Mary Mcleod Bethune Crestwood Campus", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Maya Angelou (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Maya Angelou Middle", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Maya Angelou Shaw Campus", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Mei Futures", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "New School", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "New Vistas Prep", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Next Step Alt. School", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Nia Community", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Options (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Options Satillite Campus", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Richard Milburn Academy", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Sail  16Th St.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Sail H St.", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Sasha Bruce", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Septima Clark", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Southeast Academy", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Tech World", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Thea Bowman", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Tri-Community", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Two Rivers Es/Ms", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Two Rivers Middle School", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Washington Academy (Blue Castle)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Washington Academy (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Washington Academy (Penn. Ave.)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Washington Academy Jmumc", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Washington Latin (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "William E. Doar Jr. Ne Elementary", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "William E. Doar Jr. Ne Middle", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "William E. Doar Jr. Soldiers Home", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "World", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Young America Works", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Young Technocrats", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Appletree Parkland", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Community Academy Amos Iii", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Community Academy Amos Iiia", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Community Academy Amos Iiib", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Community Academy Rand", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Hospitality High", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Ideal Academy  (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Next Step (Combined) (The Next Step)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Sail (Combined)", 
+            "value": "5"
+        }, 
+        {
+            "agency": "PCS", 
+            "value_available": false, 
+            "name": "Village Learning Center", 
+            "value": "5"
+        }
+    ]
+}

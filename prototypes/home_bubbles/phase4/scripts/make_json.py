@@ -1,28 +1,47 @@
-import csv, json
+import csv, json, random
 
-data = []
-count = 0
+public, charter = [], []
+
 # Read csv
-with open('../../data/data_master.csv', 'rU') as file:
+with open('../../data/data_master_214.csv', 'rU') as file:
    reader = csv.DictReader(file)
    for row in reader:
-      data.append(row)
-      count += 1 
+      if row['Agency'] == 'DCPS':
+         public.append(row)
+      else:
+         charter.append(row)
 
-   data_for_json = {
+   json_template = {
       'name': 'Schools',
       'children': []
    }
 
-   for datum in data:
-      tempObj = {}
-      tempObj['name'] = datum['School'].title()
-      tempObj['value'] = datum['MajorExp9815']
-      tempObj['agency'] = datum['Agency']
+   def make_obj(set):
+      json_template['children'] = []
+      for datum in set:
+         tempObj = {}
+         tempObj['name'] = datum['School'].title()
 
-      data_for_json['children'].append(tempObj)
+         if datum['TotalAllotandPlan1621'] != 'NA':
+            tempObj['value_available'] = True
+            if float(datum['TotalAllotandPlan1621']) > 0:
+               tempObj['value'] = str(int(float(datum['TotalAllotandPlan1621'])))
+            else:
+               tempObj['value'] = '3'
+         else:
+            tempObj['value'] = '5'
+            tempObj['value_available'] = False
 
-# Make JSON file
-raw_data = json.dumps(data_for_json, indent=4);
-with open('phase4.json', 'w+') as json_file:
+         tempObj['agency'] = datum['Agency']
+         json_template['children'].append(tempObj)
+      return json_template
+
+
+# Make JSON files
+raw_data = json.dumps(make_obj(public), indent=4);
+with open('public.json', 'w+') as json_file:
+   json_file.write(raw_data)
+
+raw_data = json.dumps(make_obj(charter), indent=4);
+with open('charter.json', 'w+') as json_file:
    json_file.write(raw_data)
