@@ -1,7 +1,7 @@
 'use strict';
 
 (function(that){
-    d3.csv('data/data_master.csv', function(data){
+    d3.csv('data/data_master_214.csv', function(data){
         var bubble = new Bubble('MajorExp9815'); // data
         var schools = {
             both: data,

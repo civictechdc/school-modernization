@@ -57,7 +57,7 @@ Bubble.prototype.create_nodes = function(){
             } else { 
                 if (amount === 'NA'){
                     console.log('NA', current);
-                    return 5;
+                    return 3;
                 } else {   
                     console.log('not ready', amount);
                     return 3;

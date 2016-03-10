@@ -22,8 +22,8 @@ circle {
   stroke-width: 2px;
   cursor: pointer; }
   circle:hover {
-    fill: #2bb5ff;
-    stroke: #0080c4; }
+    fill: #00334f;
+    stroke: #00334f; }
 
 text.label {
   font-size: 10px; }
@@ -48,6 +48,18 @@ text#tooltip_label {
     color: #fff; }
   #tooltip.hidden {
     display: none; }
+
+#legend {
+  border: 3px solid #001c2b;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  position: absolute;
+  right: 10%; }
+  #legend #legend_cont {
+    background-color: #fff; }
+    #legend #legend_cont p {
+      padding: 10px; }
 
 .color {
   fill: 'grey'; }
