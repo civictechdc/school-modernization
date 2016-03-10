@@ -16,9 +16,6 @@ function Bubble(b){ // data
 }
 
 Bubble.prototype.setColumn = function(column){
-    // if (this.column !== null) {
-    //     this.column = column;
-    // } 
     this.column = column;
 };
 
@@ -28,7 +25,7 @@ Bubble.prototype.setData = function(newData){
 
 Bubble.prototype.setBudget = function(budget){
     this.budget = budget;
-}
+};
 
 Bubble.prototype.make_svg = function(){
     if(document.querySelector('svg')){
@@ -40,6 +37,16 @@ Bubble.prototype.make_svg = function(){
 };
 
 Bubble.prototype.create_nodes = function(){
+    // var that = this,
+    //     max = d3.max(this.data, function(d){
+    //         return d['MajorExp9815'];}),
+    //     min = d3.min(this.data, function(d){
+    //         return d['MajorExp9815'];}),
+    //     radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 12]); // 15
+
+    // console.log(min);
+    // console.log(max);
+
     if(this.nodes.length){
         this.nodes = [];
     }
@@ -50,23 +57,20 @@ Bubble.prototype.create_nodes = function(){
         current.myy = this.center.y;
         current.radius = (function(){
             var amount= current[that.budget].trim();
-            if(amount && amount !== 'NA' 
-                && amount !== '' && typeof +amount === 'number'){
-               // return (that.radius_scale(parseInt(amount)));
-               return Math.pow(parseInt(amount), 0.157);
-            } else { 
-                if (amount === 'NA'){
-                    console.log('NA', current);
-                    return 3;
-                } else {   
-                    console.log('not ready', amount);
-                    return 3;
-                }
-            }        
+            if (amount !== 'NA'){
+                if(amount > 0){
+                    return Math.pow(parseInt(amount), 0.157);
+                    // return radius_scale(amount);
+                } else {
+                    return 5;
+                }   
+            } else {
+                return 7;
+            }
         }());
         this.nodes.push(current);
     }
-    //this.nodes.sort(function(a,b){ return b[budget] - a[budget]});
+    this.nodes.sort(function(a,b){ return b.value - a.value});
 };
 
 Bubble.prototype.add_bubbles = function(set){
@@ -207,7 +211,11 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
             if (node[column] === unique[i].name){
                 node.target = {
                     x: unique[i].x,
-                    y: unique[i].y};}}});
+                    y: unique[i].y
+                };
+            }
+        }
+    });
 
     // Add Text
     this.svg.selectAll('text')
@@ -235,6 +243,42 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     }
 };
 
+Bubble.prototype.make_legend = function(){
+    var that = this;
+    var nums = [100000000, 1000000, 1000, 1];
+    var legend = d3.select('#legend_cont')
+        .append('svg').attr('width','250').attr('height', 350);
+    legend.selectAll('circle')
+        .data(nums)
+        .enter()
+        .append('circle')
+        .attr('cx', 40)
+        .attr('cy', function(d,i){
+            return 5 + 35 * (i+1);
+        })
+        .attr('r', function(d){
+            return that.radius_scale(d);
+        });
+    legend.selectAll('text')
+        .data(nums)
+        .enter()
+        .append('text')
+        .attr('x', 95)
+        .attr('y', function(d,i){
+            return 5 + 37 * (i+1);
+        })
+        .text(function(d){return that.asMoney(d);})
+        ;
+
+    // legend.append('circle')
+    //         .attr('position', 'absolute')
+    //         .attr('id', 'legend_1')
+    //         .attr('cx', 50)
+    //         .attr('cy', 45)
+    //         .attr('r', this.radius_scale(100000000))
+    //         ;
+};
+
 Bubble.prototype.reset_svg = function() {
     d3.selectAll('.circle').remove();
     d3.selectAll('.sub_titles').remove();
@@ -248,6 +292,7 @@ Bubble.prototype.graph = function(){
     this.update();
     this.add_tootltips();
     this.group_bubbles(); 
+    this.make_legend();
     
 };
 

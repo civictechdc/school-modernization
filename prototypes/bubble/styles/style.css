@@ -1,7 +1,8 @@
 * {
   font-family: sans-serif;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  color: #001c2b; }
 
 h1 {
   display: block;
@@ -44,22 +45,26 @@ text#tooltip_label {
   border: 3px solid black; }
   #tooltip p {
     font-size: 12px;
-    line-height: 1.1em;
+    line-height: 1.666em;
     color: #fff; }
   #tooltip.hidden {
     display: none; }
 
 #legend {
-  border: 3px solid #001c2b;
-  height: 100px;
-  width: 100px;
+  border: 5px solid #001c2b;
+  height: 250px;
+  width: 250px;
   border-radius: 5px;
   position: absolute;
   right: 10%; }
   #legend #legend_cont {
-    background-color: #fff; }
+    position: absolute;
+    background-color: #fff;
+    height: 250px; }
     #legend #legend_cont p {
-      padding: 10px; }
+      padding: 10px;
+      background-color: #001c2b;
+      color: #fff; }
 
 .color {
   fill: 'grey'; }

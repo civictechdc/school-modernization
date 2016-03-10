@@ -6,6 +6,7 @@ $cerulean: #001c2b;
    font-family: sans-serif;
    margin: 0;
    padding: 0;
+   color: $cerulean;
 }
 h1 {
     display: block;
@@ -60,7 +61,7 @@ text {
    
    p {
       font-size: 12px;
-      line-height: 1.1em;
+      line-height: 1.666em;
       color: #fff;
    }
 
@@ -70,18 +71,21 @@ text {
 }
 
 #legend {
-  border: 3px solid $cerulean;
-  height: 100px;
-  width: 100px;
+  border: 5px solid $cerulean;
+  height: 250px;
+  width: 250px;
   border-radius: 5px;
   position: absolute;
   right: 10%;
 
   #legend_cont {
+    position: absolute;
     background-color: #fff;
-    
+    height: 250px;
     p {
       padding: 10px;
+      background-color: $cerulean;
+      color: #fff;
     }
   }
 }

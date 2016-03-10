@@ -1,7 +1,10 @@
 'use strict';
 
 (function(that){
-    d3.csv('data/data_master_214.csv', function(data){
+    d3.csv('data/data_master.csv', function(data){
+
+
+
         var bubble = new Bubble('MajorExp9815'); // data
         var schools = {
             both: data,
@@ -22,6 +25,7 @@
 
         // Run the graph
         bubble.setData(schools.both);
+        // bubble.setColumn('MajorExp9815');
         bubble.graph();
 
         // To change the subdivides, SUBDIVIDES
