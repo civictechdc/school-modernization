@@ -61,7 +61,7 @@ function initApp(presetMode) {
         this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.spendPast, filterMenu.spendPlanned];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
         this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
-        this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.expendMenu, this.zonesMenu];
+        this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.zonesMenu, this.expendMenu];
         this.filterTitlesArray = [];
         this.schoolNamesArray = [];
         this.categoryLabels = ["sector", "schools", "spending", "location"];
@@ -179,8 +179,10 @@ function initApp(presetMode) {
 
         for (var i = 0; i < this.filterMenusArray.length; i++) {
             nextMenu = this.filterMenusArray[i];
+            console.log("  nextMenu[0]: ", nextMenu[0]);
             for (var j = 1; j < nextMenu.length; j++) {
                 nextFilter = nextMenu[j];
+                console.log("  nextFilter.text: ", nextFilter.text);
                 this.activateFilterLink(nextFilter);
             }
         }
@@ -309,9 +311,9 @@ function initApp(presetMode) {
             var whichValue = menuObject.value;
             var whichText = menuObject.text;
             var htmlString;
-            console.log("  whichCategory: ", whichCategory);
-            console.log("  whichFilter: ", whichFilter);
-            console.log("  whichText: ", whichText);
+            // console.log("  whichCategory: ", whichCategory);
+            // console.log("  whichFilter: ", whichFilter);
+            // console.log("  whichText: ", whichText);
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             event.stopImmediatePropagation();
 
@@ -435,8 +437,8 @@ function initApp(presetMode) {
     // ======= ======= ======= resetMenuState ======= ======= =======
     function resetMenuState(displayObj, whichMenu) {
         console.log("resetMenuState");
-        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
+        // == restore levels menu for new zones selection (e.g. deactivate HS for feeders)
         if (whichMenu == "zones") {
             if (displayObj.dataFilters.zones == "Ward") {
                 setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
@@ -453,6 +455,8 @@ function initApp(presetMode) {
             } else {
                 setMenuState(displayObj, displayObj.zonesMenu, ["A", "A", "A"]);
             }
+
+        // == set levels menu according to zones selection (e.g. deactivate HS for feeders)
         } else if (whichMenu == "levels") {
             if (displayObj.dataFilters.levels == "HS") {
                 if (displayObj.dataFilters.zones == "Ward") {
