@@ -206,12 +206,6 @@ function initApp(presetMode) {
             clearFilterSelctions();
             clearProfileChart();
             checkFilterSelection(self, zonesCollectionObj);
-
-            // == clear filter window
-            filterText = "your filters";
-            var filterTitleContainer = $("#filters-selections").children("h2");
-            $(filterTitleContainer).removeClass("filterList");
-            $(filterTitleContainer).text(filterText);
             updateHoverText(null);
 
             // == load default map
@@ -496,19 +490,22 @@ function initApp(presetMode) {
 
         setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
         setMenuState(displayObj, displayObj.levelsMenu, ["A", "A", "A"]);
-        setMenuState(displayObj, displayObj.expendMenu, ["A", "A", "A"]);
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
+        setMenuState(displayObj, displayObj.expendMenu, ["A", "A", "A"]);
         displayObj.filterTitlesArray = [];
         displayObj.dataFilters.agency = "All";
         displayObj.dataFilters.levels = null;
-        displayObj.dataFilters.expend = null;
         displayObj.dataFilters.zones = "Ward";
+        displayObj.dataFilters.expend = null;
         displayObj.dataFilters.math = "spendAmount";
         zonesCollectionObj.zoneGeojson_A = null;
         zonesCollectionObj.zoneGeojson_B = null;
         zonesCollectionObj.zoneGeojson_AB = null;
         zonesCollectionObj.aggregatorArray = [];
         zonesCollectionObj.zoneA = "Ward";
+        displayObj.filterTitlesArray = [displayObj.agencyMenu[1].text, displayObj.zonesMenu[1].text];
+        console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
+        updateFilterSelections(displayObj);
     }
 
     // ======= ======= ======= findSearchSchool ======= ======= =======

@@ -183,7 +183,7 @@ function updateFilterSelections(displayObj) {
         nextFilter = displayObj.filterTitlesArray[i];
         var checkNextFilter = displayObj.filterTitlesArray.indexOf(nextFilter);
         if (checkNextFilter != -1) {
-            console.log("  nextFilter: ", nextFilter);
+            // console.log("  nextFilter: ", nextFilter);
             if (i == (displayObj.filterTitlesArray.length - 1)) {
                 selectedFilterText += nextFilter;
             } else {
