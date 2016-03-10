@@ -247,7 +247,7 @@ Bubble.prototype.make_legend = function(){
     var that = this;
     var nums = [100000000, 1000000, 1000, 1];
     var legend = d3.select('#legend_cont')
-        .append('svg').attr('width','250').attr('height', 350);
+        .append('svg').attr('width','250').attr('height', 192);
     legend.selectAll('circle')
         .data(nums)
         .enter()
@@ -269,14 +269,6 @@ Bubble.prototype.make_legend = function(){
         })
         .text(function(d){return that.asMoney(d);})
         ;
-
-    // legend.append('circle')
-    //         .attr('position', 'absolute')
-    //         .attr('id', 'legend_1')
-    //         .attr('cx', 50)
-    //         .attr('cy', 45)
-    //         .attr('r', this.radius_scale(100000000))
-    //         ;
 };
 
 Bubble.prototype.reset_svg = function() {

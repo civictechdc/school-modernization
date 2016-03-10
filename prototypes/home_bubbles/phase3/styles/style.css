@@ -2,12 +2,12 @@
   font-family: sans-serif; }
 
 circle {
-  fill: #84ae6a;
-  stroke: #53733f;
+  fill: #001c2b;
+  stroke: black;
   stroke-width: 3px;
-  opacity: 0.75; }
+  opacity: 1.0; }
   circle:hover {
-    opacity: 1.0; }
+    opacity: 0.75; }
 
 .hidden {
   display: none; }
@@ -23,6 +23,6 @@ circle {
   #tooltip p {
     font-size: 12px;
     line-height: 1.1em;
-    color: #476336; }
+    color: black; }
 
 /*# sourceMappingURL=style.css.map */

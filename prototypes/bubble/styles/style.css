@@ -56,11 +56,12 @@ text#tooltip_label {
   width: 250px;
   border-radius: 5px;
   position: absolute;
-  right: 10%; }
+  right: 10%;
+  top: 15px; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
-    height: 250px; }
+    height: 250 px; }
     #legend #legend_cont p {
       padding: 10px;
       background-color: #001c2b;

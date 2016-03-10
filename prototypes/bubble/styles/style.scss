@@ -77,11 +77,12 @@ text {
   border-radius: 5px;
   position: absolute;
   right: 10%;
+  top: 15px;
 
   #legend_cont {
     position: absolute;
     background-color: #fff;
-    height: 250px;
+    height: 250 px;
     p {
       padding: 10px;
       background-color: $cerulean;

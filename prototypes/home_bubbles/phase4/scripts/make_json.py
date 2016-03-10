@@ -27,9 +27,11 @@ with open('../../data/data_master_214.csv', 'rU') as file:
                tempObj['value'] = str(int(float(datum['TotalAllotandPlan1621'])))
             else:
                tempObj['value'] = '3'
+               tempObj['value_issue'] = 'below zero'
                tempObj['real_value'] = float(datum['TotalAllotandPlan1621'])
          else:
             tempObj['value'] = '5'
+            tempObj['value_issue'] = 'not available'
             tempObj['real_value'] = datum['TotalAllotandPlan1621']
             tempObj['value_available'] = False
 
