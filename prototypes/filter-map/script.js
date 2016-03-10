@@ -418,7 +418,15 @@ function initApp(presetMode) {
 
                     // == no zone or Ward selected
                     } else {
-                        setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
+                        if (displayObj.dataFilters.levels == "HS") {
+                            setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
+                        } else if (displayObj.dataFilters.levels == "MS") {
+                            setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
+                        } else if (displayObj.dataFilters.levels == "ES") {
+                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
+                        } else {
+                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
+                        }
                         setMenuState(displayObj, self.zonesMenu, ["S", "A", "A"]);
                     }
                     break;
