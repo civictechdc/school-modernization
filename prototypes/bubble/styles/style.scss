@@ -8,6 +8,7 @@ $cerulean: #001c2b;
    padding: 0;
    color: $cerulean;
 }
+
 h1 {
     display: block;
     font-size: 2em;
@@ -70,6 +71,12 @@ text {
    }
 }
 
+.sub_titles {
+  font-size: 12px;
+  font-weight: bold;
+  // transform: rotate(-45deg);
+}
+
 #legend {
   border: 5px solid $cerulean;
   height: 250px;
@@ -87,6 +94,7 @@ text {
       padding: 10px;
       background-color: $cerulean;
       color: #fff;
+      text-align: center;
     }
   }
 }

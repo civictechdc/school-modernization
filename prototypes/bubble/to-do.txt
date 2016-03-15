@@ -1,14 +1,9 @@
-- Add charter schools to csv
-- Subdivide by Agency (DCPS and PCS)
-- Figure out doing logic on csv columns in Python
-/ SVG Tooltips
-/ Plan all subdivides
+- Add color to the bubbles
+- Add search feature
 
-Physics:
-   make group spread out
-   make them all move slower
-fix the colors
-
-******************************************************
-- todo still
-/ done
+- Capitol -> Capital
+- 1998 - 2015 (Lifetime && Past)
+- Make legend values dynamic
+- make 'Total Spent' value reflect the current budget
+   -> if using Past numbers, Total Spent should indicate Past numbers
+- MIN / MAX !!!!!

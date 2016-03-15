@@ -1,11 +1,8 @@
 'use strict';
-
-(function(that){
+var bubble = null;
+// (function(that){
     d3.csv('data/data_master.csv', function(data){
-
-
-
-        var bubble = new Bubble('MajorExp9815'); // data
+        bubble = new Bubble('MajorExp9815'); // data
         var schools = {
             both: data,
             public: (function(d){
@@ -67,7 +64,7 @@
             });
         });
     });
-}(this))
+// }(this))
 
 
 // Utility functions

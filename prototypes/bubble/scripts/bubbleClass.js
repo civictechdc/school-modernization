@@ -1,6 +1,6 @@
-function Bubble(b){ // data
+function Bubble(budget){ // data
     var that = this;
-    this.budget = b;
+    this.budget = budget;
     this.asMoney = d3.format('$,');
     this.column = null;
     this.data = null;
@@ -44,15 +44,13 @@ Bubble.prototype.create_nodes = function(){
     //         return d['MajorExp9815'];}),
     //     radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 12]); // 15
 
-    // console.log(min);
-    // console.log(max);
-
     if(this.nodes.length){
         this.nodes = [];
     }
+
     for(var i = 0, j = this.data.length; i < j; i++){
         var that = this,
-            current = this.data[i];
+        current = this.data[i];
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.radius = (function(){
@@ -74,6 +72,7 @@ Bubble.prototype.create_nodes = function(){
 };
 
 Bubble.prototype.add_bubbles = function(set){
+    var that = this;
      this.circles = this.svg.append('g').attr('id', 'groupCircles')
         .selectAll('circle')
         .data(set).enter()
@@ -223,13 +222,15 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .enter()
         .append('text')
         .attr('class', 'sub_titles')
-        .attr('x', function(d){return d.x *1.8 - 450;})
+        .attr('x', function(d){
+            return d.x * 1.5 - 250;
+        })
+        // .attr('x', function(d){return d.x *1.8 - 450;})
         .attr('y', function(d,i){
             if(i%2 === 0){
-                return d.y - 100;
-            } else {
-                return d.y - 150;
+                return d.y - 225;
             }
+            return d.y - 200;
         })
         .text(function(d){
             return d.name;
@@ -244,8 +245,9 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 };
 
 Bubble.prototype.make_legend = function(){
-    var that = this;
-    var nums = [100000000, 1000000, 1000, 1];
+    var that = this,
+        nums = [100000000, 1000000, 1000, 1];
+
     var legend = d3.select('#legend_cont')
         .append('svg').attr('width','250').attr('height', 192);
     legend.selectAll('circle')

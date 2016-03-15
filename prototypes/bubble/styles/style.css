@@ -50,6 +50,10 @@ text#tooltip_label {
   #tooltip.hidden {
     display: none; }
 
+.sub_titles {
+  font-size: 12px;
+  font-weight: bold; }
+
 #legend {
   border: 5px solid #001c2b;
   height: 250px;
@@ -65,7 +69,8 @@ text#tooltip_label {
     #legend #legend_cont p {
       padding: 10px;
       background-color: #001c2b;
-      color: #fff; }
+      color: #fff;
+      text-align: center; }
 
 .color {
   fill: 'grey'; }
