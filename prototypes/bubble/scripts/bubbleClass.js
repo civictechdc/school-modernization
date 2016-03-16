@@ -13,7 +13,9 @@ function Bubble(budget){ // data
     this.radius_scale = d3.scale.pow().exponent(0.4).domain([-25190, 115000000]).range([3, 25]); // 15
     this.nodes = [];
     this.unique = null;
-}
+};
+
+
 
 Bubble.prototype.setColumn = function(column){
     this.column = column;
