@@ -24,14 +24,13 @@ h1 {
 }
 
 circle {
-   fill: $cerulean;
    stroke: darken($cerulean , 10%);
    stroke-width: 2px;
    cursor: pointer;
-   // opacity: 0.9;
+   opacity: 0.985;
 
    &:hover {
-      fill: lighten($cerulean , 7%);
+      // fill: lighten($cerulean , 7%);
       stroke: lighten($cerulean , 7%);
    }
 }

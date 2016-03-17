@@ -16,8 +16,6 @@ function Bubble(budget){ // data
     this.unique = null;
 };
 
-
-
 Bubble.prototype.setColumn = function(column){
     this.column = column;
 };
@@ -55,12 +53,29 @@ Bubble.prototype.create_nodes = function(){
 
         radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
 
-    console.log(this.commas(min), this.commas(max));
+    // console.log(this.commas(min), this.commas(max));
     for(var i = 0, j = this.data.length; i < j; i++){
         var that = this,
         current = this.data[i];
         current.myx = this.center.x;
         current.myy = this.center.y;
+
+
+        current.color = (function(){
+            var cur_budget = current[this.budget];
+            // console.log(current[this.budget]);
+            if(cur_budget > (max / 10)){
+                return '#001c2b';
+            }
+            if(cur_budget < (max / 10) || cur_budget > 0){
+                return '#4c606a';
+            }
+            if(cur_budget === 'NA'){ return '#fff';}
+            return 'red';
+        }).call(this);
+
+
+
         current.radius = (function(){
             var amount= current[that.budget].trim();
             if (amount !== 'NA'){
@@ -121,18 +136,30 @@ Bubble.prototype.add_tootltips = function(d){
         d3.select('#school').text('School: ' + camel(d.School));
         d3.select('#agency').text('Agency: ' + d.Agency);
         d3.select('#ward').text('Ward: ' + d.Ward);
+        // Project Type
         if(d.ProjectType && d.ProjectType !== 'NA'){
             d3.select('#project').text('Project: ' + d.ProjectType);
         } else {
             d3.select('#project').text('');
         }
+        // Year Completed
         if(d.YrComplete && d.YrComplete !== 'NA'){
             d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
         } else {
             d3.select('#yearComplete').text('');
         }
-        d3.select('#majorexp').text('Total Spent: ' + that.money(d[this.budget]));
+
+        // Total Spent
+        if(d['majorexp']){
+            console.log( d['majorexp']);
+            d3.select('#majorexp').text('Total Spent: ' + that.money(d[that.budget]));
+        } else {
+            d3.select('#majorexp').text('');
+        }
+        // Spent per SQ FT
         d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.money(d.SpentPerSqFt) + '/sq. ft.');
+
+        // Spent per Maximum Occupancy
         d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.money(d.SpentPerMaxOccupancy));
         if(d.FeederHS && d.FeederHS !== "NA"){ 
             d3.select('#hs').text('High School: ' + camel(d.FeederHS));
@@ -254,7 +281,11 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 
 Bubble.prototype.make_legend = function(){
     var that = this,
-        nums = [100000000, 1000000, 1000, 1];
+        nums = [100000000, 10000000, 10000, 1];
+
+    if(get('#legend_cont svg')){
+        d3.select('#legend_cont svg').remove('svg');
+    }
 
     var legend = d3.select('#legend_cont')
         .append('svg').attr('width','250').attr('height', 192);
@@ -267,7 +298,19 @@ Bubble.prototype.make_legend = function(){
             return 5 + 35 * (i+1);
         })
         .attr('r', function(d){
-            return that.radius_scale(d);
+            // var that = this,
+            max = d3.max(that.data, function(d){
+                // console.log(that.commas(e[that.budget]));
+                return +d[that.budget];
+            }),
+
+            min = d3.min(that.data, function(d){
+                return +d[that.budget];
+            }),
+
+            radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
+
+            return radius_scale(d);
         });
     legend.selectAll('text')
         .data(nums)
@@ -304,6 +347,7 @@ Bubble.prototype.change = function(){
     this.add_bubbles(this.nodes);
     this.add_tootltips();
     this.group_bubbles(); 
+    this.make_legend();
     
 };
 

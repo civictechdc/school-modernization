@@ -18,12 +18,11 @@ h1 {
   margin: 0 auto; }
 
 circle {
-  fill: #001c2b;
   stroke: black;
   stroke-width: 2px;
-  cursor: pointer; }
+  cursor: pointer;
+  opacity: 0.985; }
   circle:hover {
-    fill: #00334f;
     stroke: #00334f; }
 
 text.label {

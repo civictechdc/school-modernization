@@ -1,4 +1,4 @@
-- Add color to the bubbles
+√ Add color to the bubbles
 - Add search feature
 
 √ Capitol -> Capital
