@@ -6,4 +6,4 @@
 - Make legend values dynamic
 - make 'Total Spent' value reflect the current budget
    -> if using Past numbers, Total Spent should indicate Past numbers
-- MIN / MAX !!!!!
+√ MIN / MAX !!!!!

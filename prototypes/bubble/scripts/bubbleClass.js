@@ -1,7 +1,8 @@
 function Bubble(budget){ // data
     var that = this;
     this.budget = budget;
-    this.asMoney = d3.format('$,');
+    this.money = d3.format('$,');
+    this.commas = d3.format(',');
     this.column = null;
     this.data = null;
     this.sizes = {width: 950, height: 500, padding: 100};
@@ -39,17 +40,22 @@ Bubble.prototype.make_svg = function(){
 };
 
 Bubble.prototype.create_nodes = function(){
-    // var that = this,
-    //     max = d3.max(this.data, function(d){
-    //         return d['MajorExp9815'];}),
-    //     min = d3.min(this.data, function(d){
-    //         return d['MajorExp9815'];}),
-    //     radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 12]); // 15
-
     if(this.nodes.length){
         this.nodes = [];
     }
+    var that = this,
+        max = d3.max(this.data, function(d){
+            // console.log(that.commas(e[that.budget]));
+            return +d[that.budget];
+        }),
 
+        min = d3.min(this.data, function(d){
+            return +d[that.budget];
+        }),
+
+        radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
+
+    console.log(this.commas(min), this.commas(max));
     for(var i = 0, j = this.data.length; i < j; i++){
         var that = this,
         current = this.data[i];
@@ -59,8 +65,8 @@ Bubble.prototype.create_nodes = function(){
             var amount= current[that.budget].trim();
             if (amount !== 'NA'){
                 if(amount > 0){
-                    return Math.pow(parseInt(amount), 0.157);
-                    // return radius_scale(amount);
+                    // return Math.pow(parseInt(amount), 0.157);
+                    return radius_scale(amount);
                 } else {
                     return 5;
                 }   
@@ -125,9 +131,9 @@ Bubble.prototype.add_tootltips = function(d){
         } else {
             d3.select('#yearComplete').text('');
         }
-        d3.select('#majorexp').text('Total Spent: ' + that.asMoney(d[this.budget]));
-        d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.asMoney(d.SpentPerSqFt) + '/sq. ft.');
-        d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.asMoney(d.SpentPerMaxOccupancy));
+        d3.select('#majorexp').text('Total Spent: ' + that.money(d[this.budget]));
+        d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.money(d.SpentPerSqFt) + '/sq. ft.');
+        d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.money(d.SpentPerMaxOccupancy));
         if(d.FeederHS && d.FeederHS !== "NA"){ 
             d3.select('#hs').text('High School: ' + camel(d.FeederHS));
         } else {
@@ -271,7 +277,7 @@ Bubble.prototype.make_legend = function(){
         .attr('y', function(d,i){
             return 5 + 37 * (i+1);
         })
-        .text(function(d){return that.asMoney(d);})
+        .text(function(d){return that.money(d);})
         ;
 };
 
