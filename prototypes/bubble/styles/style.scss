@@ -6,7 +6,9 @@ $cerulean: #001c2b;
    font-family: sans-serif;
    margin: 0;
    padding: 0;
+   color: $cerulean;
 }
+
 h1 {
     display: block;
     font-size: 2em;
@@ -22,15 +24,14 @@ h1 {
 }
 
 circle {
-   fill: $cerulean;
    stroke: darken($cerulean , 10%);
    stroke-width: 2px;
    cursor: pointer;
-   // opacity: 0.9;
+   opacity: 0.985;
 
    &:hover {
-      fill: lighten($cerulean , 50%);
-      stroke: lighten($cerulean , 30%);
+      // fill: lighten($cerulean , 7%);
+      stroke: lighten($cerulean , 7%);
    }
 }
 
@@ -60,13 +61,41 @@ text {
    
    p {
       font-size: 12px;
-      line-height: 1.1em;
+      line-height: 1.666em;
       color: #fff;
    }
 
    &.hidden {
       display: none;
    }
+}
+
+.sub_titles {
+  font-size: 12px;
+  font-weight: bold;
+  // transform: rotate(-45deg);
+}
+
+#legend {
+  border: 5px solid $cerulean;
+  height: 250px;
+  width: 250px;
+  border-radius: 5px;
+  position: absolute;
+  right: 10%;
+  top: 15px;
+
+  #legend_cont {
+    position: absolute;
+    background-color: #fff;
+    height: 250 px;
+    p {
+      padding: 10px;
+      background-color: $cerulean;
+      color: #fff;
+      text-align: center;
+    }
+  }
 }
 
 .color {

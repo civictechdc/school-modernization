@@ -54,10 +54,15 @@ function graph(where, data){
   node.on('mouseenter', function(d){  
     document.querySelector('#tooltip').classList.remove('hidden'); 
     d3.select('#tooltip')
-      .style('left', function(){ return (d.x + tooltipPadding) + 'px';})
+      .style('left', function(){ 
+        if(d.agency === 'PCS'){
+          return (d.x + tooltipPadding + svgWidth) + 'px'; 
+        }
+        return (d.x + tooltipPadding) + 'px';})
       .style('top', function(){ return (d.y - tooltipPadding) + 'px';})
       .select('#School')
       .text('School: ' + d.name);
+
     d3.select('#Amount')
       .text('Amount: ' + money(d.value));
   });
@@ -74,16 +79,4 @@ function get_min(dataset, column){
 
 function get_max(dataset, column){
   d3.max(dataset, function(v){return v[column];})
-}
-
-function classes(root) {
-  var classes = [];
-
-  function recurse(name, node) {
-    if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-    else classes.push({packageName: name, className: node.name, value: node.size});
-  }
-
-  recurse(null, root);
-  return {children: classes};
 }

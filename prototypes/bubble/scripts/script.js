@@ -1,8 +1,8 @@
 'use strict';
-
-(function(that){
+var bubble = null;
+// (function(that){
     d3.csv('data/data_master.csv', function(data){
-        var bubble = new Bubble('MajorExp9815'); // data
+        bubble = new Bubble('MajorExp9815'); // data
         var schools = {
             both: data,
             public: (function(d){
@@ -22,6 +22,7 @@
 
         // Run the graph
         bubble.setData(schools.both);
+        // bubble.setColumn('MajorExp9815');
         bubble.graph();
 
         // To change the subdivides, SUBDIVIDES
@@ -63,7 +64,7 @@
             });
         });
     });
-}(this))
+// }(this))
 
 
 // Utility functions

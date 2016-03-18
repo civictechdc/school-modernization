@@ -1,4 +1,4 @@
-$green: #84ae6a;
+$green: #001c2b;
 $dark_green: darken($green, 20%);
 $cerulean: #f7f7f7;
 $dark_cerulean: darken($cerulean, 50%);
@@ -11,11 +11,10 @@ circle {
    fill: $green;
    stroke: darken($green, 20%);
    stroke-width: 3px;
-   opacity: 0.75;
+   opacity: 1.0;
 
    &:hover {
-      // fill: $dark_green;
-      opacity: 1.0;
+      opacity: 0.75;
    }
 }
 

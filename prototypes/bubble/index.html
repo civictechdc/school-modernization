@@ -12,18 +12,25 @@
    
       <!-- Header -->
       <h1 id='title'>DCPS Capital Spending</h1>
+
+      <!-- Search Feature -->
+      <form>
+         <input id='search' type="input"></input>
+      </form>
+   
+      <!-- Show What Your Looking At -->
       <div id="show_state_cont">
-         <p class='show_state' id='budget_state'>Expenditures from 1985 - 2015</p>
+         <p class='show_state' id='budget_state'>Expenditures from 1998 - 2015</p>
          <p class='show_state' id="sub_state">Split By: None</p>
          <p class='show_state' id="school_state">Both Public and Charter Schools</p>
       </div>
       
       <!-- Change Dataset Buttons -->
       <div id="dataset">
-         <button class="btn_state dataChange" id='MajorExp9815' data-title='Expenditures from 1985 - 2015'>Past</button>
+         <button class="btn_state dataChange" id='MajorExp9815' data-title='Expenditures from 1998 - 2015'>Past</button>
          <button class="btn_state dataChange" id='TotalAllotandPlan1621' data-title='Future Expenditures for 2016 - 2021'>Future</button>
-         <button class="btn_state dataChange" id='LifetimeBudget' data-title='Expenditures from 1985 - 2021'>Lifetime</button>
-         <button class="btn_state dataChange" id='AnnualSpentPerSqFt' data-title='Annual Spent Per SqFt. from 1985 - 2015'>Per Sq. Ft.</button>
+         <button class="btn_state dataChange" id='LifetimeBudget' data-title='Expenditures from 1998 - 2021'>Lifetime</button>
+         <button class="btn_state dataChange" id='AnnualSpentPerSqFt' data-title='Annual Spent Per SqFt. from 1998 - 2015'>Per Sq. Ft.</button>
       </div>
    
       <!-- Change Subdivision Buttons -->
@@ -42,6 +49,13 @@
          <button class="btn_state school" id='charter' data-title='Only Charter'>Charter</button>
       </div>
    
+      <!-- Legend -->
+      <div id="legend">
+         <div id="legend_cont">
+            <p>Legend</p>
+         </div>
+      </div>  
+      
       <!-- The Chart -->
       <div id="chart"></div>
    </div>
@@ -60,6 +74,7 @@
          <p id="hs"></p>
       </div>
    </div>
+
 
    
    <script src='scripts/libs/d3.min.js'></script>

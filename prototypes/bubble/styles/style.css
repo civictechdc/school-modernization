@@ -1,7 +1,8 @@
 * {
   font-family: sans-serif;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  color: #001c2b; }
 
 h1 {
   display: block;
@@ -17,13 +18,12 @@ h1 {
   margin: 0 auto; }
 
 circle {
-  fill: #001c2b;
   stroke: black;
   stroke-width: 2px;
-  cursor: pointer; }
+  cursor: pointer;
+  opacity: 0.985; }
   circle:hover {
-    fill: #2bb5ff;
-    stroke: #0080c4; }
+    stroke: #00334f; }
 
 text.label {
   font-size: 10px; }
@@ -44,10 +44,32 @@ text#tooltip_label {
   border: 3px solid black; }
   #tooltip p {
     font-size: 12px;
-    line-height: 1.1em;
+    line-height: 1.666em;
     color: #fff; }
   #tooltip.hidden {
     display: none; }
+
+.sub_titles {
+  font-size: 12px;
+  font-weight: bold; }
+
+#legend {
+  border: 5px solid #001c2b;
+  height: 250px;
+  width: 250px;
+  border-radius: 5px;
+  position: absolute;
+  right: 10%;
+  top: 15px; }
+  #legend #legend_cont {
+    position: absolute;
+    background-color: #fff;
+    height: 250 px; }
+    #legend #legend_cont p {
+      padding: 10px;
+      background-color: #001c2b;
+      color: #fff;
+      text-align: center; }
 
 .color {
   fill: 'grey'; }
