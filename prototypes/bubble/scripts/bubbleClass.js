@@ -9,7 +9,7 @@ function Bubble(budget){ // data
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.03; // -0.018
-    this.damper = 0.6; // 0.4 tightness of the bubbles
+    this.damper = 0.5; // 0.4 tightness of the bubbles
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
     this.radius_scale = d3.scale.pow().exponent(0.4).domain([-25190, 115000000]).range([3, 25]); // 15
     this.nodes = [];
@@ -51,7 +51,8 @@ Bubble.prototype.create_nodes = function(){
             return +d[that.budget];
         }),
 
-        radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
+        // radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
+        radius_scale = d3.scale.linear().domain([min, max]).range([7, 30]); // 15
 
     // console.log(this.commas(min), this.commas(max));
     for(var i = 0, j = this.data.length; i < j; i++){
@@ -193,14 +194,13 @@ Bubble.prototype.set_force = function() {
 Bubble.prototype.charge = function(d) {
     var charge = (-Math.pow(d.radius, 1.8) / 2.05); // 1.3
     if(charge == NaN){
-        charge = -25;
+        charge = -35;
     }
     return charge;
 };
 
 Bubble.prototype.group_bubbles = function(d){
     var that = this;
-
     this.force.on('tick', function(e){
         that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
             .attr('cx', function(d){ return d.x;})
@@ -208,8 +208,6 @@ Bubble.prototype.group_bubbles = function(d){
         })
         ;   
     this.force.start();
-
-
 };
 
 Bubble.prototype.move_towards_center = function(alpha){
@@ -281,7 +279,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 
 Bubble.prototype.make_legend = function(){
     var that = this,
-        nums = [100000000, 10000000, 10000, 1];
+        nums = this.budget !== 'AnnualSpentPerSqFt' ? [100000000, 50000000 ,10000000, 1] : [65, 35, 15, 1];
 
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
@@ -295,8 +293,10 @@ Bubble.prototype.make_legend = function(){
         .append('circle')
         .attr('cx', 40)
         .attr('cy', function(d,i){
+            console.log(that.budget);
             return 5 + 35 * (i+1);
         })
+        .style('fill', '#001c2b')
         .attr('r', function(d){
             // var that = this,
             max = d3.max(that.data, function(d){
@@ -308,8 +308,9 @@ Bubble.prototype.make_legend = function(){
                 return +d[that.budget];
             }),
 
-            radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
-
+            // radius_scale = d3.scale.pow().exponent(0.4).domain([min, max]).range([3, 25]); // 15
+            radius_scale = d3.scale.linear().domain([min, max]).range([3, 25]); // 15
+            console.log(min,max);
             return radius_scale(d);
         });
     legend.selectAll('text')
@@ -320,7 +321,12 @@ Bubble.prototype.make_legend = function(){
         .attr('y', function(d,i){
             return 5 + 37 * (i+1);
         })
-        .text(function(d){return that.money(d);})
+        .text(function(d){
+            if(that.budget === 'AnnualSpentPerSqFt'){
+                return that.money(d) + ' / Sq. Ft.';
+            }
+            return that.money(d);
+        })
         ;
 };
 
