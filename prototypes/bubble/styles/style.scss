@@ -30,8 +30,8 @@ circle {
    opacity: 0.985;
 
    &:hover {
-      // fill: lighten($cerulean , 7%);
-      stroke: lighten($cerulean , 7%);
+      // stroke: darken($cerulean , 7%);
+      stroke: grey;
    }
 }
 

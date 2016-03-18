@@ -23,7 +23,7 @@ circle {
   cursor: pointer;
   opacity: 0.985; }
   circle:hover {
-    stroke: #00334f; }
+    stroke: grey; }
 
 text.label {
   font-size: 10px; }
