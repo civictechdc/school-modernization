@@ -1,5 +1,4 @@
 function Bubble(budget){ // data
-    var that = this;
     this.budget = budget;
     this.money = d3.format('$,');
     this.commas = d3.format(',');
@@ -14,10 +13,8 @@ function Bubble(budget){ // data
     // this.radius_scale = d3.scale.pow().exponent(0.4).domain([-25190, 115000000]).range([3, 25]); // 15
     this.nodes = [];
     this.unique = null;
-    this.range = {
-        min: 6, 
-        max: 29
-    };
+    this.range = { min: 6, max: 29 };
+    this.colorRange = { high: '#001c2b', middle: '#6f7f87', low: '#ff3233', na: '#fff' };
 };
 
 Bubble.prototype.setColumn = function(column){
@@ -59,13 +56,13 @@ Bubble.prototype.create_nodes = function(){
             var cur_budget = current[this.budget];
             // console.log(current[this.budget]);
             if(cur_budget > (max / 10)){
-                return '#001c2b';
+                return this.colorRange.high;
             }
             if(cur_budget < (max / 10) && cur_budget > 0){
-                return '#4c606a';
+                return this.colorRange.middle;
             }
-            if(cur_budget === 'NA'){ return '#fff';}
-            return '#ff3233';
+            if(cur_budget === 'NA'){ return this.colorRange.na;}
+            return this.colorRange.low;
         }).call(this);
         current.radius = (function(){
             var amount= current[that.budget].trim();
@@ -249,9 +246,9 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         })
         // .attr('x', function(d){return d.x *1.8 - 450;})
         .attr('y', function(d,i){
-            if(i%2 === 0){
-                return d.y - 225;
-            }
+            // if(i%2 === 0){
+            //     return d.y - 225;
+            // }
             return d.y - 200;
         })
         .text(function(d){
@@ -268,7 +265,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 
 Bubble.prototype.make_legend = function(){
     var that = this,
-        nums = this.budget !== 'AnnualSpentPerSqFt' ? [100000000, 50000000 ,10000000, 1] : [50, 25, 15, 1];
+        nums = this.budget !== 'AnnualSpentPerSqFt' ? [100000000, 50000000 ,10000000, 1, 0] : [50, 25, 15, 1, 0];
 
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
@@ -284,7 +281,9 @@ Bubble.prototype.make_legend = function(){
         .attr('cy', function(d,i){
             return 5 + 35 * (i+1);
         })
-        .style('fill', '#001c2b')
+        .style('fill', function(d){
+            return d === 0 ? that.colorRange.low : that.colorRange.high;
+        })
         .attr('r', function(d){
             max = d3.max(that.data, function(d){return +d[that.budget];}),
             min = d3.min(that.data, function(d){return +d[that.budget];}),
