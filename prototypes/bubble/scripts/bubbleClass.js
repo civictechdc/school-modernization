@@ -305,6 +305,18 @@ Bubble.prototype.make_legend = function(){
         ;
 };
 
+Bubble.prototype.add_search_feature = function() {  
+    // Populate the <select> element with the schools
+    for(var i=0, j=this.nodes.length; i<j; i++){
+        var option = document.createElement('option');
+        option.setAttribute('value', i);
+        var newOption = get('select').appendChild(option);
+        newOption.innerHTML = this.nodes[i]['School'];
+    }
+
+    
+};
+
 Bubble.prototype.reset_svg = function() {
     d3.selectAll('.circle').remove();
     d3.selectAll('.sub_titles').remove();
@@ -319,6 +331,7 @@ Bubble.prototype.graph = function(){
     this.add_tootltips();
     this.group_bubbles(); 
     this.make_legend();
+    this.add_search_feature();
     
 };
 
