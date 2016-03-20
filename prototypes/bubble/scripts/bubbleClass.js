@@ -83,26 +83,29 @@ Bubble.prototype.create_nodes = function(){
 
 Bubble.prototype.add_bubbles = function(set){
     var that = this;
-     this.circles = this.svg.append('g').attr('id', 'groupCircles')
-        .selectAll('circle')
-        .data(set).enter()
-        .append('circle')
-        .attr('class', 'circle')
-        .attr('id', function(d){
-            return d['School'];
-        })
-        .style('fill', function(d,i){
-            return set[i].color;
-        })
-        .attr('cx', function(d,i){
-            return set[i].myx;
-        })
-        .attr('cy', function(d,i){
-            return set[i].myy;
-        })
-        .attr('r', function(d,i){ 
-            return set[i].radius;})
-        ;
+    this.circles = this.svg.append('g').attr('id', 'groupCircles')
+    .selectAll('circle')
+    .data(set).enter()
+    .append('circle')
+    .attr('class', 'circle')
+    .attr('color', function(d,i){
+        return set[i].color;
+    })
+    .attr('id', function(d){
+        return d['School'];
+    })
+    .style('fill', function(d,i){
+        return set[i].color;
+    })
+    .attr('cx', function(d,i){
+        return set[i].myx;
+    })
+    .attr('cy', function(d,i){
+        return set[i].myy;
+    })
+    .attr('r', function(d,i){ 
+        return set[i].radius;})
+    ;
 };
 
 Bubble.prototype.update = function() {
@@ -318,9 +321,14 @@ Bubble.prototype.add_search_feature = function() {
     // Fool with the select bar
     var selectForm = get('#select');
     selectForm.addEventListener('change', function(e){
-        // var target = e.target.value;
-        // var circle = get("circle[school='"+ target + "']");
+        if(get('[shown=true]')){
+            var last = get('[shown=true]');
+            last.style.fill = last.getAttribute('color');
+            last.removeAttribute('shown');
+        }
         var circle = document.getElementById(e.target.value);
+        circle.setAttribute('shown', true);
+        circle.style.fill = 'yellowgreen';
     });
 };
 
