@@ -10,7 +10,6 @@ function Bubble(budget){ // data
     this.force_gravity = -0.03; // -0.018
     this.damper = 0.5; // 0.4 tightness of the bubbles
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
-    // this.radius_scale = d3.scale.pow().exponent(0.4).domain([-25190, 115000000]).range([3, 25]); // 15
     this.nodes = [];
     this.unique = null;
     this.range = { min: 6, max: 29 };
@@ -89,6 +88,9 @@ Bubble.prototype.add_bubbles = function(set){
         .data(set).enter()
         .append('circle')
         .attr('class', 'circle')
+        .attr('id', function(d){
+            return d['School'];
+        })
         .style('fill', function(d,i){
             return set[i].color;
         })
@@ -174,7 +176,6 @@ Bubble.prototype.set_force = function() {
         .gravity(this.force_gravity) // -0.01
         .charge(function(d){ return that.charge(d) || -15; })
         .friction(0.9); // 0.9
-
 };
 
 Bubble.prototype.charge = function(d) {
@@ -247,9 +248,9 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         // .attr('x', function(d){return d.x *1.8 - 450;})
         .attr('y', function(d,i){
             // if(i%2 === 0){
-            //     return d.y - 225;
+            //     return d.y - 200;
             // }
-            return d.y - 200;
+            return d.y - 150;
         })
         .text(function(d){
             return d.name;
@@ -309,15 +310,22 @@ Bubble.prototype.add_search_feature = function() {
     // Populate the <select> element with the schools
     for(var i=0, j=this.nodes.length; i<j; i++){
         var option = document.createElement('option');
-        option.setAttribute('value', i);
         var newOption = get('select').appendChild(option);
-        newOption.innerHTML = this.nodes[i]['School'];
+        newOption.setAttribute('school', this.nodes[i]['School'])
+        newOption.innerHTML = this.nodes[i]['School'];      
     }
 
-    
+    // Fool with the select bar
+    var selectForm = get('#select');
+    selectForm.addEventListener('change', function(e){
+        // var target = e.target.value;
+        // var circle = get("circle[school='"+ target + "']");
+        var circle = document.getElementById(e.target.value);
+    });
 };
 
 Bubble.prototype.reset_svg = function() {
+    d3.selectAll('#groupCircles').remove();
     d3.selectAll('.circle').remove();
     d3.selectAll('.sub_titles').remove();
 };
@@ -331,8 +339,7 @@ Bubble.prototype.graph = function(){
     this.add_tootltips();
     this.group_bubbles(); 
     this.make_legend();
-    this.add_search_feature();
-    
+    this.add_search_feature();  
 };
 
 Bubble.prototype.change = function(){
@@ -342,7 +349,7 @@ Bubble.prototype.change = function(){
     this.add_tootltips();
     this.group_bubbles(); 
     this.make_legend();
-    
+    // this.add_search_feature();
 };
 
 // Utility functions
