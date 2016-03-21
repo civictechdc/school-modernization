@@ -1342,31 +1342,6 @@ function initApp(presetMode) {
         console.log("  selectedSchoolsCt: ", schoolsCollectionObj.selectedSchoolsArray.length);
         console.log("  schoolMarkersArrayCt: ", schoolsCollectionObj.schoolMarkersArray.length);
 
-        // ======= ======= ======= schoolMarkerOverlay [future] ======= ======= =======
-
-        // == make marker overlay object
-        // schoolMarkerOverlay.prototype = new google.maps.OverlayView();
-        // var schoolMarkerImageD = 'images/DCPSmarker.png';
-        // var schoolMarkerImageC = 'images/PCSmarker.png';
-        // var schoolMarker = new schoolMarkerOverlay(bounds, schoolMarkerImageD, map);
-        // icon: schoolMarkerImage
-
-        // function schoolMarkerOverlay(bounds, image, map) {
-        //     console.log("schoolMarkerOverlay");
-        //
-        //     // Initialize all properties.
-        //     this.bounds_ = bounds;
-        //     this.image_ = image;
-        //     this.map_ = map;
-        //
-        //     // Define a property to hold the image's div. We'll
-        //     // actually create this div upon receipt of the onAdd()
-        //     // method so we'll leave it null for now.
-        //     this.div_ = null;
-        //
-        //     // Explicitly call setMap on this overlay.
-        //     this.setMap(map);
-        // }
     }
 
     // ======= ======= ======= activateSchoolMarker ======= ======= =======
@@ -1491,7 +1466,7 @@ function initApp(presetMode) {
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
-        initFloatingWindows();
+        // initFloatingWindows();
         zonesCollectionObj.getZoneData();
     }
 

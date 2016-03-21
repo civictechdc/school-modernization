@@ -52,11 +52,12 @@ hr {
 
 /* ======= filter selections ======= */
 #filters-selections {
+    position: absolute;
     top: 60px;
+    left: 380px;
     width: 60%;
     height: 36px;
-    float: left;
-    padding-right: 20px;
+    padding-left: 20px;
     background-color: darkslateblue;
 }
 #filters-selections > h2 {
@@ -65,7 +66,7 @@ hr {
     width: 100%;
     font-size: 16px;
     font-style: italic;
-    text-align: right;
+    text-align: left;
     color: gray;
 }
 #filters-selections > h2.filterList {
@@ -73,7 +74,7 @@ hr {
     margin: 10px 20px 10px 0;
     width: 100%;
     font-size: 16px;
-    text-align: right;
+    text-align: left;
     color: white;
 }
 .filterLabel {
@@ -87,7 +88,7 @@ hr {
     height: auto;
     position: absolute;
     top: 60px;
-    left: 65%;
+    left: 10px;
     background-color: #fff2e5;
     box-shadow: 4px 4px 4px #555;
     border-radius: 6px 6px 2px 2px;
@@ -98,7 +99,7 @@ hr {
     height: auto;
     position: absolute;
     top: 57px;
-    left: 65%;
+    left: 5%;
     background-color: white;
     box-shadow: 4px 4px 4px #555;
     border-radius: 6px 6px 2px 2px;
@@ -240,7 +241,8 @@ td {
 /* ======= map ======= */
 #toolMap-container {
     width: 60%;
-    left: 0;
+    left: 380px;
+    top: 36px;
     height: 600px;
 }
 #storyMap-container {
@@ -432,10 +434,10 @@ hr {
     display: none;
     height: auto;
     position: absolute;
-    top: 44%;
-    left: 65%;
+    top: 340px;
+    left: 10px;
     width: 360px;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     border-collapse: collapse;
     border-spacing: 0;
     box-shadow: 6px 6px 5px #888888;
@@ -590,17 +592,25 @@ a.value-text:hover {
 }
 
 /* ======= chart ======= */
-#chart-container {
-    display: none;
-    height: auto;
+#chart-message {
     position: absolute;
-    top: 42%;
-    left: 65%;
+    top: 60px;
+    left: 160px;
+    width: 160px;
+    z-index: 999;
+}
+#chart-message > p {
+    color: red;
+}
+#chart-container {
+    position: absolute;
+    left: 10px;
     width: 360px;
-    margin-top: 20px;
-    padding: 0;
     border-collapse: collapse;
     border-spacing: 0;
+    box-shadow: 6px 6px 5px #888888;
+    border-radius: 6px 6px 2px 2px;
+    background-color: rgba(255, 255, 255, 0.9);
     z-index: 9;
 }
 #chart {
@@ -718,223 +728,3 @@ label {
 .overflow {
     height: 100px;
 }
-
-/*.filter2 {
-    position: relative;
-    width: 120px;
-    height: 40px;
-    margin: 2px 6px;
-    padding: 0;
-    text-align: center;
-    border-radius: 25px;
-    background-color: red;
-    background-color: #fdb863;
-}
-.filter4 {
-    position: relative;
-    width: 240px;
-    height: 36px;
-    margin: 2px 12px;
-    padding: 0;
-    text-align: center;
-    border-radius: 25px;
-    background-color: red;
-    background-color: #fdb863;
-}*/
-
-
-/* ======= mapLegend ======= */
-/*#legend-container {
-    display: none;
-    height: auto;
-    position: absolute;
-    top: 42%;
-    left: 65%;
-    width: 50%;
-    height: auto;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    background-color: rgba(255, 255, 255, 0.9);
-    z-index: 9;
-}
-#legend > th {
-    position: relative;
-    height: 10px;
-    color: white;
-    background-color: firebrick;
-}
-#legend > tr {
-    position: relative;
-    height: 8px;
-}
-.minMaxCol {
-    position: relative;
-    width: 70%;
-    height: 8px;
-    margin: -4px 0;
-}
-.colorChipCol {
-    position: relative;
-    width: 30%;
-    height: 8px;
-}
-.minMax {
-    position: relative;
-    padding: 1px 0;
-    margin: 1px 2px;
-    padding: 0;
-    text-align: center;
-    font-weight: 400;
-	font-size: 12px;
-    color: purple;
-}
-.colorChip {
-    position: relative;
-    margin: 5px 5px;
-    width: 40px;
-    height: 15px;
-}*/
-
-/* ======= tooltips ======= */
-/*#tooltips {
-    position: absolute;
-    height: 24px;
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 2px 2px 2px #222;
-    border-radius:2px;
-    z-index: 999;
-}
-#tooltips p {
-    margin: 8px 20px 4px 20px;
-    line-height: 12px;
-    font-size: 12px;
-    font-weight: bold;
-}*/
-
-/* ======= page nav ======= */
-/*#page-nav {
-    width: 100%;
-    float: left;
-}
-#page-nav > .nav-list {
-    display: block;
-	list-style: none;
-	position: relative;
-    width: 100%;
-	margin: 0;
-	padding: 0;
-    z-index: 999;
-}
-#page-nav > .nav-list li {
-	position: relative;
-    float: left;
-    width: 120px;
-    height: 36px;
-	margin: 0;
-	padding: 0;
-    color: white;
-    background: #ddd9b3;
-}
-#page-nav > .nav-list a {
-    display: inline-block;
-    width: 100%;
-    margin: 0;
-	padding-top: 8px;
-    text-align: center;
-	text-decoration: none;
-	font-weight: 700;
-	font-size: 14px;
-    color: #333;
-	font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-#page-nav > .nav-list li:hover {
-	background:#ffd9b3;
-}*/
-
-
-/* ======= rankLegend ======= */
-/*#rankLegend {
-    display: none;
-    height: auto;
-    position: absolute;
-    top: 40%;
-    left: 65%;
-    width: 360px;
-    margin-top: 20px;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    background-color: rgba(255, 255, 255, 0.9);
-    z-index: 9;
-}
-#rankLegend > th {
-    position: relative;
-    height: 10px;
-    color: white;
-    background-color: firebrick;
-}
-.rank-col {
-    position: relative;
-    width: 30%;
-    height: 60px;
-    margin: 4px 0;
-}
-.rank-scale {
-    position: relative;
-    width: 30%;
-    height: 60px;
-    margin: 4px 0;
-}
-.rank-school {
-    position: relative;
-    width: 30%;
-    height: 60px;
-    margin: 4px 0;
-}
-.rank-label {
-    position: relative;
-    padding: 1px 0;
-    margin: 1px 2px;
-    padding: 0;
-    text-align: center;
-    font-weight: 400;
-	font-size: 12px;
-    color: purple;
-}
-.rank-Chip {
-    position: relative;
-    margin: 5px 5px;
-    width: 10px;
-    height: 60px;
-    background-color: red;
-}*/
-
-/* ======= mouseover ======= */
-/*#mouseover-text {
-    position: absolute;
-    top: 460px;
-    left: 73%;
-    width: 20%;
-    height: 36px;
-    background-color: white;
-    box-shadow: 4px 4px 4px #555;
-    border-radius: 6px 6px 2px 2px;
-    z-index: 999;
-}*/
-
-/* ======= legend ======= */
-/*#chart {
-    display:none;
-    width:360px;
-    height:360px;
-    position:absolute;
-    top:300px;
-    left:60%;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
-    background-color: rgba(255, 255, 255, 0.9);
-    z-index:99;
-}*/

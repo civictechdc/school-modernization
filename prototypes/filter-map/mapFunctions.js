@@ -55,6 +55,7 @@ function initMap(zonesCollectionObj, displayObj) {
             center: {lat: 38.89, lng: -77.00},
             disableDefaultUI: true,
             disableDoubleClickZoom: true,
+            disableDragZoom: true,
             draggable: true,
             styles: styleArray,     // styles for map tiles
             mapTypeId: google.maps.MapTypeId.TERRAIN,
