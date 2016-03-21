@@ -43,17 +43,22 @@ hr {
 }
 
 /* ======= title ======= */
+.header {
+    background-color: black;
+}
 .page-title > h1 {
     display: block;
-    margin: 10px;
+    margin: 0;
+    padding: 10px;
     text-align: left;
-    color: black;
+    color: white;
+    background-color: black;
 }
 
 /* ======= filter selections ======= */
 #filters-selections {
     position: absolute;
-    top: 60px;
+    top: 80px;
     left: 380px;
     width: 60%;
     height: 36px;
@@ -87,7 +92,7 @@ hr {
     width: 360px;
     height: auto;
     position: absolute;
-    top: 60px;
+    top: 80px;
     left: 10px;
     background-color: #fff2e5;
     box-shadow: 4px 4px 4px #555;
@@ -242,7 +247,7 @@ td {
 #toolMap-container {
     width: 60%;
     left: 380px;
-    top: 36px;
+    top: 56px;
     height: 600px;
 }
 #storyMap-container {
@@ -252,15 +257,7 @@ td {
     top: 120px;
 }
 
-/* ======= navbar ======= */
-/*.labelText {
-    display: inline-block;
-    width: 30%;
-	margin-left: 10px;
-	padding: 0;
-    text-align: right;
-    color: red;
-}*/
+/* ======= main-nav ======= */
 #main-nav {
     width: 100%;
     float: left;
@@ -434,10 +431,9 @@ hr {
     display: none;
     height: auto;
     position: absolute;
-    top: 340px;
+    top: 360px;
     left: 10px;
     width: 360px;
-    /*margin-top: 20px;*/
     border-collapse: collapse;
     border-spacing: 0;
     box-shadow: 6px 6px 5px #888888;
@@ -605,6 +601,7 @@ a.value-text:hover {
 #chart-container {
     position: absolute;
     left: 10px;
+    top: 380px;
     width: 360px;
     border-collapse: collapse;
     border-spacing: 0;
