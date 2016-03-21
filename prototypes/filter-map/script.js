@@ -74,6 +74,7 @@ function initApp(presetMode) {
         this.zoneGeojson_A = null;         // geojson data
         this.zoneGeojson_B = null;       // geojson data
         this.zoneGeojson_AB = null;       // geojson data
+        this.mapBounds = null;
         this.aggregatorArray = [];
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
@@ -179,10 +180,8 @@ function initApp(presetMode) {
 
         for (var i = 0; i < this.filterMenusArray.length; i++) {
             nextMenu = this.filterMenusArray[i];
-            console.log("  nextMenu[0]: ", nextMenu[0]);
             for (var j = 1; j < nextMenu.length; j++) {
                 nextFilter = nextMenu[j];
-                console.log("  nextFilter.text: ", nextFilter.text);
                 this.activateFilterLink(nextFilter);
             }
         }

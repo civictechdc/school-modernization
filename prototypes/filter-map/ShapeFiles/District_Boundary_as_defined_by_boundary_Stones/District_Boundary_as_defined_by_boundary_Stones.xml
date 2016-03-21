@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<origin/>
+<pubdate>20110715</pubdate>
+<title>DC Boundary as defined by Boundary Stones</title>
+<geoform>vector digital data</geoform>
+<pubinfo>
+<publish>DC GIS</publish>
+</pubinfo>
+<lworkcit>
+<citeinfo>
+<title>DC Geographic Information System</title>
+</citeinfo>
+</lworkcit>
+</citeinfo>
+</citation>
+<descript>
+<abstract>District of Columbia boundary. The dataset is a polygon representing the District of Columbia boundary, created as part of the DC Geographic Information System (DC GIS) for the D.C. Office of the Chief Technology Officer (OCTO) and participating D.C. government agencies. The boundary was created by connecting all of the boundary stone locations into a single polygon. All DC GIS data is stored and exported in Maryland State Plane coordinates NAD 83 meters. METADATA CONTENT IS IN PROCESS OF VALIDATION AND SUBJECT TO CHANGE.</abstract>
+<purpose>This data is used for the planning and management of Washington, D.C. by local government agencies.</purpose>
+</descript>
+<timeperd>
+<timeinfo>
+<sngdate>
+<caldate>20110715</caldate>
+</sngdate>
+</timeinfo>
+<current>publication date</current>
+</timeperd>
+<status>
+<progress>Complete</progress>
+<update>As needed</update>
+</status>
+<spdom>
+<bounding>
+<westbc>-180</westbc>
+<eastbc>180</eastbc>
+<northbc>90</northbc>
+<southbc>-90</southbc>
+</bounding>
+</spdom>
+<keywords>
+<theme>
+<themekt>None</themekt>
+<themekey>Boundary</themekey>
+<themekey>boundary</themekey>
+<themekey>Government Jurisdiction</themekey>
+<themekey>Political Jurisdiction</themekey>
+<themekey>imageryBasemapsEarthCover</themekey>
+</theme>
+<theme>
+<themekt>ISO 19115 Topic Categories</themekt>
+<themekey>imageryBaseMapsEarthCover</themekey>
+</theme>
+<place>
+<placekt>None</placekt>
+<placekey>Washington</placekey>
+<placekey>D.C.</placekey>
+<placekey>DCGIS</placekey>
+<placekey>DC</placekey>
+<placekey>DC GIS</placekey>
+<placekey>District of Columbia</placekey>
+</place>
+</keywords>
+<accconst>None</accconst>
+<useconst>http://dc.gov/page/terms-and-conditions-use-district-data</useconst>
+<ptcontac>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5:00 pm</hours>
+</cntinfo>
+</ptcontac>
+<datacred>Department of Consumer and Regulatory Affairs/Office of the Surveyor</datacred>
+<native>Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.4000</native>
+</idinfo>
+<dataqual>
+<attracc>
+<attraccr>Data believed to be complete and accurate as of the time period cited. Subject to change. Digital version compared with original source data for accuracy and completeness. In process of validation by source and/or responsible agency.</attraccr>
+</attracc>
+<logic>In process of validation by source and/or responsible agency.</logic>
+<complete>Data believed to be complete and accurate, subject to change. Digital version compared with original source data for accuracy and completeness. In process of validation by source and/or responsible agency.</complete>
+<posacc>
+<horizpa>
+<horizpar>Boundary based on monuments placed with Surveyed accuracy is +/- 5cm horizontal and +/- 9cm vertical.</horizpar>
+</horizpa>
+<vertacc>
+<vertaccr>N/A</vertaccr>
+</vertacc>
+</posacc>
+<lineage>
+<srcinfo>
+<srccite>
+<citeinfo>
+<title>Planimetric water feature</title>
+</citeinfo>
+</srccite>
+<srcscale>1000</srcscale>
+<typesrc>None</typesrc>
+<srccitea>Planimetric water feature</srccitea>
+<srccontr>boundary</srccontr>
+</srcinfo>
+<srcinfo>
+<srccite>
+<citeinfo>
+<pubdate>20110715</pubdate>
+<title>Boundary Stones</title>
+</citeinfo>
+</srccite>
+<typesrc>None</typesrc>
+<srccitea>Boundary Stones</srccitea>
+<srccontr>Field surveyed</srccontr>
+</srcinfo>
+<procstep>
+<procdesc>OCTO GIS staff used arcgis desktop to connect all of the boundary stones into three lines covering the north east and west portions of the District. The western boundary of the potomac, acquired from the water layer, was used to complete the boundary. Staff intersected the water and lines at the western most location still in the water but near to Virginia.</procdesc>
+<procdate>20010806</procdate>
+<proccont>
+<cntinfo>
+<cntorgp>
+<cntorg>A Morton Thomas Engineering</cntorg>
+<cntper>Dan Schriever</cntper>
+</cntorgp>
+<cntpos>Director of Surveying</cntpos>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>12750 Twinbrook Pkwy</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20852</postal>
+<country>US</country>
+</cntaddr>
+<cntvoice>301-881-2545</cntvoice>
+<cntfax>301-881-0814</cntfax>
+<cntemail>dschriever@amtengineering.com</cntemail>
+<hours>8:30 am - 5:00 pm</hours>
+</cntinfo>
+</proccont>
+</procstep>
+</lineage>
+</dataqual>
+<spdoinfo>
+<direct>Vector</direct>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>1</ptvctcnt>
+</sdtsterm>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>1</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>DCGIS.BoundaryStonesPly</enttypl>
+</enttyp>
+<attr>
+<attrlabl>CITY_FIPS</attrlabl>
+<attrdef>District FIPS code</attrdef>
+</attr>
+<attr>
+<attrlabl>Shape</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SHAPE.AREA</attrlabl>
+</attr>
+<attr>
+<attrlabl>CAPITAL</attrlabl>
+<attrdef>Capital Name</attrdef>
+</attr>
+<attr>
+<attrlabl>CITY_NAME</attrlabl>
+<attrdef>District name</attrdef>
+</attr>
+<attr>
+<attrlabl>STATE_FIPS</attrlabl>
+<attrdef>State FIPS code</attrdef>
+</attr>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>WEB_URL</attrlabl>
+<attrdef>Web Link</attrdef>
+</attr>
+<attr>
+<attrlabl>STATE_CITY</attrlabl>
+<attrdef>State and City Name</attrdef>
+</attr>
+<attr>
+<attrlabl>STATE_NAME</attrlabl>
+<attrdef>State Name</attrdef>
+</attr>
+<attr>
+<attrlabl>SHAPE.LEN</attrlabl>
+</attr>
+<attr>
+<attrlabl>AREAMILES</attrlabl>
+<attrdef>Area of District in Square Miles</attrdef>
+</attr>
+<attr>
+<attrlabl>AREAKM</attrlabl>
+<attrdef>District of Columbia area in Square KM</attrdef>
+</attr>
+</detailed>
+</eainfo>
+<distinfo>
+<distrib>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5:00 pm</hours>
+<cntinst>dcgis@dc.gov</cntinst>
+</cntinfo>
+</distrib>
+<distliab>Acknowledgment of the DC Geographic Information Systems Program (DC GIS). The District of Columbia Government makes no claims as to the completeness, accuracy or content of any data contained hereon, and makes no representation of any kind, including, but not limited to, the warranty of the accuracy or fitness for a particular use, nor are any such warranties to be implied or inferred with respect to the information or data furnished herein.</distliab>
+<custom>Most DC GIS datasets can be downloaded from "http://dcgis.dc.gov" on the data center page. Orders can also be made by contacting OCTO GIS at "dcgis@dc.gov", especially for datasets not available for download.</custom>
+</distinfo>
+<metainfo>
+<metd>20111026</metd>
+<metrd>01/07/04</metrd>
+<metc>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5:00 pm</hours>
+<cntinst>email</cntinst>
+</cntinfo>
+</metc>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>
