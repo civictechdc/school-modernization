@@ -337,6 +337,7 @@ goodstartLEP<-subset(dcFullNew,!(dcFullNew$School.ID %in% fixedLEP$School.ID))
 dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
 dcFullUpdated$ESLPer<-dcFullUpdated$Limited.English.Proficient/dcFullUpdated$Total.Enrolled
 dcFullUpdated$SPEDPer<-dcFullUpdated$SPED/dcFullUpdated$Total.Enrolled
+dcFullUpdated$LifetimeBudget<-dcFullUpdated$MajorExp9815 + dcFullUpdated$TotalAllotandPlan1621
 
 ### Flag Charters that closed in 2015
 dcFullUpdated$Open.Now<-ifelse(grepl("Community Academy PCS",dcFullUpdated$School),0,
