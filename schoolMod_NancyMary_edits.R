@@ -4,91 +4,89 @@ library(gtools)
 library(reshape)
 library(ggmap)
 library(rgdal)
-### read in final ### 
-### read in final ### 
-### read in final ### 
-dcFull<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/Output%20Data/Old/DCSchoolsMaster_213_21CSF_edits.csv",
-          stringsAsFactors=FALSE, strip.white=TRUE)[-c(35)]
-dcFull<-subset(dcFull,dcFull$School!="")
-
-enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/2014-15%20Enrollment%20Audit.csv",
-                 stringsAsFactors=FALSE, strip.white=TRUE)[c(1,4:21,25:30)]
-
-closedCharter<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/Output%20Data/Old/PCS_MasterClosed_210.csv",
-                 stringsAsFactors=FALSE, strip.white=TRUE)
-
-charterFuture<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/FAc%20Allowance%201999-2021-Table%201.csv",
-                        stringsAsFactors=FALSE, strip.white=TRUE)[c(1,3:8)]
-charterFuture<-subset(charterFuture,charterFuture$Master.PCS.List.1998.2014.15!="")
+library(zoo)
 ### Functions ###
+blanks<-function(x) {
+  x<-rep(NA,47)
+}
 money<-function(x) {
   x<-(sub("\\$","",x))
 }
 numeric<- function(x) {
   x<-as.numeric(gsub(",","",x))
 }
+addressClean<-function(x) {
+  x<-gsub("Street| street| ST","St",x)
+  x<-gsub("Avenue| Av ","Ave",x)
+  x<-gsub("Place","Pl",x)
+  x<-gsub("Road","Rd",x)
+  x<-gsub("Martin Luther King Jr","Martin Luther King",x)
+  x<-gsub("(Main Office)|\n| |[[:punct:]]","",x)
+  x<-tolower(x)
+}
+textedit<-function (x) {
+  x<-tolower(x)
+  x<-gsub("pcs| es| ES| ms|MS| HS|[[:punct:]]","",x)
+  x<-gsub("[[:space:]]","",x)
+}
 
+### read in data ### 
+### read in data ### 
+### read in data ###
+#Nancy's corrected 
+dcFull<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/Output%20Data/Old/DCSchoolsMaster_213_21CSF_edits.csv",
+          stringsAsFactors=FALSE, strip.white=TRUE)[-c(35)]
+dcFull<-subset(dcFull,dcFull$School!="")
 
-### Add in Future Spending for Charters ###
-### Add in Future Spending for Charters ###
-### Add in Future Spending for Charters ###
-charterFuture$FY16<-numeric(charterFuture$FY2016.FA)
-charterFuture$FY17<-numeric(charterFuture$FY2017.FA)
-charterFuture$FY18<-numeric(charterFuture$FY2018.FA)
-charterFuture$FY19<-numeric(charterFuture$FY2019.FA)
-charterFuture$FY20<-numeric(charterFuture$FY2020.FA)
-charterFuture$FY21<-numeric(charterFuture$FY2021.FA)
-charterFuture$TotalAllotandPlan1621<-charterFuture$FY21 + charterFuture$FY20 + charterFuture$FY19 +
-  charterFuture$FY18 + charterFuture$FY17 + charterFuture$FY16
+#Nancy's corrected from 3-8
+nancyNewEdits<-read.csv("https://raw.githubusercontent.com/katerabinowitz/school-modernization/master/InputData/DC_Schools_Master_214-NH-Corrected-38.csv",
+                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:4,10)]
+colnames(nancyNewEdits)[c(3)]<-"Name"
+nancyNewEdits<-subset(nancyNewEdits,nancyNewEdits$Name!="DCPS MultiSchool")
 
-OpenFuture<-subset(charterFuture,charterFuture$TotalAllotandPlan1621!=0)
-OpenFuture$SchoolName<-gsub("  "," ",OpenFuture$Master.PCS.List.1998.2014.15)
-OpenFuture$SchoolName<-ifelse(OpenFuture$SchoolName=="AppleTree Douglass/Savannah Terr.","AppleTree Southeast",
-                        ifelse(OpenFuture$SchoolName=="Capital City Upper School","Capital City High School",
-                          ifelse(OpenFuture$SchoolName=="Cesar Chavez Bruce Prep","Cesar Chavez PCS Chavez Prep",
-                            ifelse(OpenFuture$SchoolName=="DCI, District of Columbia International School","District of Columbia International School",
-                             ifelse(OpenFuture$SchoolName=="E.L. Haynes Kansas Ave Elementary","E.L. Haynes PCS Kansas Avenue (Elementary School)",
-                               ifelse(OpenFuture$SchoolName=="E.W. Stokes","Elsie Whitlow Stokes Community Freedom PCS",
-                                 ifelse(OpenFuture$SchoolName=="Friendship Collegiate","Friendship Woodson Collegiate Academy",
-                                   ifelse(OpenFuture$SchoolName=="Next Step","The Next Step",OpenFuture$SchoolName ))))))))
+#source data for updates
+enroll<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/2014-15%20Enrollment%20Audit.csv",
+                 stringsAsFactors=FALSE, strip.white=TRUE)[c(1,4:21,25:30)]
 
+closedCharter<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/PCS_MasterClosed_210%203_14%202.csv",
+                           stringsAsFactors=FALSE, strip.white=TRUE)[-c(5)]
 
-OpenFuture<-OpenFuture[order(OpenFuture$SchoolName),]
-OpenFuture<-OpenFuture[c(14:15)]
+charterFuture<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/FAc%20Allowance%201999-2021-Table%201.csv",
+                        stringsAsFactors=FALSE, strip.white=TRUE)[c(1,3:8)]
+charterFuture<-subset(charterFuture,charterFuture$Master.PCS.List.1998.2014.15!="")
 
-charterFull<-subset(dcFull, dcFull$Agency=="PCS")[c(2)]
-charter<-unique(charterFull)
-charter$School2<-gsub("  "," ",charter$School)
-charter<-charter[order(charter$School2),]
+CharterDataSheet<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/Appendix%20B_Public%20Charter%20Facility%20Data%20Sheet%20for%20SY14-15%20NH.csv",
+                           stringsAsFactors=FALSE, strip.white=TRUE)[c(1:5,7:9)]
+colnames(CharterDataSheet)<-c("LEA.Code","School.ID","School","Level","Address","maxOccupancy","totalSQFT", "Total.Enroll")
+CharterDataSheet<-subset(CharterDataSheet,grepl("^[[:digit:]]",CharterDataSheet$LEA.Code))
 
-futureBind<-cbind(OpenFuture,charter)[c(1,3)]
-colnames(futureBind)[c(2)]<-c("School")
+#New charter cap data
+charterHSCap<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/HS%20Facts%20SY14-15%20Appendix4.csv",
+                       stringsAsFactors=FALSE, strip.white=TRUE,skip=2)[c(1:3,9)]
+charterHSCap<-subset(charterHSCap,charterHSCap$School.Address..SY14.15!="")
 
-charterJoin<-subset(dcFull, dcFull$Agency=="PCS")[-c(11)]
-charterFull<-join(charterJoin,futureBind,by="School")
+charterMSCap<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/MS%20Facts%20SY14-15%20Appendix4.csv",
+                       stringsAsFactors=FALSE, strip.white=TRUE,skip=2)[c(1:3,9)]
+charterMSCap<-subset(charterMSCap,charterMSCap$School.Address..SY14.15!="")
 
-DCPS<-subset(dcFull, dcFull$Agency !="PCS")
-dcFull<-rbind(DCPS,charterFull)
+charterESCap<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/InputData/ES%20Facts%20SY14-15%20Appendix4.csv",
+                       stringsAsFactors=FALSE, strip.white=TRUE,skip=2)[c(1:3,9)]
+charterESCap<-subset(charterESCap,charterESCap$School.Address..SY14.15!="")
+charterESCap$School.ID[charterESCap$School.ID == ""] <- NA
+charterESCap$School.ID  <- na.locf(charterESCap$School.ID )
+colnames(charterESCap)[c(4)]<-"Programmatic.Capacity..SY14.152"
 
-### update lat long and calculated fields to account for updated fields ###
-### update lat long and calculated fields to account for updated fields ###
-### update lat long and calculated fields to account for updated fields ###
-dcFull$MajorExp9815<-money(dcFull$MajorExp9815)
-dcFull$MajorExp9815<-numeric(dcFull$MajorExp9815)
-dcFull$totalSQFT<-numeric(dcFull$totalSQFT)
-attach(dcFull)
+charterCap<-rbind(charterESCap,charterMSCap,charterHSCap)
+charterCap$Programmatic.Capacity..SY14.152<-gsub("[[:punct:]]","",charterCap$Programmatic.Capacity..SY14.152)
+charterCap<-charterCap[order(charterCap$School.Address..SY14.15),]
+charterCap$addressMatch<-addressClean(charterCap$School.Address..SY14.15)
+charterCap$Agency<-rep("PCS",139)
+charterCap<-charterCap[!duplicated(charterCap$addressMatch),][c(4:6)]
+rm(charterESCap,charterMSCap,charterHSCap)
 
-dcFull$AtRiskPer<-At_Risk/Total.Enrolled
-dcFull$SpentPerMaxOccupancy<-ifelse(Agency=="DCPS",MajorExp9815/maxOccupancy,MajorExp9815/Total.Enrolled)
-dcFull$SpentPerSqFt<-MajorExp9815/totalSQFT
-
-dcFull$AnnualExpenseAverage<-MajorExp9815/YearsOpen
-dcFull$AnnualSpentPerMaxOccupany<-ifelse(Agency=="DCPS",dcFull$AnnualExpenseAverage/maxOccupancy,
-                                         dcFull$AnnualExpenseAverage/Total.Enrolled)
-
-dcFull$AnnualSpentPerSqFt<-dcFull$AnnualExpenseAverage/totalSQFT
-
-###add back in school code
+###add back in school code###
+###add back in school code###
+###add back in school code###
 attach(dcFull)
 schoolCode<-enroll[c(2:3)]
 dcFull$School.Name<-dcFull$School
@@ -115,16 +113,206 @@ miss<-cbind(missEnroll, missDC1)[-c(37)]
 
 missDC2$School.ID<-ifelse(missDC2$School.Name=="Oyster-Adams Bilingual School",292,NA)
 
-dcCodes<-rbind(join01,miss,missDC2)[-c(16:18)]
+dcFull<-rbind(join01,miss,missDC2)[-c(2)]
+rm(miss, missDC, missDC1, missDC2,join01, missEnroll, enroll,schoolCode)
+
+### fixes from Mary 3-8 ###
+### fixes from Mary 3-8 ###
+### fixes from Mary 3-8 ###
+#remove unnecessary columns + rows
+dcFull<-subset(dcFull,!(grepl("bowen|mmwashingtion|DCPS MultiSchool|Incarcerated Youth|Youth Services Center|Dorothy Height",
+                            dcFull$School)))
+dcFull<-dcFull[-c(6:7)]
+
+#fill in address#
+dcFull$Address<-ifelse(dcFull$School=="brucemonroe-demolished","3012 Georgia Ave NW",
+                  ifelse(dcFull$School=="garnettpatterson","2001 10th St NW",
+                    ifelse(dcFull$School=="macfarland","4400 Iowa Ave NW",
+                      ifelse(dcFull$School=="Malcolmx","1351 Alabama Ave SE",
+                        ifelse(dcFull$School=="marshall","3100 Fort Lincoln Drive SE",
+                          ifelse(dcFull$School=="prharris","4600 Livingston Rd SE",
+                            ifelse(dcFull$School=="rhterrell","1000 1st St NW",
+                              ifelse(dcFull$School=="ronbrown","4800 Meade St NE",
+                                ifelse(dcFull$School=="rudolph","5200 2nd St NW",
+                                 ifelse(dcFull$School=="shaw","925 Rhode Island Ave NW",
+                                   dcFull$Address))))))))))
+
+#correct maxOccupancy where necessary for DCPS#
+dcFull$maxOccupancy<-ifelse(dcFull$School=="McKinley MS",340,
+                            ifelse(dcFull$School=="ronbrown",500,
+                                   dcFull$maxOccupancy))
+
+#bring in new maxOccupancy numbers for charters
+dcFull$addressMatch<-addressClean(dcFull$Address)
+#correct for charters that are in same building but address is one-off
+dcFull$addressMatch<-ifelse(grepl("Capital City",dcFull$School),"100peabodystnw",
+                          ifelse(grepl("Preparatory Benning",dcFull$School),"10041ststne",
+                            ifelse(grepl("Parkside",dcFull$School),"3701hayesstne",
+                                ifelse(grepl("Washington Latin",dcFull$School),"52002ndstnw",
+                                  dcFull$addressMatch ))))
+
+dcFull<-join(dcFull,charterCap,by=c("Agency","addressMatch"), type="left")
+dcFull$maxOccupancy<-ifelse(!(is.na(dcFull$Programmatic.Capacity..SY14.152)),
+                            dcFull$Programmatic.Capacity..SY14.152,dcFull$maxOccupancy)
+rm(charterCap)
+
+#correct or fill in level where necessary #
+dcFull$Level<-ifelse(dcFull$School=="Ballou STAY","ADULT",
+                ifelse(dcFull$School=="Bunker Hill ES","ES/MS",
+                  ifelse(dcFull$School=="Burroughs ES","ES/MS",
+                    ifelse(dcFull$School=="garnettpatterson","MS",
+                      ifelse(dcFull$School=="macfarland","MS",
+                        ifelse(dcFull$School=="McKinley MS","MS",
+                          ifelse(dcFull$School=="ronbrown","HS",
+                            ifelse(dcFull$School=="Roosevelt STAY","ADULT",
+                              dcFull$Level))))))))
+
+#correct SQFT for shared schools/buildings
+dcFull$totalSQFT<-numeric(dcFull$totalSQFT)
+dcFull$unqBuilding<-ifelse((grepl("Bridges",dcFull$School)),0,dcFull$unqBuilding)
+toFix0<-subset(dcFull,dcFull$unqBuilding==0 & dcFull$Agency=="PCS")
+toMerge<-CharterDataSheet[c(3,5,7)]
+colnames(toMerge)<-c("Name","Address","SQFT")
+Fix0<-join(toFix0,toMerge,by=c("Address"), type="left")
+Fix0$totalSQFT<-Fix0$SQFT
+Fix0<-subset(Fix0,!(grepl("Perry Street Preparatory",Fix0$Name)))[c(1:35)]
+
+toFix1<-subset(dcFull,dcFull$unqBuilding!=0 & dcFull$Agency=="PCS")
+toFix1$totalSQFT<- na.locf(toFix1$totalSQFT)
+
+noFix<-subset(dcFull,dcFull$Agency!="PCS")
+dcFull<-rbind(Fix0,toFix1,noFix)
+dcFull<-dcFull[order(dcFull$School),]
+
+rm(toFix0,Fix0,toFix1,noFix,toMerge)
+
+#Update project type with Nancy's new field
+DCPS<-subset(dcFull,dcFull$Agency=="DCPS")[-c(8)]
+PCS<-subset(dcFull,dcFull$Agency!="DCPS")
+Project<-subset(nancyNewEdits,nancyNewEdits$Agency=="DCPS")
+dcFullUp<-join(DCPS, Project,by=c("Agency","School.ID","Address"),type="inner")
+
+missDCPS<-subset(DCPS,!(DCPS$School %in% dcFullUp$School))
+missDCPS$School<-ifelse(missDCPS$School=="Malcolmx","Malcolm X",missDCPS$School)
+missDCPS<-missDCPS[order(missDCPS$School),]
+missProject<-subset(Project,!(Project$Name %in% dcFullUp$Name))
+miss<-cbind(missDCPS,missProject)[-c(35:36,38)]
+
+DCPSProject<-rbind(dcFullUp,miss)[-c(35)]
+dcFull<-rbind(DCPSProject,PCS)
+rm(DCPS,PCS,Project,dcFullUp,missDCPS,missProject,miss,DCPSProject,nancyNewEdits)
+
+#fix Eaton & Roosevelt Stay
+dcFull$FeederHS<-ifelse(dcFull$School=="Eaton ES","Wilson HS",dcFull$FeederHS)
+dcFull$Total.Enrolled<-ifelse(dcFull$School=="Eaton ES",475,dcFull$Total.Enrolled)
+dcFull$Limited.English.Proficient<-ifelse(dcFull$School=="Eaton ES",43,
+                                          ifelse(dcFull$School=="Roosevelt STAY",11,
+                                                 dcFull$Limited.English.Proficient))
+dcFull$At_Risk<-ifelse(dcFull$School=="Eaton ES",26,
+                       ifelse(dcFull$School=="Roosevelt STAY",0,
+                              dcFull$At_Risk))
+dcFull$SPED<-ifelse(dcFull$School=="Eaton ES",35,
+                    ifelse(dcFull$School=="Roosevelt STAY",49,
+                           dcFull$SPED))
+#add Nancy's select new majorExp
+dcFull$MajorExp9815<-ifelse(dcFull$School=="Luke Moore HS","$16,352,780",
+                      ifelse(dcFull$School=="Patterson ES","$32,570,942",
+                        ifelse(dcFull$School=="Phelps ACE HS","$66,594,065",
+                          ifelse(dcFull$School=="Randle Highlands ES","$21,543,183",
+                            ifelse(dcFull$School=="School Without Walls HS","$40,512,741",
+                              ifelse(dcFull$School=="Sousa MS","$34,545,250",
+                                dcFull$MajorExp9815))))))
+
+### Add in Future Spending for Charters ###
+### Add in Future Spending for Charters ###
+### Add in Future Spending for Charters ###
+charterFuture$FY16<-numeric(charterFuture$FY2016.FA)
+charterFuture$FY17<-numeric(charterFuture$FY2017.FA)
+charterFuture$FY18<-numeric(charterFuture$FY2018.FA)
+charterFuture$FY19<-numeric(charterFuture$FY2019.FA)
+charterFuture$FY20<-numeric(charterFuture$FY2020.FA)
+charterFuture$FY21<-numeric(charterFuture$FY2021.FA)
+charterFuture$TotalAllotandPlan1621<-charterFuture$FY21 + charterFuture$FY20 + charterFuture$FY19 +
+  charterFuture$FY18 + charterFuture$FY17 + charterFuture$FY16
+
+OpenFuture<-subset(charterFuture,charterFuture$TotalAllotandPlan1621!=0)
+OpenFuture$SchoolName<-gsub("  "," ",OpenFuture$Master.PCS.List.1998.2014.15)
+OpenFuture$SchoolName<-ifelse(OpenFuture$SchoolName=="AppleTree Douglass/Savannah Terr.","AppleTree Southeast",
+                        ifelse(OpenFuture$SchoolName=="Capital City Upper School","Capital City High School",
+                          ifelse(OpenFuture$SchoolName=="Cesar Chavez Bruce Prep","Cesar Chavez PCS Chavez Prep",
+                            ifelse(OpenFuture$SchoolName=="DCI, District of Columbia International School","District of Columbia International School",
+                             ifelse(OpenFuture$SchoolName=="E.L. Haynes Kansas Ave Elementary","E.L. Haynes PCS Kansas Avenue (Elementary School)",
+                               ifelse(OpenFuture$SchoolName=="E.W. Stokes","Elsie Whitlow Stokes Community Freedom PCS",
+                                 ifelse(OpenFuture$SchoolName=="Friendship Collegiate","Friendship Woodson Collegiate Academy",
+                                   ifelse(OpenFuture$SchoolName=="Next Step","The Next Step",OpenFuture$SchoolName ))))))))
+
+OpenFuture<-OpenFuture[order(OpenFuture$SchoolName),]
+OpenFuture<-OpenFuture[c(14:15)]
+
+charterFull<-subset(dcFull, dcFull$Agency=="PCS")[c(3)]
+charter<-unique(charterFull)
+charter$School2<-gsub("  "," ",charter$School)
+charter<-charter[order(charter$School2),]
+
+futureBind<-cbind(OpenFuture,charter)[c(1,3)]
+colnames(futureBind)[c(2)]<-c("School")
+
+charterJoin<-subset(dcFull, dcFull$Agency=="PCS")[-c(9)]
+charterFull<-join(charterJoin,futureBind,by="School")[c(1:35)]
+
+DCPS<-subset(dcFull, dcFull$Agency !="PCS")
+dcFull<-rbind(DCPS,charterFull)
+rm(DCPS,charterJoin,charterFull,charter,OpenFuture,charterFuture,futureBind,CharterDataSheet)
+
+### Add in Closed Charter information and join with DC Full ###
+### Add in Closed Charter information and join with DC Full ###
+### Add in Closed Charter information and join with DC Full ###
+toAdd<-subset(closedCharter,closedCharter$Action==1)[c(2:7,9:10)]
+colnames(toAdd)[c(1)]<-"School"
+
+toAdd$TotalAllotandPlan1621<-rep(0,47)
+toAdd$LifetimeBudget<-toAdd$MajorExp9815
+toAdd$Agency<-rep("PCS",47)
+dcAlmost<-rbind.fill(dcFull,toAdd)
+
+#spend for charters that are listed closed but open in different variation - add spend over
+#leave out Booker T. Washington - that should be in 'toAdd' and Maya, which should be in 'toDivide'
+toMerge<-subset(closedCharter,closedCharter$Action==2)
+toMerge$MajorExp9815<-money(toMerge$MajorExp9815)
+toMerge$ccSpend<-numeric(toMerge$MajorExp9815)
+ccToMerge<-aggregate(ccSpend ~ Address, toMerge, sum)
+ccToMerge$addressMatch<-addressClean(ccToMerge$Address)
+dcFull<-join(dcAlmost,ccToMerge,by="addressMatch",type="left")
+
+#need to add divide
+
+rm(ccToMerge,dcAlmost,toAdd,toMerge)
+
+### update lat long and calculated fields to account for updated fields ###
+### update lat long and calculated fields to account for updated fields ###
+### update lat long and calculated fields to account for updated fields ###
+dcFull$MajorExp9815<-money(dcFull$MajorExp9815)
+dcFull$MajorExp9815<-numeric(dcFull$MajorExp9815)
+dcFull$maxOccupancy<-numeric(dcFull$maxOccupancy)
+dcFull$ccSpend[is.na(dcFull$ccSpend)] <- 0
+dcFull$MajorExp9815<-dcFull$MajorExp9815+dcFull$ccSpend
+dcFull$totalSQFT<-numeric(dcFull$totalSQFT)
+dcFull<-dcFull[-c(24,27:28,30:34,36:37)]
+attach(dcFull)
+
+dcFull$AtRiskPer<-At_Risk/Total.Enrolled
+dcFull$SpentPerMaxOccupancy<-MajorExp9815/maxOccupancy
+dcFull$SpentPerSqFt<-MajorExp9815/totalSQFT
 
 ### Geocode for address fixes
-noAddress<-subset(dcCodes,is.na(dcCodes$Address))
-yesAddress<-subset(dcCodes,!(is.na(dcCodes$Address)))
+noAddress<-subset(dcFull,is.na(dcFull$Address))
+yesAddress<-subset(dcFull,!(is.na(dcFull$Address)))
 yesAddress$FullAddress<-paste(yesAddress$Address, ",Washington,DC")
 address<-yesAddress$FullAddress
 latlong<-geocode(address, source="google")
 
-ward = readOGR("http://opendata.dc.gov/datasets/a4442c906559456eb6ef3ea0898fe994_32.geojson", "OGRGeoJSON")
+ward=readOGR("http://opendata.dc.gov/datasets/0ef47379cbae44e88267c01eaec2ff6e_31.geojson","OGRGeoJSON")
+
 addAll<-SpatialPoints(latlong, proj4string=CRS(as.character("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")))
 wardID <- over(addAll, ward )
 ward<-wardID[c(4)]
@@ -138,26 +326,24 @@ colnames(dcFull1)[c(34:36)]<-c("longitude","latitude","Ward")
 
 dcFullNew<-rbind(dcFull1,noAddress)[-c(2)]
 
-### Refine unqBuilding indicator to include distinction between shared school and share building
-dupAddress<-dcFullNew[duplicated(dcFullNew[,4]),]
-dupAddress<-dupAddress[order(dupAddress$Address),]
-dupAddress<-subset(dupAddress,!(is.na(dupAddress$Address)))
-allDup<-subset(dcFullNew, dcFullNew$Address %in% dupAddress$Address)
-noDup<-subset(dcFullNew,!(dcFullNew$Address %in% dupAddress$Address))
-
-allDup$unqBuilding<-rep(2,36)
-dcFullUpdated<-rbind(noDup,allDup)
-
 ### Add in missing LEP
-updateLEP<-subset(dcFullUpdated,is.na(dcFullUpdated$Limited.English.Proficient) & !(is.na(dcFullUpdated$Total.Enrolled)))
+updateLEP<-subset(dcFullNew,is.na(dcFullNew$Limited.English.Proficient) & !(is.na(dcFullNew$Total.Enrolled)))
 updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(18,20)]
 enroll_LEP_miss<-enroll[c(2,20:24)]
 fixedLEP<-join(updateLEP,enroll_LEP_miss,by="School.ID", type="left")
 fixedLEP$SPED<-fixedLEP$Level.1+fixedLEP$Level.2+fixedLEP$Level.3+fixedLEP$Level.4
-fixedLEP<-fixedLEP[-c(35:38)]
-goodstartLEP<-subset(dcFullUpdated,!(dcFullUpdated$School.ID %in% fixedLEP$School.ID))
+fixedLEP<-fixedLEP[-c(27:30)]
+goodstartLEP<-subset(dcFullNew,!(dcFullNew$School.ID %in% fixedLEP$School.ID))
 dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
+dcFullUpdated$ESLPer<-dcFullUpdated$Limited.English.Proficient/dcFullUpdated$Total.Enrolled
+dcFullUpdated$SPEDPer<-dcFullUpdated$SPED/dcFullUpdated$Total.Enrolled
 
+### Flag Charters that closed in 2015
+dcFullUpdated$Open.Now<-ifelse(grepl("Community Academy PCS",dcFullUpdated$School),0,
+                          ifelse(grepl("Options PCS",dcFullUpdated$School),0,
+                            ifelse(grepl("Perry Street Prep",dcFullUpdated$School),0,
+                              ifelse(grepl("Tree of Life",dcFullUpdated$School),0,
+                                     dcFullUpdated$Open.Now))))
 ### Clean up school names
 dcFullUpdated$School1<-gsub("PCS","",dcFullUpdated$School)
 dcFullUpdated$School1<-gsub("EC","Education Campus",dcFullUpdated$School1)
@@ -171,11 +357,11 @@ dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Onlin
                       ifelse(dcFullUpdated$School1=="Community Academy CA Online","Community Academy CAPCS Online",
                         ifelse(dcFullUpdated$School1=="Columbia Heights Education Campus (CHEducation Campus)","Columbia Heights Education Campus (CHEC)",
                           ifelse(dcFullUpdated$School1=="bowen","Bowen",
-                            ifelse(dcFullUpdated$School1=="brucemonroe-demolished","Bruce Monroe (demolished)",
+                            ifelse(dcFullUpdated$School1=="brucemonroe-demolished","Bruce Monroe ES (demolished)",
                               ifelse(dcFullUpdated$School1=="ferebeehope","Ferebee Hope",
                                 ifelse(dcFullUpdated$School1=="garnettpatterson","Garnett Patterson",
                                   ifelse(dcFullUpdated$School1=="macfarland","Macfarland",
-                                    ifelse(dcFullUpdated$School1=="Malcolmx","Malcolm X",
+                                    ifelse(dcFullUpdated$School1=="Malcolmx","Malcolm X ES",
                                       ifelse(dcFullUpdated$School1=="marshall","Marshall",
                                         ifelse(dcFullUpdated$School1=="mcterrell","Mcterrell",
                                           ifelse(dcFullUpdated$School1=="mmwashingtion","MM Washington",
@@ -188,62 +374,14 @@ dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Onlin
                                                         ifelse(dcFullUpdated$School1=="wilkinson","Wilkinson",
                                                                dcFullUpdated$School1)))))))))))))))))))
 dcFullUpdated<-dcFullUpdated[-c(3)]
-colnames(dcFullUpdated)[c(35)]<-c("School")
-
+colnames(dcFullUpdated)[c(27)]<-c("School")
+options("scipen"=100, "digits"=4)
+dcFullUpdated<-dcFullUpdated
 
 ### Remove dots in colnames
-colnames(dcFullUpdated)[c(1,16,17,28)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+colnames(dcFullUpdated)[c(1,16,17,25)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
 
 ### All schools except closed charters
 write.csv(dcFullUpdated,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_214.csv",
-          row.names=FALSE)
-
-### All open schools (excluding Incarcerated Youth, Dorothy Haight, CHOICE at Emery and Youth Services Center)
-### for mapping
-dcFullOpen<-subset(dcFullUpdated,dcFullUpdated$Open_Now==1)
-write.csv(dcFullOpen,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_OpenSchools_Master_214.csv",
-          row.names=FALSE)
-
-### All schools - open and closed - for bubble
-bubble<-dcFullUpdated[c(2,4,7,10:15,20,24,25,28,29:31,34,35)]
-
-dupSpend<-bubble[duplicated(bubble[,5]),]
-dupSpend<-subset(dupSpend,!(is.na(dupSpend$MajorExp9815)) & dupSpend$MajorExp9815!=0  )
-allDup<-subset(bubble, bubble$MajorExp9815 %in% dupSpend$MajorExp9815)
-allDup<-allDup[order(allDup$MajorExp9815),]
-
-Single<-allDup[!(duplicated(allDup[,2])),]
-bubbleNoDup<-subset(bubble,!(bubble$School %in% Single$School))
-bubbleXCC<-rbind(bubbleNoDup,Single)
-bubbleXCC<-bubbleXCC[-c(7)]
-
-closedCharter<-closedCharter[c(1,2,6,7)]
-colnames(closedCharter)[c(1)]<-"School"
-closedCharter$Agency<-rep("PCS",81)
-
-blanks<-function(x) {
-  x<-rep(NA,81)
-}
-closedCharter$maxOccupancy<-blanks(closedCharter$maxOccupancy)
-closedCharter$Level<-blanks(closedCharter$Level)
-closedCharter$TotalAllotandPlan1621<-blanks(closedCharter$TotalAllotandPlan1621)
-closedCharter$LifetimeBudget<-blanks(closedCharter$LifetimeBudget)
-closedCharter$FeederMS<-blanks(closedCharter$FeederMS)
-closedCharter$FeederHS<-blanks(closedCharter$FeederHS)
-closedCharter$AtRiskPer<-blanks(closedCharter$AtRiskPer)
-closedCharter$SpentPerMaxOccupancy<-blanks(closedCharter$SpentPerMaxOccupancy)
-closedCharter$SpentPerSqFt<-blanks(closedCharter$SpentPerSqFt)
-closedCharter$AnnualExpenseAverage<-blanks(closedCharter$AnnualExpenseAverage)
-closedCharter$AnnualSpentPerMaxOccupany<-blanks(closedCharter$AnnualSpentPerMaxOccupany)
-closedCharter$AnnualSpentPerSqFt<-blanks(closedCharter$AnnualSpentPerSqFt)
-closedCharter$Ward<-blanks(closedCharter$Ward)
-
-colnames(closedCharter)[c(3)]<-"Open_Now"
-
-bubbleFinal<-rbind(bubbleXCC,closedCharter)
-
-write.csv(bubbleFinal,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Bubbles_Master_214.csv",
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_321.csv",
           row.names=FALSE)
