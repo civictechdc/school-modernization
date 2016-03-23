@@ -6,9 +6,6 @@ library(ggmap)
 library(rgdal)
 library(zoo)
 ### Functions ###
-blanks<-function(x) {
-  x<-rep(NA,47)
-}
 money<-function(x) {
   x<-(sub("\\$","",x))
 }
@@ -202,6 +199,11 @@ DCPSProject<-rbind(dcFullUp,miss)[-c(35)]
 dcFull<-rbind(DCPSProject,PCS)
 rm(DCPS,PCS,Project,dcFullUp,missDCPS,missProject,miss,DCPSProject,nancyNewEdits)
 
+#Feeder MS updates
+dcFull$FeederMS<-ifelse(dcFull$School=="Randle Highlands ES","Sousa MS",
+               ifelse(dcFull$School=="Shepherd ES","Deal MS",
+                      dcFull$FeederMS))
+
 #fix Eaton & Roosevelt Stay
 dcFull$FeederHS<-ifelse(dcFull$School=="Eaton ES","Wilson HS",dcFull$FeederHS)
 dcFull$Total.Enrolled<-ifelse(dcFull$School=="Eaton ES",475,dcFull$Total.Enrolled)
@@ -233,7 +235,7 @@ charterFuture$FY19<-numeric(charterFuture$FY2019.FA)
 charterFuture$FY20<-numeric(charterFuture$FY2020.FA)
 charterFuture$FY21<-numeric(charterFuture$FY2021.FA)
 charterFuture$TotalAllotandPlan1621<-charterFuture$FY21 + charterFuture$FY20 + charterFuture$FY19 +
-  charterFuture$FY18 + charterFuture$FY17 + charterFuture$FY16
+charterFuture$FY18 + charterFuture$FY17 + charterFuture$FY16
 
 OpenFuture<-subset(charterFuture,charterFuture$TotalAllotandPlan1621!=0)
 OpenFuture$SchoolName<-gsub("  "," ",OpenFuture$Master.PCS.List.1998.2014.15)
@@ -267,26 +269,92 @@ rm(DCPS,charterJoin,charterFull,charter,OpenFuture,charterFuture,futureBind,Char
 ### Add in Closed Charter information and join with DC Full ###
 ### Add in Closed Charter information and join with DC Full ###
 ### Add in Closed Charter information and join with DC Full ###
-toAdd<-subset(closedCharter,closedCharter$Action==1)[c(2:7,9:10)]
-colnames(toAdd)[c(1)]<-"School"
+closedCharter$MajorExp9815<-money(closedCharter$MajorExp9815)
+closedCharter$ccSpend<-numeric(closedCharter$MajorExp9815)
 
+dcFull$MajorExp9815<-money(dcFull$MajorExp9815)
+dcFull$MajorExp9815<-numeric(dcFull$MajorExp9815)
+
+#for charters that are have spending under (combined) need to be divided up to current holdings
+# divided between holdings that were 'open' a year after the (combined) 'closed'
+toDivide<-subset(closedCharter,is.na(closedCharter$Action))
+
+toDivideAdd<-subset(toDivide,(grepl("SAIL|Washington Academy|Howard",toDivide$Master.PCS.List.1998.2014.15)))
+toDivideAdd$PCSName
+toDivideAdd$ccSpend/3
+
+toDivideMerge<-subset(toDivide,(grepl("Next Step|Ideal|Option|E.L. Haynes|Maya",toDivide$Master.PCS.List.1998.2014.15)))
+toDivideMerge$Address<-c("3600 Georgia Avenue, NW","5600 East Capitol Street NE",
+                         "6130 N Capitol Street, NW","1375 E Street, NE","3047 15th Street NW")
+  
+toAdd<-subset(closedCharter,closedCharter$Action==1)[c(2:7,9:10,12)]
+toAdd$MajorExp9815<-ifelse(grepl("Howard Road",toAdd$Master.PCS.List.1998.2014.15),toAdd$ccSpend+2945769,
+                  ifelse(grepl("Washington Academy",toAdd$Master.PCS.List.1998.2014.15),toAdd$ccSpend+179450,
+                    ifelse(grepl("SAIL",toAdd$Master.PCS.List.1998.2014.15),toAdd$ccSpend+927867,
+                           toAdd$ccSpend)))
+colnames(toAdd)[c(1)]<-"School"
+toAdd<-toAdd[-c(9)]
 toAdd$TotalAllotandPlan1621<-rep(0,47)
 toAdd$LifetimeBudget<-toAdd$MajorExp9815
 toAdd$Agency<-rep("PCS",47)
 dcAlmost<-rbind.fill(dcFull,toAdd)
 
 #spend for charters that are listed closed but open in different variation - add spend over
-#leave out Booker T. Washington - that should be in 'toAdd' and Maya, which should be in 'toDivide'
+#Booker T Washington to be added as separate line (no currently open iterations) 
+#and Maya Angelou added to Evans Campus only
 toMerge<-subset(closedCharter,closedCharter$Action==2)
-toMerge$MajorExp9815<-money(toMerge$MajorExp9815)
-toMerge$ccSpend<-numeric(toMerge$MajorExp9815)
-ccToMerge<-aggregate(ccSpend ~ Address, toMerge, sum)
+toMerge2<-rbind(toMerge,toDivideMerge)
+toMerge2$Address<-ifelse(toMerge2$Master.PCS.List.1998.2014.15=="AppleTree Parkland",
+                         "2011 Savannah Terrace, SE",toMerge2$Address)
+ccToMerge<-aggregate(ccSpend ~ Address, toMerge2, sum)
+
 ccToMerge$addressMatch<-addressClean(ccToMerge$Address)
-dcFull<-join(dcAlmost,ccToMerge,by="addressMatch",type="left")
+dcAlmost2<-join(dcAlmost,ccToMerge,by="addressMatch",type="left")
 
-#need to add divide
+ccToMergeOut<-subset(ccToMerge,!(ccToMerge$addressMatch %in% dcAlmost2$addressMatch))
+dcAlmost2$ccSpend<-ifelse(dcAlmost2$School=="Maya Angelou Evans Campus PCS",4256639,dcAlmost2$ccSpend)
+dcAlmost2$ccSpend[is.na(dcAlmost2$ccSpend)] <- 0
+dcAlmost2$MajorExp9815<-dcAlmost2$MajorExp9815+dcAlmost2$ccSpend
 
-rm(ccToMerge,dcAlmost,toAdd,toMerge)
+ccToMergeOut<-ccToMergeOut[c(1),][-c(3)]
+colnames(ccToMergeOut)[c(2)]<-"MajorExp9815"
+ccToMergeOut$School<-"Booker T Washington"
+ccToMergeOut$Ward<-1
+ccToMergeOut$TotalAllotandPlan1621<-0
+ccToMergeOut$LifetimeBudget<-ccToMergeOut$MajorExp9815
+ccToMergeOut$Agency<-"PCS"
+ccToMergeOut$YearsOpen<-12
+dcAlmost2<-rbind.fill(dcAlmost2,ccToMergeOut)
+
+#back toDivide
+toDivide2<-subset(toDivide,!(grepl("Next Step|Ideal|Option|SAIL|Washington Academy|Howard|E.L. Haynes|Maya",
+                                   toDivide$Master.PCS.List.1998.2014.15)))
+
+toDivideFunc<-function(dcFullGrep,OpenYr,divideGrep) {
+toAddTo<-subset(dcAlmost2,(grepl(dcFullGrep,dcAlmost2$School) & Open==OpenYr))
+toDivideTo<-subset(toDivide2,grepl(divideGrep,toDivide2$Master.PCS.List.1998.2014.15))
+sum<-sum(toAddTo$Total.Enrolled)
+toAddTo$MajorExp9815<-toAddTo$MajorExp9815+(toDivideTo$ccSpend*(toAddTo$Total.Enrolled/sum))
+toAddTo
+}
+AppleTree<-toDivideFunc("AppleTree Early Learning Center","2008","Apple Tree")
+CapCity<-toDivideFunc("Capital City","2009","Capital City")
+CesarChavez<-toDivideFunc("Cesar","2006","Cesar")
+CommAcademy<-toDivideFunc("Community Academy","2006","Community Academy")
+DCPrep<-toDivideFunc("D C  Preparatory","2008","DC Prep")
+Eagle<-toDivideFunc("Eagle","2010","Eagle")
+Friendship<-toDivideFunc("Friendship PCS","2003","Friendship")
+Hope<-toDivideFunc("Hope Community","2008","Hope")
+KIPP<-toDivideFunc("KIPP","2006","KIPP")
+Latin<-toDivideFunc("Washington Latin","2009","Latin")
+
+addBack<-rbind(AppleTree,CapCity,CesarChavez,CommAcademy,DCPrep,Eagle,Friendship,Hope,KIPP,Latin)
+base<-subset(dcAlmost2,!(dcAlmost2$School %in% addBack$School))
+
+dcFull<-rbind(base,addBack)
+
+rm(addBack,AppleTree,base,CapCity,ccToMerge,ccToMergeOut,CesarChavez,closedCharter,CommAcademy,dcAlmost,dcAlmost2,
+   DCPrep,Eagle,Friendship,Hope,KIPP,Latin,toAdd,toDivide,toDivide2,toDivideAdd,toDivideMerge,toMerge,toMerge2)
 
 ### update lat long and calculated fields to account for updated fields ###
 ### update lat long and calculated fields to account for updated fields ###
@@ -294,10 +362,9 @@ rm(ccToMerge,dcAlmost,toAdd,toMerge)
 dcFull$MajorExp9815<-money(dcFull$MajorExp9815)
 dcFull$MajorExp9815<-numeric(dcFull$MajorExp9815)
 dcFull$maxOccupancy<-numeric(dcFull$maxOccupancy)
-dcFull$ccSpend[is.na(dcFull$ccSpend)] <- 0
-dcFull$MajorExp9815<-dcFull$MajorExp9815+dcFull$ccSpend
+dcFull$MajorExp9815[is.na(dcFull$MajorExp9815)] <- 0
 dcFull$totalSQFT<-numeric(dcFull$totalSQFT)
-dcFull<-dcFull[-c(24,27:28,30:34,36:37)]
+dcFull<-dcFull[-c(24,27:28,30:34,36)]
 attach(dcFull)
 
 dcFull$AtRiskPer<-At_Risk/Total.Enrolled
@@ -339,12 +406,6 @@ dcFullUpdated$ESLPer<-dcFullUpdated$Limited.English.Proficient/dcFullUpdated$Tot
 dcFullUpdated$SPEDPer<-dcFullUpdated$SPED/dcFullUpdated$Total.Enrolled
 dcFullUpdated$LifetimeBudget<-dcFullUpdated$MajorExp9815 + dcFullUpdated$TotalAllotandPlan1621
 
-### Flag Charters that closed in 2015
-dcFullUpdated$Open.Now<-ifelse(grepl("Community Academy PCS",dcFullUpdated$School),0,
-                          ifelse(grepl("Options PCS",dcFullUpdated$School),0,
-                            ifelse(grepl("Perry Street Prep",dcFullUpdated$School),0,
-                              ifelse(grepl("Tree of Life",dcFullUpdated$School),0,
-                                     dcFullUpdated$Open.Now))))
 ### Clean up school names
 dcFullUpdated$School1<-gsub("PCS","",dcFullUpdated$School)
 dcFullUpdated$School1<-gsub("EC","Education Campus",dcFullUpdated$School1)
