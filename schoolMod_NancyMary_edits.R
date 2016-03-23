@@ -452,16 +452,20 @@ dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Onlin
                                                     ifelse(dcFullUpdated$School1=="rudolph","Rudolph",
                                                       ifelse(dcFullUpdated$School1=="shaw","Shaw",
                                                         ifelse(dcFullUpdated$School1=="wilkinson","Wilkinson",
-                                                               dcFullUpdated$School1)))))))))))))))))))
-dcFullUpdated<-dcFullUpdated[-c(3)]
-colnames(dcFullUpdated)[c(27)]<-c("School")
+                                                          ifelse(dcFull$School1=="School Without Walls @ Francis-Stevens Education Campus", "Francis Stevens",
+                                                               dcFull$School1))))))))))))))))))))
+dcFullUpdated<-dcFullUpdated[-c(2)]
+colnames(dcFullUpdated)[c(26)]<-c("School")
 options("scipen"=100, "digits"=4)
 dcFullUpdated<-dcFullUpdated
 
 ### Remove dots in colnames
-colnames(dcFullUpdated)[c(1,16,17,25)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+colnames(dcFullUpdated)[c(1,12:13,21)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+
+dcFullUpdated$School<-ifelse(dcFullUpdated$School=="School Without Walls @ Francis-Stevens Education Campus", "Francis Stevens",
+                             dcFullUpdated$School)
 
 ### All schools except closed charters
 write.csv(dcFullUpdated,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DC_Schools_Master_321.csv",
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchools_FY1415_Master_321.csv",
           row.names=FALSE)
