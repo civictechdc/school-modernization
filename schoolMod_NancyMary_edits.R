@@ -132,7 +132,8 @@ dcFull$Address<-ifelse(dcFull$School=="brucemonroe-demolished","3012 Georgia Ave
                               ifelse(dcFull$School=="ronbrown","4800 Meade St NE",
                                 ifelse(dcFull$School=="rudolph","5200 2nd St NW",
                                  ifelse(dcFull$School=="shaw","925 Rhode Island Ave NW",
-                                   dcFull$Address))))))))))
+                                    ifelse(dcFull$School=="Mamiedlee","100 Galatin St NE",
+                                   dcFull$Address)))))))))))
 
 #correct maxOccupancy where necessary for DCPS#
 dcFull$maxOccupancy<-ifelse(dcFull$School=="McKinley MS",340,
@@ -324,6 +325,7 @@ ccToMergeOut$TotalAllotandPlan1621<-0
 ccToMergeOut$LifetimeBudget<-ccToMergeOut$MajorExp9815
 ccToMergeOut$Agency<-"PCS"
 ccToMergeOut$YearsOpen<-12
+ccToMergeOut$Open.Now<-0
 dcAlmost2<-rbind.fill(dcAlmost2,ccToMergeOut)
 
 #back toDivide
@@ -356,14 +358,30 @@ dcFull<-rbind(base,addBack)
 rm(addBack,AppleTree,base,CapCity,ccToMerge,ccToMergeOut,CesarChavez,closedCharter,CommAcademy,dcAlmost,dcAlmost2,
    DCPrep,Eagle,Friendship,Hope,KIPP,Latin,toAdd,toDivide,toDivide2,toDivideAdd,toDivideMerge,toMerge,toMerge2)
 
-### update lat long and calculated fields to account for updated fields ###
-### update lat long and calculated fields to account for updated fields ###
-### update lat long and calculated fields to account for updated fields ###
-dcFull$MajorExp9815<-money(dcFull$MajorExp9815)
-dcFull$MajorExp9815<-numeric(dcFull$MajorExp9815)
+### split shared enrollment and $ by sq footage ###
+### split shared enrollment and $ by sq footage ###
+### split shared enrollment and $ by sq footage ###
 dcFull$maxOccupancy<-numeric(dcFull$maxOccupancy)
-dcFull$MajorExp9815[is.na(dcFull$MajorExp9815)] <- 0
 dcFull$totalSQFT<-numeric(dcFull$totalSQFT)
+codeDup<-subset(dcFull,(dcFull$School.ID %in% unique(School.ID[duplicated(School.ID)])) & 
+                  !(is.na(dcFull$School.ID)) & dcFull$Agency=="PCS")
+codeDup$School.ID[is.na(codeDup$School.ID)] <- 0
+sqftSum<-aggregate(totalSQFT ~ School.ID, codeDup, sum)
+colnames(sqftSum)<-c("School.ID","sumSQFT")
+
+codeDup2<-join(codeDup,sqftSum, by="School.ID")
+codeDup2$Total.Enrolled<-round((codeDup2$totalSQFT/codeDup2$sumSQFT)*codeDup2$Total.Enrolled)
+codeDup2$MajorExp9815<-round((codeDup2$totalSQFT/codeDup2$sumSQFT)*codeDup2$MajorExp9815)
+codeDup2$TotalAllotandPlan1621<-round((codeDup2$totalSQFT/codeDup2$sumSQFT)*codeDup2$TotalAllotandPlan1621)
+codeDup2<-codeDup2[-c(37)]
+
+codeNoDup<-subset(dcFull,!(dcFull$School.ID %in% codeDup2$School.ID))
+dcFull<-rbind(codeNoDup,codeDup)
+
+### update lat long and calculated fields to account for updated fields ###
+### update lat long and calculated fields to account for updated fields ###
+### update lat long and calculated fields to account for updated fields ###
+dcFull$MajorExp9815[is.na(dcFull$MajorExp9815)] <- 0
 dcFull<-dcFull[-c(24,27:28,30:34,36)]
 attach(dcFull)
 
@@ -378,28 +396,28 @@ yesAddress$FullAddress<-paste(yesAddress$Address, ",Washington,DC")
 address<-yesAddress$FullAddress
 latlong<-geocode(address, source="google")
 
-ward=readOGR("http://opendata.dc.gov/datasets/0ef47379cbae44e88267c01eaec2ff6e_31.geojson","OGRGeoJSON")
+ward=readOGR("https://raw.githubusercontent.com/benbalter/dc-maps/master/maps/ward-2012.geojson","OGRGeoJSON")
 
 addAll<-SpatialPoints(latlong, proj4string=CRS(as.character("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")))
 wardID <- over(addAll, ward )
-ward<-wardID[c(4)]
+ward<-wardID[c(2)]
 
-noAddress$longitude<-rep(NA,20)
-noAddress$latitude<-rep(NA,20)
-noAddress$Ward<-rep(NA,20)
+noAddress$longitude<-rep(NA,4)
+noAddress$latitude<-rep(NA,4)
+noAddress$Ward<-rep(NA,4)
 
-dcFull1<-cbind(yesAddress,latlong,ward)[-c(34)]
-colnames(dcFull1)[c(34:36)]<-c("longitude","latitude","Ward")
+dcFull1<-cbind(yesAddress,latlong,ward)[-c(12:14,28)]
+colnames(dcFull1)[c(25:27)]<-c("longitude","latitude","Ward")
 
 dcFullNew<-rbind(dcFull1,noAddress)[-c(2)]
 
 ### Add in missing LEP
 updateLEP<-subset(dcFullNew,is.na(dcFullNew$Limited.English.Proficient) & !(is.na(dcFullNew$Total.Enrolled)))
-updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(18,20)]
+updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(14,16)]
 enroll_LEP_miss<-enroll[c(2,20:24)]
 fixedLEP<-join(updateLEP,enroll_LEP_miss,by="School.ID", type="left")
 fixedLEP$SPED<-fixedLEP$Level.1+fixedLEP$Level.2+fixedLEP$Level.3+fixedLEP$Level.4
-fixedLEP<-fixedLEP[-c(27:30)]
+fixedLEP<-fixedLEP[-c(26:29)]
 goodstartLEP<-subset(dcFullNew,!(dcFullNew$School.ID %in% fixedLEP$School.ID))
 dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
 dcFullUpdated$ESLPer<-dcFullUpdated$Limited.English.Proficient/dcFullUpdated$Total.Enrolled
