@@ -10,7 +10,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     } else {
         var chartHtml = "<div id='chart'></div>";
     }
-    console.log("  $('#profile-container'): ", $('#profile-container'));
 
     // ======= remove previous chart or profile html if any =======
     if ($('#profile-container').find('#profile').length) {
@@ -20,13 +19,10 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         $("#legend").remove();
     }
 
-    console.log("  $('#chart-container'):1 ", $('#chart-container'));
-
     if ($('#chart-container').find('#chart').length) {
         $("#chart").remove();
         $("#chart-container").append(chartHtml);
         $("#chart").append(messageHtml);
-        console.log("  $('#chart-container'):2 ", $('#chart-container'));
         updateChartStyle();
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
@@ -35,12 +31,10 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         $("#chart-container").append(chartHtml);
         $("#chart").append(messageHtml);
         updateChartStyle();
-        console.log("  $('#chart-container'):3 ", $('#chart-container'));
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
         });
     }
-    console.log("  $('#chart-container'):4 ", $('#chart-container'));
 
     // ======= ======= ======= formatting variables ======= ======= =======
     var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber;
@@ -181,7 +175,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var xScaleLabels = ["scale", "amount", "school"];
     var xScale = d3.scale.ordinal()         // maps input domain to output range
         .domain(xScaleLabels.map(function(d) {
-            // console.log("  d: ", d);
             return d;;
         }))
         .range([0, chartW]);
@@ -189,7 +182,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         // ======= ======= ======= Y SCALE ======= ======= =======
     var yScale = d3.scale.linear()      // maps input domain to output range
         .domain([0, d3.max(barScaleArray, function(d, i) {
-            // console.log("  d: ", d);
             return d;
         })])
         .range([chartH + 20, 0]);
@@ -280,11 +272,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 return schoolCircleX;
             })
             .attr("cy", function(d, i) {
-                // console.log("  i/circleValuesArray[i]: ", i, " / ", circleValuesArray[i])
                 return yScale(circleValuesArray[i]);
             })
             .attr("r", function(d) {
-                // console.log("  d: ", d);
                 return schoolCircleR;
             })
             .style('fill', function(d, i){
@@ -312,7 +302,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     } else {
                         labelString = d.zoneName + " " + agencyText + schoolText + "$" + formattedNumber + " " + mathText;
                     }
-                    // console.log("  labelString: ", labelString);
                     return labelString;
                 })
                 .attr("x", function(d, i) {
@@ -359,15 +348,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
             binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-            // console.log("  zoneAmount: ", zoneAmount)
-            // console.log("   binMin: ", binMin)
-            // console.log("   binMax: ", binMax)
             if ((binMin <= zoneAmount) && (zoneAmount <= binMax)) {
                 colorIndex = i;
                 break;
             }
         }
-        // console.log("   colorIndex: ", colorIndex)
         return colorIndex;
     }
 
@@ -382,9 +367,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
         text.each(function() {
             var text = d3.select(this);                         // text as sentence
-            // var words = text.text().split(/\s+/).reverse();     // text as array (rebuilds in correct order below)
             var words = text.text().split(/\s+/);                // text as array (rebuilds in correct order below)
-            // console.log("  words: ", words);
             var wordString1 = "";
             var wordString2 = "";
             if (mathText) {
@@ -400,11 +383,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 nextWord = words[i];
                 wordString2 = wordString2 + " " + nextWord;
             }
-            // console.log("  words.length: ", words.length);
-            // console.log("  wordString1: ", wordString1);
-            // console.log("  wordString2: ", wordString2);
+
             words = [wordString2, wordString1];
-            // console.log("  words: ", words);
             var x = text.attr("x");
             var y = text.attr("y");
             var word;
@@ -453,7 +433,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         });
 
         // ======= ======= ======= mouseover ======= ======= =======
-        $("#popup").off("mouseover").on("mouseover", function(event){
+        $("#filter-container ").off("mouseover").on("mouseover", function(event){
             console.log("======= showMessage ======= ");
             $("#chart-message").css("display", "block");
         });
@@ -467,8 +447,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             change: function() {
                 console.log("\n------- setSubMenu -------");
                 nextMath = $("select[name='expendMath'] option:selected").val()
-                console.log("  event: ", event);
-                console.log("  nextMath: ", nextMath);
                 displayObj.dataFilters.math = nextMath;
                 // clearZoneAggregator(zonesCollectionObj);
                 checkFilterSelection(displayObj, zonesCollectionObj, "math");
@@ -610,408 +588,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         } else {
             $("#chart-container").css("position", "absolute");
             $("#chart-container").css("top", "360px");
-            $("#chart-container").css("left", "10px");
+            $("#chart-container").css("left", "100px");
             $("#chart-container").css("width", "360px");
             $("#chart-container").css("height", "auto");
         }
     }
-
-    // ======= stringToInt =======
-    function stringToInt(d) {
-        // console.log("stringToInt");
-        d.value = +d.value;
-        return d;
-    }
-}
-
-
-
-// ======= ======= ======= makeZoneSchoolsChart ======= ======= =======
-function makeZoneSchoolsChart(dataObjectsArray) {
-    console.log("makeZoneSchoolsChart");
-
-    // data: schoolName, schoolCode, schoolType, schoolLevel, schoolExpenditure, schoolSqft, schoolLng, schoolLat, schoolWard
-    // nextSchoolObject = { schoolName: null, schoolExpenditure: null }
-
-    $("#chart-container").css("display", "block");
-
-    var chartW, chartH, shortName, scaleFactor, scaleLabel;
-    var myJsonString = JSON.stringify(dataObjectsArray);
-    var fillColors = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod", "blueviolet", "chartreuse", "cornflowerblue"];
-
-    // ======= chart formatting =======
-    var chartPadding = {top: 10, right: 20, bottom: 80, left: 60},
-        chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
-        chartH = 360 - chartPadding.top - chartPadding.bottom;      // outer height of chart
-
-    var dataMax = d3.max(dataObjectsArray, function(d) {
-        return d.expend;
-    });
-
-    if (dataMax > 1000000) {
-        scaleFactor = 1000000;
-        scaleLabel = "M$";
-    } else if ((dataMax < 1000000) && (dataMax > 1000)) {
-        scaleFactor = 1000;
-        scaleLabel = "K$";
-    } else {
-        scaleFactor = 1;
-        scaleLabel = "$";
-    }
-    console.log("  dataMax: ", dataMax);
-    console.log("  scaleFactor: ", scaleFactor);
-
-    // ======= scale mapping (data to display) =======
-    var xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, chartW], 0.1)
-        .domain(dataObjectsArray.map(function(d) {
-            subNames = d.schoolName.split(" ");
-            shortName = subNames[0];
-            d.schoolName = shortName;
-            return d.schoolName;;
-        }));
-
-    var yScale = d3.scale.linear()
-        .domain([0, d3.max(dataObjectsArray, function(d) {
-            // return +d.expend / scaleFactor;
-            return +d.expend;
-        })])
-        .range([chartH, 0]);
-
-    // ======= scale label formating =======
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(5);
-
-    // ======= build svg objects =======
-    $("#chart").empty();
-    var svg = d3.select("#chart").append("svg")
-        .attr("width", chartW + (chartPadding.left + chartPadding.right))
-        .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
-        .append("g")
-            .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
-
-    // ======= X scale =======
-    svg.append("g")
-        .data(dataObjectsArray)
-        .attr("class", "x axis")
-        .attr("transform", "translate(0, " + chartH + ")")
-        .call(xAxis)
-        .selectAll("text")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)" )
-            .style("text-anchor", "end")
-            .style("font-size", "10px");
-
-    // ======= Y scale =======
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .selectAll("text")
-            // .attr("dx", "-.8em")
-            // .attr("dy", ".15em")
-            .style("text-anchor", "end")
-            .style("font-size", "10px");
-
-        // .append("text")
-        //     .attr("y", -30)
-        //     .attr("x", 30)
-        //     .attr("dy", ".71em")
-        //     .style("font-size", "10px")
-        //     .style("text-anchor", "start");
-
-    // ======= rects for bar graph =======
-    var counter = 0;
-    var multiplier = 0;
-    var colorIndex = 0;
-    svg.selectAll(".bar")
-        .data(dataObjectsArray)
-        .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d) {
-                console.log("  d.schoolName: ", d.schoolName);
-                return xScale(d.schoolName);
-            })
-            .attr("width", xScale.rangeBand() - 2)
-            .attr("y", function(d) {
-                return yScale(d.expend);
-            })
-            .attr("height", function(d) {
-                console.log("  d.expend: ", d.expend);
-                    return chartH - yScale(d.expend);
-                })
-            .style({'fill': function(d, i) {
-                    counter++;
-                    if (counter == fillColors.length) {
-                        multiplier++;
-                        counter = 0
-                    }
-                    colorIndex = i - (fillColors.length * multiplier);
-                    whichColor = fillColors[colorIndex];
-                    return whichColor;
-                }})
-            .style("font-size", "10px");
-
-
-    // ======= stringToInt =======
-    function stringToInt(d) {
-        // console.log("stringToInt");
-        d.value = +d.value;
-        return d;
-    }
-}
-
-
-// ======= ======= ======= makeSchoolsChart ======= ======= =======
-function makeSchoolsChart(schoolDataArray) {
-    console.log("makeSchoolsChart");
-
-    // data: schoolName, schoolCode, schoolType, schoolLevel, schoolExpenditure, schoolSqft, schoolLng, schoolLat, schoolWard
-    // nextSchoolObject = { schoolName: null, schoolExpenditure: null }
-
-    $("#chart").css("display", "block");
-
-    var chartW, chartH, shortName, scaleFactor, scaleLabel;
-    var myJsonString = JSON.stringify(schoolDataArray);
-    var fillColors = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod", "blueviolet", "chartreuse", "cornflowerblue"];
-    // console.log("  myJsonString: ", myJsonString);
-
-    // ======= chart formatting =======
-    var chartPadding = {top: 10, right: 20, bottom: 80, left: 60},
-        chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
-        chartH = 360 - chartPadding.top - chartPadding.bottom;      // outer height of chart
-
-    var dataMax = d3.max(schoolDataArray, function(d) {
-        // if (dataMax > 1000000) {
-        //     scaleFactor = 1000000;
-        //     scaleLabel = "M$";
-        // } else if ((dataMax < 1000000) && (dataMax > 1000)) {
-        //     scaleFactor = 1000;
-        //     scaleLabel = "K$";
-        // } else {
-        //     scaleFactor = 1;
-        //     scaleLabel = "$";
-        // }
-        // return d.schoolExpenditure / scaleFactor;
-        return d.schoolExpenditure;
-    });
-
-    if (dataMax > 1000000) {
-        scaleFactor = 1000000;
-        scaleLabel = "M$";
-    } else if ((dataMax < 1000000) && (dataMax > 1000)) {
-        scaleFactor = 1000;
-        scaleLabel = "K$";
-    } else {
-        scaleFactor = 1;
-        scaleLabel = "$";
-    }
-    console.log("  dataMax: ", dataMax);
-    console.log("  scaleFactor: ", scaleFactor);
-
-    // ======= scale mapping (data to display) =======
-    var xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, chartW], 0.1)
-        .domain(schoolDataArray.map(function(d) {
-            subNames = d.schoolName.split(" ");
-            shortName = subNames[0];
-            d.schoolName = shortName;
-            return d.schoolName;;
-        }));
-
-    var yScale = d3.scale.linear()
-        .domain([0, d3.max(schoolDataArray, function(d) {
-            // return +d.schoolExpenditure / scaleFactor;
-            return +d.schoolExpenditure;
-        })])
-        .range([chartH, 0]);
-
-    // ======= scale label formating =======
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(5);
-
-    // ======= build svg objects =======
-    $("#chart").empty();
-    var svg = d3.select("#chart").append("svg")
-        .attr("width", chartW + (chartPadding.left + chartPadding.right))
-        .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
-        .append("g")
-            .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
-
-    // ======= X scale =======
-    svg.append("g")
-        .data(schoolDataArray)
-        .attr("class", "x axis")
-        .attr("transform", "translate(0, " + chartH + ")")
-        .call(xAxis)
-        .selectAll("text")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)" )
-            .style("text-anchor", "end")
-            .style("font-size", "10px");
-
-    // ======= Y scale =======
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .selectAll("text")
-            // .attr("dx", "-.8em")
-            // .attr("dy", ".15em")
-            .style("text-anchor", "end")
-            .style("font-size", "10px");
-
-        // .append("text")
-        //     .attr("y", -30)
-        //     .attr("x", 30)
-        //     .attr("dy", ".71em")
-        //     .style("font-size", "10px")
-        //     .style("text-anchor", "start");
-
-    // ======= rects for bar graph =======
-    var counter = 0;
-    var multiplier = 0;
-    var colorIndex = 0;
-    svg.selectAll(".bar")
-        .data(schoolDataArray)
-        .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d) {
-                console.log("  d.schoolName: ", d.schoolName);
-                return xScale(d.schoolName);
-            })
-            .attr("width", xScale.rangeBand() - 2)
-            .attr("y", function(d) {
-                return yScale(d.schoolExpenditure);
-            })
-            .attr("height", function(d) {
-                console.log("  d.schoolExpenditure: ", d.schoolExpenditure);
-                    return chartH - yScale(d.schoolExpenditure);
-                })
-            .style({'fill': function(d, i) {
-                    counter++;
-                    if (counter == fillColors.length) {
-                        multiplier++;
-                        counter = 0
-                    }
-                    colorIndex = i - (fillColors.length * multiplier);
-                    whichColor = fillColors[colorIndex];
-                    return whichColor;
-                }})
-            .style("font-size", "10px");
-
-
-    // ======= stringToInt =======
-    function stringToInt(d) {
-        // console.log("stringToInt");
-        d.value = +d.value;
-        return d;
-    }
-}
-
-
-
-
-// ======= ======= ======= initHorizontalChart ======= ======= =======
-function initHorizontalChart(schoolName, schoolDataArray) {
-    console.log("initHorizontalChart");
-
-    // ======= chart formatting =======
-    var chartPadding = {top: 5, right: 20, bottom: 80, left: 50},
-        chartW = 280 - chartPadding.left - chartPadding.right,       // outer width of chart
-        chartH = 260 - chartPadding.top - chartPadding.bottom;      // outer height of chart
-
-    var dataH = d3.max(schoolDataArray, function(d) {
-        return d.value;
-    });
-
-    var dataMax = d3.max(schoolDataArray, function(d) {
-        return d.value;
-    })
-
-    // ======= scale mapping (data to display) =======
-    var xScale = d3.scale.ordinal()
-        .rangeRoundBands([0, chartW], .1)
-        .domain(schoolDataArray.map(function(d) {
-            return d.key;;
-        }));
-
-    var yScale = d3.scale.linear()
-        .domain([0, d3.max(schoolDataArray, function(d) {
-            return +d.value;
-        })])
-        .range([chartH, 0]);
-
-    // ======= scale label formating =======
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(5);
-
-    // ======= build svg objects =======
-    $("#chart").empty();
-    var svg = d3.select("#chart").append("svg")
-        .attr("width", chartW + (chartPadding.left + chartPadding.right))
-        .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
-        .append("g")
-            .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
-
-    // ======= X scale =======
-    svg.append("g")
-        .data(schoolDataArray)
-        .attr("class", "x axis")
-        .attr("transform", "translate(0, " + chartH + ")")
-        .call(xAxis)
-        .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)" );
-
-    // ======= Y scale =======
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-            .attr("y", -30)
-            .attr("x", 30)
-            .attr("dy", ".71em")
-            .style("font-size", "10px")
-            .style("text-anchor", "start");
-
-    // ======= rects for bar graph =======
-    svg.selectAll(".bar")
-        .data(schoolDataArray)
-        .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d) { return xScale(d.key); })
-            .attr("width", xScale.rangeBand() - 20)
-            .attr("y", function(d) { return yScale(d.value); })
-            .attr("height", function(d) {
-                    return chartH - yScale(d.value);
-                })
-            .style({'fill': function(d, i) {
-                    whichColor = 'rebeccapurple';
-                    return whichColor;
-                }})
-            .style("font-size", "10px");
-
 
     // ======= stringToInt =======
     function stringToInt(d) {

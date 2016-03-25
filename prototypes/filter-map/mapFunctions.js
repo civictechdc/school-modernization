@@ -69,21 +69,12 @@ function initMap(zonesCollectionObj, displayObj) {
 
         google.maps.event.addListener(map, 'tilesloaded', function() {
             console.log("tilesloaded.addListener");
-            // initOverlay(zonesCollectionObj, displayObj);
-
-            // var srcImage = 'images/mapWindow2.png';
-            // var ctaLayer = new google.maps.KmlLayer({
-            //    url: 'Data_Geo/District_Boundary.kml',
-            //    map: map
-            //  });
-            //  console.log("  ctaLayer: ", ctaLayer);
          });
 
     } else {
         console.log("*** storyMap ***");
         var zoom = 10;
         var mapContainer = document.getElementById('storyMap-container');
-        // console.log("  mapContainer: ", mapContainer);
         map = new google.maps.Map(mapContainer, {
             center: {lat: 38.89, lng: -77.00},
             disableDefaultUI: true,

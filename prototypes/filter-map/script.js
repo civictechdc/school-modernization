@@ -12,16 +12,10 @@ function initApp(presetMode) {
     var schoolsCollectionObj;
     var zonesCollectionObj;
     var displayObj;
-    // var map;
 
     // ======= ======= ======= initMenuObjects ======= ======= =======
     function initMenuObjects() {
         console.log("initMenuObjects");
-
-        // school -- School, Address, Agency, Level, longitude, latitude, Ward, FeederMS, FeederHS
-        // students -- Total.Enrolled, At_Risk, SPED, Limited.English.Proficient, AtRiskPer, SPEDPer, ESLPer
-        // building -- unqBuilding, totalSQFT, maxOccupancy, SqFtPerEnroll, ProjectPhase, YrComplete, ProjectType, YearsOpen, Open, Open.Now
-        // expenditures -- MajorExp9815, TotalAllotandPlan1621, LifetimeBudget, SpentPerMaxOccupancy, SpentPerSqFt, AnnualExpenseAverage, AnnualSpentPerMaxOccupany, AnnualSpentPerSqFt
 
         // == filter object properties: id, category, text, callback
         filterMenu = new Menu("filterMenu");
@@ -79,7 +73,8 @@ function initApp(presetMode) {
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
         this.indexColorsArray = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
-        this.dataColorsArray = ["#b35806","#e08214","#fdb863","#fee0b6","#d8daeb","#b2abd2","#8073ac","#542788"];
+        // this.dataColorsArray = ["#b35806","#e08214","#fdb863","#fee0b6","#d8daeb","#b2abd2","#8073ac","#542788"];
+        this.dataColorsArray = ["#002646", "#193b58", "#32516a", "#4c677d", "#667c90", "#7f92a2", "#99a8b5", "#b2bdc7"];
         this.defaultColor = "white";
         this.dataIncrement = 0;
         this.dataBins = 8;
@@ -119,11 +114,11 @@ function initApp(presetMode) {
     Display.prototype.makeSearchAndHoverDisplay = function() {
         console.log("makeSearchAndHoverDisplay");
 
-        var popupContainer = ("#popup");
+        var filterContainer = ("#filter-container ");
         var menuHtml = "";
         menuHtml += this.makeSearchDisplay();
         menuHtml += this.makeHoverDisplay();
-        $(popupContainer).append(menuHtml);
+        $(filterContainer).append(menuHtml);
         this.activateSearchButton("searchButton");
         this.activateSearchWindow("searchWindow");
     }
@@ -148,7 +143,7 @@ function initApp(presetMode) {
     Display.prototype.makeMathSelect = function(whichMenu, chartOrProfile) {
         console.log("makeMathSelect");
 
-        // == popup bar container
+        // == filter-container  bar container
         var subMenuContainer = $("#sub-nav-container");
 
         // == build sub-menu; attach to chart or profile div
@@ -304,9 +299,6 @@ function initApp(presetMode) {
             var whichValue = menuObject.value;
             var whichText = menuObject.text;
             var htmlString;
-            // console.log("  whichCategory: ", whichCategory);
-            // console.log("  whichFilter: ", whichFilter);
-            // console.log("  whichText: ", whichText);
             checkFilterSelection(self, zonesCollectionObj, whichCategory);
             event.stopImmediatePropagation();
 
@@ -651,14 +643,11 @@ function initApp(presetMode) {
         }).done(function(geoJsonData, featureArray){
             console.log("*** ajax success ***");
             self.zoneGeojson_A = geoJsonData;
-            console.log("******* zoneGeojson_A");
-            console.dir(self.zoneGeojson_A );
 
             // == aggregate for urlA zones
             if (self.aggregatorArray.length == 0) {
                 makeZoneAggregator(self, self.zoneGeojson_A);
             }
-            console.log("  self.aggregatorArray: ", self.aggregatorArray);
 
             // == get secondary map data for urlB
             if (feederFlag == true) {
@@ -721,8 +710,6 @@ function initApp(presetMode) {
     // ======= ======= ======= getSchoolData ======= ======= =======
     SchoolsCollection.prototype.getSchoolData = function() {
         console.log("\n----- getSchoolData -----");
-        console.log("  zonesCollectionObj.zoneA: ", zonesCollectionObj.zoneA);
-        console.log("  displayObj.displayMode: ", displayObj.displayMode);
 
         var self = this;
         var presetMode = displayObj.displayMode;
@@ -844,7 +831,6 @@ function initApp(presetMode) {
         var schoolFeederHS = nextSchool.FeederHS;
         var schoolFeederMS = nextSchool.FeederMS;
         var shortName = processSchoolName(school);
-        // checkFilterData(school, schoolType, schoolLevel, schoolWard, schoolFeederMS, schoolFeederHS);
 
         // == check agency match
         if (displayObj.dataFilters.agency) {
@@ -859,15 +845,12 @@ function initApp(presetMode) {
                 } else {
                     var agencyMatch = false;
                 }
-                // var agencyMatch = (checkAgency) ? true : false;
             } else {
                 var agencyMatch = true;
             }
         } else {
             var agencyMatch = true;
         }
-        // console.log("  checkAgency: ", checkAgency);
-
 
         // == check levels match
         if (displayObj.dataFilters.levels) {
@@ -878,7 +861,6 @@ function initApp(presetMode) {
 
         // == return match result
         if ((levelsMatch == true) && (agencyMatch == true)) {
-            // console.log("******* selected: ", shortName);
             return true;
         } else {
             return false;
@@ -970,7 +952,6 @@ function initApp(presetMode) {
             if (feature) {
                 featureCount++;
                 itemName = feature.getProperty('itemName');
-                // console.log("  removing: ", featureCount, "/", itemName);
                 map.data.remove(feature);
             }
         });
@@ -985,10 +966,6 @@ function initApp(presetMode) {
             map.data.addGeoJson(this.zoneGeojson_A);
             zoneBcount = 0;
         }
-        console.log("  zoneAcount: ", zoneAcount);
-        console.log("  zoneBcount: ", zoneBcount);
-        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
-        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
         // ======= ======= ======= calculate min, max, increment, average, median ======= ======= =======
         if (displayObj.dataFilters.expend) {
@@ -1039,16 +1016,10 @@ function initApp(presetMode) {
 
                 var end = new Date().getTime();
                 var time = end - start;
-                // console.log("*** LOWER layer");
-                // console.log("    index/name: ", featureIndex, "/", nextName);
-                // console.log("    zoneFormatArray: ", zoneFormatArray);
                 if (time > 0) {
                     dataDelayCount++;
-                    // console.log("    --time: ", time);
                 }
             }
-            console.log(" featureCount: ", featureIndex + 1);
-            console.log(" dataDelayCount: ", dataDelayCount);
 
             // == feeder zones or wards
             console.log("*** UPPER ZONES ***");
@@ -1070,16 +1041,10 @@ function initApp(presetMode) {
 
                 var end = new Date().getTime();
                 var time = end - start;
-                // console.log("*** UPPER layer");
-                // console.log("    index/name: ", featureIndex, "/", nextName);
-                // console.log("    zoneFormatArray: ", zoneFormatArray);
                 if (time > 0) {
                     dataDelayCount++;
-                    // console.log("    --time: ", time);
                 }
             }
-            console.log(" featureCount: ", featureIndex + 1);
-            console.log(" dataDelayCount: ", dataDelayCount);
 
         // == single zone layer
         } else {
@@ -1101,16 +1066,10 @@ function initApp(presetMode) {
 
                 var end = new Date().getTime();
                 var time = end - start;
-                // console.log("*** SINGLE layer");
-                // console.log("    index/name: ", featureIndex, "/", nextName);
-                // console.log("    zoneFormatArray: ", zoneFormatArray);
                 if (time > 0) {
                     dataDelayCount++;
-                    console.log("    --time: ", time);
                 }
             }
-            console.log(" featureCount: ", featureIndex + 1);
-            console.log(" dataDelayCount: ", dataDelayCount);
         }
 
         // ======= ======= ======= setFeatureStyle ======= ======= =======
@@ -1133,9 +1092,6 @@ function initApp(presetMode) {
         }
 
         // ======= ======= ======= show rankings chart ======= ======= =======
-        // console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
-        // console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
-        // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
         if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
             if (displayObj.dataFilters.expend) {
                 makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount);
@@ -1198,22 +1154,13 @@ function initApp(presetMode) {
                 splitZoneName = zoneName.split(", ");
                 var zoneName = splitZoneName[0];
             }
-            console.log("zoneName: ", zoneName);
 
             // == set new zone info on menuObject
-            // var menuObject = filterMenu[zoneA];
-            // menuObject.value = zoneName;
-            // displayObj.dataFilters.zone = zoneA;
             displayObj.dataFilters.selectedZone = zoneName;
-
             updateHoverText(zoneName);
             displayFilterMessage(displayObj, zoneName, "add");
             de_activateZoneListeners(self);
-
-            // displayObj.activateClearButton();
             zonesCollectionObj.getZoneData();
-
-            // zoomToZone(event);
         });
 
         // == add listeners to listeners array
@@ -1244,13 +1191,10 @@ function initApp(presetMode) {
         // ======= ======= ======= processPoints ======= ======= =======
         function processPoints(geometry, callback, thisArg) {
             if (geometry instanceof google.maps.LatLng) {
-                // console.log("  ** google.maps.LatLng");
                 callback.call(thisArg, geometry);
             } else if (geometry instanceof google.maps.Data.Point) {
-                // console.log("  ** bounds.extend");
                 callback.call(thisArg, geometry.get());
             } else {
-                // console.log("  ** geometry.getArray");
                 geometry.getArray().forEach(function(g) {
                     processPoints(g, callback, thisArg);
                 });
@@ -1466,7 +1410,6 @@ function initApp(presetMode) {
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
-        // initFloatingWindows();
         zonesCollectionObj.getZoneData();
     }
 
