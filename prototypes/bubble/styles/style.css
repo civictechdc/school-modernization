@@ -53,13 +53,14 @@ text#tooltip_label {
     color: #ff3233; }
 
 #legend {
-  border: 5px solid #001c2b;
   height: 250px;
   width: 250px;
-  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   position: absolute;
   right: 10%;
-  top: 15px; }
+  top: 15px;
+  border: 3px solid #001c2b; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
@@ -69,7 +70,9 @@ text#tooltip_label {
   padding: 10px;
   background-color: #001c2b;
   color: #fff;
-  text-align: center; }
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; }
 
 #menuInner {
   padding: 5px;

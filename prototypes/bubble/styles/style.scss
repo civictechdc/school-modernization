@@ -89,24 +89,19 @@ text {
 
 // LEGEND
 #legend {
-  border: 5px solid $cerulean;
   height: 250px;
   width: 250px;
-  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   position: absolute;
   right: 10%;
   top: 15px;
+  border: 3px solid $cerulean;
 
   #legend_cont {
     position: absolute;
     background-color: #fff;
     height: 250 px;
-    p {
-      // padding: 10px;
-      // background-color: $cerulean;
-      // color: #fff;
-      // text-align: center;
-    }
   }
 }
 
@@ -115,6 +110,8 @@ text {
   background-color: $cerulean;
   color: #fff;
   text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 // MENU
@@ -123,7 +120,7 @@ $menuW: 450px;
   padding: 5px;
   border: 3px solid $cerulean;
   background-color: #FFF;
-  // border-radius: 5px;
+  
 }
 #menuDiv {
   border-radius: 5px;
