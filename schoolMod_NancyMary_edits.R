@@ -111,7 +111,7 @@ miss<-cbind(missEnroll, missDC1)[-c(37)]
 missDC2$School.ID<-ifelse(missDC2$School.Name=="Oyster-Adams Bilingual School",292,NA)
 
 dcFull<-rbind(join01,miss,missDC2)[-c(2)]
-rm(miss, missDC, missDC1, missDC2,join01, missEnroll, enroll,schoolCode)
+rm(miss, missDC, missDC1, missDC2,join01, missEnroll,schoolCode)
 
 ### fixes from Mary 3-8 ###
 ### fixes from Mary 3-8 ###
@@ -382,7 +382,7 @@ dcFull<-rbind(codeNoDup,codeDup)
 ### update lat long and calculated fields to account for updated fields ###
 ### update lat long and calculated fields to account for updated fields ###
 dcFull$MajorExp9815[is.na(dcFull$MajorExp9815)] <- 0
-dcFull<-dcFull[-c(24,27:28,30:34,36)]
+dcFull<-dcFull[-c(27:28,30:34,36)]
 attach(dcFull)
 
 dcFull$AtRiskPer<-At_Risk/Total.Enrolled
@@ -406,18 +406,18 @@ noAddress$longitude<-rep(NA,4)
 noAddress$latitude<-rep(NA,4)
 noAddress$Ward<-rep(NA,4)
 
-dcFull1<-cbind(yesAddress,latlong,ward)[-c(12:14,28)]
-colnames(dcFull1)[c(25:27)]<-c("longitude","latitude","Ward")
+dcFull1<-cbind(yesAddress,latlong,ward)[-c(12:14,29)]
+colnames(dcFull1)[c(26:28)]<-c("longitude","latitude","Ward")
 
-dcFullNew<-rbind(dcFull1,noAddress)[-c(2)]
+dcFullNew<-rbind(dcFull1,noAddress)
 
 ### Add in missing LEP
 updateLEP<-subset(dcFullNew,is.na(dcFullNew$Limited.English.Proficient) & !(is.na(dcFullNew$Total.Enrolled)))
-updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(14,16)]
+updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(15,17)]
 enroll_LEP_miss<-enroll[c(2,20:24)]
 fixedLEP<-join(updateLEP,enroll_LEP_miss,by="School.ID", type="left")
 fixedLEP$SPED<-fixedLEP$Level.1+fixedLEP$Level.2+fixedLEP$Level.3+fixedLEP$Level.4
-fixedLEP<-fixedLEP[-c(26:29)]
+fixedLEP<-fixedLEP[-c(28:31)]
 goodstartLEP<-subset(dcFullNew,!(dcFullNew$School.ID %in% fixedLEP$School.ID))
 dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
 dcFullUpdated$ESLPer<-dcFullUpdated$Limited.English.Proficient/dcFullUpdated$Total.Enrolled
@@ -434,7 +434,6 @@ dcFullUpdated$School1<-gsub("  "," ",dcFullUpdated$School1)
 dcFullUpdated$School1<-gsub("D C ","DC ",dcFullUpdated$School1)
 dcFullUpdated$School1<-gsub(" -|- ","-",dcFullUpdated$School1)
 dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Online","Community Academy CAPCS Online",
-                      ifelse(dcFullUpdated$School1=="Community Academy CA Online","Community Academy CAPCS Online",
                         ifelse(dcFullUpdated$School1=="Columbia Heights Education Campus (CHEducation Campus)","Columbia Heights Education Campus (CHEC)",
                           ifelse(dcFullUpdated$School1=="bowen","Bowen",
                             ifelse(dcFullUpdated$School1=="brucemonroe-demolished","Bruce Monroe ES (demolished)",
@@ -452,20 +451,18 @@ dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Onlin
                                                     ifelse(dcFullUpdated$School1=="rudolph","Rudolph",
                                                       ifelse(dcFullUpdated$School1=="shaw","Shaw",
                                                         ifelse(dcFullUpdated$School1=="wilkinson","Wilkinson",
-                                                          ifelse(dcFull$School1=="School Without Walls @ Francis-Stevens Education Campus", "Francis Stevens",
-                                                               dcFull$School1))))))))))))))))))))
-dcFullUpdated<-dcFullUpdated[-c(2)]
-colnames(dcFullUpdated)[c(26)]<-c("School")
+                                                          ifelse(dcFullUpdated$School1=="School Without Walls @ Francis-Stevens Education Campus", "Francis Stevens",
+                                                               dcFullUpdated$School1)))))))))))))))))))
+
+dcFullUpdated<-dcFullUpdated[-c(3)]
+colnames(dcFullUpdated)[c(28)]<-c("School")
 options("scipen"=100, "digits"=4)
 dcFullUpdated<-dcFullUpdated
 
 ### Remove dots in colnames
 colnames(dcFullUpdated)[c(1,12:13,21)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
 
-dcFullUpdated$School<-ifelse(dcFullUpdated$School=="School Without Walls @ Francis-Stevens Education Campus", "Francis Stevens",
-                             dcFullUpdated$School)
-
-### All schools except closed charters
+### All schools
 write.csv(dcFullUpdated,
           "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchools_FY1415_Master_321.csv",
           row.names=FALSE)
