@@ -81,7 +81,6 @@ text#tooltip_label {
 
 #menuDiv {
   border-radius: 5px;
-  margin-top: 30px;
   background-color: #001c2b;
   width: 450px; }
   #menuDiv ul {
@@ -122,6 +121,9 @@ text#tooltip_label {
 
 .color {
   fill: 'grey'; }
+
+.inactive {
+  background-color: gray; }
 
 .selected {
   background-color: #005e91;

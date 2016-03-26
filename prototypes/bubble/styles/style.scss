@@ -124,7 +124,7 @@ $menuW: 450px;
 }
 #menuDiv {
   border-radius: 5px;
-  margin-top: 30px;
+  // margin-top: 30px;
   background-color: $cerulean;
   width: $menuW;
   
@@ -177,6 +177,9 @@ $menuW: 450px;
 // MINUTIA
 .color {
    fill: 'grey';
+}
+.inactive {
+  background-color: gray;
 }
 
 .selected {

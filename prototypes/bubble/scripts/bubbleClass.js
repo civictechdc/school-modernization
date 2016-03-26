@@ -1,6 +1,6 @@
 function Bubble(budget){ // data
     this.budget = budget;
-    this.money = d3.format('$,<2f></2f>');
+    this.money = d3.format('$,.2f');
     this.commas = d3.format(',');
     this.column = null;
     this.data = null;
@@ -14,6 +14,8 @@ function Bubble(budget){ // data
     this.unique = null;
     this.range = { min: 6, max: 29 };
     this.colorRange = { high: '#001c2b', middle: '#6f7f87', low: '#ff3233', na: '#fff' };
+    this.min = null;
+    this.max = null;
 };
 
 Bubble.prototype.setColumn = function(column){
@@ -41,9 +43,9 @@ Bubble.prototype.create_nodes = function(){
     if(this.nodes.length){
         this.nodes = [];
     }
-    var that = this,
-        max = d3.max(this.data, function(d){ return +d[that.budget]; }),
-        min = d3.min(this.data, function(d){ return +d[that.budget]; }),
+    var that = this;
+        this.max = max = d3.max(this.data, function(d){ return +d[that.budget]; }),
+        this.min = min = d3.min(this.data, function(d){ return +d[that.budget]; }),
         radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]);
 
     for(var i = 0, j = this.data.length; i < j; i++){
@@ -67,7 +69,7 @@ Bubble.prototype.create_nodes = function(){
             var amount= current[that.budget].trim();
             if (amount !== 'NA'){
                 if(amount > 0){
-                    // return Math.pow(parseInt(amount), 0.157);
+                    // console.log(radius_scale(amount));
                     return radius_scale(amount);
                 } else {
                     return 5;

@@ -87,6 +87,10 @@
                 // get('#school_state').innerHTML = e.target.dataset.title + ' Schools';
             });
         });
+
+        if(get('#charter').classList.contains('selected')){
+            get('#FeederHS').setAttribute("disabled", "disabled")
+        }
     });
 }())
 
