@@ -30,6 +30,10 @@ text.label {
 text#tooltip_label {
   font-size: 12px; }
 
+.sub_titles {
+  font-weight: bold;
+  font-size: 12px; }
+
 #tooltip {
   position: absolute;
   width: 200px;
@@ -44,10 +48,9 @@ text#tooltip_label {
     color: #fff; }
   #tooltip.hidden {
     display: none; }
-
-.sub_titles {
-  font-size: 12px;
-  font-weight: bold; }
+  #tooltip #school {
+    font-weight: bold;
+    color: #ff3233; }
 
 #legend {
   border: 5px solid #001c2b;
@@ -61,14 +64,17 @@ text#tooltip_label {
     position: absolute;
     background-color: #fff;
     height: 250 px; }
-    #legend #legend_cont p {
-      padding: 10px;
-      background-color: #001c2b;
-      color: #fff;
-      text-align: center; }
+
+.modHeader {
+  padding: 10px;
+  background-color: #001c2b;
+  color: #fff;
+  text-align: center; }
 
 #menuInner {
-  padding: 5px; }
+  padding: 5px;
+  border: 3px solid #001c2b;
+  background-color: #FFF; }
 
 #menuDiv {
   border-radius: 5px;
@@ -80,7 +86,8 @@ text#tooltip_label {
 
 #select {
   margin: 5px 20px;
-  border: 3px solid white; }
+  color: #fff;
+  background-color: #001c2b; }
   #select option {
     padding: 50px; }
 
@@ -90,7 +97,6 @@ text#tooltip_label {
   width: 56.25px;
   height: 15px;
   padding-right: 5px;
-  color: white;
   font-size: 12px;
   vertical-align: middle;
   padding: 5px; }
@@ -99,15 +105,16 @@ text#tooltip_label {
   text-align: center;
   font-size: 10px;
   cursor: pointer;
-  background-color: white;
-  color: #001c2b;
+  background-color: #001c2b;
+  color: #fff;
   border-radius: 3px; }
   .rowBehavior:hover {
     color: #fff;
-    background-color: #005e91; }
+    background-color: #003d5e; }
 
 .title {
   font-weight: bold;
+  color: #001c2b;
   text-align: right; }
 
 .color {

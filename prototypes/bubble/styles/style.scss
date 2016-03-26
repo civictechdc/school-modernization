@@ -2,6 +2,10 @@
 // $cerulean: #002646;
 $cerulean: #001c2b;
 $lighterCerulean: #6f7f87;
+$red: #ff3233;
+@mixin bold {
+  font-weight: bold;
+}
 
 // GLOBALS
 * {
@@ -18,13 +22,16 @@ h1 {
     -webkit-margin-after: 0.67em;
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
-    font-weight: bold;
+    @include bold;
 }
+
 #container {
    width: 80%;
    margin: 0 auto;
 }
 
+
+// GRAPH SPECIFIC
 circle {
    stroke: darken($cerulean , 10%);
    stroke-width: 2px;
@@ -47,11 +54,14 @@ text {
    }
 }
 
-// .highlighted {
-//    fill: 'white';
-//    background-color: 'white';
-// }
+.sub_titles {
+  @include bold;
+  font-size: 12px;
+  // transform: rotate(-25deg);
+}
 
+
+// TOOLTIP
 #tooltip {
    position: absolute;
    width: 200px;
@@ -70,12 +80,11 @@ text {
    &.hidden {
       display: none;
    }
-}
 
-.sub_titles {
-  font-size: 12px;
-  font-weight: bold;
-  // transform: rotate(-45deg);
+  #school {
+    @include bold;
+    color: $red;
+  }
 }
 
 // LEGEND
@@ -93,18 +102,28 @@ text {
     background-color: #fff;
     height: 250 px;
     p {
-      padding: 10px;
-      background-color: $cerulean;
-      color: #fff;
-      text-align: center;
+      // padding: 10px;
+      // background-color: $cerulean;
+      // color: #fff;
+      // text-align: center;
     }
   }
+}
+
+.modHeader {
+  padding: 10px;
+  background-color: $cerulean;
+  color: #fff;
+  text-align: center;
 }
 
 // MENU
 $menuW: 450px;
 #menuInner {
   padding: 5px;
+  border: 3px solid $cerulean;
+  background-color: #FFF;
+  // border-radius: 5px;
 }
 #menuDiv {
   border-radius: 5px;
@@ -114,16 +133,13 @@ $menuW: 450px;
   
   ul {
     padding: 5px;
-
   }
-}
-#selectDiv {
-  // : 150px;
 }
 
 #select {
   margin: 5px 20px;
-  border: 3px solid white;
+  color: #fff;
+  background-color: $cerulean;
 
   option {
     padding: 50px;
@@ -137,7 +153,6 @@ $menuW: 450px;
   width: $menuW / 8;
   height: 15px;
   padding-right: 5px;
-  color: white;
   font-size: 12px;
   vertical-align: middle;
   padding: 5px;
@@ -147,19 +162,20 @@ $menuW: 450px;
   text-align: center;
   font-size: 10px;
   cursor: pointer;
-  background-color: white;
-  color: $cerulean;
+  background-color: $cerulean;
+  color: #fff;
   border-radius: 3px;
 
   &:hover {
     color: #fff;
-    background-color: lighten($cerulean, 20%);
+    background-color: lighten($cerulean, 10%);
   }
 }
 
 .title {
   @extend .row;
-  font-weight: bold;
+  @include bold;
+  color: $cerulean;
   text-align: right;
 }
 
