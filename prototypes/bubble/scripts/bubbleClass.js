@@ -246,7 +246,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .append('text')
         .attr('class', 'sub_titles')
         .attr('transform', function(d){
-            console.log(d.x);
             return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
         })
         // .attr('x', function(d){
@@ -288,7 +287,7 @@ Bubble.prototype.make_legend = function(){
         .append('circle')
         .attr('cx', 40)
         .attr('cy', function(d,i){
-            return 5 + 35 * (i+1);
+            return 40 * (i+1);
         })
         .style('fill', function(d){
             return d === 0 ? that.colorRange.low : that.colorRange.high;
@@ -298,7 +297,8 @@ Bubble.prototype.make_legend = function(){
             min = d3.min(that.data, function(d){return +d[that.budget];}),
             radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]); // 15
             return radius_scale(d);
-        });
+        })
+        ;
     legend.selectAll('text')
         .data(nums)
         .enter()

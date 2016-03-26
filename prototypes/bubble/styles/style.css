@@ -92,7 +92,7 @@ text#tooltip_label {
   color: #fff;
   background-color: #001c2b; }
   #select option {
-    padding: 50px; }
+    color: #fff; }
 
 .row, .title {
   vertical-align: top;

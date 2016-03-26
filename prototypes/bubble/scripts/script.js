@@ -23,6 +23,8 @@
             }(data))}; // return both, public, charter
 
         // Run the graph
+        get('#MajorExp9815').classList.add('selected');
+        get('#both').classList.add('selected');
         bubble.setData(schools.both);
         bubble.graph();
 
@@ -35,6 +37,12 @@
                         sel.classList.remove('selected');
                     }
                 });
+                if(e.target.id === 'FeederHS'){
+                    bubble.setData(schools['public']);
+                    get('#both').classList.remove('selected');
+                    get('#charter').classList.remove('selected');
+                    get('#public').classList.add('selected');
+                }
                 bubble.setColumn(e.target.id);
                 bubble.change();
                 makeSelected(e);
@@ -52,6 +60,8 @@
                         sel.classList.remove('selected');
                     }
                 });
+
+
                 bubble.setBudget(e.target.id);
                 bubble.change();
                 makeSelected(e);
@@ -61,21 +71,22 @@
         });
 
         // To change the bubble radii, SCHOOL SET
-        // var schoolChange = Array.prototype.slice.call(getAll('.school'));
-        // schoolChange.forEach(function(item, e){
-        //     item.addEventListener('click', function(e){ 
-        //         schoolChange.forEach(function(sel){
-        //             if(sel.classList.contains('selected')){
-        //                 sel.classList.remove('selected');
-        //             }
-        //         });
-        //         bubble.setData(schools[e.target.id]);
-        //         bubble.change();
+        var schoolChange = Array.prototype.slice.call(getAll('.school'));
+        schoolChange.forEach(function(item, e){
+            item.addEventListener('click', function(e){ 
+                schoolChange.forEach(function(sel){
+                    if(sel.classList.contains('selected')){
+                        sel.classList.remove('selected');
+                    }
+                });
+                bubble.setData(schools[e.target.id]);
+                bubble.change();
+                makeSelected(e);
 
-        //         // Change the title
-        //         // get('#school_state').innerHTML = e.target.dataset.title + ' Schools';
-        //     });
-        // });
+                // Change the title
+                // get('#school_state').innerHTML = e.target.dataset.title + ' Schools';
+            });
+        });
     });
 }())
 
