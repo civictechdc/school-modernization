@@ -460,7 +460,7 @@ options("scipen"=100, "digits"=4)
 dcFullUpdated<-dcFullUpdated
 
 ### Remove dots in colnames
-colnames(dcFullUpdated)[c(1,12:13,21)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+colnames(dcFullUpdated)[c(1,13:14,23)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
 
 ### All schools
 write.csv(dcFullUpdated,
