@@ -1,5 +1,7 @@
 // VARS
+// $cerulean: #002646;
 $cerulean: #001c2b;
+$lighterCerulean: #6f7f87;
 
 // GLOBALS
 * {
@@ -45,10 +47,10 @@ text {
    }
 }
 
-.highlighted {
-   fill: 'white';
-   background-color: 'white';
-}
+// .highlighted {
+//    fill: 'white';
+//    background-color: 'white';
+// }
 
 #tooltip {
    position: absolute;
@@ -76,6 +78,7 @@ text {
   // transform: rotate(-45deg);
 }
 
+// LEGEND
 #legend {
   border: 5px solid $cerulean;
   height: 250px;
@@ -98,8 +101,76 @@ text {
   }
 }
 
+// MENU
+$menuW: 450px;
+#menuInner {
+  padding: 5px;
+}
+#menuDiv {
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: $cerulean;
+  width: $menuW;
+  
+  ul {
+    padding: 5px;
+
+  }
+}
+#selectDiv {
+  // : 150px;
+}
+
+#select {
+  margin: 5px 20px;
+  border: 3px solid white;
+
+  option {
+    padding: 50px;
+    
+  }
+}
+
+.row {
+  vertical-align: top;
+  display: inline-block;
+  width: $menuW / 8;
+  height: 15px;
+  padding-right: 5px;
+  color: white;
+  font-size: 12px;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.rowBehavior {
+  text-align: center;
+  font-size: 10px;
+  cursor: pointer;
+  background-color: white;
+  color: $cerulean;
+  border-radius: 3px;
+
+  &:hover {
+    color: #fff;
+    background-color: lighten($cerulean, 20%);
+  }
+}
+
+.title {
+  @extend .row;
+  font-weight: bold;
+  text-align: right;
+}
+
+// MINUTIA
 .color {
    fill: 'grey';
+}
+
+.selected {
+  background-color: lighten($cerulean, 20%);
+  color: #fff;
 }
 
 .btn_state {

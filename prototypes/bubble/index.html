@@ -13,41 +13,50 @@
       <!-- Header -->
       <h1 id='title'>DCPS Capital Spending</h1>
 
-      <!-- Search Feature -->
-      <select id='select' name="select">
-         <option value="first" selected>Select a School</option>
-      </select>
+      
+
+      <!-- Menu -->
+      <div id='menuDiv'>
+         <div id="menuInner">
+            <ul id='menu'>
+               <li class="title">Budget</li>
+               <li id='MajorExp9815' class="row rowBehavior dataChange">Past</li>
+               <li id='TotalAllotandPlan1621' class="row rowBehavior dataChange">Future</li>
+               <li id='LifetimeBudget' class="row rowBehavior dataChange">Lifetime</li>
+               <li id='SpentPerSqFt' class="row rowBehavior dataChange">Square Foot</li>
+            </ul>
+
+            <ul id='menu'>
+               <li class="title">Splits</li>
+               <li id='Agency' class="row rowBehavior subdivides">Agency</li>
+               <li id='Level' class="row rowBehavior subdivides">Level</li>
+               <li id='Ward' class="row rowBehavior subdivides">Ward</li>
+               <li id='FeederHS' class="row rowBehavior subdivides">HS Feeder</li>
+               <li id='ProjectType' class="row rowBehavior subdivides">Project Type</li>
+            </ul>
+
+            <ul id='menu'>
+               <li class="title">Agency</li>
+               <li id='both' class="row rowBehavior school">All Schools</li>
+               <li id='public' class="row rowBehavior school">Public</li>
+               <li id='charter' class="row rowBehavior school">Charter</li>
+            </ul>
+
+            <!-- Search Feature -->
+            <div id="selectDiv">
+               <select id='select' name="select">
+                  <option value="first" selected>Select a School</option>
+               </select>
+            </div>
+         </div>
+      </div>
    
       <!-- Show What Your Looking At -->
-      <div id="show_state_cont">
+<!--       <div id="show_state_cont">
          <p class='show_state' id='budget_state'>Expenditures from 1998 - 2015</p>
          <p class='show_state' id="sub_state">Split By: None</p>
          <p class='show_state' id="school_state">Both Public and Charter Schools</p>
-      </div>
-      
-      <!-- Change Dataset Buttons -->
-      <div id="dataset">
-         <button class="btn_state dataChange" id='MajorExp9815' data-title='Expenditures from 1998 - 2015'>Past</button>
-         <button class="btn_state dataChange" id='TotalAllotandPlan1621' data-title='Future Expenditures for 2016 - 2021'>Future</button>
-         <button class="btn_state dataChange" id='LifetimeBudget' data-title='Expenditures from 1998 - 2021'>Lifetime</button>
-         <button class="btn_state dataChange" id='AnnualSpentPerSqFt' data-title='Annual Spent Per SqFt. from 1998 - 2015'>Per Sq. Ft.</button>
-      </div>
-   
-      <!-- Change Subdivision Buttons -->
-      <div id="subdivides">
-         <button class="btn_state subdivides" id='Agency' data-title='Agency'>Agency</button>
-         <button class="btn_state subdivides" id='Level' data-title='School Level'>Levels</button>
-         <button class="btn_state subdivides" id='Ward' data-title='Ward'>Ward</button>
-         <button class="btn_state subdivides" id='FeederHS' data-title='High School Feeder'>Feeders: High</button>
-         <button class="btn_state subdivides" id='ProjectType' data-title='Project Type'>Project Type</button>
-      </div>
-
-      <!-- Change School Datasets Buttons -->
-      <div id="subdivides">
-         <button class="btn_state school" id='both' data-title='Both Public and Charter'>Both</button>
-         <button class="btn_state school" id='public' data-title='Only Public'>Public</button>
-         <button class="btn_state school" id='charter' data-title='Only Charter'>Charter</button>
-      </div>
+      </div> -->
    
       <!-- Legend -->
       <div id="legend">

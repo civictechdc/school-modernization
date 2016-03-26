@@ -30,10 +30,6 @@ text.label {
 text#tooltip_label {
   font-size: 12px; }
 
-.highlighted {
-  fill: 'white';
-  background-color: 'white'; }
-
 #tooltip {
   position: absolute;
   width: 200px;
@@ -71,8 +67,55 @@ text#tooltip_label {
       color: #fff;
       text-align: center; }
 
+#menuInner {
+  padding: 5px; }
+
+#menuDiv {
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: #001c2b;
+  width: 450px; }
+  #menuDiv ul {
+    padding: 5px; }
+
+#select {
+  margin: 5px 20px;
+  border: 3px solid white; }
+  #select option {
+    padding: 50px; }
+
+.row, .title {
+  vertical-align: top;
+  display: inline-block;
+  width: 56.25px;
+  height: 15px;
+  padding-right: 5px;
+  color: white;
+  font-size: 12px;
+  vertical-align: middle;
+  padding: 5px; }
+
+.rowBehavior {
+  text-align: center;
+  font-size: 10px;
+  cursor: pointer;
+  background-color: white;
+  color: #001c2b;
+  border-radius: 3px; }
+  .rowBehavior:hover {
+    color: #fff;
+    background-color: #005e91; }
+
+.title {
+  font-weight: bold;
+  text-align: right; }
+
 .color {
   fill: 'grey'; }
+
+.selected {
+  background-color: #005e91;
+  color: #fff; }
 
 .btn_state {
   line-height: 0.5em; }

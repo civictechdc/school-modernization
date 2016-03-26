@@ -1,10 +1,10 @@
 function Bubble(budget){ // data
     this.budget = budget;
-    this.money = d3.format('$,');
+    this.money = d3.format('$,<2f></2f>');
     this.commas = d3.format(',');
     this.column = null;
     this.data = null;
-    this.sizes = {width: 950, height: 500, padding: 100};
+    this.sizes = {width: 950, height: 425, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.03; // -0.018
@@ -17,7 +17,7 @@ function Bubble(budget){ // data
 };
 
 Bubble.prototype.setColumn = function(column){
-    this.column = column;
+    this.column = column; 
 };
 
 Bubble.prototype.setData = function(newData){
@@ -81,7 +81,7 @@ Bubble.prototype.create_nodes = function(){
     this.nodes.sort(function(a,b){ return b.value - a.value});
 };
 
-Bubble.prototype.add_bubbles = function(set){
+Bubble.prototype.create_bubbles = function(set){
     var that = this;
     this.circles = this.svg.append('g').attr('id', 'groupCircles')
     .selectAll('circle')
@@ -250,9 +250,9 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         })
         // .attr('x', function(d){return d.x *1.8 - 450;})
         .attr('y', function(d,i){
-            // if(i%2 === 0){
-            //     return d.y - 200;
-            // }
+            if(i%2 === 0){
+                return d.y - 175;
+            }
             return d.y - 150;
         })
         .text(function(d){
@@ -312,10 +312,11 @@ Bubble.prototype.make_legend = function(){
 Bubble.prototype.add_search_feature = function() {  
     // Populate the <select> element with the schools
     for(var i=0, j=this.nodes.length; i<j; i++){
-        var option = document.createElement('option');
-        var newOption = get('select').appendChild(option);
-        newOption.setAttribute('school', this.nodes[i]['School'])
-        newOption.innerHTML = this.nodes[i]['School'];      
+        var option = document.createElement('option'),
+            newOption = get('select').appendChild(option),
+            sortedNodes = _.sortBy(this.nodes, 'School');
+        newOption.setAttribute('school', sortedNodes[i]['School'])
+        newOption.innerHTML = sortedNodes[i]['School'];  
     }
 
     // Fool with the select bar
@@ -327,6 +328,7 @@ Bubble.prototype.add_search_feature = function() {
             last.removeAttribute('shown');
         }
         var circle = document.getElementById(e.target.value);
+        console.log(circle);
         circle.setAttribute('shown', true);
         circle.style.fill = 'yellowgreen';
     });
@@ -342,7 +344,7 @@ Bubble.prototype.graph = function(){
     this.make_svg();
     this.set_force();
     this.create_nodes();
-    this.add_bubbles(this.nodes);
+    this.create_bubbles(this.nodes);
     this.update();
     this.add_tootltips();
     this.group_bubbles(); 
@@ -353,14 +355,15 @@ Bubble.prototype.graph = function(){
 Bubble.prototype.change = function(){
     this.reset_svg();
     this.create_nodes();
-    this.add_bubbles(this.nodes);
+    this.create_bubbles(this.nodes);
     this.add_tootltips();
     this.group_bubbles(); 
     this.make_legend();
-    // this.add_search_feature();
+    this.add_search_feature();
 };
 
 // Utility functions
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
+
