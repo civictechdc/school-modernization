@@ -36,7 +36,7 @@ text#tooltip_label {
 
 #tooltip {
   position: absolute;
-  width: 200px;
+  width: 210px;
   height: 205px;
   padding: 10px;
   background-color: #001c2b;
@@ -50,7 +50,9 @@ text#tooltip_label {
     display: none; }
   #tooltip #school {
     font-weight: bold;
-    color: #ff3233; }
+    font-size: 16px;
+    color: white;
+    line-height: 1.1em; }
 
 #legend {
   height: 250px;
@@ -96,16 +98,16 @@ text#tooltip_label {
 .row, .title {
   vertical-align: top;
   display: inline-block;
-  width: 56.25px;
-  height: 15px;
+  width: 45px;
+  height: 17px;
   padding-right: 5px;
   font-size: 12px;
-  vertical-align: middle;
   padding: 5px; }
 
 .rowBehavior {
+  vertical-align: bottom;
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
   cursor: pointer;
   background-color: #001c2b;
   color: #fff;

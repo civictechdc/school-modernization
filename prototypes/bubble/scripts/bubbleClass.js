@@ -128,7 +128,7 @@ Bubble.prototype.add_tootltips = function(d){
             yPosition = d3.select(this)[0][0]['cy'].animVal.value;
         
         // TOOLTIP INFO
-        d3.select('#school').text('School: ' + camel(d.School));
+        d3.select('#school').text(camel(d.School));
         d3.select('#agency').text('Agency: ' + d.Agency);
         d3.select('#ward').text('Ward: ' + d.Ward);
         // Project Type

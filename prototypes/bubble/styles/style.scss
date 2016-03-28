@@ -64,7 +64,7 @@ text {
 // TOOLTIP
 #tooltip {
    position: absolute;
-   width: 200px;
+   width: 210px;
    height: 205px;
    padding: 10px;
    background-color: $cerulean;
@@ -83,7 +83,9 @@ text {
 
   #school {
     @include bold;
-    color: $red;
+    font-size: 16px;
+    color: white;
+    line-height: 1.1em;
   }
 }
 
@@ -145,17 +147,18 @@ $menuW: 450px;
 .row {
   vertical-align: top;
   display: inline-block;
-  width: $menuW / 8;
-  height: 15px;
+  width: ($menuW / 9) - 5;
+  height: 17px;
   padding-right: 5px;
   font-size: 12px;
-  vertical-align: middle;
+  // vertical-align: middle;
   padding: 5px;
 }
 
 .rowBehavior {
+  vertical-align: bottom;
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
   cursor: pointer;
   background-color: $cerulean;
   color: #fff;
