@@ -70,8 +70,9 @@ filter: #E7ECF2 (active)
     top: 100px;
     left: 100px;
     background-color: #D0D8E2;
-    box-shadow: 4px 4px 4px #555;
-    border-radius: 6px 6px 2px 2px;
+    /*box-shadow: 4px 4px 4px #555;*/
+    border: 1px solid #002646;
+    /*border-radius: 6px 6px 2px 2px;*/
     z-index:99;
 }
 #filters-selections {
@@ -99,8 +100,8 @@ filter: #E7ECF2 (active)
     top: 360px;
     border-collapse: collapse;
     border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
+    /*border: 1px solid #002646;*/
+    /*border-radius: 6px 6px 2px 2px;*/
     background-color: rgba(255, 255, 255, 0.9);
     z-index: 9;
 }
@@ -111,8 +112,7 @@ filter: #E7ECF2 (active)
     left: 100px;
     border-collapse: collapse;
     border-spacing: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
+    /*border-radius: 6px 6px 2px 2px;*/
     background-color: rgba(255, 255, 255, 0.9);
     z-index: 9;
 }
@@ -145,13 +145,12 @@ filter: #E7ECF2 (active)
     width: 100%;
     text-align: center;
     border-collapse: collapse;
-    border: 1px solid #001C2B;
     background-color: #D0D8E2;
     color: #001C2B;
-    border-radius: 6px 6px 2px 2px;
+    /*border-radius: 6px 6px 2px 2px;*/
 }
 td {
-    border: 1px solid #001C2B ;
+    border: 1px solid #001C2B;
 }
 .filters-banner {
     height: 36px;
@@ -160,7 +159,7 @@ td {
     background-color: white;
 }
 #filter-title, #filter-subtitle {
-    margin: 2px 0;
+    margin: 2px 0 0 150px;
     color: #001C2B;
 }
 #filter-title {
@@ -171,8 +170,8 @@ td {
     display: inline-block;
     height: 22px;
     width: 70px;
-    left: 90%;
-    margin-left: 60px;
+    left: 95%;
+    margin-left: 70px;
     border-radius: 2px 2px 2px 2px;
     background-color: darkviolet;
     border: solid 2px black;
@@ -197,7 +196,7 @@ td {
     background-color: #D0D8E2;
 }
 .filter-label {
-    width: 80px;
+    width: 210px;
     padding-right: 10px;
     font-family: "Times", serif;
     text-align: right;
@@ -206,7 +205,7 @@ td {
     position: relative;
     /*width: 50px;
     height: 30px;*/
-    width: 80px;
+    width: 50px;
     height: 100%;
     margin: auto;
     padding: 0 4px;
@@ -455,7 +454,7 @@ hr {
 
 /* ======= profile ======= */
 #profile-container > tbody, tr {
-    width: 100%;
+    /*width: 100%;*/
     padding: -10px 0;
     margin: -10px 0;
 }
@@ -470,11 +469,13 @@ hr {
 /* ======= profile-banner ======= */
 .profile-banner {
     position: relative;
-    width: 100%;
+    margin: 0;
+    /*width: 360px;*/
     height: 58px;
     text-align: left;
     color: #001C2B;
     background-color: #D0D8E2;
+    font-family: "Times", serif;
 }
 #profile-banner-left {
     position: relative;
@@ -493,7 +494,7 @@ hr {
     height: 58px;
 }
 .profile-banner > p {
-    color: white;
+    color: #002646;
 }
 
 /* ======= banner contents ======= */
@@ -528,7 +529,7 @@ hr {
 .profile-subtitle {
     display: block;
     width: 60%;
-    margin: 8px 0 0 34px;
+    margin: 5px 0 0 34px;
     font-size: 12px;
     color: #001C2B;
 }
@@ -547,19 +548,58 @@ hr {
     /*margin-right: 10px;*/
 }
 
+/* ======= profile table ======= */
+.data-key {
+    width: 220px;
+}
+.data-value {
+    width: 140px;
+}
+.key-text, .value-text {
+    position: relative;
+    padding: 1px 0;
+    margin: 1px 10px;
+    height: 100%;
+    font-weight: 400;
+	font-size: 12px;
+}
+.key-text {
+    text-align: right;
+    color: black;
+}
+.value-text {
+    text-align: left;
+    color: purple;
+}
+a.value-text {
+    text-decoration: none;
+    text-align: left;
+    font-size: 12px;
+    color: black;
+}
+a.value-text:hover {
+    color: purple;
+}
+
+.value-label {
+    color: black;
+}
+
 /* ======= chart ======= */
 #chart {
     position: relative;
-    width: 100%;
+    /*width: 360px;*/
     height: auto;
+    margin: 0;
     left: 0;
-    box-shadow: 6px 6px 5px #888888;
-    border-radius: 6px 6px 2px 2px;
+    border: 1px solid #002646;
+    /*box-shadow: 6px 6px 5px #888888;*/
+    /*border-radius: 6px 6px 2px 2px;*/
     background-color: rgba(255, 255, 255, 0.9);
 }
 .title-container {
     float: left;
-    width: 65%;
+    /*width: 65%;*/
     text-align: center;
 }
 #chart-title {
@@ -576,7 +616,7 @@ hr {
 }
 #expendMathC {
     /*float: right;*/
-    width: 100px;
+    /*width: 100px;*/
     height: 30px;
     margin-top: 20px;
     /*margin-right: 10px;*/
@@ -594,7 +634,7 @@ hr {
     display: inline-block;
     float: left;
     height: 30px;
-    width: 100px;
+    /*width: 100px;*/
     margin-top: 2px;
     margin-left: 5px;
     line-height: 16px;
@@ -606,7 +646,7 @@ hr {
     display: none;
 	list-style: none;
 	position: relative;
-    width: 100%;
+    /*width: 100%;*/
     height: 95%;
 	margin: 0;
 	padding: 0;
@@ -614,14 +654,14 @@ hr {
 }
 #sub-nav-container > .sub-nav-list li {
     position: relative;
-    width: 100%;
+    /*width: 100%;*/
     height: 90%;
 	margin: 2px 0;
     background-color: gray;
 }
 #sub-nav-container > .sub-nav-list a {
     display: inline-block;
-    width: 100%;
+    /*width: 100%;*/
     height: 100%;
     margin: 0;
     padding: 5px 0;
@@ -658,41 +698,6 @@ hr {
     height: 14px;
     vertical-align: center;
     border-bottom: 1px solid #ddd;
-}
-.data-key {
-    width: 140px;
-}
-.data-value {
-    width: 220px;
-}
-.key-text, .value-text {
-    position: relative;
-    padding: 1px 0;
-    margin: 1px 10px;
-    height: 100%;
-    font-weight: 400;
-	font-size: 14px;
-}
-.key-text {
-    text-align: right;
-    color: black;
-}
-.value-text {
-    text-align: left;
-    color: purple;
-}
-a.value-text {
-    text-decoration: none;
-    text-align: left;
-    font-size: 12px;
-    color: black;
-}
-a.value-text:hover {
-    color: purple;
-}
-
-.value-label {
-    color: black;
 }
 
 /* ======= d3 ======= */

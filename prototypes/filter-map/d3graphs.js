@@ -62,7 +62,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
         var yAxisLabel = "left";
     } else {
-        var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
+        var chartPadding = {top: 20, right: 10, bottom: 40, left: 80},
             chartW = 150 - chartPadding.left - chartPadding.right,       // outer width of chart
             chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
         var yAxisLabel = "right";
@@ -132,6 +132,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= ======= ======= label/title formatting ======= ======= =======
     labelTextArray = updateChartText(displayObj, subtitle);
+    console.log("  labelTextArray: ", labelTextArray);
     mathText = labelTextArray[0];
     schoolText = labelTextArray[1];
     agencyText = labelTextArray[2];
@@ -230,7 +231,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 if (displayObj.displayMode != "storyMap") {
                     return 4;
                 } else {
-                    return 0;
+                    return 10;
                 }
             })
             .attr("width", barW)
@@ -589,7 +590,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             $("#chart-container").css("position", "absolute");
             $("#chart-container").css("top", "360px");
             $("#chart-container").css("left", "100px");
-            $("#chart-container").css("width", "360px");
+            // $("#chart-container").css("width", "360px");
             $("#chart-container").css("height", "auto");
         }
     }

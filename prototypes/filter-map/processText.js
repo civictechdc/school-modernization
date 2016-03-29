@@ -72,14 +72,15 @@ function updateChartText(displayObj, subtitle) {
 
     // == math label
     if (displayObj.dataFilters.math) {
-        if (displayObj.displayMode != "storyMap") {
-            mathText = filterMenu[displayObj.dataFilters.math].text;
-        } else {
-            mathText = filterMenu[displayObj.dataFilters.math].label;
-        }
-        if (mathText == "dollar amount") {
-            mathText = "";
-        }
+        // if (displayObj.displayMode != "storyMap") {
+        //     mathText = filterMenu[displayObj.dataFilters.math].label;
+        // } else {
+        //     mathText = filterMenu[displayObj.dataFilters.math].label;
+        // }
+        // if (mathText == "dollar amount") {
+        //     mathText = "";
+        // }
+        mathText = "";
     } else {
         mathText = "";
     }
@@ -135,8 +136,8 @@ function updateHoverText(itemName, schoolType) {
                     itemName = splitZoneName[0];
                 }
             }
-            if (itemName.length > 35) {
-                itemName = itemName.substring(0, 32) + "...";
+            if (itemName.length > 38) {
+                itemName = itemName.substring(0, 35) + "...";
             }
         }
         $("#mouseover-text").children("h2").css("visibility", "visible");

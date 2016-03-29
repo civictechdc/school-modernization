@@ -22,8 +22,8 @@ function initApp(presetMode) {
 
         // == District, Charter
         filterMenu.District = { id:"District", category:"schools", label:"DCPS Schools", text:"DCPS Schools", column:"Agency", value:"DCPS" };
-        filterMenu.Charter = { id:"Charter", category:"schools", label:"Charter Schools", text:"Charter Schools", column:"Agency", value:"PCS" };
-        filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"All school types", column:"Agency", value:"All" };
+        filterMenu.Charter = { id:"Charter", category:"schools", label:"Charter Schools", text:"Public Charter Schools", column:"Agency", value:"PCS" };
+        filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"Both", column:"Agency", value:"Both" };
 
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
         filterMenu.Elem = { id:"Elem", category:"schools", label:"Elementary Schools", text:"Elementary Schools", column:"Level", value:"ES" };
@@ -31,9 +31,9 @@ function initApp(presetMode) {
         filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools", column:"Level", value:"HS" };
 
         // == spendPast, spendLifetime, spendPlanned
-        filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Past Spending 1998-2015", column:"MajorExp9815", value:null };
-        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Future Spending 2016-2021", column:"TotalAllotandPlan1621", value:null };
-        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total Spending", column:"LifetimeBudget", value:null };
+        filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Total facility spending 1998-2015", column:"MajorExp9815", value:null };
+        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Planned facility spending 2016-2021", column:"TotalAllotandPlan1621", value:null };
+        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total spending 1998-2021", column:"LifetimeBudget", value:null };
 
         // == spendSqFt, spendEnroll
         filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", label:"/sqft", text:"per sqFt", column:"SpentPerSqFt", value:null };
@@ -42,8 +42,8 @@ function initApp(presetMode) {
 
         // == zones
         filterMenu.Ward = { id:"Ward", category:"zone", label:"Wards", text:"Wards", column:"Ward", value:null };
-        filterMenu.FeederHS = { id:"FeederHS", category:"zone", label:"HSfeeders", text:"High School feeder zones", column:"FeederHS", value:null };
-        filterMenu.FeederMS = { id:"FeederMS", category:"zone", label:"MSfeeders", text:"Middle School feeder zones", column:"FeederMS", value:null };
+        filterMenu.FeederHS = { id:"FeederHS", category:"zone", label:"HSfeeders", text:"High School Feeder Pattern", column:"FeederHS", value:null };
+        filterMenu.FeederMS = { id:"FeederMS", category:"zone", label:"MSfeeders", text:"Middle School Boundary", column:"FeederMS", value:null };
         filterMenu.Elementary = { id:"Elementary", category:"zone", label:"Elementary zones", text:"Elementary zones", column:null, value:null };
 
     }
@@ -505,7 +505,8 @@ function initApp(presetMode) {
 
         var self = this;
         var searchSchoolName = $("#searchWindow").val();
-        var url = "Data_Schools/DC_OpenSchools_Master_214.csv";
+        // var url = "Data_Schools/DC_OpenSchools_Master_214.csv";
+        var url = "Data_Schools/DCSchools_FY1415_Master_321.csv ";
         var filterTitleContainer = $("#filters-selections").children("h2");
         var jsonData, foundDataArray, schoolText, tempSchoolText;
 
@@ -723,11 +724,13 @@ function initApp(presetMode) {
         // ======= get school data =======
         if (this.jsonData == null) {
             $.ajax({
-                url: websitePrefix + "Data_Schools/DC_OpenSchools_Master_214.csv",
+                // url: websitePrefix + "Data_Schools/DC_OpenSchools_Master_214.csv",
+                url: websitePrefix + "Data_Schools/DCSchools_FY1415_Master_321.csv",
                 method: "GET",
                 dataType: "text"
             }).done(function(textData){
                 console.log("*** ajax success ***");
+                console.dir(textData);
                 jsonData = CSV2JSON(textData);
                 console.dir(jsonData);
 
@@ -896,11 +899,13 @@ function initApp(presetMode) {
 
         // ======= get selected data =======
         $.ajax({
-            url: "Data_Schools/DC_OpenSchools_Master_214.csv",
+            // url: "Data_Schools/DC_OpenSchools_Master_214.csv",
+            url: "Data_Schools/DCSchools_FY1415_Master_321.csv",
             method: "GET",
             dataType: "text"
         }).done(function(textData) {
             console.log("*** ajax success ***");
+            console.dir(textData);
             jsonData = CSV2JSON(textData);
             console.dir(jsonData);
 

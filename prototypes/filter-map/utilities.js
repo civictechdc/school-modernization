@@ -272,8 +272,9 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
-    var nextSchoolSqft, nextSchoolEnroll;
+    var validExpendFlag = true;
     var nextZone = schoolZoneIndex = null;
+    var nextSchoolSqft, nextSchoolEnroll, validExpendFlag;
 
     // == match school name from geojson file with school name from csv file
     if (displayObj.dataFilters.zones) {
@@ -288,12 +289,14 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
         if (displayObj.dataFilters.expend == null) {
             if ((nextSchoolExpend == "NA") || (nextSchoolExpend == null)) {
                 nextSchoolExpend = 0;
+                validExpendFlag = false;
             } else {
                 nextSchoolExpend = parseInt(schoolData.spendLifetime);
             }
         } else {
             if ((nextSchoolExpend == "NA") || (nextSchoolExpend == null)) {
                 nextSchoolExpend = 0;
+                validExpendFlag = false;
             } else {
                 nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
             }
@@ -315,8 +318,10 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
 
         // == aggregate new value into zone total
         if (Number.isInteger(nextSchoolExpend)) {
-            zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount++;
             if (nextSchoolExpend >= 0) {
+                if (validExpendFlag == true) {
+                    zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount++;
+                }
                 currentAmount = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount;
                 aggregatedAmount = currentAmount + nextSchoolExpend;
                 zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount = aggregatedAmount;
@@ -355,7 +360,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 aggregatedSqft = currentSqft + nextSchoolSqft;
                 zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneSqft = aggregatedSqft;
             } else {
-                console.log("ERROR: negative values for " + schoolData.schoolName);
+                console.log("ERROR: negative sqft values for " + schoolData.schoolName);
                 nextSchoolSqft = 0;
             }
         } else {
@@ -370,7 +375,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 aggregatedEnroll = currentEnroll + nextSchoolEnroll;
                 zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneEnroll = aggregatedEnroll;
             } else {
-                console.log("ERROR: negative values for " + schoolData.schoolName);
+                console.log("ERROR: negative enroll values for " + schoolData.schoolName);
                 nextSchoolEnroll = 0;
             }
         } else {
@@ -857,7 +862,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == school sqft
     schoolSqft = cleanedSchoolData.schoolSqft;
     if (schoolSqft == "") {
-        schoolSqft = "No data for school sqft.";
+        schoolSqft = "No data";
         schoolSqftSpan = "";
     } else {
         schoolSqftSpan = "<span class='value-label'>sqft</span>";
@@ -866,7 +871,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == capacity
     schoolMaxOccupancy = cleanedSchoolData.schoolMaxOccupancy;
     if (schoolMaxOccupancy == "") {
-        schoolMaxOccupancy = "No data for school capacity.";
+        schoolMaxOccupancy = "No data";
         schoolMaxOccupancySpan = "";
     } else {
         schoolMaxOccupancySpan = "<span class='value-label'>students</span>";
@@ -875,7 +880,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == enrollment
     schoolEnroll = cleanedSchoolData.schoolEnroll;
     if (schoolEnroll == "") {
-        schoolEnroll = "No data for enrollment.";
+        schoolEnroll = "No data";
         schoolEnrollSpan = "";
     } else {
         schoolEnrollSpan = "<span class='value-label'>students</span>";
@@ -884,7 +889,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == sqft per enrolled student
     schoolSqFtPerEnroll = cleanedSchoolData.schoolSqFtPerEnroll;
     if (schoolSqFtPerEnroll == "") {
-        schoolSqFtPerEnroll = "No data for sqFt/student.";
+        schoolSqFtPerEnroll = "No data";
         schoolSqFtPerEnrollSpan = "";
     } else {
         schoolSqFtPerEnroll = parseInt(cleanedSchoolData.schoolSqFtPerEnroll);
@@ -894,7 +899,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == lifetime spending
     spendLifetime = cleanedSchoolData.spendLifetime;
     if (spendLifetime == "") {
-        spendLifetime = "<span class='value-label'>No data for lifetime spending</span>";
+        spendLifetime = "<span class='value-label'>No data</span>";
     } else {
         spendLifetime = "$" + spendLifetime;
     }
@@ -902,7 +907,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == future spending
     spendPlanned = cleanedSchoolData.spendPlanned;
     if (spendPlanned == "") {
-        spendPlanned = "<span class='value-label'>No data for future spending</span>";
+        spendPlanned = "<span class='value-label'>No data</span>";
     } else {
         spendPlanned = "$" + spendPlanned;
     }
@@ -910,7 +915,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == past spending
     spendPast = cleanedSchoolData.spendPast;
     if (spendPast == "") {
-        spendPast = "<span class='value-label'>No data for past spending</span>";
+        spendPast = "<span class='value-label'>No data</span>";
     } else {
         spendPast = "$" + spendPast;
     }
@@ -918,7 +923,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == spending per student
     spendEnroll = cleanedSchoolData.spendEnroll;
     if ((spendEnroll == "") || (spendEnroll == 0)) {
-        spendEnroll = "<span class='value-label'>No spending per student data</span>";
+        spendEnroll = "<span class='value-label'>No data</span>";
         spendEnrollSpan = "";
     } else {
         spendEnroll = "$" + parseInt(spendEnroll);
@@ -928,7 +933,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == spending per sqft
     spendSqFt = parseInt(cleanedSchoolData.spendSqFt);
     if ((spendSqFt == "") || (spendSqFt == 0)) {
-        spendSqFt = "<span class='value-label'>No spending per sqft data</span>";
+        spendSqFt = "<span class='value-label'>No data</span>";
         spendSqFtSpan = "";
     } else {
         spendSqFt = "$" + parseInt(spendSqFt);
@@ -956,27 +961,41 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<div id='close-X'><p>X</p></div>";
     htmlString += "<p class='profile-title'>" + itemName + "</p>";
     htmlString += "<p class='profile-subtitle'>" + cleanedSchoolData.schoolAddress + "</p>";
-    htmlString += "<p class='profile-subtitle2'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + "</p>";
+    htmlString += "<p class='profile-subtitle2'>Ward " + cleanedSchoolData.schoolWard + " / " + cleanedSchoolData.schoolLevel + " / ";
+    htmlString += "HS Feeder: " + cleanedSchoolData.schoolFeederHS +  "</p>";
     htmlString += displayObj.makeMathSelect(displayObj.expendMathMenu, "profile");
     htmlString += "</td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>project type</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>HS Feeder</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolFeederHS + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>bldg Sqft</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + schoolSqft + " " + schoolSqftSpan + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>bldg capacity</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + schoolMaxOccupancy + " " + schoolMaxOccupancySpan + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>enrolled (2014-15)</p></td>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Enrollment (2014-15)</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + schoolEnroll + " " + schoolEnrollSpan + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>sqft/enrolled</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + schoolSqFtPerEnroll + " " + schoolSqFtPerEnrollSpan + "</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime Spending</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Future Spending</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Past Spending</p></td>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Bldg sq ft 2016</p></td>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + schoolSqft + " " + schoolSqftSpan + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Bldg capacity 2016</p></td>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + schoolMaxOccupancy + " " + schoolMaxOccupancySpan + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Past spending (FY1998-2015)</p></td>";
     htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>&nbsp;</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Past facilities improvements</p></td>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Year completed</p></td>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2022)</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future facilities improvements</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Projected completion</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2022</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
+
     htmlString += "</table>";
 
     // == remove previous chart or profile html if any
