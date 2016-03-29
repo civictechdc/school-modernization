@@ -1,0 +1,803 @@
+{
+    "name": "Schools", 
+    "children": [
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Aiton Es", 
+            "value": 16.303007745757803
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Amidon-Bowen Es", 
+            "value": 14.672975913115874
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Anacostia Hs", 
+            "value": 12.01568348671339
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ballou Hs", 
+            "value": 16.822984681200424
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ballou Stay", 
+            "value": 15.884970685680464
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Bancroft Es", 
+            "value": 15.541498863871723
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Barnard Es", 
+            "value": 15.83564617319923
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Beers Es", 
+            "value": 13.437596188414787
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Benjamin Banneker Hs", 
+            "value": 13.09066789045965
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Bowen", 
+            "value": 14.051287444922863
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Brent Es", 
+            "value": 18.636796291605503
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Brightwood Ec", 
+            "value": 11.699197745964808
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Brookland Ms", 
+            "value": 14.018304139487196
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Browne Ec", 
+            "value": 16.969584996599945
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Bruce-Monroe Es @ Park View", 
+            "value": 12.488866005766742
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Brucemonroe-Demolished", 
+            "value": 16.147286091850763
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Bunker Hill Es", 
+            "value": 19.55713104939334
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Burroughs Es", 
+            "value": 10.618058845233378
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Burrville Es", 
+            "value": 11.491457828590683
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "C.W. Harris Es", 
+            "value": 18.293169391920372
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Capitol Hill Montessori", 
+            "value": 15.170872975686445
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Cardozo Ec", 
+            "value": 17.135012423686586
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Choice Academy", 
+            "value": 12.557386678362795
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Cleveland Es", 
+            "value": 15.062089452028713
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Columbia Heights Ec (Chec)", 
+            "value": 13.279166433039693
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Coolidge Hs", 
+            "value": 11.044234135972914
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Deal Ms", 
+            "value": 13.244768375240731
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Dorothy Height Es", 
+            "value": 16.295704000203177
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Drew Es", 
+            "value": 16.998249909989617
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Dunbar Hs", 
+            "value": 19.586104037274325
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Eastern Hs", 
+            "value": 19.324856010283717
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Eaton Es", 
+            "value": 13.260368156997036
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Eliot-Hine Ms", 
+            "value": 14.21077610225123
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ellington School Of The Arts", 
+            "value": 15.74268257979206
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ferebeehope", 
+            "value": 18.24950904496282
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Garfield Es", 
+            "value": 18.128952635618475
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Garnettpatterson", 
+            "value": 14.65256020479234
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Garrison Es", 
+            "value": 18.47355680673285
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "H.D. Cooke Es", 
+            "value": 17.161410883431287
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Hardy Ms", 
+            "value": 19.880141043024736
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Hart Ms", 
+            "value": 11.451421612328414
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Hearst Es", 
+            "value": 18.401044594529857
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Hendley Es", 
+            "value": 14.942110977069785
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Houston Es", 
+            "value": 19.154551935428287
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Hyde-Addison Es", 
+            "value": 12.93206249360876
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Incarcerated Youth Program", 
+            "value": 11.047969424909962
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "J.O. Wilson Es", 
+            "value": 13.311860649224645
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Janney Es", 
+            "value": 13.883923325308917
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Jefferson Ms", 
+            "value": 12.102000091340377
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Johnson Ms", 
+            "value": 18.388009487908217
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Kelly Miller Ms", 
+            "value": 17.467912668837364
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ketcham Es", 
+            "value": 13.358359495560723
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Key Es", 
+            "value": 16.49301116145686
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Kimball Es", 
+            "value": 18.584798923524367
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "King, M.L. Es", 
+            "value": 13.510506302066084
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Kramer Ms", 
+            "value": 18.96295703000392
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Lafayette Es", 
+            "value": 15.678832147173658
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Langdon Es", 
+            "value": 10.883615215098942
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Langley Es", 
+            "value": 18.438842082107854
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Lasalle-Backus Ec", 
+            "value": 15.834533882355501
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Leckie Es", 
+            "value": 18.011506790423
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ludlow-Taylor Es", 
+            "value": 18.718005790061483
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Luke Moore Hs", 
+            "value": 16.39047625150834
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Macfarland", 
+            "value": 12.605190046016773
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Malcolm X Es", 
+            "value": 14.179903103040079
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Malcolmx", 
+            "value": 11.135080556267381
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mamiedlee", 
+            "value": 12.954238651130684
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mamiedleespedcntr", 
+            "value": 11.69252658961329
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mann Es", 
+            "value": 11.551254275925784
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Marie Reed Es", 
+            "value": 16.680466485772463
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Marshall", 
+            "value": 13.682081966601753
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Maury Es", 
+            "value": 17.322926644944765
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mckinley Ms", 
+            "value": 18.60428682027228
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mckinley Technology Hs", 
+            "value": 11.569806407092141
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mcterrell", 
+            "value": 11.59439983249181
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Miner Es", 
+            "value": 11.03749054857783
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Mmwashingtion", 
+            "value": 16.017711038911518
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Montgomery/Kipp", 
+            "value": 10.137774720943828
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Moten Es", 
+            "value": 17.5406969146161
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Murch Es", 
+            "value": 12.969793739689568
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Nalle Es", 
+            "value": 13.387210760891463
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Noyes Es", 
+            "value": 16.47707772629426
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Orr Es", 
+            "value": 11.46949550343299
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Oyster-Adams Bilingual School", 
+            "value": 16.3903191506537
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Oyster-Adams Bilingual School", 
+            "value": 14.17356043550144
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Patterson Es", 
+            "value": 19.894149314034635
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Payne Es", 
+            "value": 13.65734549611
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Peabody Es", 
+            "value": 15.771013171267404
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Phelps Ace Hs", 
+            "value": 19.917468223907
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Plummer Es", 
+            "value": 16.00879309248139
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Powell Es", 
+            "value": 14.020540104030822
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Prharris", 
+            "value": 11.438195273836874
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Randle Highlands Es", 
+            "value": 12.460496733132686
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Raymond Ec", 
+            "value": 15.193308414954076
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Rhterrell", 
+            "value": 19.893143486443346
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "River Terrace Special Education Center", 
+            "value": 16.65654884023308
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ronbrown", 
+            "value": 16.82779505703747
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Roosevelt Hs", 
+            "value": 17.103842061121483
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Roosevelt Stay", 
+            "value": 15.066111788193917
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Ross Es", 
+            "value": 13.958628364291778
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Rudolph", 
+            "value": 15.29581156655652
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Savoy Es", 
+            "value": 10.03971227175057
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "School Without Walls @ Francis-Stevens Ec", 
+            "value": 18.38728202566594
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "School Without Walls Hs", 
+            "value": 11.067854553795083
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "School-Within-School", 
+            "value": 12.055619407058309
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Seaton Es", 
+            "value": 12.060557346382474
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Sharpehealth", 
+            "value": 19.333405419275344
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Shaw", 
+            "value": 18.532027588888027
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Shepherd Es", 
+            "value": 10.827048393657451
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Simon Es", 
+            "value": 14.342859388031819
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Smothers Es", 
+            "value": 12.996664955186953
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Sousa Ms", 
+            "value": 14.25760892154539
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Stanton Es", 
+            "value": 16.403370715734635
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Stoddert Es", 
+            "value": 18.301543680357202
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Stuart-Hobson Ms", 
+            "value": 19.237545129010066
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Takoma Ec", 
+            "value": 14.036514237057986
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Thomas Es", 
+            "value": 19.941814038087994
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Thomson Es", 
+            "value": 18.545288731081737
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Truesdell Ec", 
+            "value": 14.583942501452885
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Tubman Es", 
+            "value": 19.500810432365817
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Turner Es", 
+            "value": 11.182178802213086
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Tyler Es", 
+            "value": 18.003447001432882
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Van Ness Es", 
+            "value": 16.982265892561703
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Walker-Jones Ec", 
+            "value": 10.104624576333842
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Washington Metropolitan Hs", 
+            "value": 16.55069070798868
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Watkins Es", 
+            "value": 10.273145101974329
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "West Ec", 
+            "value": 19.395148704122796
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Wheatley Ec", 
+            "value": 11.494491502121647
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Whittier Ec", 
+            "value": 19.22798402490767
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Wilkinson", 
+            "value": 16.153116317241555
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Wilson Hs", 
+            "value": 14.443041862618003
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Woodson, H.D. Hs", 
+            "value": 15.240762873800936
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": false, 
+            "name": "Youth Services Center", 
+            "value": 17.080134839784126
+        }
+    ]
+}

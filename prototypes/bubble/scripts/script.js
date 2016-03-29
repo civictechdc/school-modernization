@@ -1,85 +1,105 @@
-var diameter = 760,
-    format = d3.format(",d"),
-    color = d3.scale.category20c();
+'use strict';
+// var bubble = null;
+(function(){
+    // d3.csv('data/data_master.csv', function(data){
+    // d3.csv('data/data_openschools_master_214.csv', function(data){
+    d3.csv('data/data_master_321.csv', function(data){
+        var bubble = new Bubble('LifetimeBudget'); // data
+        var schools = {
+            both: data,
+            public: (function(d){
+                return d.filter(function(item){
+                    if (item.Agency === 'DCPS'){
+                        return item;
+                    }
+                });
+            }(data)),
+            charter: (function(d){
+                return d.filter(function(item){
+                    if (item.Agency === 'PCS'){
+                        return item;
+                    }
+                });
+            }(data))
+        };
 
-var bubble = d3.layout.pack()
-    .sort(null)
-    .size([diameter, diameter])
-    // .radius(function(){return '20';})
-    .padding(25)
-    ;
+        // Run the graph
+        get('#None').classList.add('selected');
+        get('#LifetimeBudget').classList.add('selected');
+        get('#both').classList.add('selected');
+        bubble.setData(schools.both);
+        bubble.graph();
 
-var svg = d3.select("#chart").append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
-    .attr("class", "bubble");
+        // To change the subdivides, SUBDIVIDES
+        var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
+        subdivides.forEach(function(item, e){
+            item.addEventListener('click', function(e){
+                subdivides.forEach(function(sel){
+                    if(sel.classList.contains('selected')){
+                        sel.classList.remove('selected');
+                    }
+                });
+                if(e.target.id === 'FeederHS'){
+                    bubble.setData(schools['public']);
+                    get('#both').classList.remove('selected');
+                    get('#charter').classList.remove('selected');
+                    get('#public').classList.add('selected');
+                }
+                bubble.setColumn(e.target.id);
+                bubble.change();
+                makeSelected(e);
+                // Change the title
+                // get('#sub_state').innerHTML = 'Split By:  ' + e.target.dataset.title;
+            });
+        });
 
-d3.json("scripts/json/data.json", function(error, root) {
-  if (error) throw error;
+        // To change the bubble radii, BUDGET COLUMNS
+        var dataChange = Array.prototype.slice.call(getAll('.dataChange'));
+        dataChange.forEach(function(item, e){
+            item.addEventListener('click', function(e){  
+                dataChange.forEach(function(sel){
+                    if(sel.classList.contains('selected')){
+                        sel.classList.remove('selected');
+                    }
+                });
 
-  var node = svg.selectAll(".node")
-      .data(bubble.nodes(classes(root))
-      .filter(function(d) { return !d.children; }))
-    .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-  node.append("title")
-      .text(function(d) { return d.className + ": " + format(d.value); });
+                bubble.setBudget(e.target.id);
+                bubble.change();
+                makeSelected(e);
+                // Change the title
+                // get('#budget_state').innerHTML = e.target.dataset.title;
+            });
+        });
 
-  node.append("circle")
-      // .transition()
-      // .duration(500)
-      .attr("r", function(d) { 
-        var r_scale = d3.scale.linear().domain([0, 117015598]).rangeRound([10,100]);
-        return r_scale(d.value);
-      })
-      .style("fill", function(d) {
-        return getColor(d.value);
-      })
-      .on('mouseenter', function(){
-        this.style.fill = 'gray';
-      })
-      .on('mouseleave', function(d){
-        this.style.fill = getColor(d.value);
-      })
+        // To change the bubble radii, SCHOOL SET
+        var schoolChange = Array.prototype.slice.call(getAll('.school'));
+        schoolChange.forEach(function(item, e){
+            item.addEventListener('click', function(e){ 
+                schoolChange.forEach(function(sel){
+                    if(sel.classList.contains('selected')){
+                        sel.classList.remove('selected');
+                    }
+                });
+                bubble.setData(schools[e.target.id]);
+                bubble.change();
+                makeSelected(e);
 
-      ;
+                // Change the title
+                // get('#school_state').innerHTML = e.target.dataset.title + ' Schools';
+            });
+        });
 
-  node.append("text")
-      .attr("dy", ".3em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.className.substring(0, d.r / 3); });
+        // if(get('#charter').classList.contains('selected')){
+        //     get('#FeederHS').setAttribute("disabled", "disabled")
+        // }
+    });
+}())
 
-});
 
-// Returns a flattened hierarchy containing all leaf nodes under the root.
-function classes(root) {
-  var classes = [];
+// Utility functions
+function makeSelected(e){e.target.classList.add('selected');}
+function get(sel){return document.querySelector(sel);}
+function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
+function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
 
-  function recurse(name, node) {
-    if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-    else classes.push({packageName: name, className: node.name, value: node.size});
-  }
-
-  recurse(null, root);
-  return {children: classes};
-}
-
-// Returns the appropriate color for the value passed into it
-function getColor(the_data){
-    var value = the_data;
-    if(value > 10000000){ // 10 MILLION
-        return '#77cc00';
-    } else if(value < 10000000 && value > 1000000){
-        return '#779900';
-    } else if (value < 1000000 && value > 100000){
-        return '#774400';
-    } else if (value < 100000 && value > 0){
-        return '#771100';
-    } else {
-        return '#aa0000';
-    }
-}
-
-d3.select(self.frameElement).style("height", diameter + "px");

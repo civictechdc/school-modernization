@@ -1,14 +1,71 @@
-- Add charter schools to csv
-- Subdivide by Agency (DCPS and PCS)
-- Figure out doing logic on csv columns in Python
-/ SVG Tooltips
-/ Plan all subdivides
+√ Add color to the bubbles
+- Add search feature
 
-Physics:
-   make group spread out
-   make them all move slower
-fix the colors
+√ Capitol -> Capital
+√ 1998 - 2015 (Lifetime && Past)
+- Make legend values dynamic
+- make 'Total Spent' value reflect the current budget
+   -> if using Past numbers, Total Spent should indicate Past numbers
+√ MIN / MAX !!!!!
 
-******************************************************
-- todo still
-/ done
+
+Hey guys, 
+
+Thanks again for all the hard work. I've gone through most of the separate tools here and below are my thoughts. 
+
+For reference, here is the link to Tom's map tool and Nick's bubble chart.
+
+I've included Giulia here because I have some asks for her below and Nick Skelsey here so he understands where we are on in the process. 
+
+Here are my questions and design suggestions for both tools, the bubble chart and map.
+
+Would love to hammer these out this week and wrap up project if we can. 
+
+I'm available to talk to either of you tonight if you'd like to discuss before meeting up tomorrow. 
+
+Thanks again guys and sorry for the delay here.
+
+
+For both
+-​Need a title; we will work on that on Monday, not on you two.
+
+-In Sam's graph, if the user clicks 'levels' there seem to be a lot more types. Looking at Kate's data, I didn't see these different types. For instance, there is the 'adult' category, but not sure what that is. Can one of you two help clarify?
+
+-can we make the profiles for each dot have the same fields?
+
+-we need to come up with a common set of colors for district schools, charter schools and schools with no data. For instance, Nick has red dots for schools with no data, and Tom has red dots for charter schools. GIULIA: I could use your help with this decision
+
+
+Bubble chart
+-add dark blue header with white font
+-add grey navigation bar on left hand side
+-drop legend to bottom right hand corner  
+-for the legend, add color dots to denote district school, charter school, and a 'no data' dot. we will decide color for dots on Monday
+-add 'Data for:' description bar similar to map tool
+-what is the default set of bubbles represent?
+-under each group of bubbles, can we add total figure amounts? For instance, if someone clicked on 'past' and 'agency' there would be a split of dots between 'DCPS' and 'PCS'. Can we please put numbers under both groups to show the user the difference in spending?
+-filter table
+label table as 'Filters' with white background for header row, similar to Tom's map
+all dark blue buttons into light grey similar to Tom's filter and turn on-click color to purple via Tom's TOM: do you have color numbers for gray and purple here?
+add 'clear' button that resets filter functions similar to Tom's map
+labels for filter titles and rows:
+header title: "Filters" add 'clear' button
+1st row title: rename "Facility Spending"
+   Button 1: "Past facility spending 1998 - 2015"
+   Button 2: "Planned facility spending 2016 - 2021"
+   Button 3: "Total spending from 1998 - 2021"
+2nd row title: rename 'View data by:'
+   Button 1: "District vs Charter" 
+   Button 2: "School Age Level"
+   Button 3: "Ward"
+   Button 4: "High School Feeder Pattern"
+   Button 5: "Construction Project Type"
+I think the 3rd row, 'agency' would be clearer if we added it as an on-hover option when someone clicks on the 2nd row. That way they understand they can see the dots as either, 'DCPS data', 'Charter school data' or 'Both' 
+can we line up the labels of the categories to match with the group of dots more clearly?
+when I click 'future' the sizes of the bubbles in the legend changes. is there a reason for that?
+when I click 'square foot' the legend turns dark. is there a reason for that?
+when I click on 'HS feeder' I don't get a grouping. Is that right?
+when I click on 'charter' for agency, the size of dots in legend seems wrong
+
+-data descriptor bar. I like this feature a lot but the description is a little confusing for me. Can we try a different merge formula? Perhaps:
+"Data for: [Facility Spending (if user chooses it)] for [School Type] [School by Age Level] by [Geographic Boundary]."

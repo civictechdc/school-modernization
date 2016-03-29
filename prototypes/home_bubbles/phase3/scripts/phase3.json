@@ -1,0 +1,505 @@
+{
+    "name": "Schools", 
+    "children": [
+        {
+            "name": "Academy Of Hope Adult Pcs", 
+            "value": "786432"
+        }, 
+        {
+            "name": "Academy Of Hope Adult Pcs", 
+            "value": "786432"
+        }, 
+        {
+            "name": "Achievement Preparatory Pcs-Elementary", 
+            "value": "3963509"
+        }, 
+        {
+            "name": "Achievement Preparatory Pcs-Middle School", 
+            "value": "2316432"
+        }, 
+        {
+            "name": "Appletree Early Learning Center Pcs Columbia Heights", 
+            "value": "3156647"
+        }, 
+        {
+            "name": "Appletree Early Learning Center Pcs Lincoln Park", 
+            "value": "1182840"
+        }, 
+        {
+            "name": "Appletree Early Learning Center Pcs Oklahoma", 
+            "value": "2327592"
+        }, 
+        {
+            "name": "Appletree Early Learning Center Pcs Southwest", 
+            "value": "736320"
+        }, 
+        {
+            "name": "Appletree Early Learning Pcs Southeast", 
+            "value": "1560816"
+        }, 
+        {
+            "name": "Appletree Early Learning Pcs Southeast", 
+            "value": "1560816"
+        }, 
+        {
+            "name": "Basis Dc Pcs", 
+            "value": "4551672"
+        }, 
+        {
+            "name": "Bridges Pcs", 
+            "value": "3405436"
+        }, 
+        {
+            "name": "Bridges Pcs", 
+            "value": "3405436"
+        }, 
+        {
+            "name": "Bridges Pcs", 
+            "value": "3405436"
+        }, 
+        {
+            "name": "Briya Public Charter School", 
+            "value": "8206459"
+        }, 
+        {
+            "name": "Briya Public Charter School", 
+            "value": "8206459"
+        }, 
+        {
+            "name": "Briya Public Charter School", 
+            "value": "8206459"
+        }, 
+        {
+            "name": "Capital City High School Pcs", 
+            "value": "5546488"
+        }, 
+        {
+            "name": "Capital City Lower Pcs", 
+            "value": "5829980"
+        }, 
+        {
+            "name": "Capital City Middle School", 
+            "value": "3252992"
+        }, 
+        {
+            "name": "Carlos Rosario International Pcs Harvard Street Campus", 
+            "value": "57276227"
+        }, 
+        {
+            "name": "Carlos Rosario International Pcs Harvard Street Campus", 
+            "value": "57276227"
+        }, 
+        {
+            "name": "Cedar Tree Academy Pcs", 
+            "value": "2065776"
+        }, 
+        {
+            "name": "Center City Brightwood Campus Pcs", 
+            "value": "4766091"
+        }, 
+        {
+            "name": "Center City Capitol Hill Campus Pcs", 
+            "value": "4699097"
+        }, 
+        {
+            "name": "Center City Congress Heights Campus Pcs", 
+            "value": "4770011"
+        }, 
+        {
+            "name": "Center City Petworth Campus Pcs", 
+            "value": "4949770"
+        }, 
+        {
+            "name": "Center City Shaw Campus Pcs", 
+            "value": "4824166"
+        }, 
+        {
+            "name": "Center City Trinidad Campus Pcs", 
+            "value": "4651663"
+        }, 
+        {
+            "name": "Cesar Chavez Capitol Hill Pcs", 
+            "value": "12075294"
+        }, 
+        {
+            "name": "Cesar Chavez Parkside Ms Pcs", 
+            "value": "16948761"
+        }, 
+        {
+            "name": "Cesar Chavez Pcs Chavez Prep", 
+            "value": "6096304"
+        }, 
+        {
+            "name": "Cesar Chavez Pcs Parkside Upper", 
+            "value": "3379632"
+        }, 
+        {
+            "name": "Community Academy Amos I", 
+            "value": "13482960"
+        }, 
+        {
+            "name": "Community Academy Amos Ii", 
+            "value": "5565731"
+        }, 
+        {
+            "name": "Community Academy Butler Global", 
+            "value": "7549324"
+        }, 
+        {
+            "name": "Community Academy Capcs Online", 
+            "value": "3128675"
+        }, 
+        {
+            "name": "Community College Preparatory Academy Pcs", 
+            "value": "1339656"
+        }, 
+        {
+            "name": "Creative Minds International Pcs", 
+            "value": "1282032"
+        }, 
+        {
+            "name": "D C  Bilingual Pcs", 
+            "value": "9258495"
+        }, 
+        {
+            "name": "D C  Bilingual Pcs", 
+            "value": "9258495"
+        }, 
+        {
+            "name": "D C  Preparatory Benning Campus Pcs", 
+            "value": "6611687"
+        }, 
+        {
+            "name": "D C  Preparatory Edgewood Elementary Campus Pcs", 
+            "value": "9341738"
+        }, 
+        {
+            "name": "D C  Preparatory Edgewood Middle Campus Pcs", 
+            "value": "6749878"
+        }, 
+        {
+            "name": "D C Preparatory Benning Middle Campus", 
+            "value": "697944"
+        }, 
+        {
+            "name": "Dc Scholars Pcs", 
+            "value": "2641008"
+        }, 
+        {
+            "name": "Democracy Prep Pcs-Congress Heights", 
+            "value": "1904640"
+        }, 
+        {
+            "name": "District Of Columbia International School", 
+            "value": "645120"
+        }, 
+        {
+            "name": "E L  Haynes Pcs Georgia Avenue", 
+            "value": "6850144"
+        }, 
+        {
+            "name": "E.L. Haynes Kansas Avenue - High School", 
+            "value": "5596776"
+        }, 
+        {
+            "name": "E.L. Haynes Pcs Kansas Avenue (Elementary School)", 
+            "value": "2661384"
+        }, 
+        {
+            "name": "Eagle Academy Pcs - Eagle Center At Mcgogney", 
+            "value": "10094728"
+        }, 
+        {
+            "name": "Eagle Academy Pcs New Jersey Avenue Campus", 
+            "value": "2333312"
+        }, 
+        {
+            "name": "Early Childhood Academy Pcs", 
+            "value": "4742251"
+        }, 
+        {
+            "name": "Early Childhood Academy Pcs", 
+            "value": "4742251"
+        }, 
+        {
+            "name": "Elsie Whitlow Stokes Community Freedom Pcs", 
+            "value": "11118784"
+        }, 
+        {
+            "name": "Excel Academy Pcs", 
+            "value": "8332774"
+        }, 
+        {
+            "name": "Excel Academy Pcs Lead", 
+            "value": "476160"
+        }, 
+        {
+            "name": "Friendship Pcs Blow Pierce Elementary", 
+            "value": "20538240"
+        }, 
+        {
+            "name": "Friendship Pcs Blow-Pierce Middle", 
+            "value": "654336"
+        }, 
+        {
+            "name": "Friendship Pcs Chamberlain Elementary", 
+            "value": "23717234"
+        }, 
+        {
+            "name": "Friendship Pcs Chamberlain Middle", 
+            "value": "1053696"
+        }, 
+        {
+            "name": "Friendship Pcs Southeast Academy", 
+            "value": "17344193"
+        }, 
+        {
+            "name": "Friendship Pcs Tech Prep", 
+            "value": "6129328"
+        }, 
+        {
+            "name": "Friendship Pcs Tech Prep", 
+            "value": "6129328"
+        }, 
+        {
+            "name": "Friendship Pcs Woodridge Elementary", 
+            "value": "18909379"
+        }, 
+        {
+            "name": "Friendship Pcs Woodridge Middle", 
+            "value": "516096"
+        }, 
+        {
+            "name": "Friendship Pcs Woodson Collegiate Academy", 
+            "value": "37822656"
+        }, 
+        {
+            "name": "Harmony Dc Pcs-School Of Excellence", 
+            "value": "202752"
+        }, 
+        {
+            "name": "Hope Community Pcs Lamond Campus", 
+            "value": "8335030"
+        }, 
+        {
+            "name": "Hope Community Pcs Tolson Campus", 
+            "value": "9509758"
+        }, 
+        {
+            "name": "Howard University Middle School Of Math And Science Pcs", 
+            "value": "8215644"
+        }, 
+        {
+            "name": "Idea Pcs", 
+            "value": "13450019"
+        }, 
+        {
+            "name": "Ideal Academy Pcs North Capitol Street Campus Es", 
+            "value": "6508377"
+        }, 
+        {
+            "name": "Ingenuity Prep Pcs", 
+            "value": "941472"
+        }, 
+        {
+            "name": "Inspired Teaching Demonstration Pcs", 
+            "value": "2824824"
+        }, 
+        {
+            "name": "Kipp Dc Aim Pcs Academy Pcs", 
+            "value": "8354731"
+        }, 
+        {
+            "name": "Kipp Dc Arts & Technology Academy Pcs", 
+            "value": "651264"
+        }, 
+        {
+            "name": "Kipp Dc College Prep Pcs", 
+            "value": "5814288"
+        }, 
+        {
+            "name": "Kipp Dc Connect Academy", 
+            "value": "1533672"
+        }, 
+        {
+            "name": "Kipp Dc Discover Pcs", 
+            "value": "4626760"
+        }, 
+        {
+            "name": "Kipp Dc Grow Academy Pcs", 
+            "value": "3706464"
+        }, 
+        {
+            "name": "Kipp Dc Heights Academy Pcs", 
+            "value": "3161880"
+        }, 
+        {
+            "name": "Kipp Dc Key Academy Pcs", 
+            "value": "11203877"
+        }, 
+        {
+            "name": "Kipp Dc Lead Academy", 
+            "value": "1893744"
+        }, 
+        {
+            "name": "Kipp Dc Leap Academy Pcs", 
+            "value": "6204843"
+        }, 
+        {
+            "name": "Kipp Dc Northeast Academy Pcs", 
+            "value": "387072"
+        }, 
+        {
+            "name": "Kipp Dc Promise Pcs", 
+            "value": "5553600"
+        }, 
+        {
+            "name": "Kipp Dc Quest Academy Pcs", 
+            "value": "866304"
+        }, 
+        {
+            "name": "Kipp Dc Spring Academy", 
+            "value": "616344"
+        }, 
+        {
+            "name": "Kipp Dc Will Academy Pcs", 
+            "value": "7645919"
+        }, 
+        {
+            "name": "Latin American Montessori Bilingual (Lamb) Pcs", 
+            "value": "6050898"
+        }, 
+        {
+            "name": "Latin American Montessori Bilingual (Lamb) Pcs", 
+            "value": "6050898"
+        }, 
+        {
+            "name": "Latin American Youth Center Career Academy", 
+            "value": "1168680"
+        }, 
+        {
+            "name": "Lee Montessori Pcs", 
+            "value": "227328"
+        }, 
+        {
+            "name": "Mary Mcleod Bethune Day Academy Pcs Slowe Campus", 
+            "value": "6686938"
+        }, 
+        {
+            "name": "Maya Angelou Evans Campus Pcs", 
+            "value": "6961429"
+        }, 
+        {
+            "name": "Maya Angelou Young Adult Learning Center", 
+            "value": "1144584"
+        }, 
+        {
+            "name": "Meridian Pcs", 
+            "value": "20265712"
+        }, 
+        {
+            "name": "Mundo Verde Bilingual Pcs", 
+            "value": "3140088"
+        }, 
+        {
+            "name": "National Collegiate Prep Pcs", 
+            "value": "4199632"
+        }, 
+        {
+            "name": "Options Pcs", 
+            "value": "5525896"
+        }, 
+        {
+            "name": "Paul Public Charter School - International High School", 
+            "value": "1757400"
+        }, 
+        {
+            "name": "Paul Public Charter School - Middle School", 
+            "value": "21115814"
+        }, 
+        {
+            "name": "Perry Street Prep Pcs", 
+            "value": "28592629"
+        }, 
+        {
+            "name": "Potomac Preparatory Pcs", 
+            "value": "7783669"
+        }, 
+        {
+            "name": "Richard Wright Pcs For Journalism And Media Arts", 
+            "value": "2883960"
+        }, 
+        {
+            "name": "Roots Pcs", 
+            "value": "3896368"
+        }, 
+        {
+            "name": "Roots Pcs", 
+            "value": "3896368"
+        }, 
+        {
+            "name": "School For Educational Evolution And Development (Seed) Pcs", 
+            "value": "31414511"
+        }, 
+        {
+            "name": "Sela Pcs", 
+            "value": "483192"
+        }, 
+        {
+            "name": "Shining Stars Montessori Pcs", 
+            "value": "947496"
+        }, 
+        {
+            "name": "Somerset Pcs", 
+            "value": "1217280"
+        }, 
+        {
+            "name": "St. Coletta Special Education Pcs", 
+            "value": "6315254"
+        }, 
+        {
+            "name": "The Next Step Pcs", 
+            "value": "3142236"
+        }, 
+        {
+            "name": "Thurgood Marshall Academy Pcs", 
+            "value": "12321572"
+        }, 
+        {
+            "name": "Tree Of Life Community Pcs", 
+            "value": "10057948"
+        }, 
+        {
+            "name": "Two Rivers Pcs", 
+            "value": "8446894"
+        }, 
+        {
+            "name": "Two Rivers Pcs", 
+            "value": "8446894"
+        }, 
+        {
+            "name": "Washington Latin Pcs Hs", 
+            "value": "4643648"
+        }, 
+        {
+            "name": "Washington Latin Pcs Ms", 
+            "value": "6687433"
+        }, 
+        {
+            "name": "Washington Math Science Tech Pcs", 
+            "value": "13661934"
+        }, 
+        {
+            "name": "Washington Yu Ying Pcs", 
+            "value": "7254586"
+        }, 
+        {
+            "name": "William E. Doar Jr Pcs", 
+            "value": "6138356"
+        }, 
+        {
+            "name": "Youthbuild Pcs", 
+            "value": "2747123"
+        }
+    ]
+}

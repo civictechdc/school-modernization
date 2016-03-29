@@ -1,0 +1,537 @@
+{
+    "name": "Schools", 
+    "children": [
+        {
+            "name": "Aiton Es", 
+            "value": "8916"
+        }, 
+        {
+            "name": "Amidon-Bowen Es", 
+            "value": "5993305"
+        }, 
+        {
+            "name": "Anacostia Hs", 
+            "value": "68228069"
+        }, 
+        {
+            "name": "Ballou Hs", 
+            "value": "141737725"
+        }, 
+        {
+            "name": "Ballou Stay", 
+            "value": "0"
+        }, 
+        {
+            "name": "Bancroft Es", 
+            "value": "1446450"
+        }, 
+        {
+            "name": "Barnard Es", 
+            "value": "17867772"
+        }, 
+        {
+            "name": "Beers Es", 
+            "value": "14813933"
+        }, 
+        {
+            "name": "Benjamin Banneker Hs", 
+            "value": "671104"
+        }, 
+        {
+            "name": "Bowen", 
+            "value": "0"
+        }, 
+        {
+            "name": "Brent Es", 
+            "value": "4475354"
+        }, 
+        {
+            "name": "Brightwood Ec", 
+            "value": "22265461"
+        }, 
+        {
+            "name": "Brookland Ms", 
+            "value": "58053351"
+        }, 
+        {
+            "name": "Browne Ec", 
+            "value": "131951"
+        }, 
+        {
+            "name": "Bruce-Monroe Es @ Park View", 
+            "value": "11264300"
+        }, 
+        {
+            "name": "Brucemonroe-Demolished", 
+            "value": "1499358"
+        }, 
+        {
+            "name": "Bunker Hill Es", 
+            "value": "6533765"
+        }, 
+        {
+            "name": "Burroughs Es", 
+            "value": "8239048"
+        }, 
+        {
+            "name": "Burrville Es", 
+            "value": "2991980"
+        }, 
+        {
+            "name": "C.W. Harris Es", 
+            "value": "0"
+        }, 
+        {
+            "name": "Capitol Hill Montessori", 
+            "value": "975866"
+        }, 
+        {
+            "name": "Cardozo Ec", 
+            "value": "131527974"
+        }, 
+        {
+            "name": "Choice Academy", 
+            "value": "0"
+        }, 
+        {
+            "name": "Cleveland Es", 
+            "value": "20270264"
+        }, 
+        {
+            "name": "Columbia Heights Ec (Chec)", 
+            "value": "78652173"
+        }, 
+        {
+            "name": "Coolidge Hs", 
+            "value": "2537691"
+        }, 
+        {
+            "name": "Deal Ms", 
+            "value": "73524856"
+        }, 
+        {
+            "name": "Dorothy Height Es", 
+            "value": "0"
+        }, 
+        {
+            "name": "Drew Es", 
+            "value": "4898637"
+        }, 
+        {
+            "name": "Dunbar Hs", 
+            "value": "122897293"
+        }, 
+        {
+            "name": "Eastern Hs", 
+            "value": "74502874"
+        }, 
+        {
+            "name": "Eaton Es", 
+            "value": "81414"
+        }, 
+        {
+            "name": "Eliot-Hine Ms", 
+            "value": "210957"
+        }, 
+        {
+            "name": "Ellington School Of The Arts", 
+            "value": "34081441"
+        }, 
+        {
+            "name": "Ferebeehope", 
+            "value": "4532419"
+        }, 
+        {
+            "name": "Garfield Es", 
+            "value": "1082203"
+        }, 
+        {
+            "name": "Garnettpatterson", 
+            "value": "5560714"
+        }, 
+        {
+            "name": "Garrison Es", 
+            "value": "655646"
+        }, 
+        {
+            "name": "H.D. Cooke Es", 
+            "value": "32500688"
+        }, 
+        {
+            "name": "Hardy Ms", 
+            "value": "50758871"
+        }, 
+        {
+            "name": "Hart Ms", 
+            "value": "13075759"
+        }, 
+        {
+            "name": "Hearst Es", 
+            "value": "35678706"
+        }, 
+        {
+            "name": "Hendley Es", 
+            "value": "15937127"
+        }, 
+        {
+            "name": "Houston Es", 
+            "value": "1191032"
+        }, 
+        {
+            "name": "Hyde-Addison Es", 
+            "value": "19157333"
+        }, 
+        {
+            "name": "Incarcerated Youth Program", 
+            "value": "0"
+        }, 
+        {
+            "name": "J.O. Wilson Es", 
+            "value": "4264356"
+        }, 
+        {
+            "name": "Janney Es", 
+            "value": "37443325"
+        }, 
+        {
+            "name": "Jefferson Ms", 
+            "value": "0"
+        }, 
+        {
+            "name": "Johnson Ms", 
+            "value": "18602234"
+        }, 
+        {
+            "name": "Kelly Miller Ms", 
+            "value": "10614880"
+        }, 
+        {
+            "name": "Ketcham Es", 
+            "value": "8328691"
+        }, 
+        {
+            "name": "Key Es", 
+            "value": "13007488"
+        }, 
+        {
+            "name": "Kimball Es", 
+            "value": "0"
+        }, 
+        {
+            "name": "King, M.L. Es", 
+            "value": "4118755"
+        }, 
+        {
+            "name": "Kramer Ms", 
+            "value": "30951777"
+        }, 
+        {
+            "name": "Lafayette Es", 
+            "value": "9939007"
+        }, 
+        {
+            "name": "Langdon Es", 
+            "value": "19828246"
+        }, 
+        {
+            "name": "Langley Es", 
+            "value": "10253618"
+        }, 
+        {
+            "name": "Lasalle-Backus Ec", 
+            "value": "14206295"
+        }, 
+        {
+            "name": "Leckie Es", 
+            "value": "595860"
+        }, 
+        {
+            "name": "Ludlow-Taylor Es", 
+            "value": "11489803"
+        }, 
+        {
+            "name": "Luke Moore Hs", 
+            "value": "0"
+        }, 
+        {
+            "name": "Macfarland", 
+            "value": "874564"
+        }, 
+        {
+            "name": "Malcolm X Es", 
+            "value": "0"
+        }, 
+        {
+            "name": "Malcolmx", 
+            "value": "0"
+        }, 
+        {
+            "name": "Mamiedlee", 
+            "value": "2089951"
+        }, 
+        {
+            "name": "Mamiedleespedcntr", 
+            "value": "150000"
+        }, 
+        {
+            "name": "Mann Es", 
+            "value": "34565362"
+        }, 
+        {
+            "name": "Marie Reed Es", 
+            "value": "2970097"
+        }, 
+        {
+            "name": "Marshall", 
+            "value": "0"
+        }, 
+        {
+            "name": "Maury Es", 
+            "value": "6444395"
+        }, 
+        {
+            "name": "Mckinley Ms", 
+            "value": "0"
+        }, 
+        {
+            "name": "Mckinley Technology Hs", 
+            "value": "77382544"
+        }, 
+        {
+            "name": "Mcterrell", 
+            "value": "1706121"
+        }, 
+        {
+            "name": "Miner Es", 
+            "value": "6391359"
+        }, 
+        {
+            "name": "Mmwashingtion", 
+            "value": "18696"
+        }, 
+        {
+            "name": "Montgomery/Kipp", 
+            "value": "6934511"
+        }, 
+        {
+            "name": "Moten Es", 
+            "value": "27716993"
+        }, 
+        {
+            "name": "Murch Es", 
+            "value": "748083"
+        }, 
+        {
+            "name": "Nalle Es", 
+            "value": "11521407"
+        }, 
+        {
+            "name": "Noyes Es", 
+            "value": "24719301"
+        }, 
+        {
+            "name": "Orr Es", 
+            "value": "0"
+        }, 
+        {
+            "name": "Oyster-Adams Bilingual School", 
+            "value": "0"
+        }, 
+        {
+            "name": "Oyster-Adams Bilingual School", 
+            "value": "3803375"
+        }, 
+        {
+            "name": "Patterson Es", 
+            "value": "5365870"
+        }, 
+        {
+            "name": "Payne Es", 
+            "value": "22389213"
+        }, 
+        {
+            "name": "Peabody Es", 
+            "value": "7028816"
+        }, 
+        {
+            "name": "Phelps Ace Hs", 
+            "value": "0"
+        }, 
+        {
+            "name": "Plummer Es", 
+            "value": "13846933"
+        }, 
+        {
+            "name": "Powell Es", 
+            "value": "25490976"
+        }, 
+        {
+            "name": "Prharris", 
+            "value": "700"
+        }, 
+        {
+            "name": "Randle Highlands Es", 
+            "value": "8391223"
+        }, 
+        {
+            "name": "Raymond Ec", 
+            "value": "0"
+        }, 
+        {
+            "name": "Rhterrell", 
+            "value": "1446215"
+        }, 
+        {
+            "name": "River Terrace Special Education Center", 
+            "value": "32133707"
+        }, 
+        {
+            "name": "Ronbrown", 
+            "value": "0"
+        }, 
+        {
+            "name": "Roosevelt Hs", 
+            "value": "117015598"
+        }, 
+        {
+            "name": "Roosevelt Stay", 
+            "value": "0"
+        }, 
+        {
+            "name": "Ross Es", 
+            "value": "2604666"
+        }, 
+        {
+            "name": "Rudolph", 
+            "value": "100000"
+        }, 
+        {
+            "name": "Savoy Es", 
+            "value": "21059646"
+        }, 
+        {
+            "name": "School Without Walls @ Francis-Stevens Ec", 
+            "value": "1314689"
+        }, 
+        {
+            "name": "School Without Walls Hs", 
+            "value": "0"
+        }, 
+        {
+            "name": "School-Within-School", 
+            "value": "1365487"
+        }, 
+        {
+            "name": "Seaton Es", 
+            "value": "4298925"
+        }, 
+        {
+            "name": "Sharpehealth", 
+            "value": "2089951"
+        }, 
+        {
+            "name": "Shaw", 
+            "value": "10000"
+        }, 
+        {
+            "name": "Shepherd Es", 
+            "value": "20462934"
+        }, 
+        {
+            "name": "Simon Es", 
+            "value": "8505311"
+        }, 
+        {
+            "name": "Smothers Es", 
+            "value": "152322"
+        }, 
+        {
+            "name": "Sousa Ms", 
+            "value": "0"
+        }, 
+        {
+            "name": "Stanton Es", 
+            "value": "23307939"
+        }, 
+        {
+            "name": "Stoddert Es", 
+            "value": "18707417"
+        }, 
+        {
+            "name": "Stuart-Hobson Ms", 
+            "value": "44653267"
+        }, 
+        {
+            "name": "Takoma Ec", 
+            "value": "26979598"
+        }, 
+        {
+            "name": "Thomas Es", 
+            "value": "7563320"
+        }, 
+        {
+            "name": "Thomson Es", 
+            "value": "25521091"
+        }, 
+        {
+            "name": "Truesdell Ec", 
+            "value": "4465045"
+        }, 
+        {
+            "name": "Tubman Es", 
+            "value": "3644743"
+        }, 
+        {
+            "name": "Turner Es", 
+            "value": "27580545"
+        }, 
+        {
+            "name": "Tyler Es", 
+            "value": "3750929"
+        }, 
+        {
+            "name": "Van Ness Es", 
+            "value": "10556642"
+        }, 
+        {
+            "name": "Walker-Jones Ec", 
+            "value": "40442253"
+        }, 
+        {
+            "name": "Washington Metropolitan Hs", 
+            "value": "0"
+        }, 
+        {
+            "name": "Watkins Es", 
+            "value": "2675972"
+        }, 
+        {
+            "name": "West Ec", 
+            "value": "0"
+        }, 
+        {
+            "name": "Wheatley Ec", 
+            "value": "42645563"
+        }, 
+        {
+            "name": "Whittier Ec", 
+            "value": "5208611"
+        }, 
+        {
+            "name": "Wilkinson", 
+            "value": "500000"
+        }, 
+        {
+            "name": "Wilson Hs", 
+            "value": "114246156"
+        }, 
+        {
+            "name": "Woodson, H.D. Hs", 
+            "value": "107742134"
+        }, 
+        {
+            "name": "Youth Services Center", 
+            "value": "0"
+        }
+    ]
+}

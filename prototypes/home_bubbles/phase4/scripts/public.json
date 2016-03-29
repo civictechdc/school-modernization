@@ -1,0 +1,979 @@
+{
+    "name": "Schools", 
+    "children": [
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Aiton Elementary", 
+            "value": "12115000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Bancroft Elementary", 
+            "value": "59943000"
+        }, 
+        {
+            "name": "Barnard Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Beers Elementary", 
+            "real_value": -24188.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Cleveland Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Eaton Elementary", 
+            "value": "15552000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Garfield Elementary", 
+            "value": "12583908"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Garrison Elementary", 
+            "value": "20000000"
+        }, 
+        {
+            "name": "Hendley Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Houston Elementary", 
+            "value": "15693000"
+        }, 
+        {
+            "name": "Ketcham Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Hearst Elementary", 
+            "value": "361277"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Kimball Elementary", 
+            "value": "17696000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Lafayette Elementary", 
+            "value": "59373105"
+        }, 
+        {
+            "name": "Mann Elementary", 
+            "real_value": -500000.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Maury Elementary", 
+            "value": "5044000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Marie Reed Elementary", 
+            "value": "54503000"
+        }, 
+        {
+            "name": "Moten Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Murch Elementary", 
+            "value": "63156000"
+        }, 
+        {
+            "name": "Nalle Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Orr Elementary", 
+            "value": "41995000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Payne Elementary", 
+            "value": "27450"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Plummer Elementary", 
+            "value": "26191"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Powell Elementary", 
+            "value": "2504026"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Raymond Education Campus", 
+            "value": "19567000"
+        }, 
+        {
+            "name": "Savoy Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Shepherd Elementary", 
+            "value": "1274389"
+        }, 
+        {
+            "name": "Simon Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Randle Highlands Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Stanton Elementary", 
+            "value": "2165644"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Smothers Elementary", 
+            "value": "12679000"
+        }, 
+        {
+            "name": "Takoma Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Thomson Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Truesdell Education Campus", 
+            "value": "7489000"
+        }, 
+        {
+            "name": "Turner Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "West Education Campus", 
+            "value": "35095000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Benjamin Banneker High", 
+            "value": "77074000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Browne Education Campus", 
+            "value": "20636000"
+        }, 
+        {
+            "name": "Kramer Middle", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Sousa Middle", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Coolidge High", 
+            "value": "116633000"
+        }, 
+        {
+            "name": "Dunbar High", 
+            "real_value": -250000.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Ellington School Of The Arts", 
+            "value": "61688778"
+        }, 
+        {
+            "name": "Choice Academy At Emery", 
+            "real_value": "NA", 
+            "agency": "DCPS", 
+            "value": "5", 
+            "value_issue": "not available", 
+            "value_available": false
+        }, 
+        {
+            "name": "Amidon-Bowen Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "C.W. Harris Elementary", 
+            "value": "12606000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Eliot-Hine Middle", 
+            "value": "40911043"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Hyde-Addison Elementary", 
+            "value": "22284976"
+        }, 
+        {
+            "name": "J.O. Wilson Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Johnson Middle", 
+            "real_value": -5857.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "King, M.L. Elementary", 
+            "value": "372458"
+        }, 
+        {
+            "name": "Langdon Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Lasalle-Backus Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Ludlow-Taylor Elementary", 
+            "real_value": -1026290.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Luke Moore High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Oyster-Adams Bilingual School", 
+            "value": "12236000"
+        }, 
+        {
+            "name": "Phelps Ace High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "School-Within-School At Goding", 
+            "value": "12028931"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "School Without Walls @ Francis-Stevens Education Campus", 
+            "value": "20178000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Stuart-Hobson Middle", 
+            "value": "1190116"
+        }, 
+        {
+            "name": "Walker-Jones Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Watkins Elementary", 
+            "value": "30313978"
+        }, 
+        {
+            "name": "Brookland Middle", 
+            "real_value": -1202174.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Oyster-Adams Bilingual School", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "River Terrace Special Education Center", 
+            "real_value": -2200000.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Van Ness Elementary", 
+            "value": "17995000"
+        }, 
+        {
+            "name": "Youth Services Center", 
+            "real_value": "NA", 
+            "agency": "DCPS", 
+            "value": "5", 
+            "value_issue": "not available", 
+            "value_available": false
+        }, 
+        {
+            "name": "Incarcerated Youth Program", 
+            "real_value": "NA", 
+            "agency": "DCPS", 
+            "value": "5", 
+            "value_issue": "not available", 
+            "value_available": false
+        }, 
+        {
+            "name": "Bowen", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Bruce Monroe (Demolished)", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Dcps Multischool", 
+            "value": "242169537"
+        }, 
+        {
+            "name": "Dorothy Height Elementary", 
+            "real_value": "NA", 
+            "agency": "DCPS", 
+            "value": "5", 
+            "value_issue": "not available", 
+            "value_available": false
+        }, 
+        {
+            "name": "Ferebee Hope", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Garnett Patterson", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Macfarland", 
+            "value": "50026000"
+        }, 
+        {
+            "name": "Malcolm X", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Marshall", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Mcterrell", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Mm Washington", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Montgomery/Kipp", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Rh Terrell", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Ron Brown", 
+            "value": "44597000"
+        }, 
+        {
+            "name": "Rudolph", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Shaw", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Wilkinson", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Ballou High", 
+            "value": "4007"
+        }, 
+        {
+            "name": "Ballou Stay", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Mckinley Middle", 
+            "real_value": "NA", 
+            "agency": "DCPS", 
+            "value": "5", 
+            "value_issue": "not available", 
+            "value_available": false
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Roosevelt High", 
+            "value": "1887406"
+        }, 
+        {
+            "name": "Sharpe Health", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Malcolm X Elementary At Green", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Wheatley Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "School Without Walls High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Bunker Hill Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Capitol Hill Montessori", 
+            "value": "11987136"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Jefferson Middle", 
+            "value": "35993000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Washington Metropolitan High", 
+            "value": "9900000"
+        }, 
+        {
+            "agency": "DCPS", 
+            "value_available": true, 
+            "name": "Roosevelt Stay", 
+            "value": "1887406"
+        }, 
+        {
+            "name": "Pr Harris", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Leckie Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Mamiedlee", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Ross Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Burrville Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Tubman Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Tyler Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Seaton Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Brent Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Drew Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Whittier Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Patterson Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Miner Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Peabody Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Thomas Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Burroughs Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Langley Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Kelly Miller Middle", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Bruce-Monroe Elementary @ Park View", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Key Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Hart Middle", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Stoddert Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Brightwood Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Noyes Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "H.D. Cooke Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Janney Elementary", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Hardy Middle", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Anacostia High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Deal Middle", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Eastern High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Mckinley Technology High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Columbia Heights Education Campus (Chec)", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Woodson, H.D. High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Wilson High", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }, 
+        {
+            "name": "Cardozo Education Campus", 
+            "real_value": 0.0, 
+            "agency": "DCPS", 
+            "value": "3", 
+            "value_issue": "below zero", 
+            "value_available": true
+        }
+    ]
+}
