@@ -484,7 +484,7 @@ function initApp(presetMode) {
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         setMenuState(displayObj, displayObj.expendMenu, ["A", "A", "A"]);
         displayObj.filterTitlesArray = [];
-        displayObj.dataFilters.agency = "All";
+        displayObj.dataFilters.agency = "Both";
         displayObj.dataFilters.levels = null;
         displayObj.dataFilters.zones = "Ward";
         displayObj.dataFilters.expend = null;

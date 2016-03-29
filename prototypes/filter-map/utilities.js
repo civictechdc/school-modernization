@@ -123,14 +123,19 @@ function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
 function setMenuState(displayObj, whichMenu, whichStates) {
     console.log("setMenuState");
 
+    var nextState, nextFilter, nextFilterText, nextElement, checkIndex;
+
     // == loop through states for each filter on menu
     for (var i = 0; i < whichStates.length; i++) {
         nextState = whichStates[i];
         nextFilter = whichMenu[i+1];
         nextFilterText = nextFilter.text;
         nextElement = $("#" + nextFilter.id);
+
+        // == see if filter is in filter list
         checkIndex = $.inArray(nextFilterText, displayObj.filterTitlesArray);
 
+        // == set filter menu state; leave only selected filters in filterTitlesArray
         if (nextState == "A") {
             if (checkIndex > -1) {
                 displayObj.filterTitlesArray.splice(checkIndex, 1);
@@ -165,13 +170,13 @@ function updateFilterSelections(displayObj) {
     console.log("updateFilterSelections");
 
     var selectedFilterContainer = $("#filters-selections").children("h2");
-    var selectedFilterText = $(selectedFilterContainer).html();
+    var nextFilter, checkNextFilter;
 
     // == build new filter text html from filterTitlesArray
-    selectedFilterText = "<span class='filterLabel'>Data for: </span>";
+    var selectedFilterText = "<span class='filterLabel'>Data for: </span>";
     for (var i = 0; i < displayObj.filterTitlesArray.length; i++) {
         nextFilter = displayObj.filterTitlesArray[i];
-        var checkNextFilter = displayObj.filterTitlesArray.indexOf(nextFilter);
+        checkNextFilter = displayObj.filterTitlesArray.indexOf(nextFilter);
         if (checkNextFilter != -1) {
             if (i == (displayObj.filterTitlesArray.length - 1)) {
                 selectedFilterText += nextFilter;
