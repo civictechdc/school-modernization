@@ -65,13 +65,17 @@ Bubble.prototype.create_nodes = function(){
             // if(cur_budget === 'NA'){ return this.colorRange.na;}
             // return this.colorRange.low;
             // console.log(current['Agency']);
+             if(current[this.budget] === '0'){
+                return '#ff3233';
+            }
             if(current['Agency'] === 'DCPS'){
                 return '#021c2a';
             }
-            if(current[this.budget] === '0'){
-                return '#ff3233';
+            if(current['Agency'] === 'PCS'){
+                return '#425165';
             }
-            return '#425165';
+           
+            
 
 
         }).call(this);
