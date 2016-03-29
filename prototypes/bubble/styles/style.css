@@ -1,45 +1,66 @@
 * {
-  font-family: sans-serif;
+  font-family: 'Averia Serif Libre', cursive;
   margin: 0;
-  padding: 0;
-  color: #001c2b; }
+  padding: 0; }
 
-h1 {
-  display: block;
-  font-size: 2em;
-  -webkit-margin-before: 0.67em;
-  -webkit-margin-after: 0.67em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  font-weight: bold; }
+li {
+  list-style-type: none; }
 
-#container {
+a {
+  color: #d1d8e1; }
+  a:focus, a:visited {
+    color: initial; }
+
+.container {
   width: 80%;
-  margin: 0 auto; }
+  margin: 0px auto; }
+
+.nav {
+  position: fixed; }
+
+header {
+  background-color: #021c2a;
+  height: 75px;
+  width: 100%; }
+  header h1 {
+    color: white;
+    padding: 17px 0px; }
 
 circle {
-  stroke: black;
+  stroke: white;
   stroke-width: 2px;
   cursor: pointer;
   opacity: 0.985; }
   circle:hover {
-    stroke: #00334f; }
+    stroke: grey; }
 
 text.label {
   font-size: 10px; }
 text#tooltip_label {
   font-size: 12px; }
 
-.highlighted {
-  fill: 'white';
-  background-color: 'white'; }
+.sub_titles {
+  font-weight: bold;
+  font-size: 12px; }
+
+#sideNavDiv {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  background-color: #d1d8e1;
+  top: 75px;
+  color: #d1d8e1; }
+  #sideNavDiv #sideNavUl {
+    margin-left: 45%; }
+    #sideNavDiv #sideNavUl .sideNavItem {
+      padding-top: 35px; }
 
 #tooltip {
   position: absolute;
-  width: 200px;
+  width: 210px;
   height: 205px;
   padding: 10px;
-  background-color: #001c2b;
+  background-color: #021c2a;
   border-radius: 5px;
   border: 3px solid black; }
   #tooltip p {
@@ -48,31 +69,89 @@ text#tooltip_label {
     color: #fff; }
   #tooltip.hidden {
     display: none; }
-
-.sub_titles {
-  font-size: 12px;
-  font-weight: bold; }
+  #tooltip #school {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    line-height: 1.1em; }
 
 #legend {
-  border: 5px solid #001c2b;
   height: 250px;
   width: 250px;
-  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   position: absolute;
-  right: 10%;
-  top: 15px; }
+  right: 5%;
+  top: 100px;
+  border: 3px solid #021c2a; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
     height: 250 px; }
-    #legend #legend_cont p {
-      padding: 10px;
-      background-color: #001c2b;
-      color: #fff;
-      text-align: center; }
+
+.modHeader {
+  padding: 10px;
+  background-color: #021c2a;
+  color: #fff;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; }
+
+#menuInner {
+  padding: 5px;
+  border: 3px solid #021c2a;
+  background-color: #FFF; }
+
+#menuDiv {
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: #021c2a;
+  width: 450px; }
+  #menuDiv ul {
+    padding: 5px; }
+
+#select {
+  margin: 5px 20px;
+  color: #fff;
+  background-color: #021c2a; }
+  #select option {
+    color: #fff; }
+
+.row, .title {
+  vertical-align: top;
+  display: inline-block;
+  width: 45px;
+  height: 17px;
+  padding-right: 5px;
+  font-size: 12px;
+  padding: 5px; }
+
+.rowBehavior {
+  vertical-align: bottom;
+  text-align: center;
+  font-size: 9px;
+  cursor: pointer;
+  background-color: #021c2a;
+  color: #fff;
+  border-radius: 3px; }
+  .rowBehavior:hover {
+    color: #fff;
+    background-color: #043c5b; }
+
+.title {
+  font-weight: bold;
+  color: #021c2a;
+  text-align: right; }
 
 .color {
   fill: 'grey'; }
+
+.inactive {
+  background-color: gray; }
+
+.selected {
+  background-color: #075d8b;
+  color: #fff; }
 
 .btn_state {
   line-height: 0.5em; }

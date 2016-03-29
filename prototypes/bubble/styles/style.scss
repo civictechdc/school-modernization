@@ -1,37 +1,70 @@
 // VARS
-$cerulean: #001c2b;
+// $cerulean: #002646;
+$cerulean: #021c2a;
+$grey: #d1d8e1;
+$lighterCerulean: #6f7f87;
+$red: #ff3233;
+$headerHeight: 75px;
+@mixin bold {
+  font-weight: bold;
+}
 
 // GLOBALS
 * {
-   font-family: sans-serif;
-   margin: 0;
-   padding: 0;
-   color: $cerulean;
+  font-family: 'Averia Serif Libre', cursive;
+  margin: 0;
+  padding: 0;
 }
 
-h1 {
-    display: block;
-    font-size: 2em;
-    -webkit-margin-before: 0.67em;
-    -webkit-margin-after: 0.67em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    font-weight: bold;
+li {
+  list-style-type: none;
 }
-#container {
+
+a {
+  color: $grey;
+  &:focus, 
+  &:visited {
+    color: initial;
+  }
+}
+
+.container {
    width: 80%;
-   margin: 0 auto;
+   margin: 0px auto;
+   // margin-left: 10%;
+   // margin-top: 15%;
 }
+
+.nav {
+  position: fixed;
+}
+
+// GRAPH SPECIFIC
+// Header
+header {
+  background-color: $cerulean;
+  // height: 15%;
+  height: $headerHeight;
+  width: 100%;
+  // margin-bottom: 35px;
+
+  h1 {
+    color: white;
+    padding: 17px 0px;
+  }
+}
+
 
 circle {
-   stroke: darken($cerulean , 10%);
+   // stroke: lighten($cerulean , 10%);
+   stroke: white;
    stroke-width: 2px;
    cursor: pointer;
    opacity: 0.985;
 
    &:hover {
-      // fill: lighten($cerulean , 7%);
-      stroke: lighten($cerulean , 7%);
+      // stroke: darken($cerulean , 7%);
+      stroke: grey;
    }
 }
 
@@ -45,14 +78,34 @@ text {
    }
 }
 
-.highlighted {
-   fill: 'white';
-   background-color: 'white';
+.sub_titles {
+  @include bold;
+  font-size: 12px;
+  // transform: rotate(-25deg);
 }
 
+// SIDE NAVIGATION
+#sideNavDiv {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  background-color: $grey;
+  top: $headerHeight;
+  color: $grey;
+
+  #sideNavUl {
+    margin-left: 45%;
+
+    .sideNavItem {
+      padding-top: 35px;
+    }
+  }
+}
+
+// TOOLTIP
 #tooltip {
    position: absolute;
-   width: 200px;
+   width: 210px;
    height: 205px;
    padding: 10px;
    background-color: $cerulean;
@@ -68,38 +121,114 @@ text {
    &.hidden {
       display: none;
    }
+
+  #school {
+    @include bold;
+    font-size: 16px;
+    color: white;
+    line-height: 1.1em;
+  }
 }
 
-.sub_titles {
-  font-size: 12px;
-  font-weight: bold;
-  // transform: rotate(-45deg);
-}
-
+// LEGEND
 #legend {
-  border: 5px solid $cerulean;
   height: 250px;
   width: 250px;
-  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   position: absolute;
-  right: 10%;
-  top: 15px;
+  right: 5%;
+  top: 100px;
+  border: 3px solid $cerulean;
 
   #legend_cont {
     position: absolute;
     background-color: #fff;
     height: 250 px;
-    p {
-      padding: 10px;
-      background-color: $cerulean;
-      color: #fff;
-      text-align: center;
-    }
   }
 }
 
+.modHeader {
+  padding: 10px;
+  background-color: $cerulean;
+  color: #fff;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+// MENU
+$menuW: 450px;
+#menuInner {
+  padding: 5px;
+  border: 3px solid $cerulean;
+  background-color: #FFF;
+  
+}
+#menuDiv {
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: $cerulean;
+  width: $menuW;
+  
+  ul {
+    padding: 5px;
+  }
+}
+
+#select {
+  margin: 5px 20px;
+  color: #fff;
+  background-color: $cerulean;
+  option {
+    color: #fff;
+  }
+}
+
+.row {
+  vertical-align: top;
+  display: inline-block;
+  width: ($menuW / 9) - 5;
+  height: 17px;
+  padding-right: 5px;
+  font-size: 12px;
+  // vertical-align: middle;
+  padding: 5px;
+}
+
+.rowBehavior {
+  vertical-align: bottom;
+  text-align: center;
+  font-size: 9px;
+  cursor: pointer;
+  background-color: $cerulean;
+  color: #fff;
+  border-radius: 3px;
+
+  &:hover {
+    color: #fff;
+    background-color: lighten($cerulean, 10%);
+  }
+}
+
+.title {
+  @extend .row;
+  @include bold;
+  color: $cerulean;
+  text-align: right;
+}
+
+// MINUTIA
 .color {
    fill: 'grey';
+}
+.inactive {
+  background-color: gray;
+}
+
+.selected {
+  background-color: lighten($cerulean, 20%);
+  color: #fff;
 }
 
 .btn_state {
