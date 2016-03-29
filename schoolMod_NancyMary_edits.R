@@ -1,3 +1,4 @@
+### Lifetime budget - for DCPS as reported, for Charters past FA+future FA ###
 library(stringr)
 library(plyr)
 library(gtools)
@@ -37,7 +38,7 @@ dcFull<-subset(dcFull,dcFull$School!="")
 
 #Nancy's corrected from 3-8
 nancyNewEdits<-read.csv("https://raw.githubusercontent.com/katerabinowitz/school-modernization/master/InputData/DC_Schools_Master_214-NH-Corrected-38.csv",
-                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:4,10)]
+                     stringsAsFactors=FALSE, strip.white=TRUE)[c(1:4,6:7,10,16)]
 colnames(nancyNewEdits)[c(3)]<-"Name"
 nancyNewEdits<-subset(nancyNewEdits,nancyNewEdits$Name!="DCPS MultiSchool")
 
@@ -119,8 +120,6 @@ rm(miss, missDC, missDC1, missDC2,join01, missEnroll,schoolCode)
 #remove unnecessary columns + rows
 dcFull<-subset(dcFull,!(grepl("bowen|mmwashingtion|DCPS MultiSchool|Incarcerated Youth|Youth Services Center|Dorothy Height",
                             dcFull$School)))
-dcFull<-dcFull[-c(6:7)]
-
 #fill in address#
 dcFull$Address<-ifelse(dcFull$School=="brucemonroe-demolished","3012 Georgia Ave NW",
                   ifelse(dcFull$School=="garnettpatterson","2001 10th St NW",
@@ -173,7 +172,7 @@ toMerge<-CharterDataSheet[c(3,5,7)]
 colnames(toMerge)<-c("Name","Address","SQFT")
 Fix0<-join(toFix0,toMerge,by=c("Address"), type="left")
 Fix0$totalSQFT<-Fix0$SQFT
-Fix0<-subset(Fix0,!(grepl("Perry Street Preparatory",Fix0$Name)))[c(1:35)]
+Fix0<-subset(Fix0,!(grepl("Perry Street Preparatory",Fix0$Name)))[c(1:37)]
 
 toFix1<-subset(dcFull,dcFull$unqBuilding!=0 & dcFull$Agency=="PCS")
 toFix1$totalSQFT<- na.locf(toFix1$totalSQFT)
@@ -184,19 +183,20 @@ dcFull<-dcFull[order(dcFull$School),]
 
 rm(toFix0,Fix0,toFix1,noFix,toMerge)
 
-#Update project type with Nancy's new field
-DCPS<-subset(dcFull,dcFull$Agency=="DCPS")[-c(8)]
+#Update project type, year, and feederHS with Nancy's new field
+DCPS<-subset(dcFull,dcFull$Agency=="DCPS")[-c(6,7,10,19)]
 PCS<-subset(dcFull,dcFull$Agency!="DCPS")
 Project<-subset(nancyNewEdits,nancyNewEdits$Agency=="DCPS")
+colnames(Project)[c(6)]<-"YrComplete"
 dcFullUp<-join(DCPS, Project,by=c("Agency","School.ID","Address"),type="inner")
 
 missDCPS<-subset(DCPS,!(DCPS$School %in% dcFullUp$School))
 missDCPS$School<-ifelse(missDCPS$School=="Malcolmx","Malcolm X",missDCPS$School)
 missDCPS<-missDCPS[order(missDCPS$School),]
 missProject<-subset(Project,!(Project$Name %in% dcFullUp$Name))
-miss<-cbind(missDCPS,missProject)[-c(35:36,38)]
+miss<-cbind(missDCPS,missProject)[-c(34:35,37)]
 
-DCPSProject<-rbind(dcFullUp,miss)[-c(35)]
+DCPSProject<-rbind(dcFullUp,miss)[-c(34)]
 dcFull<-rbind(DCPSProject,PCS)
 rm(DCPS,PCS,Project,dcFullUp,missDCPS,missProject,miss,DCPSProject,nancyNewEdits)
 
@@ -206,7 +206,6 @@ dcFull$FeederMS<-ifelse(dcFull$School=="Randle Highlands ES","Sousa MS",
                       dcFull$FeederMS))
 
 #fix Eaton & Roosevelt Stay
-dcFull$FeederHS<-ifelse(dcFull$School=="Eaton ES","Wilson HS",dcFull$FeederHS)
 dcFull$Total.Enrolled<-ifelse(dcFull$School=="Eaton ES",475,dcFull$Total.Enrolled)
 dcFull$Limited.English.Proficient<-ifelse(dcFull$School=="Eaton ES",43,
                                           ifelse(dcFull$School=="Roosevelt STAY",11,
@@ -217,14 +216,28 @@ dcFull$At_Risk<-ifelse(dcFull$School=="Eaton ES",26,
 dcFull$SPED<-ifelse(dcFull$School=="Eaton ES",35,
                     ifelse(dcFull$School=="Roosevelt STAY",49,
                            dcFull$SPED))
-#add Nancy's select new majorExp
+
+#add Nancy's select new majorExp and Lifetime Budget
 dcFull$MajorExp9815<-ifelse(dcFull$School=="Luke Moore HS","$16,352,780",
                       ifelse(dcFull$School=="Patterson ES","$32,570,942",
                         ifelse(dcFull$School=="Phelps ACE HS","$66,594,065",
                           ifelse(dcFull$School=="Randle Highlands ES","$21,543,183",
                             ifelse(dcFull$School=="School Without Walls HS","$40,512,741",
                               ifelse(dcFull$School=="Sousa MS","$34,545,250",
-                                dcFull$MajorExp9815))))))
+                                ifelse(dcFull$School=="Barnard ES","$24,386,910", 
+                                  ifelse(dcFull$School=="Kelly Miller MS","$34,578,507", 
+                                    ifelse(dcFull$School=="McKinley MS","$15,000,000",
+                                      ifelse(dcFull$School=="Savoy ES","$34,338,372",
+                                        ifelse(dcFull$School=="Stoddert ES","$34,319,480",
+                                          ifelse(dcFull$School=="Wilson HS","$135,126,577",
+                                dcFull$MajorExp9815))))))))))))
+dcFull$LifetimeBudget<-ifelse(dcFull$School=="Barnard ES","$24,386,910", 
+                        ifelse(dcFull$School=="Kelly Miller MS","$34,578,507", 
+                          ifelse(dcFull$School=="McKinley MS","$15,000,000",
+                            ifelse(dcFull$School=="Savoy ES","$34,338,372",
+                              ifelse(dcFull$School=="Stoddert ES","$34,319,480",
+                                ifelse(dcFull$School=="Wilson HS","$135,126,577",
+                                       dcFull$LifetimeBudget))))))
 
 ### Add in Future Spending for Charters ###
 ### Add in Future Spending for Charters ###
@@ -261,7 +274,7 @@ futureBind<-cbind(OpenFuture,charter)[c(1,3)]
 colnames(futureBind)[c(2)]<-c("School")
 
 charterJoin<-subset(dcFull, dcFull$Agency=="PCS")[-c(9)]
-charterFull<-join(charterJoin,futureBind,by="School")[c(1:35)]
+charterFull<-join(charterJoin,futureBind,by="School")
 
 DCPS<-subset(dcFull, dcFull$Agency !="PCS")
 dcFull<-rbind(DCPS,charterFull)
@@ -373,7 +386,7 @@ codeDup2<-join(codeDup,sqftSum, by="School.ID")
 codeDup2$Total.Enrolled<-round((codeDup2$totalSQFT/codeDup2$sumSQFT)*codeDup2$Total.Enrolled)
 codeDup2$MajorExp9815<-round((codeDup2$totalSQFT/codeDup2$sumSQFT)*codeDup2$MajorExp9815)
 codeDup2$TotalAllotandPlan1621<-round((codeDup2$totalSQFT/codeDup2$sumSQFT)*codeDup2$TotalAllotandPlan1621)
-codeDup2<-codeDup2[-c(37)]
+codeDup2<-codeDup2[-c(38)]
 
 codeNoDup<-subset(dcFull,!(dcFull$School.ID %in% codeDup2$School.ID))
 dcFull<-rbind(codeNoDup,codeDup)
@@ -382,7 +395,7 @@ dcFull<-rbind(codeNoDup,codeDup)
 ### update lat long and calculated fields to account for updated fields ###
 ### update lat long and calculated fields to account for updated fields ###
 dcFull$MajorExp9815[is.na(dcFull$MajorExp9815)] <- 0
-dcFull<-dcFull[-c(27:28,30:34,36)]
+dcFull<-dcFull[-c(11:13,33,38)]
 attach(dcFull)
 
 dcFull$AtRiskPer<-At_Risk/Total.Enrolled
@@ -406,23 +419,29 @@ noAddress$longitude<-rep(NA,4)
 noAddress$latitude<-rep(NA,4)
 noAddress$Ward<-rep(NA,4)
 
-dcFull1<-cbind(yesAddress,latlong,ward)[-c(12:14,29)]
-colnames(dcFull1)[c(26:28)]<-c("longitude","latitude","Ward")
+dcFull1<-cbind(yesAddress,latlong,ward)[-c(11,34)]
+colnames(dcFull1)[c(33:35)]<-c("longitude","latitude","Ward")
 
 dcFullNew<-rbind(dcFull1,noAddress)
 
 ### Add in missing LEP
 updateLEP<-subset(dcFullNew,is.na(dcFullNew$Limited.English.Proficient) & !(is.na(dcFullNew$Total.Enrolled)))
-updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(15,17)]
+updateLEP<-subset(updateLEP,updateLEP$School.ID!=292)[-c(13,15)]
 enroll_LEP_miss<-enroll[c(2,20:24)]
 fixedLEP<-join(updateLEP,enroll_LEP_miss,by="School.ID", type="left")
 fixedLEP$SPED<-fixedLEP$Level.1+fixedLEP$Level.2+fixedLEP$Level.3+fixedLEP$Level.4
-fixedLEP<-fixedLEP[-c(28:31)]
+fixedLEP<-fixedLEP[-c(35:38)]
 goodstartLEP<-subset(dcFullNew,!(dcFullNew$School.ID %in% fixedLEP$School.ID))
 dcFullUpdated<-rbind(goodstartLEP,fixedLEP)
 dcFullUpdated$ESLPer<-dcFullUpdated$Limited.English.Proficient/dcFullUpdated$Total.Enrolled
 dcFullUpdated$SPEDPer<-dcFullUpdated$SPED/dcFullUpdated$Total.Enrolled
-dcFullUpdated$LifetimeBudget<-dcFullUpdated$MajorExp9815 + dcFullUpdated$TotalAllotandPlan1621
+dcFullUpdated$LifetimeBudget<-money(dcFullUpdated$LifetimeBudget)
+dcFullUpdated$LifetimeBudget<-numeric(dcFullUpdated$LifetimeBudget)
+dcFullUpdated$TotalAllotandPlan1621<-money(dcFullUpdated$TotalAllotandPlan1621)
+dcFullUpdated$TotalAllotandPlan1621<-numeric(dcFullUpdated$TotalAllotandPlan1621)
+dcFullUpdated$LifetimeBudget<-ifelse(dcFullUpdated$Agency=="PCS",
+                                     dcFullUpdated$MajorExp9815 + dcFullUpdated$TotalAllotandPlan1621,
+                                     dcFullUpdated$LifetimeBudget)   
 
 ### Clean up school names
 dcFullUpdated$School1<-gsub("PCS","",dcFullUpdated$School)
@@ -454,13 +473,14 @@ dcFullUpdated$School1<-ifelse(dcFullUpdated$School1=="Community Academy CA Onlin
                                                           ifelse(dcFullUpdated$School1=="School Without Walls @ Francis-Stevens Education Campus", "Francis Stevens",
                                                                dcFullUpdated$School1)))))))))))))))))))
 
-dcFullUpdated<-dcFullUpdated[-c(3)]
-colnames(dcFullUpdated)[c(28)]<-c("School")
+colnames(dcFullUpdated)
+dcFullUpdated<-dcFullUpdated[-c(3,22,23,25:28)]
+colnames(dcFullUpdated)[c(29)]<-c("School")
 options("scipen"=100, "digits"=4)
 dcFullUpdated<-dcFullUpdated
 
 ### Remove dots in colnames
-colnames(dcFullUpdated)[c(1,13:14,23)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
+colnames(dcFullUpdated)[c(1,11:12,21)]<-c("School_ID","Total_Enrolled","Limited_English","Open_Now")
 
 ### All schools
 write.csv(dcFullUpdated,
