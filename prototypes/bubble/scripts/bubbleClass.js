@@ -12,7 +12,7 @@ function Bubble(budget){ // data
     this.center = {x: this.sizes.width / 2, y: this.sizes.height / 2};
     this.nodes = [];
     this.unique = null;
-    this.range = { min: 6, max: 29 };
+    this.range = { min: 5, max: 35 };
     this.colorRange = { high: '#001c2b', middle: '#6f7f87', low: '#ff3233', na: '#fff' };
     this.min = null;
     this.max = null;
@@ -54,16 +54,26 @@ Bubble.prototype.create_nodes = function(){
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.color = (function(){
-            var cur_budget = current[this.budget];
-            // console.log(current[this.budget]);
-            if(cur_budget > (max / 10)){
-                return this.colorRange.high;
+            // var cur_budget = current[this.budget];
+            // // console.log(current[this.budget]);
+            // if(cur_budget > (max / 10)){
+            //     return this.colorRange.high;
+            // }
+            // if(cur_budget < (max / 10) && cur_budget > 0){
+            //     return this.colorRange.middle;
+            // }
+            // if(cur_budget === 'NA'){ return this.colorRange.na;}
+            // return this.colorRange.low;
+            // console.log(current['Agency']);
+            if(current['Agency'] === 'DCPS'){
+                return '#021c2a';
             }
-            if(cur_budget < (max / 10) && cur_budget > 0){
-                return this.colorRange.middle;
+            if(current[this.budget] === '0'){
+                return '#ff3233';
             }
-            if(cur_budget === 'NA'){ return this.colorRange.na;}
-            return this.colorRange.low;
+            return '#425165';
+
+
         }).call(this);
         current.radius = (function(){
             var amount= current[that.budget].trim();
