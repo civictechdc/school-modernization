@@ -1,26 +1,33 @@
 * {
-  ffont-family: 'Averia Serif Libre', cursive;
+  font-family: 'Averia Serif Libre', cursive;
   margin: 0;
-  padding: 0;
-  color: #021c2a; }
+  padding: 0; }
 
 li {
   list-style-type: none; }
+
+a {
+  color: #d1d8e1; }
+  a:focus, a:visited {
+    color: initial; }
 
 .container {
   width: 80%;
   margin: 0px auto; }
 
+.nav {
+  position: fixed; }
+
 header {
   background-color: #021c2a;
   height: 75px;
-  margin-bottom: 35px; }
+  width: 100%; }
   header h1 {
     color: white;
     padding: 17px 0px; }
 
 circle {
-  stroke: black;
+  stroke: white;
   stroke-width: 2px;
   cursor: pointer;
   opacity: 0.985; }
@@ -41,11 +48,12 @@ text#tooltip_label {
   height: 100%;
   position: absolute;
   background-color: #d1d8e1;
-  top: 75px; }
+  top: 75px;
+  color: #d1d8e1; }
   #sideNavDiv #sideNavUl {
     margin-left: 45%; }
     #sideNavDiv #sideNavUl .sideNavItem {
-      margin-top: 35px; }
+      padding-top: 35px; }
 
 #tooltip {
   position: absolute;
@@ -74,7 +82,7 @@ text#tooltip_label {
   border-top-right-radius: 10px;
   position: absolute;
   right: 5%;
-  top: 110px;
+  top: 100px;
   border: 3px solid #021c2a; }
   #legend #legend_cont {
     position: absolute;
@@ -96,6 +104,7 @@ text#tooltip_label {
 
 #menuDiv {
   border-radius: 5px;
+  margin-top: 30px;
   background-color: #021c2a;
   width: 450px; }
   #menuDiv ul {

@@ -11,22 +11,33 @@ $headerHeight: 75px;
 
 // GLOBALS
 * {
-
-  ffont-family: 'Averia Serif Libre', cursive;
+  font-family: 'Averia Serif Libre', cursive;
   margin: 0;
   padding: 0;
-  color: $cerulean;
 }
 
 li {
   list-style-type: none;
 }
 
+a {
+  color: $grey;
+  &:focus, 
+  &:visited {
+    color: initial;
+  }
+}
+
 .container {
    width: 80%;
    margin: 0px auto;
+   // margin-left: 10%;
+   // margin-top: 15%;
 }
 
+.nav {
+  position: fixed;
+}
 
 // GRAPH SPECIFIC
 // Header
@@ -34,7 +45,8 @@ header {
   background-color: $cerulean;
   // height: 15%;
   height: $headerHeight;
-  margin-bottom: 35px;
+  width: 100%;
+  // margin-bottom: 35px;
 
   h1 {
     color: white;
@@ -44,7 +56,8 @@ header {
 
 
 circle {
-   stroke: darken($cerulean , 10%);
+   // stroke: lighten($cerulean , 10%);
+   stroke: white;
    stroke-width: 2px;
    cursor: pointer;
    opacity: 0.985;
@@ -78,12 +91,13 @@ text {
   position: absolute;
   background-color: $grey;
   top: $headerHeight;
+  color: $grey;
 
   #sideNavUl {
     margin-left: 45%;
 
     .sideNavItem {
-      margin-top: 35px;
+      padding-top: 35px;
     }
   }
 }
@@ -124,7 +138,7 @@ text {
   border-top-right-radius: 10px;
   position: absolute;
   right: 5%;
-  top: 110px;
+  top: 100px;
   border: 3px solid $cerulean;
 
   #legend_cont {
@@ -153,7 +167,7 @@ $menuW: 450px;
 }
 #menuDiv {
   border-radius: 5px;
-  // margin-top: 30px;
+  margin-top: 30px;
   background-color: $cerulean;
   width: $menuW;
   
