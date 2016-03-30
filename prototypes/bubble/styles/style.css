@@ -1,4 +1,6 @@
 * {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   font-family: 'Averia Serif Libre', cursive;
   margin: 0;
   padding: 0; }
@@ -10,6 +12,9 @@ a {
   color: #d1d8e1; }
   a:focus, a:visited {
     color: initial; }
+
+button {
+  border-radius: 15px; }
 
 .container {
   width: 80%;
@@ -115,6 +120,8 @@ text#tooltip_label {
 
 #select {
   color: #fff;
+  font-size: 16px;
+  border: 0;
   background-color: #021c2a; }
   #select option {
     color: #fff; }

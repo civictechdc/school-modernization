@@ -43,7 +43,6 @@
                <li id='MajorExp9815' class="row rowBehavior dataChange">1998 - 2015</li>
                <li id='TotalAllotandPlan1621' class="row rowBehavior dataChange">2016 - 2021</li>
                <li id='LifetimeBudget' class="row rowBehavior dataChange">1998 - 2021</li>
-               <!-- <li id='SpentPerSqFt' class="row rowBehavior dataChange">Square Foot</li> -->
             </ul>
 
             <ul class='menu'>
@@ -55,7 +54,8 @@
                <li id='FeederHS' class="row rowBehavior subdivides">Feeder Pattern</li>
                <li id='ProjectType' class="row rowBehavior subdivides">Project Type</li>
             </ul>
-
+            
+             <!-- Search Feature && Clear Button-->
             <ul class='menu'>
                <li class="title">Select School</li>
                <select id='select' name="select">
@@ -63,18 +63,13 @@
                </select>
 
                <!-- Clear Button -->
-               <button id='clear'>Clear All</button>
+               <li id='None' class='row rowBehavior subdivides'>Clear All</li>
             </ul>
-
-            <!-- Search Feature -->
-           <!--  <div id="selectDiv">
-               
-            </div> -->
          
          <!-- Status View -->
          <div id="statusBar">
-            <p> <span class='bold'>Now Viewing: </span>Facility spending for <span id="budget_state">1998 - 2015</span>, categorized by <span id="sub_state"></span>
-               <span id="school_state"></span>
+            <p> <span class='bold'>Now Viewing: </span><span id="school_state">District & Charter Schools</span> </span>Facility spending for <span id="budget_state">1998 - 2015</span>, categorized by <span id="sub_state">None</span>
+               
             </p>
          </div>
 

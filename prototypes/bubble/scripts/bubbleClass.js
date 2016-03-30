@@ -264,10 +264,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('transform', function(d){
             return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
         })
-        // .attr('x', function(d){
-        //     return d.x * 1.5 - 250;
-        // })
-        // .attr('x', function(d){return d.x *1.8 - 450;})
         .attr('y', function(d,i){
             // if(i%2 === 0){
             //     return d.y - 175;

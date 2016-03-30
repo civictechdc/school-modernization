@@ -45,6 +45,12 @@
                     get('#charter').classList.remove('selected');
                     get('#public').classList.add('selected');
                 }
+                if(e.target.id === 'Agency'){
+                    bubble.setData(schools['both']);
+                    get('#both').classList.add('selected');
+                    get('#charter').classList.remove('selected');
+                    get('#public').classList.remove('selected');
+                }
                 bubble.setColumn(e.target.id);
                 bubble.change();
                 makeSelected(e);
@@ -63,7 +69,6 @@
                         sel.classList.remove('selected');
                     }
                 });
-
 
                 bubble.setBudget(e.target.id);
                 bubble.change();
