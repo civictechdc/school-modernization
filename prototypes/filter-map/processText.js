@@ -185,7 +185,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
 
     var cleanedData = {};
 
-    // schoolIndex, schoolName, schoolWard, schoolCode, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, schoolAgency
+    // schoolIndex, schoolName, schoolWard, schoolCode, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, YrComplete
     cleanedData.schoolIndex = schoolData.schoolIndex;
     cleanedData.schoolName = schoolData.schoolName;
     cleanedData.schoolWard = schoolData.schoolWard;
@@ -228,7 +228,12 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     if ((schoolData.schoolAgency == "NA") || (schoolData.schoolAgency == null)) {
         cleanedData.schoolAgency = "";
     } else {
-        cleanedData.schoolLevel = schoolData.schoolLevel;
+        cleanedData.schoolAgency = schoolData.schoolAgency;
+    }
+    if ((schoolData.YrComplete == "NA") || (schoolData.YrComplete == null)) {
+        cleanedData.YrComplete = "";
+    } else {
+        cleanedData.YrComplete = schoolData.YrComplete;
     }
 
     // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
