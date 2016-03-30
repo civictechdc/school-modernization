@@ -24,7 +24,7 @@
         };
 
         // Run the graph
-        get('#None').classList.add('selected');
+        get('#Agency').classList.add('selected');
         get('#LifetimeBudget').classList.add('selected');
         get('#both').classList.add('selected');
         bubble.setData(schools.both);
@@ -48,8 +48,9 @@
                 bubble.setColumn(e.target.id);
                 bubble.change();
                 makeSelected(e);
+
                 // Change the title
-                // get('#sub_state').innerHTML = 'Split By:  ' + e.target.dataset.title;
+                get('#sub_state').innerHTML = e.target.innerHTML;
             });
         });
 
@@ -67,8 +68,9 @@
                 bubble.setBudget(e.target.id);
                 bubble.change();
                 makeSelected(e);
+
                 // Change the title
-                // get('#budget_state').innerHTML = e.target.dataset.title;
+                get('#budget_state').innerHTML = e.target.innerHTML;
             });
         });
 
@@ -86,12 +88,12 @@
                 makeSelected(e);
 
                 // Change the title
-                // get('#school_state').innerHTML = e.target.dataset.title + ' Schools';
+                get('#school_state').innerHTML = e.target.innerHTML + ' Schools';
             });
         });
 
         // if(get('#charter').classList.contains('selected')){
-        //     get('#FeederHS').setAttribute("disabled", "disabled")
+            // get('#FeederHS').setAttribute("disabled", "disabled")
         // }
     });
 }())

@@ -50,6 +50,7 @@ all dark blue buttons into light grey similar to Tom's filter and turn on-click 
 add 'clear' button that resets filter functions similar to Tom's map
 labels for filter titles and rows:
 header title: "Filters" add 'clear' button
+
 1st row title: rename "Facility Spending"
    Button 1: "Past facility spending 1998 - 2015"
    Button 2: "Planned facility spending 2016 - 2021"
@@ -60,6 +61,7 @@ header title: "Filters" add 'clear' button
    Button 3: "Ward"
    Button 4: "High School Feeder Pattern"
    Button 5: "Construction Project Type"
+
 I think the 3rd row, 'agency' would be clearer if we added it as an on-hover option when someone clicks on the 2nd row. That way they understand they can see the dots as either, 'DCPS data', 'Charter school data' or 'Both' 
 can we line up the labels of the categories to match with the group of dots more clearly?
 when I click 'future' the sizes of the bubbles in the legend changes. is there a reason for that?
@@ -68,4 +70,7 @@ when I click on 'HS feeder' I don't get a grouping. Is that right?
 when I click on 'charter' for agency, the size of dots in legend seems wrong
 
 -data descriptor bar. I like this feature a lot but the description is a little confusing for me. Can we try a different merge formula? Perhaps:
+
+
+
 "Data for: [Facility Spending (if user chooses it)] for [School Type] [School by Age Level] by [Geographic Boundary]."

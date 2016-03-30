@@ -12,6 +12,7 @@ $headerHeight: 75px;
 // GLOBALS
 * {
   font-family: 'Averia Serif Libre', cursive;
+  // font-family: 'serif';
   margin: 0;
   padding: 0;
 }
@@ -138,7 +139,7 @@ text {
   border-top-right-radius: 10px;
   position: absolute;
   right: 5%;
-  top: 100px;
+  top: 90px;
   border: 3px solid $cerulean;
 
   #legend_cont {
@@ -158,16 +159,20 @@ text {
 }
 
 // MENU
-$menuW: 450px;
+#statusBar {
+  padding-left: 25px;
+}
+
+$menuW: 700px;
 #menuInner {
   padding: 5px;
   border: 3px solid $cerulean;
   background-color: #FFF;
   
 }
-#menuDiv {
+.menuDiv {
   border-radius: 5px;
-  margin-top: 30px;
+  margin-top: 15px;
   background-color: $cerulean;
   width: $menuW;
   
@@ -177,7 +182,6 @@ $menuW: 450px;
 }
 
 #select {
-  margin: 5px 20px;
   color: #fff;
   background-color: $cerulean;
   option {
@@ -186,20 +190,13 @@ $menuW: 450px;
 }
 
 .row {
+  padding: 5px 8px;
   vertical-align: top;
   display: inline-block;
-  width: ($menuW / 9) - 5;
-  height: 17px;
-  padding-right: 5px;
   font-size: 12px;
-  // vertical-align: middle;
-  padding: 5px;
 }
 
 .rowBehavior {
-  vertical-align: bottom;
-  text-align: center;
-  font-size: 9px;
   cursor: pointer;
   background-color: $cerulean;
   color: #fff;
@@ -214,8 +211,10 @@ $menuW: 450px;
 .title {
   @extend .row;
   @include bold;
+  width: 100px;
   color: $cerulean;
   text-align: right;
+  margin-top: -3px;
 }
 
 // MINUTIA
@@ -224,6 +223,10 @@ $menuW: 450px;
 }
 .inactive {
   background-color: gray;
+}
+
+.bold {
+  font-weight: 700;
 }
 
 .selected {

@@ -38,13 +38,4 @@ d3.json('scripts/multi_school.json', function(d){
             .text('Amount: ' + money(d.value));
       })
       ;
-
-   // function update(dataset){
-   //    bubbles.transition()
-   //       .duration(1000)
-   //       .data(dataset)
-   //       .
-   // }
-
-
 });
