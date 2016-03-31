@@ -60,7 +60,7 @@ function initApp(presetMode) {
         this.schoolNamesArray = [];
         this.categoryLabels = ["sector", "schools", "spending", "location"];
         this.groupLabels = ["who", "what", "when", "where"];
-        this.dataFilters = { "agency": null, "levels": null, "expend": null, "zones": "Ward", "math": "spendAmount", "selectedZone": null  };
+        this.dataFilters = { "agency": "All", "levels": null, "expend": null, "zones": "Ward", "math": "spendAmount", "selectedZone": null  };
     }
     function ZonesCollection() {
         console.log("ZonesCollection");
@@ -200,6 +200,7 @@ function initApp(presetMode) {
             clearFilterSelctions();
             clearProfileChart();
             checkFilterSelection(self, zonesCollectionObj);
+            $("#searchWindow").val('');
             updateHoverText(null);
 
             // == load default map
@@ -480,12 +481,12 @@ function initApp(presetMode) {
     function clearFilterSelctions() {
         console.log("clearFilterSelctions");
 
-        setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
+        setMenuState(displayObj, displayObj.agencyMenu, ["A", "A", "S"]);
         setMenuState(displayObj, displayObj.levelsMenu, ["A", "A", "A"]);
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         setMenuState(displayObj, displayObj.expendMenu, ["A", "A", "A"]);
         displayObj.filterTitlesArray = [];
-        displayObj.dataFilters.agency = "Both";
+        displayObj.dataFilters.agency = "All";
         displayObj.dataFilters.levels = null;
         displayObj.dataFilters.zones = "Ward";
         displayObj.dataFilters.expend = null;
@@ -825,7 +826,7 @@ r
                 }
                 self.sharedAddressArray = sharedAddressArray;
                 self.selectedSchoolsArray = selectedSchoolsArray;
-                // checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
+                checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
 
                 // ======= make map layers ======
                 if (selectedSchoolsArray.length > 0) {
@@ -1436,7 +1437,7 @@ r
         displayObj.activateFilterMenus();
         displayObj.makeSearchAndHoverDisplay();
         displayObj.activateClearButton();
-        setMenuState(displayObj, displayObj.agencyMenu, ["S", "A", "A"]);
+        setMenuState(displayObj, displayObj.agencyMenu, ["A", "A", "S"]);
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
         schoolsCollectionObj.loadAutoComplete();
         checkFilterSelection(displayObj, zonesCollectionObj, "init");
