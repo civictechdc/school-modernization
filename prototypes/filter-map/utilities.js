@@ -701,12 +701,6 @@ function clearProfileChart() {
         });
         $("#chart").remove();
     }
-    if ($('#legend-container').find('#legend').length) {
-        $("#legend-container").fadeOut( "fast", function() {
-            console.log("*** FADEOUT legend-container ***");
-        });
-        $("#legend").remove();
-    }
     if ($('#profile-container').find('#profile').length) {
         $("#profile-container").fadeOut( "fast", function() {
             console.log("*** FADEOUT profile-container ***");

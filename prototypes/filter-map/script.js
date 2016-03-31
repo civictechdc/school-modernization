@@ -50,7 +50,7 @@ function initApp(presetMode) {
     function Display() {
         console.log("Display");
         this.displayMode = null;
-        this.agencyMenu = ["agency", filterMenu.All, filterMenu.District, filterMenu.Charter];
+        this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter, filterMenu.All];
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
         this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.spendPast, filterMenu.spendPlanned];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
@@ -212,6 +212,7 @@ function initApp(presetMode) {
         console.log("activateSearchWindow");
 
         $("#" + windowId).on('input',function(e){
+            console.log("input");
             clearProfileChart();
         });
     }
@@ -310,17 +311,17 @@ function initApp(presetMode) {
                     self.dataFilters.agency = whichFilter;
                     clearZoneAggregator(zonesCollectionObj);
                     if (whichFilter == "All") {
-                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
+                        setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
                         resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "District") {
-                        setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
+                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
                         resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "Charter") {
                         self.dataFilters.zones = "Ward";
                         zonesCollectionObj.zoneA = "Ward";
                         zonesCollectionObj.zoneGeojson_AB = null;
                         zonesCollectionObj.aggregatorArray = [];
-                        setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
+                        setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
                         if (self.dataFilters.levels == "HS") {
                             setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
                         } else if (self.dataFilters.levels == "MS") {
@@ -505,8 +506,11 @@ function initApp(presetMode) {
 
         var self = this;
         var searchSchoolName = $("#searchWindow").val();
+        console.log("  searchSchoolName: ", searchSchoolName);
+
         // var url = "Data_Schools/DC_OpenSchools_Master_214.csv";
-        var url = "Data_Schools/DCSchools_FY1415_Master_321.csv ";
+        // var url = "Data_Schools/DCSchools_FY1415_Master_321.csv ";
+        var url = "../../DCSchools_FY1415_Master_321.csv ";
         var filterTitleContainer = $("#filters-selections").children("h2");
         var jsonData, foundDataArray, schoolText, tempSchoolText;
 
@@ -543,9 +547,11 @@ function initApp(presetMode) {
         for (var i = 0; i < jsonData.length; i++) {
             nextSchool = jsonData[i];
             schoolName = nextSchool.School;
-            var checkSchool = schoolName.indexOf(searchSchoolName);
-            if (checkSchool > -1) {
-                foundDataArray.push([i, nextSchool]);
+            if (schoolName) {
+                var checkSchool = schoolName.indexOf(searchSchoolName);
+                if (checkSchool > -1) {
+                    foundDataArray.push([i, nextSchool]);
+                }
             }
         }
         return foundDataArray;
@@ -560,11 +566,15 @@ function initApp(presetMode) {
 
         // == display found school name or "no data" message
         if (foundDataArray.length > 0) {
+
+            // == more than one school matches search
             if (foundDataArray.length > 1) {
                 $(filterTitleContainer).css("font-size", "14px");
                 schoolText = "<span class='filterLabel'>Multiple schools: </span>";
                 hoverText = "Re-enter detailed name (from list)"
                 updateHoverText(hoverText);
+
+            // == single school matches search
             } else {
                 displayObj.activateClearButton();
                 makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0][1]);
@@ -598,17 +608,26 @@ function initApp(presetMode) {
     function hiliteSchoolMarker(foundDataArray) {
         console.log("hiliteSchoolMarker");
 
-        var schoolMarker = schoolsCollectionObj.schoolMarkersArray[foundDataArray[0][0]];
+        var schoolIndex = foundDataArray[0][0];
+        var flashCounter = 0;
+        var schoolMarker = schoolsCollectionObj.schoolMarkersArray[schoolIndex];
         console.dir(schoolMarker);
 
-        schoolMarker.icon.fillColor = "white";
-        schoolMarker.icon.strikeColor = "black";
-        schoolMarker.icon.strokeWeight = 6;
-        schoolMarker.icon.scale = 0.4;
-        schoolMarker.setMap(map);
+        var hilite = setInterval(flashMarker, 500);
 
-        setTimeout(resetMarker, 3000);
-
+        function flashMarker() {
+            flashCounter++;
+            schoolMarker.icon.fillColor = "purple";
+            schoolMarker.icon.strikeColor = "black";
+            schoolMarker.icon.strokeWeight = 6;
+            schoolMarker.icon.scale = .6;
+            schoolMarker.setMap(map);
+            if (flashCounter > 4) {
+                clearInterval(hilite);
+            }
+            setTimeout(resetMarker, 400);
+        }
+r
         function resetMarker() {
             schoolMarker.icon.fillColor = schoolMarker.defaultColor;
             schoolMarker.icon.scale = 0.2;
@@ -720,12 +739,14 @@ function initApp(presetMode) {
         } else {
             var websitePrefix = "";
         }
+        // var url = websitePrefix + "Data_Schools/DCSchools_FY1415_Master_321.csv"
+        var url = websitePrefix + "../../DCSchools_FY1415_Master_321.csv"
 
         // ======= get school data =======
         if (this.jsonData == null) {
             $.ajax({
                 // url: websitePrefix + "Data_Schools/DC_OpenSchools_Master_214.csv",
-                url: websitePrefix + "Data_Schools/DCSchools_FY1415_Master_321.csv",
+                url: url,
                 method: "GET",
                 dataType: "text"
             }).done(function(textData){
@@ -896,11 +917,13 @@ function initApp(presetMode) {
         } else {
             var websitePrefix = "";
         }
+        // var url = "Data_Schools/DCSchools_FY1415_Master_321.csv"
+        var url = "../../DCSchools_FY1415_Master_321.csv"
 
         // ======= get selected data =======
         $.ajax({
             // url: "Data_Schools/DC_OpenSchools_Master_214.csv",
-            url: "Data_Schools/DCSchools_FY1415_Master_321.csv",
+            url: url,
             method: "GET",
             dataType: "text"
         }).done(function(textData) {
@@ -914,12 +937,14 @@ function initApp(presetMode) {
 
             // == get school names
             displayObj.schoolNamesArray = [];
-            for (var i = 0; i < jsonData.length; i++) {
+            for (var i = 0; i < jsonData.length - 1; i++) {
                 var filterFlagCount = 0;
 
                 // == level filter
                 nextSchool = jsonData[i];
-                displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
+                if (nextSchool) {
+                    displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
+                }
             }
             initAutoComplete(displayObj);
 
