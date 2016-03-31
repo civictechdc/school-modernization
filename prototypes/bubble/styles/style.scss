@@ -139,10 +139,10 @@ text {
 
 // LEGEND
 #legend {
-  height: 250px;
+  height: 255px;
   width: 250px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
   position: absolute;
   right: 5%;
   top: 90px;
@@ -204,6 +204,7 @@ $menuW: 700px;
   vertical-align: top;
   display: inline-block;
   font-size: 12px;
+  // width: 90px;
 }
 
 .rowBehavior {
@@ -226,6 +227,13 @@ $menuW: 700px;
   text-align: right;
   margin-top: -3px;
 }
+
+// #public {
+//   background-color: #7AA25C;
+// }
+// #charter {
+//   background-color: orange;
+// }
 
 // MINUTIA
 .color {

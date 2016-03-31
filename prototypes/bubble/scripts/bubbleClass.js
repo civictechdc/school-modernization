@@ -4,7 +4,7 @@ function Bubble(budget){ // data
     this.commas = d3.format(',');
     this.column = null;
     this.data = null;
-    this.sizes = {width: 950, height: 425, padding: 100};
+    this.sizes = {width: 950, height: 400, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.03; // -0.018
@@ -16,6 +16,7 @@ function Bubble(budget){ // data
     this.colorRange = { high: '#001c2b', middle: '#6f7f87', low: '#ff3233', na: '#fff' };
     this.min = null;
     this.max = null;
+    this.sum = null;
 };
 
 Bubble.prototype.setColumn = function(column){
@@ -54,25 +55,18 @@ Bubble.prototype.create_nodes = function(){
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.color = (function(){
-            // var cur_budget = current[this.budget];
-            // // console.log(current[this.budget]);
-            // if(cur_budget > (max / 10)){
-            //     return this.colorRange.high;
-            // }
-            // if(cur_budget < (max / 10) && cur_budget > 0){
-            //     return this.colorRange.middle;
-            // }
-            // if(cur_budget === 'NA'){ return this.colorRange.na;}
-            // return this.colorRange.low;
-            // console.log(current['Agency']);
              if(current[this.budget] === '0'){
                 return '#ff3233';
             }
             if(current['Agency'] === 'DCPS'){
-                return '#021c2a';
+                // return '#99cc99';
+                return '#7AA25C';
+                // return '#021c2a';
             }
             if(current['Agency'] === 'PCS'){
-                return '#425165';
+                // return '#425165';
+                return 'orange';
+
             }
            
             
@@ -216,14 +210,6 @@ Bubble.prototype.group_bubbles = function(d){
     this.force.start();
 };
 
-Bubble.prototype.move_towards_center = function(alpha){
-    var that = this;
-    return function(d){
-        d.x = d.x + (that.center.x - d.x) * (that.damper + 0.02) * alpha;
-        d.y = d.y + (that.center.y - d.y) * (that.damper + 0.02) * alpha;    
-    };
-}
-
 Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Make an array of unique items
     var that = this,
@@ -285,42 +271,53 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 
 Bubble.prototype.make_legend = function(){
     var that = this,
-        nums = this.budget !== 'AnnualSpentPerSqFt' ? [100000000, 50000000 ,10000000, 1, 0] : [50, 25, 15, 1, 0];
+        nums = [100000000, 50000000 ,10000000, 0];
 
+    that.sum = 0;
+    // var sum = null;
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
     }
 
+    var max = d3.max(that.data, function(d){return +d[that.budget];}),
+        min = d3.min(that.data, function(d){return +d[that.budget];}),
+        radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]),
+        numDynamic = [d3.round(max, -5), d3.round(max/2), min+1, 0];
+
     var legend = d3.select('#legend_cont')
-        .append('svg').attr('width','250').attr('height', 192);
+        .append('svg').attr('width','250').attr('height', '250');
     legend.selectAll('circle')
-        .data(nums)
+        .data(numDynamic)
         .enter()
         .append('circle')
         .attr('cx', 40)
         .attr('cy', function(d,i){
-            return 40 * (i+1);
+            // that.sum += (radius_scale(d) + 25);
+            // if(i === 0){
+            //     return '40';
+            // }
+            // return that.sum;
+            return 60 * (i+1) - 20;
         })
         .style('fill', function(d){
             return d === 0 ? that.colorRange.low : that.colorRange.high;
         })
         .attr('r', function(d){
-            max = d3.max(that.data, function(d){return +d[that.budget];}),
-            min = d3.min(that.data, function(d){return +d[that.budget];}),
-            radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]); // 15
             return radius_scale(d);
         })
         ;
     legend.selectAll('text')
-        .data(nums)
+        .data(numDynamic)
         .enter()
         .append('text')
         .attr('x', 95)
         .attr('y', function(d,i){
-            return 5 + 37 * (i+1);
+            // that.sumText += (radius_scale(d)*2 + 20);
+            // return that.sum;
+            // return (that.range.max + 10) * (i+1);
+            return 60 * (i+1) - 20;
         })
         .text(function(d){
-            if(that.budget === 'AnnualSpentPerSqFt'){ return that.money(d) + ' / Sq. Ft.';}
             return that.money(d);
         })
         ;
@@ -347,7 +344,7 @@ Bubble.prototype.add_search_feature = function() {
         var circle = document.getElementById(e.target.value);
         console.log(circle);
         circle.setAttribute('shown', true);
-        circle.style.fill = 'yellowgreen';
+        circle.style.fill = '#021c2a';
     });
 };
 

@@ -81,10 +81,8 @@ text#tooltip_label {
     line-height: 1.1em; }
 
 #legend {
-  height: 250px;
+  height: 255px;
   width: 250px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   position: absolute;
   right: 5%;
   top: 90px;
