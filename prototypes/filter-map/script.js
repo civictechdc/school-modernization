@@ -116,12 +116,24 @@ function initApp(presetMode) {
 
         var filterContainer = ("#filter-container ");
         var menuHtml = "";
+        this.makeColorLegend();
         menuHtml += this.makeSearchDisplay();
         menuHtml += this.makeHoverDisplay();
         $(filterContainer).append(menuHtml);
         this.activateSearchButton("searchButton");
         this.activateSearchWindow("searchWindow");
     }
+
+    // ======= ======= ======= makeColorLegend ======= ======= =======
+    Display.prototype.makeColorLegend = function() {
+        console.log("makeColorLegend");
+        var legendHtml = "<div id='legend'>";
+        legendHtml += "<div><p class='legend-text'>District Schools</p><div class=legend-color-dcps>&nbsp;</div></div>";
+        legendHtml += "<div><p class='legend-text'>Charter Schools</p><div class=legend-color-pcs>&nbsp;</div></div>";
+        legendHtml += "</div>";
+        $("body").append(legendHtml);
+    }
+
 
     // ======= ======= ======= makeSearchDisplay ======= ======= =======
     Display.prototype.makeSearchDisplay = function() {
@@ -153,6 +165,8 @@ function initApp(presetMode) {
         } else if (chartOrProfile == "profile") {
             var subMenuHtml = "<select id='expendMathP' name='expendMath'>";
         }
+
+        var nextItem, nextId, nextText;
         for (var i = 1; i < whichMenu.length; i++) {
             nextItem = whichMenu[i];
             nextId = nextItem.id;
@@ -826,7 +840,7 @@ r
                 }
                 self.sharedAddressArray = sharedAddressArray;
                 self.selectedSchoolsArray = selectedSchoolsArray;
-                checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
+                // checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
 
                 // ======= make map layers ======
                 if (selectedSchoolsArray.length > 0) {
@@ -1263,8 +1277,8 @@ r
 
             // == set color of school circle
             if (nextSchoolType == "DCPS") {
-                fillColor = "red";
-                strokeColor = "maroon";
+                fillColor = "#7aa25c";
+                strokeColor = "black";
             } else {
                 fillColor = "orange";
                 strokeColor = "crimson ";
