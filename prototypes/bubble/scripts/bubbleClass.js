@@ -214,6 +214,11 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Make an array of unique items
     var that = this,
         items = _.uniq(_.pluck(this.nodes, column)).sort();
+
+    var values = [],
+        
+
+
         unique = [];
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
@@ -272,32 +277,22 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 Bubble.prototype.make_legend = function(){
     var that = this,
         nums = [100000000, 50000000 ,10000000, 0];
-
-    that.sum = 0;
-    // var sum = null;
+    
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
     }
-
-    var max = d3.max(that.data, function(d){return +d[that.budget];}),
-        min = d3.min(that.data, function(d){return +d[that.budget];}),
-        radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]),
-        numDynamic = [d3.round(max, -5), d3.round(max/2), min+1, 0];
-
+    var numDynamic = [d3.round(max, -5), d3.round(max/2), min+1, 0],
+        multiplier = [1, 2.2, 2.85, 3.3];
+    
     var legend = d3.select('#legend_cont')
-        .append('svg').attr('width','250').attr('height', '250');
+        .append('svg').attr('width','244').attr('height', '200');
     legend.selectAll('circle')
         .data(numDynamic)
         .enter()
         .append('circle')
         .attr('cx', 40)
         .attr('cy', function(d,i){
-            // that.sum += (radius_scale(d) + 25);
-            // if(i === 0){
-            //     return '40';
-            // }
-            // return that.sum;
-            return 60 * (i+1) - 20;
+            return 50 * multiplier[i];
         })
         .style('fill', function(d){
             return d === 0 ? that.colorRange.low : that.colorRange.high;
@@ -312,10 +307,7 @@ Bubble.prototype.make_legend = function(){
         .append('text')
         .attr('x', 95)
         .attr('y', function(d,i){
-            // that.sumText += (radius_scale(d)*2 + 20);
-            // return that.sum;
-            // return (that.range.max + 10) * (i+1);
-            return 60 * (i+1) - 20;
+            return 50 * multiplier[i] + 5   ;
         })
         .text(function(d){
             return that.money(d);

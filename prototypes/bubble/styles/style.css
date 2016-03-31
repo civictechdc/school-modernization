@@ -81,24 +81,23 @@ text#tooltip_label {
     line-height: 1.1em; }
 
 #legend {
-  height: 255px;
+  height: 200px;
   width: 250px;
   position: absolute;
   right: 5%;
-  top: 90px;
-  border: 3px solid #021c2a; }
+  top: 90px; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
     height: 250 px; }
+    #legend #legend_cont svg {
+      border: 3px solid #021c2a; }
 
 .modHeader {
   padding: 10px;
   background-color: #021c2a;
   color: #fff;
-  text-align: center;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px; }
+  text-align: center; }
 
 #statusBar {
   padding-left: 25px; }
@@ -132,11 +131,11 @@ text#tooltip_label {
 
 .rowBehavior {
   cursor: pointer;
-  background-color: #021c2a;
-  color: #fff;
+  background-color: #d1d8e1;
+  color: #021c2a;
   border-radius: 3px; }
   .rowBehavior:hover {
-    color: #fff;
+    color: #021c2a;
     background-color: #043c5b; }
 
 .title {
@@ -156,7 +155,7 @@ text#tooltip_label {
   font-weight: 700; }
 
 .selected {
-  background-color: #075d8b;
+  background-color: #021c2a;
   color: #fff; }
 
 .btn_state {
