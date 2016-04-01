@@ -21,9 +21,9 @@ function initApp(presetMode) {
         filterMenu = new Menu("filterMenu");
 
         // == District, Charter
-        filterMenu.District = { id:"District", category:"schools", label:"DCPS Schools", text:"DCPS Schools", column:"Agency", value:"DCPS" };
+        filterMenu.District = { id:"District", category:"schools", label:"DCPS Schools", text:"District Schools", column:"Agency", value:"DCPS" };
         filterMenu.Charter = { id:"Charter", category:"schools", label:"Charter Schools", text:"Public Charter Schools", column:"Agency", value:"PCS" };
-        filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"Both", column:"Agency", value:"Both" };
+        filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"District and Charter Schools", column:"Agency", value:"Both" };
 
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
         filterMenu.Elem = { id:"Elem", category:"schools", label:"Elementary Schools", text:"Elementary Schools", column:"Level", value:"ES" };
@@ -31,9 +31,9 @@ function initApp(presetMode) {
         filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools", column:"Level", value:"HS" };
 
         // == spendPast, spendLifetime, spendPlanned
-        filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Total facility spending 1998-2015", column:"MajorExp9815", value:null };
-        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Planned facility spending 2016-2021", column:"TotalAllotandPlan1621", value:null };
-        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total spending 1998-2021", column:"LifetimeBudget", value:null };
+        filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Total facility spending (1998-2015)", column:"MajorExp9815", value:null };
+        filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Planned facility spending (2016-2021)", column:"TotalAllotandPlan1621", value:null };
+        filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total facility spending (1998-2021)", column:"LifetimeBudget", value:null };
 
         // == spendSqFt, spendEnroll
         filterMenu.spendSqFt = { id:"spendSqFt", category:"expenditures", label:"/sqft", text:"per sqFt", column:"SpentPerSqFt", value:null };
@@ -41,7 +41,7 @@ function initApp(presetMode) {
         filterMenu.spendAmount = { id:"spendAmount", category:"expenditures", label:"", text:"dollar amount", column:null, value:null };
 
         // == zones
-        filterMenu.Ward = { id:"Ward", category:"zone", label:"Wards", text:"Wards", column:"Ward", value:null };
+        filterMenu.Ward = { id:"Ward", category:"zone", label:"Wards", text:"Ward", column:"Ward", value:null };
         filterMenu.FeederHS = { id:"FeederHS", category:"zone", label:"HSfeeders", text:"High School Feeder Pattern", column:"FeederHS", value:null };
         filterMenu.FeederMS = { id:"FeederMS", category:"zone", label:"MSfeeders", text:"Middle School Boundary", column:"FeederMS", value:null };
         filterMenu.Elementary = { id:"Elementary", category:"zone", label:"Elementary zones", text:"Elementary zones", column:null, value:null };
@@ -56,6 +56,7 @@ function initApp(presetMode) {
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
         this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
         this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.zonesMenu, this.expendMenu];
+        this.filterTitlesObject = { "agency":"All", "levels":null, "expend":null, "zones": "Ward" };
         this.filterTitlesArray = [];
         this.schoolNamesArray = [];
         this.categoryLabels = ["sector", "schools", "spending", "location"];
@@ -510,6 +511,7 @@ function initApp(presetMode) {
         zonesCollectionObj.zoneGeojson_AB = null;
         zonesCollectionObj.aggregatorArray = [];
         zonesCollectionObj.zoneA = "Ward";
+        displayObj.filterTitlesObject = { "agency":"District and Charter Schools", "levels":null, "expend":null, "zones": "Ward" };
         displayObj.filterTitlesArray = [displayObj.agencyMenu[1].text, displayObj.zonesMenu[1].text];
         console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
         updateFilterSelections(displayObj);

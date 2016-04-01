@@ -53,6 +53,8 @@ function initMap(zonesCollectionObj, displayObj) {
 
         map = new google.maps.Map(mapContainer, {
             center: {lat: 38.89, lng: -77.00},
+            minZoom: 11,
+            maxZoom: 12,
             disableDefaultUI: true,
             disableDoubleClickZoom: true,
             disableDragZoom: true,
@@ -61,6 +63,8 @@ function initMap(zonesCollectionObj, displayObj) {
             mapTypeId: google.maps.MapTypeId.TERRAIN,
             zoom: zoom
         });
+
+        // map.setOptions({ minZoom: 10, maxZoom: 11 });
 
         var historicalOverlay = new google.maps.GroundOverlay(
             'images/mapMask.png',
