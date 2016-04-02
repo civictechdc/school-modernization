@@ -50,7 +50,7 @@ text#tooltip_label {
 
 #sideNavDiv {
   width: 100px;
-  height: 100%;
+  min-height: 100%;
   position: absolute;
   background-color: #d1d8e1;
   top: 75px;
@@ -144,6 +144,10 @@ text#tooltip_label {
   color: #021c2a;
   text-align: right;
   margin-top: -3px; }
+
+.splitValue {
+  fill: red;
+  font-size: 1.2em; }
 
 .color {
   fill: 'grey'; }

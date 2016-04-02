@@ -1,10 +1,13 @@
 'use strict';
-// var bubble = null;
+
 (function(){
-    // d3.csv('data/data_master.csv', function(data){
-    // d3.csv('data/data_openschools_master_214.csv', function(data){
+
+    var lastSchoolState = null;
+
     d3.csv('data/data_master_321.csv', function(data){
         var bubble = new Bubble('LifetimeBudget'); // data
+
+        // Filter the data
         var schools = {
             both: data,
             public: (function(d){
@@ -22,13 +25,6 @@
                 });
             }(data))
         };
-
-        // Run the graph
-        get('#Agency').classList.add('selected');
-        get('#LifetimeBudget').classList.add('selected');
-        get('#both').classList.add('selected');
-        bubble.setData(schools.both);
-        bubble.graph();
 
         // To change the subdivides, SUBDIVIDES
         var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
@@ -97,9 +93,14 @@
             });
         });
 
-        // if(get('#charter').classList.contains('selected')){
-            // get('#FeederHS').setAttribute("disabled", "disabled")
-        // }
+        // Run the graph
+        get('#Agency').classList.add('selected');
+        get('#LifetimeBudget').classList.add('selected');
+        get('#both').classList.add('selected');
+        bubble.setData(schools.both);
+        bubble.graph();
+
+        // function 
     });
 }())
 

@@ -4,7 +4,7 @@ function Bubble(budget){ // data
     this.commas = d3.format(',');
     this.column = null;
     this.data = null;
-    this.sizes = {width: 950, height: 400, padding: 100};
+    this.sizes = {width: 850, height: 500, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.03; // -0.018
@@ -68,10 +68,6 @@ Bubble.prototype.create_nodes = function(){
                 return 'orange';
 
             }
-           
-            
-
-
         }).call(this);
         current.radius = (function(){
             var amount= current[that.budget].trim();
@@ -131,9 +127,9 @@ Bubble.prototype.add_tootltips = function(d){
     this.circles.on('mouseenter', function(d){
 
         // GET THE X/Y COOD OF OBJECT
-        var tooltipPadding = 160,
-            xPosition = d3.select(this)[0][0]['cx'].animVal.value + tooltipPadding,
-            yPosition = d3.select(this)[0][0]['cy'].animVal.value;
+        var tooltipPadding = 180, // 160,
+            xPosition = d3.select(this)[0][0]['cx'].animVal.value + tooltipPadding + 20,
+            yPosition = d3.select(this)[0][0]['cy'].animVal.value + tooltipPadding;
         
         // TOOLTIP INFO
         d3.select('#school').text(camel(d.School));
@@ -215,14 +211,29 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     var that = this,
         items = _.uniq(_.pluck(this.nodes, column)).sort();
 
-    var values = [],
-        
-
-
-        unique = [];
+    var unique = [];
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
     }
+
+    // Calculate the sums of all the unique values of the current budget
+    var itemSums = items.map(function(x){
+        var arr = that.nodes.filter(function(node){
+            if(node[column] === x){
+                return node;
+            }
+        });
+        
+        var sums = _.reduce(arr, function(a,b){
+            var budget = b[that.budget];
+            if(budget === 'NA'){
+                return a;
+            }
+            return a + parseInt(b[that.budget]);
+        }, 0);
+
+        return sums;
+    });
 
     // Assign unique_item a point to occupy
     var width = this.sizes.width,
@@ -247,28 +258,56 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     });
 
     // Add Text
-    this.svg.selectAll('text')
+    var text = this.svg.selectAll('text')
         .data(unique)
         .enter()
         .append('text')
         .attr('class', 'sub_titles')
-        .attr('transform', function(d){
-            return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
-        })
-        .attr('y', function(d,i){
-            // if(i%2 === 0){
-            //     return d.y - 175;
-            // }
-            return d.y - 150;
-        })
+        // .attr('transform', function(d){
+        //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
+        // });
+        ;
 
-        .text(function(d){
+    // Add the label for the group
+    text.append('tspan')
+        .text(function(d, i){
+            if(d.name === undefined){
+                return 'All';
+            }
             return d.name;
         })
+        .attr('x', function(d,i){
+            return d.x * 1.5 - 250;
+        })
+        // .attr('transform', function(d){
+        //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
+        // })
+        .attr('y', function(d,i){
+            return d.y - 150;
+        });
+
+    // Add the budget's sum for the group
+    text.append('tspan')
+        .attr('class', 'splitValue')
+        .text(function(d,i){
+            return that.money(itemSums[i]);
+        })
+        .attr('x', function(d,i){
+            return d.x * 1.5 - 300;
+        })
+        // .attr('transform', function(d){
+        //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
+        // })
+        .attr('y', function(d,i){
+            return d.y - 120;
+        })
+        // .attr('x', function(d,i){
+        //     return d.x - 200;
+        // })
         ;
+
     // Send the nodes the their corresponding point
     return function(d){
-        // d3.select('#groupCircles').attr('transform', 'translate(' + that.center.x + ', ' + that.center.y + ')');
         d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
         d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
     }
@@ -281,7 +320,7 @@ Bubble.prototype.make_legend = function(){
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
     }
-    var numDynamic = [d3.round(max, -5), d3.round(max/2), min+1, 0],
+    var numDynamic = [d3.round(max), d3.round(max/2), min+1, 0],
         multiplier = [1, 2.2, 2.85, 3.3];
     
     var legend = d3.select('#legend_cont')
