@@ -3,7 +3,7 @@
 $cerulean: #021c2a;
 $grey: #d1d8e1;
 $lighterCerulean: #6f7f87;
-$red: #ff3233;
+$red: #4a445d;
 $headerHeight: 75px;
 @mixin bold {
   font-weight: bold;
@@ -35,7 +35,7 @@ button {
 }
 
 .container {
-   width: 80%;
+   width: 75%;
    margin: 0px auto;
    // margin-left: 10%;
    // margin-top: 15%;
@@ -145,7 +145,7 @@ text {
   height: 200px;
   width: 250px;
   position: absolute;
-  right: 5%;
+  right: 7%;
   top: 90px;
 
   #legend_cont {

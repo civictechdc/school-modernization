@@ -60,7 +60,7 @@ Bubble.prototype.create_nodes = function(){
         current.myy = this.center.y;
         current.color = (function(){
              if(current[this.budget] === '0'){
-                return '#ff3233';
+                return '#787385';
             }
             if(current['Agency'] === 'DCPS'){
                 // return '#99cc99';
@@ -306,8 +306,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 };
 
 Bubble.prototype.make_legend = function(){
-    var that = this,
-        nums = [100000000, 50000000 ,10000000, 0];
+    var that = this;
     
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
@@ -326,7 +325,7 @@ Bubble.prototype.make_legend = function(){
             return 50 * multiplier[i];
         })
         .style('fill', function(d){
-            return d === 0 ? that.colorRange.low : that.colorRange.high;
+            return d === 0 ? '#4a445d' : that.colorRange.high;
         })
         .attr('r', function(d){
             return that.radius_scale(d);

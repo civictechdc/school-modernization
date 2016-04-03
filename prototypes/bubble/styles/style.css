@@ -17,7 +17,7 @@ button {
   border-radius: 15px; }
 
 .container {
-  width: 80%;
+  width: 75%;
   margin: 0px auto; }
 
 .nav {
@@ -87,7 +87,7 @@ text#tooltip_label {
   height: 200px;
   width: 250px;
   position: absolute;
-  right: 5%;
+  right: 7%;
   top: 90px; }
   #legend #legend_cont {
     position: absolute;
