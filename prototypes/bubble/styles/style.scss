@@ -234,11 +234,14 @@ $menuW: 700px;
   font-size: 1.2em;
 }
 
+.invalid {
+  background-color: #e5e8e9;
+  color: white;
+  pointer-events: none;
+}
+
 .color {
    fill: 'grey';
-}
-.inactive {
-  background-color: gray;
 }
 
 .bold {
