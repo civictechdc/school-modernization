@@ -1,8 +1,5 @@
 'use strict';
-// var bubble = null;
 (function(){
-    // d3.csv('data/data_master.csv', function(data){
-    // d3.csv('data/data_openschools_master_214.csv', function(data){
     d3.csv('data/data_master_321.csv', function(data){
         var bubble = new Bubble('LifetimeBudget'); // data
         var schools = {
