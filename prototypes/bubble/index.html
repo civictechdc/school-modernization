@@ -5,7 +5,6 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
    <title>Bubble Chart</title>
    <meta name="viewport" content="width=device-width,initial-scale=1">
-   <!-- <link href='https://fonts.googleapis.com/css?family=Averia+Serif+Libre' rel='stylesheet' type='text/css'> -->
    <link href='https://fonts.googleapis.com/css?family=Averia+Serif+Libre:300' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" href="styles/style.css">
 </head>
@@ -20,7 +19,7 @@
    
    <!-- Sidebar Navigation -->
    <div id="sideNavDiv">
-      <ul id="sideNavUl">
+      <!-- <ul id="sideNavUl">
          <li class="sideNavItem"><a href="#">1</a></li>
          <li class="sideNavItem"><a href="#">2</a></li>
          <li class="sideNavItem"><a href="#">3</a></li>
@@ -28,58 +27,77 @@
          <li class="sideNavItem"><a href="#">5</a></li>
          <li class="sideNavItem"><a href="#">6</a></li>
          <li class="sideNavItem"><a href="#">7</a></li>
-      </ul>
+      </ul> -->
    </div>
 
    <!-- Page -->
    <div class="container">
 
       <!-- Menu -->
-      <div id='menuDiv'>
-         <p class='modHeader'>Menu</p>
+      <div class='menuDiv'>
+         <p class='modHeader'>Filters</p>
          <div id="menuInner">
             
             <ul class='menu'>
-               <li class="title">Budget</li>
-               <li id='MajorExp9815' class="row rowBehavior dataChange">Past</li>
-               <li id='TotalAllotandPlan1621' class="row rowBehavior dataChange">Future</li>
-               <li id='LifetimeBudget' class="row rowBehavior dataChange">Lifetime</li>
-               <li id='SpentPerSqFt' class="row rowBehavior dataChange">Square Foot</li>
+               <li class="title">Facility Spending</li>
+               <li id='MajorExp9815' class="row rowBehavior dataChange">1998 - 2015</li>
+               <li id='TotalAllotandPlan1621' class="row rowBehavior dataChange">2016 - 2021</li>
+               <li id='LifetimeBudget' class="row rowBehavior dataChange">1998 - 2021</li>
+               <li id='SpentPerSqFt' class="row rowBehavior dataChange">Per Square Foot</li>
+               <li id='SpentPerMaxOccupancy' class="row rowBehavior dataChange">Per Student</li>
+
+               
             </ul>
 
             <ul class='menu'>
                <li class="title">Category</li>
-               <li id='None' class="row rowBehavior subdivides">None</li>
-               <li id='Agency' class="row rowBehavior subdivides">Agency</li>
-               <li id='Level' class="row rowBehavior subdivides">Level</li>
+               <li id='Agency' class="row rowBehavior subdivides">District vs Charter</li>
+               <li id='Level' class="row rowBehavior subdivides">Grade Level</li>
                <li id='Ward' class="row rowBehavior subdivides">Ward</li>
-               <li id='FeederHS' class="row rowBehavior subdivides">HS Feeder</li>
+               <li id='FeederHS' class="row rowBehavior subdivides">Feeder Pattern</li>
                <li id='ProjectType' class="row rowBehavior subdivides">Project Type</li>
             </ul>
-
+            
+             <!-- Search Feature && Clear Button-->
             <ul class='menu'>
-               <li class="title">Agency</li>
-               <li id='both' class="row rowBehavior school">All Schools</li>
-               <li id='public' class="row rowBehavior school">Public</li>
-               <li id='charter' class="row rowBehavior school">Charter</li>
-            </ul>
-
-            <!-- Search Feature -->
-            <div id="selectDiv">
+               <li class="title">Select School</li>
                <select id='select' name="select">
-                  <option value="first" selected>Select a School</option>
+                  <option value="first" selected></option>
                </select>
-            </div>
+
+               <!-- Clear Button -->
+               <li id='None' class='row rowBehavior subdivides'>Clear All</li>
+            </ul>
+         
+         <!-- Status View -->
+         <div id="statusBar">
+            <p> <span class='bold'>Now Viewing: </span><span id="school_state">District & Charter Schools</span> </span>Facility spending for <span id="budget_state">1998 - 2015</span>, categorized by <span id="sub_state">None</span>
+               
+            </p>
+         </div>
+
          </div>
       </div>
-   
+      
+      <!-- Show By Schools -->
+      <div class="menuDiv">
+         <div id="menuInner">
+            <ul class='menu'>
+               <li class="title">Show Only</li>
+               <li id='public' class="row rowBehavior school">District Schools</li>
+               <li id='charter' class="row rowBehavior school">Charter Schools</li>
+               <li id='both' class="row rowBehavior school">All Schools</li>
+            </ul>
+         </div>
+      </div>
+
       <!-- Legend -->
       <div id="legend">
          <p class='modHeader'>Legend</p>   
          <div id="legend_cont"></div>
       </div>  
       
-      <!-- The Chart -->
+      <!-- Chart -->
       <div id="chart"></div>
    </div>
 

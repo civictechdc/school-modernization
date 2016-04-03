@@ -3,9 +3,7 @@ import csv, json
 # Read csv
 with open('../../data/multi_school.csv', 'rU') as file:
    reader = csv.DictReader(file)
-   # csv_data = [row for row in reader]
-   # print csv_data
-   
+
    data_for_json = {
       'name': 'Projects',
       'children': []
@@ -17,7 +15,6 @@ with open('../../data/multi_school.csv', 'rU') as file:
       tempObj['value'] = row['Amount']
       # print tempObj['name']
       data_for_json['children'].append(tempObj)
-
 
 # Make JSON file
 raw_data = json.dumps(data_for_json, indent=4);

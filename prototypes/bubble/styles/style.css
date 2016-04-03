@@ -1,4 +1,6 @@
 * {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   font-family: 'Averia Serif Libre', cursive;
   margin: 0;
   padding: 0; }
@@ -10,6 +12,9 @@ a {
   color: #d1d8e1; }
   a:focus, a:visited {
     color: initial; }
+
+button {
+  border-radius: 15px; }
 
 .container {
   width: 80%;
@@ -41,19 +46,22 @@ text#tooltip_label {
 
 .sub_titles {
   font-weight: bold;
-  font-size: 12px; }
+  font-size: 14px; }
 
 #sideNavDiv {
   width: 100px;
-  height: 100%;
+  height: 900px;
   position: absolute;
   background-color: #d1d8e1;
-  top: 75px;
   color: #d1d8e1; }
   #sideNavDiv #sideNavUl {
     margin-left: 45%; }
     #sideNavDiv #sideNavUl .sideNavItem {
       padding-top: 35px; }
+
+.splitValue {
+  fill: #6f7f87;
+  font-size: 0.8em; }
 
 #tooltip {
   position: absolute;
@@ -76,81 +84,83 @@ text#tooltip_label {
     line-height: 1.1em; }
 
 #legend {
-  height: 250px;
+  height: 200px;
   width: 250px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   position: absolute;
   right: 5%;
-  top: 100px;
-  border: 3px solid #021c2a; }
+  top: 90px; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
     height: 250 px; }
+    #legend #legend_cont svg {
+      border: 3px solid #021c2a; }
 
 .modHeader {
   padding: 10px;
   background-color: #021c2a;
   color: #fff;
-  text-align: center;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px; }
+  text-align: center; }
+
+#statusBar {
+  padding-left: 25px; }
 
 #menuInner {
   padding: 5px;
   border: 3px solid #021c2a;
   background-color: #FFF; }
 
-#menuDiv {
+.menuDiv {
   border-radius: 5px;
-  margin-top: 30px;
+  margin-top: 15px;
   background-color: #021c2a;
-  width: 450px; }
-  #menuDiv ul {
+  width: 700px; }
+  .menuDiv ul {
     padding: 5px; }
 
 #select {
-  margin: 5px 20px;
   color: #fff;
+  font-size: 16px;
+  border: 0;
   background-color: #021c2a; }
   #select option {
     color: #fff; }
 
 .row, .title {
+  padding: 5px 8px;
   vertical-align: top;
   display: inline-block;
-  width: 45px;
-  height: 17px;
-  padding-right: 5px;
-  font-size: 12px;
-  padding: 5px; }
+  font-size: 12px; }
 
 .rowBehavior {
-  vertical-align: bottom;
-  text-align: center;
-  font-size: 9px;
   cursor: pointer;
-  background-color: #021c2a;
-  color: #fff;
+  background-color: #d1d8e1;
+  color: #021c2a;
   border-radius: 3px; }
   .rowBehavior:hover {
-    color: #fff;
+    color: #021c2a;
     background-color: #043c5b; }
 
 .title {
   font-weight: bold;
+  width: 100px;
   color: #021c2a;
-  text-align: right; }
+  text-align: right;
+  margin-top: -3px; }
+
+.invalid {
+  background-color: #e5e8e9;
+  color: white;
+  pointer-events: none; }
 
 .color {
   fill: 'grey'; }
 
-.inactive {
-  background-color: gray; }
+.bold {
+  font-weight: 700; }
 
 .selected {
-  background-color: #075d8b;
+  background-color: #021c2a;
   color: #fff; }
 
 .btn_state {
@@ -161,5 +171,8 @@ text#tooltip_label {
 
 .show_state {
   line-height: 1.5em; }
+
+tspan {
+  background-color: red; }
 
 /*# sourceMappingURL=style.css.map */
