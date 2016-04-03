@@ -283,7 +283,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
         // })
         .attr('y', function(d,i){
-            return d.y - 150;
+            return d.y - 200;
         });
 
     // Add the budget's sum for the group
@@ -293,13 +293,13 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
             return that.money(itemSums[i]);
         })
         .attr('x', function(d,i){
-            return d.x * 1.5 - 300;
+            return d.x * 1.5 - 250;
         })
         // .attr('transform', function(d){
         //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
         // })
         .attr('y', function(d,i){
-            return d.y - 120;
+            return d.y - 180;
         })
         // .attr('x', function(d,i){
         //     return d.x - 200;
@@ -367,11 +367,13 @@ Bubble.prototype.add_search_feature = function() {
     // Fool with the select bar
     var selectForm = get('#select');
     selectForm.addEventListener('change', function(e){
+        // Un-highlight the previously selected node
         if(get('[shown=true]')){
             var last = get('[shown=true]');
             last.style.fill = last.getAttribute('color');
             last.removeAttribute('shown');
         }
+        // Highlight the selected node
         var circle = document.getElementById(e.target.value);
         console.log(circle);
         circle.setAttribute('shown', true);

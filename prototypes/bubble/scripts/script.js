@@ -106,8 +106,6 @@
 
                 // Change the title
                 get('#school_state').innerHTML = e.target.innerHTML + ' Schools';
-                
-
             });
         });
 
@@ -119,7 +117,7 @@
         bubble.graph();
 
     });
-}())
+}());
 
 
 // Utility functions
