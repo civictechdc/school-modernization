@@ -23,7 +23,7 @@
             }(data))
         };
 
-        // To change the subdivides, SUBDIVIDES
+        // To change the subdivides, CATEGORY
         // District vs Charter, Grade Level, Ward, Feeder Pattern
         var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
         subdivides.forEach(function(item, e){

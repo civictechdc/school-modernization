@@ -47,7 +47,7 @@ text#tooltip_label {
 
 .sub_titles {
   font-weight: bold;
-  font-size: 12px; }
+  font-size: 14px; }
 
 #sideNavDiv {
   width: 100px;
@@ -59,6 +59,10 @@ text#tooltip_label {
     margin-left: 45%; }
     #sideNavDiv #sideNavUl .sideNavItem {
       padding-top: 35px; }
+
+.splitValue {
+  fill: #6f7f87;
+  font-size: 0.8em; }
 
 #tooltip {
   position: absolute;
@@ -145,10 +149,6 @@ text#tooltip_label {
   text-align: right;
   margin-top: -3px; }
 
-.splitValue {
-  fill: #6f7f87;
-  font-size: 1.2em; }
-
 .invalid {
   background-color: #e5e8e9;
   color: white;
@@ -172,5 +172,8 @@ text#tooltip_label {
 
 .show_state {
   line-height: 1.5em; }
+
+tspan {
+  background-color: red; }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,10 +1,12 @@
+'use strict';
+
 function Bubble(budget){ // data
     this.budget = budget;
     this.money = d3.format('$,.2f');
     this.commas = d3.format(',');
     this.column = null;
     this.data = null;
-    this.sizes = {width: 850, height: 500, padding: 100};
+    this.sizes = {width: 1050, height: 600, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.03; // -0.018
@@ -17,6 +19,7 @@ function Bubble(budget){ // data
     this.min = null;
     this.max = null;
     this.sum = null;
+    this.radius_scale = null;
 };
 
 Bubble.prototype.setColumn = function(column){
@@ -44,10 +47,11 @@ Bubble.prototype.create_nodes = function(){
     if(this.nodes.length){
         this.nodes = [];
     }
-    var that = this;
+    var that = this, min, max;
         this.max = max = d3.max(this.data, function(d){ return +d[that.budget]; }),
-        this.min = min = d3.min(this.data, function(d){ return +d[that.budget]; }),
-        radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]);
+        this.min = min = d3.min(this.data, function(d){ return +d[that.budget]; });
+    var radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]);
+    this.radius_scale = radius_scale;
 
     for(var i = 0, j = this.data.length; i < j; i++){
         var that = this,
@@ -261,49 +265,37 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     var text = this.svg.selectAll('text')
         .data(unique)
         .enter()
+        .append('g')
+        .attr('transform', function(d){
+            // console.log(unique);
+            return 'translate(' + (d.x * 1.4 - 200) + ',' + (d.y - 150) + ') rotate(-25)';
+        })
         .append('text')
         .attr('class', 'sub_titles')
-        // .attr('transform', function(d){
-        //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
-        // });
         ;
 
     // Add the label for the group
     text.append('tspan')
         .text(function(d, i){
-            if(d.name === undefined){
-                return 'All';
-            }
+            // if(d.name === undefined){
+            //     return 'All';
+            // }
+            console.log(d);
+            // if (d.name === ''){
+            //     return 'Ward ' + d.name;
+            // }
             return d.name;
         })
-        .attr('x', function(d,i){
-            return d.x * 1.5 - 250;
-        })
-        // .attr('transform', function(d){
-        //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
-        // })
-        .attr('y', function(d,i){
-            return d.y - 200;
-        });
 
     // Add the budget's sum for the group
     text.append('tspan')
         .attr('class', 'splitValue')
+        // .attr('dy', '15')
+        // .attr('dx', '-17')
+        .attr('dx', '10')
         .text(function(d,i){
             return that.money(itemSums[i]);
         })
-        .attr('x', function(d,i){
-            return d.x * 1.5 - 250;
-        })
-        // .attr('transform', function(d){
-        //     return 'translate(' + (d.x * 1.5 - 250) + ',0) rotate(-15)'
-        // })
-        .attr('y', function(d,i){
-            return d.y - 180;
-        })
-        // .attr('x', function(d,i){
-        //     return d.x - 200;
-        // })
         ;
 
     // Send the nodes the their corresponding point
@@ -320,7 +312,7 @@ Bubble.prototype.make_legend = function(){
     if(get('#legend_cont svg')){
         d3.select('#legend_cont svg').remove('svg');
     }
-    var numDynamic = [d3.round(max), d3.round(max/2), min+1, 0],
+    var numDynamic = [d3.round(this.max), d3.round(this.max/2), this.min+1, 0],
         multiplier = [1, 2.2, 2.85, 3.3];
     
     var legend = d3.select('#legend_cont')
@@ -337,7 +329,7 @@ Bubble.prototype.make_legend = function(){
             return d === 0 ? that.colorRange.low : that.colorRange.high;
         })
         .attr('r', function(d){
-            return radius_scale(d);
+            return that.radius_scale(d);
         })
         ;
     legend.selectAll('text')

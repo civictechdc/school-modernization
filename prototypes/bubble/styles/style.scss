@@ -88,7 +88,7 @@ text {
 
 .sub_titles {
   @include bold;
-  font-size: 12px;
+  font-size: 14px;
   // transform: rotate(-25deg);
 }
 
@@ -109,6 +109,11 @@ text {
       padding-top: 35px;
     }
   }
+}
+
+.splitValue {
+  fill: $lighterCerulean;
+  font-size: 0.8em;
 }
 
 // TOOLTIP
@@ -230,11 +235,6 @@ $menuW: 700px;
 }
 
 // MINUTIA
-.splitValue {
-  fill: $lighterCerulean;
-  font-size: 1.2em;
-}
-
 .invalid {
   background-color: #e5e8e9;
   color: white;
@@ -265,4 +265,8 @@ $menuW: 700px;
 
 .show_state {
    line-height: 1.5em;
+}
+
+tspan {
+  background-color: red;
 }
