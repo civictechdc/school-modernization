@@ -15,6 +15,12 @@ angular.module("PostModern", ['ngRoute'])
       .when('/legacy-of-inequities', {
           templateUrl: 'static/angular/views/legacy-of-inequities.html',
       })
+      .when('/bubble-chart', {
+        templateUrl: 'static/angular/views/under-construction.html'
+      })
+      .when('/school-map', {
+        templateUrl: 'static/angular/views/under-construction.html'
+      })
       .when('/appendix', {
           templateUrl: 'static/angular/views/appendix.html',
       })
