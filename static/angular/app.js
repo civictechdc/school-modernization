@@ -12,6 +12,9 @@ angular.module("PostModern", ['ngRoute'])
       .when("/current-state", {
           templateUrl: 'static/angular/views/current-state.html',
       })
+      .when('/legacy-of-inequities', {
+          templateUrl: 'static/angular/views/legacy-of-inequities.html',
+      })
       .when('/appendix', {
           templateUrl: 'static/angular/views/appendix.html',
       })
