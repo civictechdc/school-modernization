@@ -9,6 +9,9 @@ angular.module("PostModern", ['ngRoute'])
       .when("/dig-out", {
           templateUrl: 'static/angular/views/dig-out.html',
       })
+      .when("/current-state", {
+          templateUrl: 'static/angular/views/current-state.html',
+      })
       .when('/appendix', {
           templateUrl: 'static/angular/views/appendix.html',
       })
