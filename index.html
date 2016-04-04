@@ -4,44 +4,42 @@
         <title>Post Modern</title>
         <link rel="stylesheet" href="static/css/main.css"/>
         <link rel="stylesheet" href="static/css/story.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,700,300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
         <!-- <link rel="stylesheet" href="prototypes/filter-map/css/style.css"/> -->
         <script src="static/angular/lib/angular.js"></script>
         <script src="static/angular/lib/angular-route.js"></script>
     </head>
     <body>
-        <div class="global-wrap">
-            <!-- ======= ======= header ======= ======= =======-->
-            <div class="header row">
-                <h1 id="page-title">The Post Modernization Story</h1>
-            </div>
+        <!-- ======= ======= header ======= ======= =======-->
+        <div class="header">
+            <h1 id="page-title">The Post Modernization Story</h1>
+        </div>
 
-            <div class="content row">
-                <!-- ======= ======= narrative ======= ======= -->
-                <div class="column col-md-10">
-                <div id="narrative" ng-view ></div>
-            </div>
 
-            <!-- ======= ======= navigation ======= ======= =======-->
-            <div id="navigation" class="col-md-2" ng-controller="navCtrl">
-                <div class="wrap">
-                    <h3>Index</h3>
-                    <ul>
-                        <li><a href="#/intro">Introduction</a></li>
-                        <li class="index-item" ng-repeat="path in paths">
-                        <a href="#/story/{{ path.path }}" ng-click="callSetPath($index)">{{ path.text }}</a>
-                        </li>
-                        <li><a href="#/appendix">Appendix</a></li>
-                        <li><a href="#/about">About</a></li>
-                    </ul>
+        <div class="container-fluid">
+            <div class="row">
+
+              <!-- ======= ======= navigation ======= ======= =======-->
+                <div id="navigation" class="col-md-2 sidebar" ng-controller="navCtrl">
+                    <div class="wrap">
+                        <ul>
+                            <li><a href="#/intro">Introduction</a></li>
+                            <li class="index-item" ng-repeat="path in paths">
+                            <a href="#/story/{{ path.path }}" ng-click="callSetPath($index)">{{ path.text }}</a>
+                            </li>
+                            <li><a href="#/appendix">Appendix</a></li>
+                            <li><a href="#/about">About</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+                <!-- ======= ======= narrative ======= ======= -->
+                <div class="col-md-10 col-md-offset-2 content" id="narrative" ng-view></div>
 
-            </div>
-            <!-- ======= ======= footer ======= ======= =======-->
-            <div class="footer row">
-            <p id="footer"><small>das foot</small></p>
             </div>
         </div>
+
+    
 
         <script src="static/angular/app.js"></script>
 

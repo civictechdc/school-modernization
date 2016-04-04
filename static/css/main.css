@@ -1,11 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* ======= general ======= */
 body {
     /*font-family:"Ariel", sans-serif;*/
-    font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Averia Sans Libre', cursive;
+    position: relative;
 }
-div.global-wrap {
-    width: 970px;
-    margin: 0 auto;
+
+a {
+    text-decoration: none;
+    color: #000;
 }
 
 /* ======= rows columns ======= */
@@ -39,13 +47,25 @@ div.global-wrap {
 
 /* ======= navigation ======= */
 #navigation {
-    float: right;
+    float: left;
 }
 #navigation .wrap {
     padding-left: 20px;
 }
 #navigation ul {
-    padding-left: 30px;
+    padding-left: 20px;
+    list-style-type: none;
+    margin-left: -20px;
+}
+
+#navigation a {
+    text-transform: uppercase;
+}
+
+#narrative {
+    font-family: 'Open Sans', sans-serif;
+    margin-left: 16.66%;
+    margin-top: 20px;
 }
 
 #narrative div.words {
@@ -144,4 +164,71 @@ path {
 /* ======= timeline ======= */
 .storyName {
     display: block;
+}
+
+/* ---- Header Styles ----- */
+
+html, body, .container-fluid, .row {
+    height: 100%;
+}
+
+.header {
+    color: #e1e1e1;
+    background-color: #021C2A;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ---- Nav Styles ----- */
+
+#navigation {
+    height: 100vh;
+    background-color: #d1d8e1;
+    color: #e1e1e1;
+    height: 100%;
+    margin-right: 20px;
+    padding: 1.5%;
+}
+
+#navigation li {
+    margin-top: 20px;
+}
+
+/* ---- Intro Styles ----- */
+
+.logo-row {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logo, .csf-logo {
+    display: inline-block;
+}
+
+img.logo-img {
+    width: 70%;
+}
+
+/* ---- Appendix Styles ----- */
+
+.appendix-container {
+    width: 44%;
+    display: inline-block;
+    margin-top: 20px;
+    vertical-align: top;
+    padding-left: 20px;
+}
+
+.sources-list {
+    padding-left: 35px;
+}
+
+/* ---- About Styles ----- */
+
+.logo-about {
+    max-width: 90%;
+}
+
+.about-csf, .about-cfdc {
+    overflow: auto;
 }

@@ -8,13 +8,13 @@ angular.module("PostModern", ['ngRoute'])
           templateUrl: 'static/angular/story.html',
       })
       .when("/intro", {
-          templateUrl: 'static/angular/intro.html',
+          templateUrl: 'static/angular/views/intro.html',
       })
       .when('/appendix', {
-          templateUrl: 'static/angular/appendix.html',
+          templateUrl: 'static/angular/views/appendix.html',
       })
       .when('/about', {
-          templateUrl: 'static/angular/about.html',
+          templateUrl: 'static/angular/views/about.html',
       })
       .otherwise('/intro')
   }])
