@@ -61,7 +61,8 @@ text#tooltip_label {
 
 .splitValue {
   fill: #6f7f87;
-  font-size: 0.8em; }
+  font-size: 0.8em;
+  letter-spacing: 0.75px; }
 
 #tooltip {
   position: absolute;
