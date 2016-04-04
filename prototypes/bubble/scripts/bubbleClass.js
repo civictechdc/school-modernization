@@ -347,7 +347,6 @@ Bubble.prototype.make_legend = function(){
         .append('svg')
         .attr('class', 'legendSvg')
         .attr('width','244').attr('height', '85');
-    // Circles
     schoolLegend.selectAll('circle')
         .data(schools)
         .enter()
@@ -364,14 +363,14 @@ Bubble.prototype.make_legend = function(){
             return 'orange';
         })
         ;
-    // Text
+
     schoolLegend.selectAll('text')
         .data(schools)
         .enter()
         .append('text')
         .attr('x', 95)
         .attr('y', function(d,i){
-            return 30 + (i * 30);
+            return 28 + (i * 30);
         })
         .text(function(d,i){
             return schools[i];
