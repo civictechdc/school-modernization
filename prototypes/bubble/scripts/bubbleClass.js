@@ -267,7 +267,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .enter()
         .append('g')
         .attr('transform', function(d){
-            // console.log(unique);
             return 'translate(' + (d.x * 1.4 - 200) + ',' + (d.y - 150) + ') rotate(-25)';
         })
         .append('text')
@@ -277,21 +276,12 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Add the label for the group
     text.append('tspan')
         .text(function(d, i){
-            // if(d.name === undefined){
-            //     return 'All';
-            // }
-            console.log(d);
-            // if (d.name === ''){
-            //     return 'Ward ' + d.name;
-            // }
             return d.name;
         })
 
     // Add the budget's sum for the group
     text.append('tspan')
         .attr('class', 'splitValue')
-        // .attr('dy', '15')
-        // .attr('dx', '-17')
         .attr('dx', '10')
         .text(function(d,i){
             return that.money(itemSums[i]);
@@ -308,14 +298,21 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 Bubble.prototype.make_legend = function(){
     var that = this;
     
-    if(get('#legend_cont svg')){
-        d3.select('#legend_cont svg').remove('svg');
+    if(get('.legendSvg')){
+        // d3.select('#legend_cont.legendSvg').remove('svg');
+        // var list = d3.select('.legendSvg');
+        var list = getAll('.legendSvg');
+        for (var i = list.length - 1; i >= 0; i--) {
+            d3.select(list[i]).remove();
+        }
     }
-    var numDynamic = [d3.round(this.max), d3.round(this.max/2), this.min+1, 0],
+    var numDynamic = [d3.round(this.max), d3.round(this.max/2), 0],
         multiplier = [1, 2.2, 2.85, 3.3];
     
     var legend = d3.select('#legend_cont')
-        .append('svg').attr('width','244').attr('height', '200');
+        .append('svg')
+        .attr('class', 'legendSvg')
+        .attr('width','244').attr('height', '160');
     legend.selectAll('circle')
         .data(numDynamic)
         .enter()
@@ -341,6 +338,41 @@ Bubble.prototype.make_legend = function(){
         })
         .text(function(d){
             return that.money(d);
+        })
+        ;
+
+    // District vs Charter Legend
+    var schools = ['District Schools', 'Charter Schools'];
+    var schoolLegend = d3.select('#legend_cont')
+        .append('svg')
+        .attr('class', 'legendSvg')
+        .attr('width','244').attr('height', '85');
+    schoolLegend.selectAll('circle')
+        .data(schools)
+        .enter()
+        .append('circle')
+        .attr('cx', 40)
+        .attr('cy', function(d,i){
+            return 25 + (i * 30);
+        })
+        .attr('r', 10)
+        .style('fill', function(d,i){
+            if(i === 0){
+                return '#7AA25C';
+            }
+            return 'orange';
+        })
+        ;
+    schoolLegend.selectAll('text')
+        .data(schools)
+        .enter()
+        .append('text')
+        .attr('x', 95)
+        .attr('y', function(d,i){
+            return 28 + (i * 30);
+        })
+        .text(function(d,i){
+            return schools[i];
         })
         ;
 };
