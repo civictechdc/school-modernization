@@ -3,12 +3,11 @@
 angular.module("PostModern", ['ngRoute'])
   .config(["$routeProvider", function($routeProvider, navService) {
       console.log("ang:routeProvider");
-      $routeProvider.when("/story/:name", {
-          controller: 'storyCtrl',
-          templateUrl: 'static/angular/story.html',
-      })
-      .when("/intro", {
+      $routeProvider.when("/intro", {
           templateUrl: 'static/angular/views/intro.html',
+      })
+      .when("/dig-out", {
+          templateUrl: 'static/angular/views/dig-out.html',
       })
       .when('/appendix', {
           templateUrl: 'static/angular/views/appendix.html',
@@ -18,28 +17,7 @@ angular.module("PostModern", ['ngRoute'])
       })
       .otherwise('/intro')
   }])
-  .controller('storyCtrl', function($scope, navService, storyService, mapService) {
-    console.log("ang:storyCtrl");
-    var navObj = navService.GetPath();
-    var story = storyService[navObj.path];
-    var templatePath = 'static/angular/' + navObj.path;
-    $scope.story = story
-    $scope.storyName = navObj.path;
-    $scope.belowFold = templatePath + '.html';
-    if (story.includeTop) {
-      $scope.includeTop = story.includeTop;
-      $scope.titlePara = templatePath + '-top.html';
-    }
-
-    story.mapDisplay(mapService);
-  })
-  .controller('navCtrl', function($scope, navService) {
-    console.log("ang:navCtrl");
-    $scope.paths = navService.GetPaths()
-    $scope.callSetPath = function(idx) {
-      navService.SetPath(idx);
-    }
-  })
+  
   .factory('mapService', function() {
     console.log("ang:mapService");
     var filterSelector = initApp("storyMap");

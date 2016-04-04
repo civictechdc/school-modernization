@@ -21,13 +21,11 @@
             <div class="row">
 
               <!-- ======= ======= navigation ======= ======= =======-->
-                <div id="navigation" class="col-md-2 sidebar" ng-controller="navCtrl">
+                <div id="navigation" class="col-md-2 sidebar">
                     <div class="wrap">
                         <ul>
                             <li><a href="#/intro">Introduction</a></li>
-                            <li class="index-item" ng-repeat="path in paths">
-                            <a href="#/story/{{ path.path }}" ng-click="callSetPath($index)">{{ path.text }}</a>
-                            </li>
+                            <li><a href="#/dig-out">Digging Out</a></li>
                             <li><a href="#/appendix">Appendix</a></li>
                             <li><a href="#/about">About</a></li>
                         </ul>
