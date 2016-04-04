@@ -6,7 +6,7 @@ function Bubble(budget){ // data
     this.commas = d3.format(',');
     this.column = null;
     this.data = null;
-    this.sizes = {width: 1050, height: 600, padding: 100};
+    this.sizes = {width: 1050, height: 570, padding: 100};
     this.force = null;
     this.circles = null;
     this.force_gravity = -0.03; // -0.018
@@ -245,7 +245,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         padding = this.sizes.padding;
     for (var i in unique){
         // Make the grid here
-        unique[i].x = (i * width / unique.length) * 0.55 + 250; // + 250; //+ 500; // * alpha
+        unique[i].x = (i * width / unique.length) * 0.50 + 250; // + 250; //+ 500; // * alpha
         unique[i].y = this.center.y; // * alpha
     }
 
@@ -347,6 +347,7 @@ Bubble.prototype.make_legend = function(){
         .append('svg')
         .attr('class', 'legendSvg')
         .attr('width','244').attr('height', '85');
+    // Circles
     schoolLegend.selectAll('circle')
         .data(schools)
         .enter()
@@ -363,13 +364,14 @@ Bubble.prototype.make_legend = function(){
             return 'orange';
         })
         ;
+    // Text
     schoolLegend.selectAll('text')
         .data(schools)
         .enter()
         .append('text')
         .attr('x', 95)
         .attr('y', function(d,i){
-            return 28 + (i * 30);
+            return 30 + (i * 30);
         })
         .text(function(d,i){
             return schools[i];

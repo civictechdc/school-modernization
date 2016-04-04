@@ -217,8 +217,9 @@ $menuW: 700px;
   border-radius: 3px;
 
   &:hover {
-    color: $cerulean;
-    background-color: lighten($cerulean, 10%);
+    color: white;
+    background-color: lighten($cerulean, 30%);
+
   }
 }
 

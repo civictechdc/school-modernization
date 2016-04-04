@@ -139,8 +139,8 @@ text#tooltip_label {
   color: #021c2a;
   border-radius: 3px; }
   .rowBehavior:hover {
-    color: #021c2a;
-    background-color: #043c5b; }
+    color: white;
+    background-color: #097dbc; }
 
 .title {
   font-weight: bold;
