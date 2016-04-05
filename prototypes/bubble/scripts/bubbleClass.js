@@ -312,6 +312,7 @@ Bubble.prototype.make_legend = function(){
     var legend = d3.select('#legend_cont')
         .append('svg')
         .attr('class', 'legendSvg')
+        .attr('id', 'radiusLegend')
         .attr('width','244').attr('height', '160');
     legend.selectAll('circle')
         .data(numDynamic)
@@ -334,7 +335,7 @@ Bubble.prototype.make_legend = function(){
         .append('text')
         .attr('x', 95)
         .attr('y', function(d,i){
-            return 50 * multiplier[i] + 5   ;
+            return 49 * multiplier[i] + 5   ;
         })
         .text(function(d){
             return that.money(d);
@@ -346,6 +347,7 @@ Bubble.prototype.make_legend = function(){
     var schoolLegend = d3.select('#legend_cont')
         .append('svg')
         .attr('class', 'legendSvg')
+        .attr('id', 'schoolLegend')
         .attr('width','244').attr('height', '85');
     schoolLegend.selectAll('circle')
         .data(schools)
@@ -370,7 +372,7 @@ Bubble.prototype.make_legend = function(){
         .append('text')
         .attr('x', 95)
         .attr('y', function(d,i){
-            return 28 + (i * 30);
+            return 30 + (i * 30);
         })
         .text(function(d,i){
             return schools[i];
