@@ -104,7 +104,7 @@
                 makeSelected(e);
 
                 // Change the title
-                get('#school_state').innerHTML = e.target.innerHTML + ' Schools';
+                get('#school_state').innerHTML = e.target.innerHTML;
             });
         });
 
