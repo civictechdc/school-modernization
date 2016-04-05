@@ -1,7 +1,7 @@
 "use strict";
 
 var width = 900,
-   height = 500,
+   height = 600,
    padding = 15,
    svgWidth = (width / 2) - padding,
    tooltipPadding = 40,
@@ -19,15 +19,30 @@ var bubble = d3.layout.pack()
 
 // Make the AJAX requests, the run the graphs
 d3.json('scripts/public.json', function(d){
-  graph(svg_left, d);
+  graph(svg_left, d, 'District Schools');
 });
 
 d3.json('scripts/charter.json', function(d){
-  graph(svg_right, d);
+  graph(svg_right, d, 'Charter Schools');
 });
 
 // Reusable function to make the graphs
-function graph(where, data){
+function graph(where, data, title){
+
+  d3.select(where[0][0])
+    .append('text')
+    // .text(title)
+    .attr('y', 20)
+    .attr('x', 150)
+    .append('tspan')
+    .text(title)
+    .append('tspan')
+    .attr('class', 'subtitle')
+    .attr('dy', '25')
+    .attr('dx', '-100')
+    .text('Future Spending')
+    ;
+
   var node = where.selectAll(".node")
     .data(bubble.nodes(data))
     // .filter(function(info) { return !info.children; })
@@ -51,21 +66,21 @@ function graph(where, data){
   d3.select('#circle_0').remove();
 
   // Add tooltips
-  node.on('mouseenter', function(d){  
-    document.querySelector('#tooltip').classList.remove('hidden'); 
-    d3.select('#tooltip')
-      .style('left', function(){ 
-        if(d.agency === 'PCS'){
-          return (d.x + tooltipPadding + svgWidth) + 'px'; 
-        }
-        return (d.x + tooltipPadding) + 'px';})
-      .style('top', function(){ return (d.y - tooltipPadding) + 'px';})
-      .select('#School')
-      .text('School: ' + d.name);
+  // node.on('mouseenter', function(d){  
+  //   document.querySelector('#tooltip').classList.remove('hidden'); 
+  //   d3.select('#tooltip')
+  //     .style('left', function(){ 
+  //       if(d.agency === 'PCS'){
+  //         return (d.x + tooltipPadding + svgWidth) + 'px'; 
+  //       }
+  //       return (d.x + tooltipPadding) + 'px';})
+  //     .style('top', function(){ return (d.y - tooltipPadding) + 'px';})
+  //     .select('#School')
+  //     .text('School: ' + d.name);
 
-    d3.select('#Amount')
-      .text('Amount: ' + money(d.value));
-  });
+  //   d3.select('#Amount')
+  //     .text('Amount: ' + money(d.value));
+  // });
 }
 
 // Utility Functions

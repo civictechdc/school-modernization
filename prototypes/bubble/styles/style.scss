@@ -5,6 +5,7 @@ $grey: #d1d8e1;
 $lighterCerulean: #6f7f87;
 $red: #4a445d;
 $headerHeight: 75px;
+$border_radius: 4px;
 @mixin bold {
   font-weight: bold;
 }
@@ -32,10 +33,11 @@ a {
 
 button {
   border-radius: 15px;
+  -webkit-border-radius: 15px;
 }
 
 .container {
-   width: 75%;
+   width: 80%;
    margin: 0px auto;
    // margin-left: 10%;
    // margin-top: 15%;
@@ -45,18 +47,22 @@ button {
   position: fixed;
 }
 
+#chart {
+  margin-top: 10px;
+  margin-left: -10px;
+}
+
 // GRAPH SPECIFIC
 // Header
 header {
   background-color: $cerulean;
   // height: 15%;
-  height: $headerHeight;
   width: 100%;
   // margin-bottom: 35px;
 
   h1 {
     color: white;
-    padding: 17px 0px;
+    padding: 20px 0px;
   }
 }
 
@@ -121,6 +127,7 @@ text {
    padding: 10px;
    background-color: $cerulean;
    border-radius: 5px;
+   -webkit-border-radius: 5px;
    border: 3px solid darken($cerulean , 10%);
    
    p {
@@ -156,6 +163,12 @@ text {
 
     svg {
       border: 3px solid $cerulean;
+      border-radius: $border_radius;
+      -webkit-border-radius: $border_radius;
+    }
+    #radiusLegend {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
     }
   }
 
@@ -167,15 +180,26 @@ text {
   background-color: $cerulean;
   color: #fff;
   text-align: center;
+  border-top-left-radius: $border_radius;
+  border-top-right-radius: $border_radius;
+}
+
+
+
+#schoolLegend {
+
 }
 
 // MENU
 #statusBar {
   padding-left: 25px;
+  margin-top: 20px;
 }
 
 $menuW: 700px;
 #menuInner {
+  border-radius: $border_radius;
+  -webkit-border-radius: $border_radius;
   padding: 5px;
   border: 3px solid $cerulean;
   background-color: #FFF;
@@ -183,6 +207,7 @@ $menuW: 700px;
 }
 .menuDiv {
   border-radius: 5px;
+  -webkit-border-radius: 5px;
   margin-top: 15px;
   background-color: $cerulean;
   width: $menuW;
@@ -215,6 +240,7 @@ $menuW: 700px;
   background-color: #d1d8e1;
   color: $cerulean;
   border-radius: 3px;
+  -webkit-border-radius: 3px;
 
   &:hover {
     color: white;
@@ -229,10 +255,13 @@ $menuW: 700px;
   width: 100px;
   color: $cerulean;
   text-align: right;
-  margin-top: -3px;
+  margin-top: 0px;
 }
 
 // MINUTIA
+.nowViewing {
+  font-size: 1.1em;
+}
 .invalid {
   background-color: #e5e8e9;
   color: white;

@@ -113,6 +113,7 @@
         get('#LifetimeBudget').classList.add('selected');
         get('#both').classList.add('selected');
         bubble.setData(schools.both);
+        bubble.setColumn('Agency');
         bubble.graph();
 
     });
