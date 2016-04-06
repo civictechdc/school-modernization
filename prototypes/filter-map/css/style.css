@@ -106,7 +106,8 @@ filter: #E7ECF2 (active)
 #chart-container {
     position: absolute;
     width: 360px;
-    top: 380px;
+    top: 400px;
+    left: 0 !important;
     border-collapse: collapse;
     border-spacing: 0;
     /*border-radius: 6px 6px 2px 2px;*/
