@@ -233,7 +233,13 @@ img.logo-img {
     overflow: auto;
 }
 
-/* ---- Digging Out Styles ----- */
+/* ---- Map Styles ----- */
+
+iframe {
+    width: 90%;
+    height: 1200px;
+    border: none;
+}
 
 .img-bc {
     max-width: 90%;

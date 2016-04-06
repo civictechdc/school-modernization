@@ -19,7 +19,7 @@ angular.module("PostModern", ['ngRoute'])
         templateUrl: 'static/angular/views/under-construction.html'
       })
       .when('/school-map', {
-        templateUrl: 'static/angular/views/under-construction.html'
+        templateUrl: 'static/angular/views/map.html'
       })
       .when('/appendix', {
           templateUrl: 'static/angular/views/appendix.html',

@@ -107,7 +107,6 @@ filter: #E7ECF2 (active)
     position: absolute;
     width: 360px;
     top: 380px;
-    left: 100px;
     border-collapse: collapse;
     border-spacing: 0;
     /*border-radius: 6px 6px 2px 2px;*/
@@ -282,7 +281,7 @@ td {
 #legend {
     position: absolute;
     font-family: "Times", serif;
-    left: 500px;
+    left: 400px;
     top: 500px;
     background-color: white;
     border: solid black 1px;
