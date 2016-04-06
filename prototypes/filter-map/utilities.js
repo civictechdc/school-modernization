@@ -122,8 +122,6 @@ function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
 // ======= ======= ======= setMenuState ======= ======= =======
 function setMenuState(displayObj, whichMenu, whichStates) {
     console.log("setMenuState");
-    console.log("  whichMenu: ", whichMenu);
-    console.log("  whichStates: ", whichStates);
 
     var nextState, nextFilter, nextFilterText, nextElement, checkIndex, selectedFilterText;
 
@@ -180,7 +178,6 @@ function setMenuState(displayObj, whichMenu, whichStates) {
             // }
             selectedFilterText = nextFilterText;
             displayObj.filterTitlesObject[whichMenu[0]] = selectedFilterText;
-            console.log("  selectedFilterText: ", selectedFilterText);
             $(nextElement).removeClass("deactivated");
             $(nextElement).addClass("active");
             $(nextElement).addClass("selected");
@@ -192,9 +189,6 @@ function setMenuState(displayObj, whichMenu, whichStates) {
 // ======= ======= ======= updateFilterSelections ======= ======= =======
 function updateFilterSelections(displayObj, whichMenu, filterText) {
     console.log("updateFilterSelections");
-    console.log("  filterText: ", filterText);
-    console.log("  displayObj.filterTitlesObject: ", displayObj.filterTitlesObject);
-    console.log("  displayObj.filterTitlesObject: ", displayObj.filterTitlesObject);
 
     var selectedFilterContainer = $("#filters-selections").children("h2");
     var nextFilter, checkNextFilter;
@@ -214,7 +208,6 @@ function updateFilterSelections(displayObj, whichMenu, filterText) {
     if (displayObj.filterTitlesObject.zones) {
         selectedFilterText += " by " + displayObj.filterTitlesObject.zones;
     }
-    console.log("  selectedFilterText: ", selectedFilterText);
 
     $(selectedFilterContainer).addClass("filterList");
     $(selectedFilterContainer).html(selectedFilterText);
@@ -285,14 +278,20 @@ function getZoneIndex(zonesCollectionObj, displayObj, schoolData) {
 }
 
 // ======= ======= ======= makeZoneAggregator ======= ======= =======
-function makeZoneAggregator(zonesCollectionObj, whichGeojson) {
+function makeZoneAggregator(zonesCollectionObj, displayObj, whichGeojson) {
     console.log("makeZoneAggregator");
 
     zonesCollectionObj.aggregatorArray = [];
     if (whichGeojson) {
-        var nextZoneName, splitZoneName, nextZoneObject;
+        var nextZoneName, splitZoneName, nextZoneObject, nextGIS_ID, startCode, nextZoneCode;
         for (var i = 0; i < whichGeojson.features.length; i++) {
             nextZoneName = whichGeojson.features[i].properties.NAME;
+            // if (displayObj.dataFilters.zones != "Ward") {
+            //     nextGIS_ID = whichGeojson.features[i].properties.GIS_ID;
+            //     startCode = nextGIS_ID.indexOf("_");
+            //     nextZoneCode = nextGIS_ID.substring(startCode + 1);
+            //     console.log("  nextZoneCode: ", nextZoneCode);
+            // }
             nextZoneObject = { zoneIndex:i, zoneName:nextZoneName, schoolCount:0, zoneAmount:0, zoneSqft:0, zoneEnroll:0, amountMin:0, amountMax:0, amountAvg:0, amountMed:0 }
             zonesCollectionObj.aggregatorArray.push(nextZoneObject);
         }
@@ -357,10 +356,10 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
             if (nextSchoolExpend >= 0) {
                 if (validExpendFlag == true) {
                     zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount++;
+                    currentAmount = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount;
+                    aggregatedAmount = currentAmount + nextSchoolExpend;
+                    zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount = aggregatedAmount;
                 }
-                currentAmount = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount;
-                aggregatedAmount = currentAmount + nextSchoolExpend;
-                zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount = aggregatedAmount;
 
                 // ======= record max =======
                 if (nextSchoolExpend > zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax) {

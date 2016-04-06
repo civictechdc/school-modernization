@@ -26,6 +26,7 @@ function initApp(presetMode) {
         filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"District and Charter Schools", column:"Agency", value:"Both" };
 
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
+        filterMenu.EMH = { id:"EMH", category:"schools", label:"All Levels", text:"All Grade Levels", column:"Level", value:"EMH" };
         filterMenu.Elem = { id:"Elem", category:"schools", label:"Elementary Schools", text:"Elementary Schools", column:"Level", value:"ES" };
         filterMenu.Middle = { id:"Middle", category:"schools", label:"Middle Schools", text:"Middle Schools", column:"Level", value:"MS" };
         filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools", column:"Level", value:"HS" };
@@ -680,10 +681,11 @@ r
         }).done(function(geoJsonData, featureArray){
             console.log("*** ajax success ***");
             self.zoneGeojson_A = geoJsonData;
+            console.dir(geoJsonData);
 
             // == aggregate for urlA zones
             if (self.aggregatorArray.length == 0) {
-                makeZoneAggregator(self, self.zoneGeojson_A);
+                makeZoneAggregator(self, displayObj, self.zoneGeojson_A);
             }
 
             // == get secondary map data for urlB
@@ -895,7 +897,25 @@ r
 
         // == check levels match
         if (displayObj.dataFilters.levels) {
-            var levelsMatch = (displayObj.dataFilters.levels == schoolLevel) ? true : false;
+            if (displayObj.dataFilters.levels == "HS") {
+                levelFilter = ["HS", "ADULT", "MS/HS", "ALT"];
+                var checkLevel = levelFilter.indexOf(schoolLevel);
+                if (checkLevel > -1) {
+                    var levelsMatch = true;
+                }
+            } else if (displayObj.dataFilters.levels == "MS") {
+                levelFilter = ["MS", "SPED"];
+                var checkLevel = levelFilter.indexOf(schoolLevel);
+                if (checkLevel > -1) {
+                    var levelsMatch = true;
+                }
+            } else if (displayObj.dataFilters.levels == "ES") {
+                levelFilter = ["ES", "ES/MS", "PK3-K"];
+                var checkLevel = levelFilter.indexOf(schoolLevel);
+                if (checkLevel > -1) {
+                    var levelsMatch = true;
+                }
+            }
         } else {
             var levelsMatch = true;
         }
