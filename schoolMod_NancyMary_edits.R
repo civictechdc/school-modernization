@@ -1,4 +1,3 @@
-### Lifetime budget - for DCPS as reported, for Charters past FA+future FA ###
 library(stringr)
 library(plyr)
 library(gtools)
