@@ -3,14 +3,17 @@
 $cerulean: #021c2a;
 $grey: #d1d8e1;
 $lighterCerulean: #6f7f87;
-$red: #ff3233;
+$red: #4a445d;
 $headerHeight: 75px;
+$border_radius: 4px;
 @mixin bold {
   font-weight: bold;
 }
 
 // GLOBALS
 * {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
   font-family: 'Averia Serif Libre', cursive;
   margin: 0;
   padding: 0;
@@ -28,6 +31,11 @@ a {
   }
 }
 
+button {
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+}
+
 .container {
    width: 80%;
    margin: 0px auto;
@@ -39,18 +47,22 @@ a {
   position: fixed;
 }
 
+#chart {
+  margin-top: 10px;
+  margin-left: -10px;
+}
+
 // GRAPH SPECIFIC
 // Header
 header {
   background-color: $cerulean;
   // height: 15%;
-  height: $headerHeight;
   width: 100%;
   // margin-bottom: 35px;
 
   h1 {
     color: white;
-    padding: 17px 0px;
+    padding: 20px 0px;
   }
 }
 
@@ -80,17 +92,16 @@ text {
 
 .sub_titles {
   @include bold;
-  font-size: 12px;
+  font-size: 14px;
   // transform: rotate(-25deg);
 }
 
 // SIDE NAVIGATION
 #sideNavDiv {
   width: 100px;
-  height: 100%;
+  height: 900px;
   position: absolute;
   background-color: $grey;
-  top: $headerHeight;
   color: $grey;
 
   #sideNavUl {
@@ -102,6 +113,12 @@ text {
   }
 }
 
+.splitValue {
+  fill: $lighterCerulean;
+  font-size: 0.8em;
+  letter-spacing: 0.75px;
+}
+
 // TOOLTIP
 #tooltip {
    position: absolute;
@@ -110,6 +127,7 @@ text {
    padding: 10px;
    background-color: $cerulean;
    border-radius: 5px;
+   -webkit-border-radius: 5px;
    border: 3px solid darken($cerulean , 10%);
    
    p {
@@ -132,20 +150,29 @@ text {
 
 // LEGEND
 #legend {
-  height: 250px;
+  height: 200px;
   width: 250px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   position: absolute;
-  right: 5%;
-  top: 100px;
-  border: 3px solid $cerulean;
+  right: 7%;
+  top: 90px;
 
   #legend_cont {
     position: absolute;
     background-color: #fff;
     height: 250 px;
+
+    svg {
+      border: 3px solid $cerulean;
+      border-radius: $border_radius;
+      -webkit-border-radius: $border_radius;
+    }
+    #radiusLegend {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
   }
+
+
 }
 
 .modHeader {
@@ -153,21 +180,35 @@ text {
   background-color: $cerulean;
   color: #fff;
   text-align: center;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: $border_radius;
+  border-top-right-radius: $border_radius;
+}
+
+
+
+#schoolLegend {
+
 }
 
 // MENU
-$menuW: 450px;
+#statusBar {
+  padding-left: 25px;
+  margin-top: 20px;
+}
+
+$menuW: 700px;
 #menuInner {
+  border-radius: $border_radius;
+  -webkit-border-radius: $border_radius;
   padding: 5px;
   border: 3px solid $cerulean;
   background-color: #FFF;
   
 }
-#menuDiv {
+.menuDiv {
   border-radius: 5px;
-  margin-top: 30px;
+  -webkit-border-radius: 5px;
+  margin-top: 15px;
   background-color: $cerulean;
   width: $menuW;
   
@@ -177,57 +218,67 @@ $menuW: 450px;
 }
 
 #select {
-  margin: 5px 20px;
   color: #fff;
+  font-size: 16px;
+  border: 0;
   background-color: $cerulean;
   option {
     color: #fff;
+
   }
 }
 
 .row {
+  padding: 5px 8px;
   vertical-align: top;
   display: inline-block;
-  width: ($menuW / 9) - 5;
-  height: 17px;
-  padding-right: 5px;
   font-size: 12px;
-  // vertical-align: middle;
-  padding: 5px;
 }
 
 .rowBehavior {
-  vertical-align: bottom;
-  text-align: center;
-  font-size: 9px;
   cursor: pointer;
-  background-color: $cerulean;
-  color: #fff;
+  background-color: #d1d8e1;
+  color: $cerulean;
   border-radius: 3px;
+  -webkit-border-radius: 3px;
 
   &:hover {
-    color: #fff;
-    background-color: lighten($cerulean, 10%);
+    color: white;
+    background-color: lighten($cerulean, 30%);
+
   }
 }
 
 .title {
   @extend .row;
   @include bold;
+  width: 100px;
   color: $cerulean;
   text-align: right;
+  margin-top: 0px;
 }
 
 // MINUTIA
+.nowViewing {
+  font-size: 1.1em;
+}
+.invalid {
+  background-color: #e5e8e9;
+  color: white;
+  pointer-events: none;
+}
+
 .color {
    fill: 'grey';
 }
-.inactive {
-  background-color: gray;
+
+.bold {
+  font-weight: 700;
 }
 
 .selected {
-  background-color: lighten($cerulean, 20%);
+  // background-color: lighten($cerulean, 20%);
+  background-color: $cerulean;
   color: #fff;
 }
 
@@ -241,4 +292,8 @@ $menuW: 450px;
 
 .show_state {
    line-height: 1.5em;
+}
+
+tspan {
+  background-color: red;
 }
