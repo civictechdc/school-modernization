@@ -89,7 +89,7 @@
             });
         });
 
-        // To change the bubble radii, SCHOOL SET
+        // To change the data set, SCHOOL SET
         // District Schools, Charter Schools, All Schools
         var schoolChange = Array.prototype.slice.call(getAll('.school'));
         schoolChange.forEach(function(item, e){
