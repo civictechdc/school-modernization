@@ -19,7 +19,7 @@ button {
 
 .container {
   width: 90%;
-  margin: 0px auto; }
+  margin: 0px -1px; }
 
 .nav {
   position: fixed; }
@@ -91,9 +91,9 @@ text#tooltip_label {
 
 #legend {
   height: 200px;
-  width: 250px;
+  width: 200px;
   position: absolute;
-  right: 17%;
+  right: -3%;
   top: 15px; }
   #legend #legend_cont {
     position: absolute;
