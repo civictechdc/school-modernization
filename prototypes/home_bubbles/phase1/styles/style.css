@@ -12,6 +12,12 @@ circle {
 .hidden {
   display: none; }
 
+#chart {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 #tooltip {
   position: absolute;
   width: 250px;
