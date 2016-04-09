@@ -20,6 +20,9 @@ function Bubble(budget){ // data
     this.max = null;
     this.sum = null;
     this.radius_scale = null;
+    this.round = function(x){
+        return this.money(d3.round(x, 0));
+    };
 };
 
 Bubble.prototype.setColumn = function(column){
@@ -154,15 +157,21 @@ Bubble.prototype.add_tootltips = function(d){
 
         // Total Spent
         if(d[that.budget]){
-            d3.select('#majorexp').text('Total Spent: ' + that.money(d[that.budget]));
+            d3.select('#majorexp').text('Total Spent: ' + that.round(d[that.budget]));
         } else {
             d3.select('#majorexp').text('');
         }
         // Spent per SQ FT
-        d3.select('#spent_sqft').text('Spent per Sq.Ft.: ' + that.money(d.SpentPerSqFt) + '/sq. ft.');
+        var test = that.round(d.SpentPerSqFt, 0);
+        d3.select('#spent_sqft').text(function(d){
+            if (test === '' || test === 'NA') {
+                return 'Spent per Sq Ft: Not Available';
+            }
+            return 'Spent per Sq.Ft.: ' + test + '/sq. ft.';
+        });
 
         // Spent per Maximum Occupancy
-        d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.money(d.SpentPerMaxOccupancy));
+        d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.round(d.SpentPerMaxOccupancy));
         if(d.FeederHS && d.FeederHS !== "NA"){ 
             d3.select('#hs').text('High School: ' + camel(d.FeederHS));
         } else {
@@ -284,7 +293,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('class', 'splitValue')
         .attr('dx', '10')
         .text(function(d,i){
-            return that.money(itemSums[i]);
+            return that.round(itemSums[i]);
         })
         ;
 
@@ -338,7 +347,7 @@ Bubble.prototype.make_legend = function(){
             return 49 * multiplier[i] + 5   ;
         })
         .text(function(d){
-            return that.money(d);
+            return that.round(d);
         })
         ;
 
