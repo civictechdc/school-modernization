@@ -9,8 +9,8 @@ angular.module("PostModern", ['ngRoute'])
       .when("/dig-out", {
           templateUrl: 'static/angular/views/dig-out.html',
       })
-      .when("/current-state", {
-          templateUrl: 'static/angular/views/current-state.html',
+      .when("/progress", {
+          templateUrl: 'static/angular/views/progress.html',
       })
       .when('/legacy-of-inequities', {
           templateUrl: 'static/angular/views/legacy-of-inequities.html',

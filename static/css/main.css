@@ -253,4 +253,38 @@ iframe {
     max-width: 90%;
 }
 
-/* ---- Current State Styles ----- */
+/* ---- Progress Styles ----- */
+
+.bold {
+    font-weight: bold;
+}
+
+.med-blue-bg {
+    background-color: #5B9BD5;
+    font-weight: bold;
+}
+
+.light-blue-bg {
+    background-color: #D0DEEF;
+}
+
+th, td {
+    padding: 2px 5px;
+}
+
+.lightest-blue-bg {
+    background-color: #E9EFF7;
+}
+
+.white-text {
+    color: #fff;
+}
+
+.red-text {
+    color: red;
+}
+
+#school-table {
+    font-size: 13px;
+    text-align: center;
+}
