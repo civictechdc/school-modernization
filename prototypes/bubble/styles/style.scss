@@ -37,7 +37,7 @@ button {
 }
 
 .container {
-   width: 90%;
+   width: 80%;
    margin: 0px auto;
    // margin-left: 10%;
    // margin-top: 15%;
@@ -153,8 +153,8 @@ text {
   height: 200px;
   width: 250px;
   position: absolute;
-  right: 7%;
-  top: 90px;
+  right: 16.5%;
+  top: 15px;
 
   #legend_cont {
     position: absolute;
@@ -194,9 +194,13 @@ text {
 #statusBar {
   padding-left: 25px;
   margin-top: 20px;
+
+  p {
+    width: 610px;
+  }
 }
 
-$menuW: 730px;
+$menuW: 650px;
 #menuInner {
   border-radius: $border_radius;
   -webkit-border-radius: $border_radius;
