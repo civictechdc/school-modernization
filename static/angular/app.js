@@ -21,7 +21,7 @@ angular.module("PostModern", ['ngRoute'])
       .when('/school-map', {
         templateUrl: 'static/angular/views/map.html'
       })
-      .when('/appendix', {
+      .when('/resources', {
           templateUrl: 'static/angular/views/appendix.html',
       })
       .when('/about', {
