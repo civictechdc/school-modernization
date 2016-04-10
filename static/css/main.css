@@ -68,6 +68,10 @@ a {
     margin-top: 115px;
 }
 
+#narrative a {
+    color: #3C7AB7;
+}
+
 #narrative div.words {
     min-height: 175px;
 }
@@ -220,7 +224,7 @@ img.logo-img {
 /* ---- Appendix Styles ----- */
 
 .appendix-container {
-    width: 44%;
+    width: 85%;
     display: inline-block;
     margin-top: 20px;
     vertical-align: top;
