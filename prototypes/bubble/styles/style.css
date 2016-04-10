@@ -94,12 +94,8 @@ text#tooltip_label {
   height: 200px;
   width: 200px;
   position: absolute;
-<<<<<<< HEAD
-  right: -3%;
-=======
-  right: 16.5%;
->>>>>>> nick
-  top: 15px; }
+  top: 15px;
+  left: 660px; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
