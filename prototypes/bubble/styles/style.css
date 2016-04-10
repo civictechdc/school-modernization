@@ -18,7 +18,7 @@ button {
   -webkit-border-radius: 15px; }
 
 .container {
-  width: 90%;
+  width: 80%;
   margin: 0px auto; }
 
 .nav {
@@ -118,6 +118,8 @@ text#tooltip_label {
 #statusBar {
   padding-left: 25px;
   margin-top: 20px; }
+  #statusBar p {
+    width: 610px; }
 
 #menuInner {
   border-radius: 4px;
@@ -131,7 +133,7 @@ text#tooltip_label {
   -webkit-border-radius: 5px;
   margin-top: 15px;
   background-color: #021c2a;
-  width: 730px; }
+  width: 650px; }
   .menuDiv ul {
     padding: 5px; }
 

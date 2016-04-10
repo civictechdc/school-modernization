@@ -223,7 +223,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Make an array of unique items
     var that = this,
         items = _.uniq(_.pluck(this.nodes, column)).sort();
-
     var unique = [];
     for (var i = 0; i < items.length; i++) { 
         unique.push({name: items[i]}); 
@@ -231,12 +230,15 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 
     // Calculate the sums of all the unique values of the current budget
     var itemSums = items.map(function(x){
+
+        // Makes an array of all the nodes with matching x
         var arr = that.nodes.filter(function(node){
             if(node[column] === x){
                 return node;
             }
         });
         
+        // returns the sums of the column values
         var sums = _.reduce(arr, function(a,b){
             var budget = b[that.budget];
             if(budget === 'NA'){
@@ -244,6 +246,11 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
             }
             return a + parseInt(b[that.budget]);
         }, 0);
+
+        // return the averages og the column values
+        if (that.budget === 'SpentPerSqFt' || that.budget === 'SpentPerMaxOccupancy'){
+            return sums / arr.length;
+        }
 
         return sums;
     });
@@ -253,9 +260,10 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         height = this.sizes.height,
         padding = this.sizes.padding;
     for (var i in unique){
+
         // Make the grid here
-        unique[i].x = (i * width / unique.length) * 0.50 + 250; // + 250; //+ 500; // * alpha
-        unique[i].y = this.center.y; // * alpha
+        unique[i].x = (i * width / unique.length) * 0.50 + 250;
+        unique[i].y = this.center.y;
     }
 
     // Attach the target coordinates to each node
@@ -293,7 +301,11 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('class', 'splitValue')
         .attr('dx', '10')
         .text(function(d,i){
-            return that.round(itemSums[i]);
+            var amount = that.round(itemSums[i]);
+            if (that.budget === 'SpentPerSqFt'){
+                return amount + ' per Sq. Ft.'
+            }
+            return amount;
         })
         ;
 
