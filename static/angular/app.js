@@ -12,9 +12,6 @@ angular.module("PostModern", ['ngRoute'])
       .when("/progress", {
           templateUrl: 'static/angular/views/progress.html',
       })
-      .when('/legacy-of-inequities', {
-          templateUrl: 'static/angular/views/legacy-of-inequities.html',
-      })
       .when('/bubble-chart', {
         templateUrl: 'static/angular/views/bubble.html'
       })
