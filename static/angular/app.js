@@ -16,7 +16,7 @@ angular.module("PostModern", ['ngRoute'])
           templateUrl: 'static/angular/views/legacy-of-inequities.html',
       })
       .when('/bubble-chart', {
-        templateUrl: 'static/angular/views/under-construction.html'
+        templateUrl: 'static/angular/views/bubble.html'
       })
       .when('/school-map', {
         templateUrl: 'static/angular/views/map.html'
