@@ -52,7 +52,7 @@ filter: #E7ECF2 (active)
     position: absolute;
     width: 520px;
     height: auto;
-    top: 40px;
+    top: 110px;
     left: 20px;
     background-color: #D0D8E2;
     border: 1px solid #002646;
@@ -60,7 +60,7 @@ filter: #E7ECF2 (active)
 }
 #filters-selections {
     position: absolute;
-    top: 40px;
+    top: 110px;
     left: 580px;
     width: 48%;
     height: 56px;
@@ -71,7 +71,7 @@ filter: #E7ECF2 (active)
     position: absolute;
     width: 48%;
     left: 580px;
-    top: 100px;
+    top: 170px;
     height: 600px;
 }
 #profile-container {
@@ -80,7 +80,7 @@ filter: #E7ECF2 (active)
     width: 520px;
     height: auto;
     left: 20px;
-    top: 340px;
+    top: 410px;
     border-collapse: collapse;
     border-spacing: 0;
     background-color: rgba(255, 255, 255, 0.9);
@@ -89,7 +89,7 @@ filter: #E7ECF2 (active)
 #chart-container {
     position: absolute;
     width: 520px;
-    top: 340px;
+    top: 410px;
     left: 20px;
     border-collapse: collapse;
     border-spacing: 0;
@@ -103,7 +103,7 @@ filter: #E7ECF2 (active)
     position: absolute;
     font-family: "Times", serif;
     left: 580px;
-    top: 440px;
+    top: 510px;
     background-color: white;
     border: solid black 1px;
     z-index: 999;
