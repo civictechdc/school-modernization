@@ -53,7 +53,7 @@ filter: #E7ECF2 (active)
     width: 520px;
     height: auto;
     top: 110px;
-    left: 20px;
+    left: 0;
     background-color: #D0D8E2;
     border: 1px solid #002646;
     z-index:99;
@@ -61,7 +61,7 @@ filter: #E7ECF2 (active)
 #filters-selections {
     position: absolute;
     top: 110px;
-    left: 580px;
+    left: 560px;
     width: 48%;
     height: 56px;
     padding: 0 20px 2px 10px;
@@ -70,7 +70,7 @@ filter: #E7ECF2 (active)
 #toolMap-container {
     position: absolute;
     width: 48%;
-    left: 580px;
+    left: 560px;
     top: 170px;
     height: 600px;
 }
@@ -79,7 +79,7 @@ filter: #E7ECF2 (active)
     display: none;
     width: 520px;
     height: auto;
-    left: 20px;
+    left: 0;
     top: 410px;
     border-collapse: collapse;
     border-spacing: 0;
@@ -90,7 +90,7 @@ filter: #E7ECF2 (active)
     position: absolute;
     width: 520px;
     top: 410px;
-    left: 20px;
+    left: 0;
     border-collapse: collapse;
     border-spacing: 0;
     /*border-radius: 6px 6px 2px 2px;*/
@@ -102,7 +102,7 @@ filter: #E7ECF2 (active)
 #legend {
     position: absolute;
     font-family: "Times", serif;
-    left: 580px;
+    left: 560px;
     top: 510px;
     background-color: white;
     border: solid black 1px;
