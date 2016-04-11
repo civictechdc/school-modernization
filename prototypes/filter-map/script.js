@@ -83,8 +83,7 @@ function initApp(presetMode) {
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
         this.indexColorsArray = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
-        // this.dataColorsArray = ["#b35806","#e08214","#fdb863","#fee0b6","#d8daeb","#b2abd2","#8073ac","#542788"];
-        this.dataColorsArray = ["#002646", "#193b58", "#32516a", "#4c677d", "#667c90", "#7f92a2", "#99a8b5", "#b2bdc7"];
+        this.dataColorsArray = ["#b2bdc7", "#99a8b5", "#7f92a2", "#667c90", "#4c677d", "#32516a", "#193b58", "#002646"];
         this.defaultColor = "white";
         this.dataIncrement = 0;
         this.dataBins = 8;
