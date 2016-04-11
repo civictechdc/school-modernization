@@ -126,27 +126,27 @@ function updateHoverText(itemName, schoolType) {
     // console.log("  $(filterTitleContainer).css(): ", $(filterTitleContainer).css());
     var filterText = $(filterTitleContainer).text();
     if (itemName) {
-        if (itemName.length > 35) {
-            var checkName = itemName.indexOf(", ");
-            if (checkName > -1) {
-                splitZoneName = itemName.split(", ");
-                if (splitZoneName.length > 2) {
-                    itemName = splitZoneName[0] + ", " + splitZoneName[1];
-                } else {
-                    itemName = splitZoneName[0];
-                }
-            }
-            if (itemName.length > 38) {
-                itemName = itemName.substring(0, 35) + "...";
-            }
-        }
+        // if (itemName.length > 63) {
+        //     var checkName = itemName.indexOf(", ");
+        //     if (checkName > -1) {
+        //         splitZoneName = itemName.split(", ");
+        //         if (splitZoneName.length > 2) {
+        //             itemName = splitZoneName[0] + ", " + splitZoneName[1];
+        //         } else {
+        //             itemName = splitZoneName[0];
+        //         }
+        //     }
+        //     if (itemName.length > 63) {
+        //         itemName = itemName.substring(0, 63) + "...";
+        //     }
+        // }
         $("#mouseover-text").children("h2").css("visibility", "visible");
         if (schoolType == "DCPS") {
-            $("#mouseover-text").children("h2").css("color", "red");
+            $("#mouseover-text").children("h2").css("color", "#7aa25c");
         } else if (schoolType == "PCS") {
             $("#mouseover-text").children("h2").css("color", "orange");
         }
-        $(filterTitleContainer).text(itemName);
+        $(filterTitleContainer).html(itemName);
     } else {
         $("#mouseover-text").children("h2").css("visibility", "hidden");
         $(filterTitleContainer).text("&nbsp;");

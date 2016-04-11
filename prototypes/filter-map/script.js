@@ -25,11 +25,19 @@ function initApp(presetMode) {
         filterMenu.Charter = { id:"Charter", category:"schools", label:"Charter Schools", text:"Public Charter Schools", column:"Agency", value:"PCS" };
         filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"District and Charter Schools", column:"Agency", value:"Both" };
 
+
+        // High
+        // Includes 2014-15 high schools, 6-12 MS/HS, adult, and alternative education schools.
+        // Middle
+        // Includes 2014-15 middle schools and special education schools.
+        // Elem
+        // Includes 2014-15 early childhood, elementary and elem/middle grade schools.
+
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
         filterMenu.EMH = { id:"EMH", category:"schools", label:"All Levels", text:"All Grade Levels", column:"Level", value:"EMH" };
-        filterMenu.Elem = { id:"Elem", category:"schools", label:"Elementary Schools", text:"Elementary Schools", column:"Level", value:"ES" };
-        filterMenu.Middle = { id:"Middle", category:"schools", label:"Middle Schools", text:"Middle Schools", column:"Level", value:"MS" };
-        filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools", column:"Level", value:"HS" };
+        filterMenu.Elem = { id:"Elem", category:"schools", label:"Elementary Schools", text:"Elementary, Elem/Middle, Early Childhood Schools", column:"Level", value:"ES" };
+        filterMenu.Middle = { id:"Middle", category:"schools", label:"Middle Schools", text:"Middle Schools, Special Ed", column:"Level", value:"MS" };
+        filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools, 6-12 MS/HS, Adult, Alternative Schools", column:"Level", value:"HS" };
 
         // == spendPast, spendLifetime, spendPlanned
         filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Total facility spending (1998-2015)", column:"MajorExp9815", value:null };
@@ -136,6 +144,30 @@ function initApp(presetMode) {
         $("body").append(legendHtml);
     }
 
+    // ======= ======= ======= makeSelectBox ======= ======= =======
+    Display.prototype.makeSelectBox = function(jsonData) {
+        console.log("makeSelectBox");
+
+        var selectBox = null
+        var selectHtml = "<select id='school-select'>";
+        var nextSchool, nextSchoolName;
+        for (var i = 0; i < jsonData.length; i++ ) {
+            nextSchool = jsonData[i];
+            nextSchoolName = nextSchool.School;
+            console.log("  nextSchoolName: ", nextSchoolName);
+            selectHtml += "<option value='" + nextSchoolName + "'>" + nextSchoolName + "</option>";
+        }
+        selectHtml += "</select>";
+
+        var filterContainer = ("#filter-container ");
+        selectBox = $("#filter-container").children("select");
+        console.log("  selectBox: ", selectBox);
+        if (selectBox) {
+            $(filterContainer).append(selectHtml);
+            this.activateSelectBox();
+        }
+
+    }
 
     // ======= ======= ======= makeSearchDisplay ======= ======= =======
     Display.prototype.makeSearchDisplay = function() {
@@ -231,6 +263,25 @@ function initApp(presetMode) {
         $("#" + windowId).on('input',function(e){
             console.log("input");
             clearProfileChart();
+        });
+    }
+
+    // ======= ======= ======= activateSelectBox ======= ======= =======
+    Display.prototype.activateSelectBox = function(windowId) {
+        console.log("activateSelectBox");
+
+        var self = this;
+        $("#school-select").on('change',function(e){
+            console.log("school-select");
+            $("#searchWindow").val("");
+            if ($('#profile-container').find('#profile').length) {
+                $("#profile-container").fadeIn( "fast", function() {
+                    console.log("*** FADEIN profile-container ***");
+                });
+            } else {
+                clearProfileChart();
+            };
+            self.findSearchSchool();
         });
     }
 
@@ -519,11 +570,18 @@ function initApp(presetMode) {
     }
 
     // ======= ======= ======= findSearchSchool ======= ======= =======
-    Display.prototype.findSearchSchool = function(buttonId) {
+    Display.prototype.findSearchSchool = function() {
         console.log("findSearchSchool");
 
         var self = this;
-        var searchSchoolName = $("#searchWindow").val();
+        var searchSchoolName = null;
+        updateHoverText(null);
+        updateFilterSelections(displayObj);
+        if ($("#searchWindow").val()) {
+            searchSchoolName = $("#searchWindow").val();
+        } else {
+            searchSchoolName = $("#school-select").val();
+        }
         console.log("  searchSchoolName: ", searchSchoolName);
 
         // var url = "Data_Schools/DC_OpenSchools_Master_214.csv";
@@ -589,7 +647,7 @@ function initApp(presetMode) {
             if (foundDataArray.length > 1) {
                 $(filterTitleContainer).css("font-size", "14px");
                 schoolText = "<span class='filterLabel'>Multiple schools: </span>";
-                hoverText = "Re-enter detailed name (from list)"
+                hoverText = "<span class='filterLabel'>Multiple schools found. </span>Re-enter choice from options above map.";
                 updateHoverText(hoverText);
 
             // == single school matches search
@@ -844,6 +902,7 @@ r
                 }
                 self.sharedAddressArray = sharedAddressArray;
                 self.selectedSchoolsArray = selectedSchoolsArray;
+
                 // checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoolsArray, selectedCodesArray, rejectedCodesArray, rejectedAggregatorArray);
 
                 // ======= make map layers ======
@@ -968,6 +1027,8 @@ r
             console.dir(textData);
             jsonData = CSV2JSON(textData);
             console.dir(jsonData);
+            displayObj.makeSelectBox(jsonData);
+            displayObj.makeSearchAndHoverDisplay();
 
             // == store school json data
             self.jsonData = jsonData;
@@ -1471,7 +1532,6 @@ r
     if (displayObj.displayMode != "storyMap") {
         this.jsonData = null;
         displayObj.activateFilterMenus();
-        displayObj.makeSearchAndHoverDisplay();
         displayObj.activateClearButton();
         setMenuState(displayObj, displayObj.agencyMenu, ["A", "A", "S"]);
         setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);

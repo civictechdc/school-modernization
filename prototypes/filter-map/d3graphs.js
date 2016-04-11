@@ -589,7 +589,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
           // Do nothing
         } else {
             $("#chart-container").css("position", "absolute");
-            $("#chart-container").css("top", "360px");
+            $("#chart-container").css("top", "400px");
             $("#chart-container").css("left", "100px");
             $("#chart-container").css("width", "520px");
             $("#chart-container").css("height", "auto");

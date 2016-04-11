@@ -96,7 +96,7 @@ filter: #E7ECF2 (active)
     width: 520px;
     height: auto;
     left: 100px;
-    top: 360px;
+    top: 400px;
     border-collapse: collapse;
     border-spacing: 0;
     /*border: 1px solid #002646;*/
@@ -107,7 +107,7 @@ filter: #E7ECF2 (active)
 #chart-container {
     position: absolute;
     width: 520px;
-    top: 360px;
+    top: 400px;
     left: 100px;
     border-collapse: collapse;
     border-spacing: 0;
@@ -471,6 +471,17 @@ hr {
     height: 30px;
     margin-left: 15px;
 }
+
+/* ======= search ======= */
+#school-select {
+    position: relative;
+    width: 80%;
+    height: 24px;
+	margin: 20px 10px 10px 10px ;
+	padding: 0;
+    z-index: 99;
+}
+
 
 /* ======= mouseover ======= */
 #mouseover-text {

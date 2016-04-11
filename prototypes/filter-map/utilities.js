@@ -453,7 +453,7 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterInd
     var checkSchoolName = processSchoolName(schoolData.schoolName)
 
     if (displayObj.dataFilters.levels) {
-        var nextZoneName, splitZoneName, nextZoneObject;
+        var splitZoneName, nextZoneObject, nextDataObject, nextSchoolName, nextSchoolExpend, nextSchoolSqft, nextSchoolEnroll;
         for (var i = 0; i < zoneAggregator.length; i++) {
             nextDataObject = zoneAggregator[i];
             nextSchoolName = nextDataObject.zoneName;
