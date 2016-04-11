@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module("PostModern", ['ngRoute'])
-  .config(["$routeProvider", function($routeProvider, navService) {
-      console.log("ang:routeProvider");
+
+angular.module("PostModern", ['ngRoute', 'ngCookies'])
+  .config(["$routeProvider", function($routeProvider) {
       $routeProvider.when("/intro", {
           templateUrl: 'static/angular/views/intro.html',
       })
@@ -24,6 +24,20 @@ angular.module("PostModern", ['ngRoute'])
       .when('/about', {
           templateUrl: 'static/angular/views/about.html',
       })
-      .otherwise('/intro')
+      .otherwise('/intro');
   }])
+  .controller("mainCtrl", ["$scope", "$cookies", function($scope, $cookies) {
+    var cookVal = $cookies.get('visited');
+    $scope.visited_before = cookVal === 'yes';
+    if (!$scope.visited_before) {
+      $cookies.put('visited', 'yes', {
+        expires: new Date(2020, 1, 1),
+      });
+
+      $scope.modalVisibility = {display: 'block'};
+      $scope.modalClose = function() {
+        $scope.modalVisibility.display = 'none';
+      };
+    }
+}]);
 
