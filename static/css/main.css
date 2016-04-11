@@ -1,11 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* ======= general ======= */
 body {
     /*font-family:"Ariel", sans-serif;*/
-    font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Averia Sans Libre', cursive;
+    position: relative;
 }
-div.global-wrap {
-    width: 970px;
-    margin: 0 auto;
+
+a {
+    text-decoration: none;
+    color: #000;
 }
 
 /* ======= rows columns ======= */
@@ -39,13 +47,29 @@ div.global-wrap {
 
 /* ======= navigation ======= */
 #navigation {
-    float: right;
+    float: left;
 }
 #navigation .wrap {
     padding-left: 20px;
 }
 #navigation ul {
-    padding-left: 30px;
+    padding-left: 20px;
+    list-style-type: none;
+    margin-left: -20px;
+}
+
+#navigation a {
+    text-transform: uppercase;
+}
+
+#narrative {
+    font-family: 'Open Sans', sans-serif;
+    margin-left: 20%;
+    margin-top: 115px;
+}
+
+#narrative a {
+    color: #3C7AB7;
 }
 
 #narrative div.words {
@@ -145,3 +169,169 @@ path {
 .storyName {
     display: block;
 }
+
+/* ---- Header Styles ----- */
+
+html, body, .container-fluid, .row {
+    height: 100%;
+}
+
+.header {
+    color: #e1e1e1;
+    background-color: #021C2A;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* ---- Nav Styles ----- */
+
+#navigation {
+    height: 100vh;
+    background-color: #d1d8e1;
+    color: #e1e1e1;
+    height: 100%;
+    margin-right: 20px;
+    padding: 1.5%;
+    position: fixed;
+    top: 104px;
+    margin-right: 20px;
+}
+
+#navigation li {
+    margin-top: 20px;
+}
+
+
+
+/* ---- Intro Styles ----- */
+
+.logo-row {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logo, .csf-logo {
+    display: inline-block;
+}
+
+img.logo-img {
+    width: 70%;
+}
+
+/* ---- Appendix Styles ----- */
+
+.appendix-container {
+    width: 85%;
+    display: inline-block;
+    margin-top: 20px;
+    vertical-align: top;
+    padding-left: 20px;
+}
+
+.sources-list {
+    padding-left: 35px;
+}
+
+/* ---- About Styles ----- */
+
+.logo-about {
+    max-width: 90%;
+}
+
+.about-csf, .about-cfdc {
+    overflow: auto;
+}
+
+/* ---- Map Styles ----- */
+
+iframe {
+    width: 104%;
+    height: 1200px;
+    border: none;
+}
+
+.img-bc {
+    max-width: 90%;
+}
+
+/* ---- Progress Styles ----- */
+
+.bold {
+    font-weight: bold;
+}
+
+.med-blue-bg {
+    background-color: #5B9BD5;
+    font-weight: bold;
+}
+
+.light-blue-bg {
+    background-color: #D0DEEF;
+}
+
+th, td {
+    padding: 2px 5px;
+}
+
+.lightest-blue-bg {
+    background-color: #E9EFF7;
+}
+
+.white-text {
+    color: #fff;
+}
+
+.red-text {
+    color: red;
+}
+
+#school-table {
+    font-size: 13px;
+    text-align: center;
+}
+
+/* ---- Popup Modal Styles ---- */
+#opaqueCover {
+  z-index: 2;
+
+}
+
+#firstVisit {
+  position: absolute;
+  x: 0;
+  y: 0;
+  height: 100%;
+  width: 100%; 
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+#firstVisit .centerPane {
+  position: relative;
+  display: block;
+  margin: 10% auto 0 auto;
+  padding: 30px;
+  width: 40%;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  border: 1px solid rgba(0,0,0,.2);
+}
+
+#firstVisit div.close {
+  text-align: center;
+}
+
+#firstVisit a.btn {
+  font-size: 1.3em;
+  padding: 8px;
+  margin: 15px 0;
+  cursor: pointer;
+  color: #021c2a;
+  background-color: #d1d8e1;
+  border-radius: 2px;
+} 
+

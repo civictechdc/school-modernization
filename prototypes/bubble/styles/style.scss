@@ -1,0 +1,304 @@
+// VARS
+// $cerulean: #002646;
+$cerulean: #021c2a;
+$grey: #d1d8e1;
+$lighterCerulean: #6f7f87;
+$red: #4a445d;
+$headerHeight: 75px;
+$border_radius: 4px;
+@mixin bold {
+  font-weight: bold;
+}
+
+// GLOBALS
+* {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+  font-family: 'Averia Serif Libre', cursive;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: $grey;
+  &:focus, 
+  &:visited {
+    color: initial;
+  }
+}
+
+button {
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+}
+
+.container {
+   width: 80%;
+   margin: 0px auto;
+   // margin-left: 10%;
+   // margin-top: 15%;
+}
+
+.nav {
+  position: fixed;
+}
+
+#chart {
+  margin-top: 10px;
+  margin-left: -10px;
+}
+
+// GRAPH SPECIFIC
+// Header
+header {
+  background-color: $cerulean;
+  // height: 15%;
+  width: 100%;
+  // margin-bottom: 35px;
+
+  h1 {
+    color: white;
+    padding: 20px 0px;
+  }
+}
+
+
+circle {
+   // stroke: lighten($cerulean , 10%);
+   stroke: white;
+   stroke-width: 2px;
+   cursor: pointer;
+   opacity: 0.985;
+
+   &:hover {
+      // stroke: darken($cerulean , 7%);
+      stroke: grey;
+   }
+}
+
+text {
+   &.label {
+      font-size: 10px;
+   }
+
+   &#tooltip_label {
+      font-size: 12px;
+   }
+}
+
+.sub_titles {
+  @include bold;
+  font-size: 14px;
+  // transform: rotate(-25deg);
+}
+
+// SIDE NAVIGATION
+#sideNavDiv {
+  width: 100px;
+  height: 900px;
+  position: absolute;
+  background-color: $grey;
+  color: $grey;
+
+  #sideNavUl {
+    margin-left: 45%;
+
+    .sideNavItem {
+      padding-top: 35px;
+    }
+  }
+}
+
+.splitValue {
+  fill: $lighterCerulean;
+  font-size: 0.8em;
+  letter-spacing: 0.75px;
+}
+
+// TOOLTIP
+#tooltip {
+   position: absolute;
+   width: 210px;
+   height: 205px;
+   padding: 10px;
+   background-color: $cerulean;
+   border-radius: 5px;
+   -webkit-border-radius: 5px;
+   border: 3px solid darken($cerulean , 10%);
+   
+   p {
+      font-size: 12px;
+      line-height: 1.666em;
+      color: #fff;
+   }
+
+   &.hidden {
+      display: none;
+   }
+
+  #school {
+    @include bold;
+    font-size: 16px;
+    color: white;
+    line-height: 1.1em;
+  }
+}
+
+// LEGEND
+#legend {
+  height: 200px;
+  width: 250px;
+  position: absolute;
+  right: 16.5%;
+  top: 15px;
+
+  #legend_cont {
+    position: absolute;
+    background-color: #fff;
+    height: 250 px;
+
+    svg {
+      border: 3px solid $cerulean;
+      border-radius: $border_radius;
+      -webkit-border-radius: $border_radius;
+    }
+    #radiusLegend {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+  }
+
+
+}
+
+.modHeader {
+  padding: 10px;
+  background-color: $cerulean;
+  color: #fff;
+  text-align: center;
+  border-top-left-radius: $border_radius;
+  border-top-right-radius: $border_radius;
+}
+
+
+
+#schoolLegend {
+
+}
+
+// MENU
+#statusBar {
+  padding-left: 25px;
+  margin-top: 20px;
+
+  p {
+    width: 610px;
+  }
+}
+
+$menuW: 650px;
+#menuInner {
+  border-radius: $border_radius;
+  -webkit-border-radius: $border_radius;
+  padding: 5px;
+  border: 3px solid $cerulean;
+  background-color: #FFF;
+  
+}
+.menuDiv {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-top: 15px;
+  background-color: $cerulean;
+  width: $menuW;
+  
+  ul {
+    padding: 5px;
+  }
+}
+
+#select {
+  color: #fff;
+  font-size: 16px;
+  border: 0;
+  background-color: $cerulean;
+  option {
+    color: #fff;
+
+  }
+}
+
+.row {
+  padding: 5px 8px;
+  vertical-align: top;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.rowBehavior {
+  cursor: pointer;
+  background-color: #d1d8e1;
+  color: $cerulean;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  &:hover {
+    color: white;
+    background-color: lighten($cerulean, 30%);
+    // background-color: grey;
+
+  }
+}
+
+.title {
+  @extend .row;
+  @include bold;
+  width: 100px;
+  color: $cerulean;
+  text-align: right;
+  margin-top: 0px;
+}
+
+// MINUTIA
+.nowViewing {
+  font-size: 1.1em;
+}
+.invalid {
+  background-color: #e5e8e9;
+  color: white;
+  pointer-events: none;
+}
+
+.color {
+   fill: 'grey';
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.selected {
+  // background-color: lighten($cerulean, 20%);
+  background-color: $cerulean;
+  color: #fff;
+}
+
+.btn_state {
+   line-height: 0.5em;
+}
+
+#show_state_cont {
+   margin: 5px 0px;
+}
+
+.show_state {
+   line-height: 1.5em;
+}
+
+tspan {
+  background-color: red;
+}
