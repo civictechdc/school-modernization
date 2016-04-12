@@ -377,16 +377,15 @@ function initApp(presetMode) {
                     clearZoneAggregator(zonesCollectionObj);
                     if (whichFilter == "All") {
                         setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
-                        // resetMenuState(displayObj, "zones");
+                        resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "District") {
                         setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
-                        // resetMenuState(displayObj, "zones");
+                        resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "Charter") {
                         self.dataFilters.zones = "Ward";
                         zonesCollectionObj.zoneA = "Ward";
                         zonesCollectionObj.zoneGeojson_AB = null;
                         zonesCollectionObj.aggregatorArray = [];
-                        setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
                         if (self.dataFilters.levels == "HS") {
                             setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
                         } else if (self.dataFilters.levels == "MS") {
@@ -394,6 +393,7 @@ function initApp(presetMode) {
                         } else if (self.dataFilters.levels == "ES") {
                             setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
                         }
+                        setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
                         setMenuState(displayObj, self.zonesMenu, ["S", "D", "D"]);
                     }
                     break;
@@ -434,17 +434,21 @@ function initApp(presetMode) {
 
                 // == wards or feeder zones for map
                 case "zones":
+                console.log("  ======= ======= dataFilters.levels: ", self.dataFilters.levels);
                     self.dataFilters.zones = whichFilter;
                     zonesCollectionObj.zoneA = whichFilter;
                     zonesCollectionObj.zoneGeojson_AB = null;
                     zonesCollectionObj.aggregatorArray = [];
+                    var tempAgency = self.dataFilters.agency;
+                    var tempLevels = self.dataFilters.levels;
+                    console.log("  tempAgency: ", tempAgency);
+                    console.log("  tempLevels: ", tempLevels);
 
                     // == high school feeder zone selected
                     if (whichFilter == "FeederHS") {
                         self.dataFilters.agency = "District";
                         setMenuState(displayObj, self.agencyMenu, ["S", "D", "D"]);
                         setMenuState(displayObj, self.zonesMenu, ["A", "S", "A"]);
-                        tempLevels = self.dataFilters.levels;
 
                         // == high school feeder zones apply to middle or elem schools
                         if (tempLevels == "ES") {
@@ -460,6 +464,7 @@ function initApp(presetMode) {
                             setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
                             levelObject = filterMenu["High"];
                         } else if (tempLevels == null) {
+                            self.dataFilters.levels = null;
                             setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
                             levelObject = filterMenu[null];
                         }
@@ -469,7 +474,6 @@ function initApp(presetMode) {
                         self.dataFilters.agency = "District";
                         setMenuState(displayObj, self.agencyMenu, ["S", "D", "D"]);
                         setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
-                        tempLevels = self.dataFilters.levels;
 
                         // == high school feeder zones apply to middle or elem schools
                         if (tempLevels == "ES") {
@@ -485,6 +489,7 @@ function initApp(presetMode) {
                             setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
                             levelObject = filterMenu["High"];
                         } else if (tempLevels == null) {
+                            self.dataFilters.levels = null;
                             setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
                             levelObject = filterMenu[null];
                         }
@@ -512,6 +517,15 @@ function initApp(presetMode) {
                         } else {
                             setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
                         }
+                        if (displayObj.dataFilters.agency == "District") {
+                            setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
+                        } else if (displayObj.dataFilters.agency == "Charter") {
+                            setMenuState(displayObj, self.agencyMenu, ["A", "S", "A"]);
+                        } else if (displayObj.dataFilters.agency == "All") {
+                            setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
+                        } else {
+                            setMenuState(displayObj, self.agencyMenu, ["A", "A", "A"]);
+                        }
                         setMenuState(displayObj, self.zonesMenu, ["S", "A", "A"]);
                     }
                     break;
@@ -537,13 +551,13 @@ function initApp(presetMode) {
                 setMenuState(displayObj, displayObj.zonesMenu, ["S", "A", "A"]);
             } else if (displayObj.dataFilters.zones == "FeederHS") {
                 if ((displayObj.dataFilters.levels == "HS") || (displayObj.dataFilters.levels == "MS")) {
-                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "S", "A"]);
+                    // setMenuState(displayObj, displayObj.levelsMenu, ["D", "S", "A"]);
                 } else if (displayObj.dataFilters.levels == "ES") {
-                    setMenuState(displayObj, displayObj.levelsMenu, ["D", "A", "S"]);
+                    // setMenuState(displayObj, displayObj.levelsMenu, ["D", "A", "S"]);
                 }
                 setMenuState(displayObj, displayObj.zonesMenu, ["A", "S", "A"]);
             } else if (displayObj.dataFilters.zones == "FeederMS") {
-                setMenuState(displayObj, displayObj.levelsMenu, ["D", "D", "S"]);
+                // setMenuState(displayObj, displayObj.levelsMenu, ["D", "D", "S"]);
                 setMenuState(displayObj, displayObj.zonesMenu, ["A", "A", "S"]);
             } else {
                 setMenuState(displayObj, displayObj.zonesMenu, ["A", "A", "A"]);
