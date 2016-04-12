@@ -57,8 +57,7 @@ Bubble.prototype.create_nodes = function(){
     this.radius_scale = radius_scale;
 
     for(var i = 0, j = this.data.length; i < j; i++){
-        var that = this,
-        current = this.data[i];
+        var current = this.data[i];
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.color = (function(){
@@ -91,7 +90,6 @@ Bubble.prototype.create_nodes = function(){
         }());
         this.nodes.push(current);
     }
-    this.nodes.sort(function(a,b){ return b.value - a.value});
 };
 
 Bubble.prototype.create_bubbles = function(set){
@@ -132,7 +130,6 @@ Bubble.prototype.update = function() {
 Bubble.prototype.add_tootltips = function(d){
     var that = this;
     this.circles.on('mouseenter', function(d){
-
         // GET THE X/Y COOD OF OBJECT
         var tooltipPadding = 180, // 160,
             xPosition = d3.select(this)[0][0]['cx'].animVal.value + tooltipPadding + 20,
