@@ -5,6 +5,9 @@
 // ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
 // ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
 
+// //https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv
+//https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv
+
 // ======= ======= ======= polyfill for Safari ======= ======= =======
 Number.isInteger = Number.isInteger || function(value) {
     return typeof value === "number" &&
@@ -1014,7 +1017,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<tr><td class='data-key'><p class='key-text'>Year completed</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.YrComplete + "</p></td></tr>";
 
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2022)</p></td>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2021)</p></td>";
     htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Future facilities improvements</p></td>";
@@ -1023,7 +1026,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<tr><td class='data-key'><p class='key-text'>Projected completion</p></td>";
     htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
 
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2022</p></td>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2021</p></td>";
     htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
 
     htmlString += "</table>";

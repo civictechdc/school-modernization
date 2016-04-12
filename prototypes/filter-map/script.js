@@ -585,7 +585,9 @@ function initApp(presetMode) {
 
         // var url = "Data_Schools/DC_OpenSchools_Master_214.csv";
         // var url = "Data_Schools/DCSchools_FY1415_Master_321.csv ";
-        var url = "../../DCSchools_FY1415_Master_321.csv ";
+        // var url = "../../DCSchools_FY1415_Master_321.csv ";
+        var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv";
+
         var filterTitleContainer = $("#filters-selections").children("h2");
         var jsonData, foundDataArray, schoolText, tempSchoolText;
 
@@ -816,7 +818,9 @@ r
             var websitePrefix = "";
         }
         // var url = websitePrefix + "Data_Schools/DCSchools_FY1415_Master_321.csv"
-        var url = websitePrefix + "../../DCSchools_FY1415_Master_321.csv"
+        // var url = websitePrefix + "../../DCSchools_FY1415_Master_321.csv"
+        // var url = "../../DCSchools_FY1415_Master_321.csv ";
+        var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv";
 
         // ======= get school data =======
         if (this.jsonData == null) {
@@ -1013,7 +1017,8 @@ r
             var websitePrefix = "";
         }
         // var url = "Data_Schools/DCSchools_FY1415_Master_321.csv"
-        var url = "../../DCSchools_FY1415_Master_321.csv"
+        // var url = "../../DCSchools_FY1415_Master_321.csv ";
+        var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv";
 
         // ======= get selected data =======
         $.ajax({
