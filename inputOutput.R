@@ -1,8 +1,4 @@
 setwd ("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/InputData")
-dcFullUpdated<-read.csv("DCSchools_FY1415_Master_4_6_21CSFUPDATE.csv",stringsAsFactors=FALSE, strip.white=TRUE)
-
-dcFullUpdated<-subset(dcFullUpdated,dcFullUpdated$School!="")
-str(dcFullUpdated)
 
 money<-function(x) {
   x<-(sub("\\$","",x))
@@ -19,6 +15,11 @@ tab<-function(x) {
 numeric<- function(x) {
   x<-as.numeric(gsub(",","",x))
 }
+#spend by School
+dcFullUpdated<-read.csv("DCSchools_FY1415_Master_411_21CSFUPDATE.csv",stringsAsFactors=FALSE, strip.white=TRUE)
+dcFullUpdated<-subset(dcFullUpdated,dcFullUpdated$School!="")
+dcFullUpdated<-subset(dcFullUpdated,is.na(dcFullUpdated$Delete))[-c(4)]
+str(dcFullUpdated)
 
 write.csv(dcFullUpdated,
           "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchools_FY1415_Master_412.csv",
@@ -47,12 +48,12 @@ dcFullUpdated$SqFtPerEnroll<-numeric(dcFullUpdated$SqFtPerEnroll)
 
 colnames(dcFullUpdated)[c(35)]<-"latitude"
 
-setwd ("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data")
-newMulti<-read.csv("DCPS_MultiSchool_Project_Spend.csv",stringsAsFactors=FALSE, strip.white=TRUE)[c(1,2)]
+# Multi Spend
+newMulti<-read.csv("MultiSchoolSpend.csv",stringsAsFactors=FALSE, strip.white=TRUE)[c(1,2)][-c(33),]
 
-newMulti$Sum.of.Lifetime.Budget<-money(newMulti$Sum.of.Lifetime.Budget)
-newMulti$Sum.of.Lifetime.Budget<-numeric(newMulti$Sum.of.Lifetime.Budget)
+newMulti$lifetimeBudget<-money(newMulti$lifetimeBudget)
+newMulti$lifetimeBudget<-numeric(newMulti$lifetimeBudget)
 
 write.csv(newMulti,
-          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCPS_MultiSchool_Project_Spend.csv.csv",
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCPS_MultiSchool_Project_Spend.csv",
           row.names=FALSE)
