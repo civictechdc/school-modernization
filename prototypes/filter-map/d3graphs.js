@@ -589,8 +589,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
           // Do nothing
         } else {
             $("#chart-container").css("position", "absolute");
-            $("#chart-container").css("top", "340px");
-            $("#chart-container").css("left", "20px");
+            $("#chart-container").css("top", "410px");
+            $("#chart-container").css("left", "0");
             $("#chart-container").css("width", "520px");
             $("#chart-container").css("height", "auto");
         }
