@@ -377,10 +377,10 @@ function initApp(presetMode) {
                     clearZoneAggregator(zonesCollectionObj);
                     if (whichFilter == "All") {
                         setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
-                        // resetMenuState(displayObj, "zones");
+                        resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "District") {
                         setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
-                        // resetMenuState(displayObj, "zones");
+                        resetMenuState(displayObj, "zones");
                     } else if (whichFilter == "Charter") {
                         self.dataFilters.zones = "Ward";
                         zonesCollectionObj.zoneA = "Ward";
@@ -403,17 +403,14 @@ function initApp(presetMode) {
                     self.dataFilters.levels = whichValue;
                     zonesCollectionObj.aggregatorArray = [];
                     if (whichValue == "HS") {
-                        setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
                         zonesCollectionObj.zoneA = "FeederHS";
-                        // resetMenuState(displayObj, "levels");
+                        resetMenuState(displayObj, "levels");
                     } else if (whichValue == "MS") {
-                        setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
                         zonesCollectionObj.zoneA = "FeederMS";
-                        // resetMenuState(displayObj, "levels");
+                        resetMenuState(displayObj, "levels");
                     } else if (whichValue == "ES") {
-                        setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
                         zonesCollectionObj.zoneA = "Elementary";
-                        // resetMenuState(displayObj, "levels");
+                        resetMenuState(displayObj, "levels");
                     } else {
                         zonesCollectionObj.zoneA = "Ward";
                     }
@@ -441,59 +438,28 @@ function initApp(presetMode) {
 
                     // == high school feeder zone selected
                     if (whichFilter == "FeederHS") {
-                        self.dataFilters.agency = "District";
-                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
                         setMenuState(displayObj, self.zonesMenu, ["A", "S", "A"]);
                         tempLevels = self.dataFilters.levels;
 
                         // == high school feeder zones apply to middle or elem schools
                         if (tempLevels == "ES") {
                             self.dataFilters.levels = "ES";
-                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
+                            setMenuState(displayObj, self.levelsMenu, ["D", "A", "S"]);
                             levelObject = filterMenu["Elem"];
-                        } else if (tempLevels == "MS") {
+                        } else if ((tempLevels == "MS") || (tempLevels == "HS") || (tempLevels == null))  {
                             self.dataFilters.levels = "MS";
-                            setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
+                            setMenuState(displayObj, self.levelsMenu, ["D", "S", "A"]);
                             levelObject = filterMenu["Middle"];
-                        } else if (tempLevels == "HS") {
-                            self.dataFilters.levels = "HS";
-                            setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
-                            levelObject = filterMenu["High"];
-                        } else if (tempLevels == null) {
-                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
-                            levelObject = filterMenu[null];
                         }
 
                     // == middle school feeder zone selected
                     } else if (whichFilter == "FeederMS") {
-                        self.dataFilters.agency = "District";
-                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
-                        setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
-                        tempLevels = self.dataFilters.levels;
-
-                        // == high school feeder zones apply to middle or elem schools
-                        if (tempLevels == "ES") {
-                            self.dataFilters.levels = "ES";
-                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "S"]);
-                            levelObject = filterMenu["Elem"];
-                        } else if (tempLevels == "MS") {
-                            self.dataFilters.levels = "MS";
-                            setMenuState(displayObj, self.levelsMenu, ["A", "S", "A"]);
-                            levelObject = filterMenu["Middle"];
-                        } else if (tempLevels == "HS") {
-                            self.dataFilters.levels = "HS";
-                            setMenuState(displayObj, self.levelsMenu, ["S", "A", "A"]);
-                            levelObject = filterMenu["High"];
-                        } else if (tempLevels == null) {
-                            setMenuState(displayObj, self.levelsMenu, ["A", "A", "A"]);
-                            levelObject = filterMenu[null];
-                        }
 
                         // == middle school feeder zones apply to elementary schools only
-                        // self.dataFilters.levels = "ES";
-                        // setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
-                        // setMenuState(displayObj, self.levelsMenu, ["D", "D", "S"]);
-                        // levelObject = filterMenu["Elem"];
+                        self.dataFilters.levels = "ES";
+                        setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
+                        setMenuState(displayObj, self.levelsMenu, ["D", "D", "S"]);
+                        levelObject = filterMenu["Elem"];
 
                     // == elementary zone selected
                     } else if (whichFilter == "Elementary") {

@@ -858,8 +858,6 @@ function getDataDetails(nextSchool, nextIndex) {
         // "unqBuilding": nextSchool.unqBuilding,
         "YrComplete": nextSchool.YrComplete,
 
-        console.log("  tempSchoolData.schoolMaxOccupancy: ", tempSchoolData.schoolMaxOccupancy);
-
         "schoolEnroll": nextSchool.Total_Enrolled,
         "studentEng": nextSchool.Limited_English,
         "studentAtRisk": nextSchool.At_Risk,
@@ -876,47 +874,12 @@ function getDataDetails(nextSchool, nextIndex) {
         "YrComplete1621": nextSchool.YrComplete1621,
         "SqFtPerEnroll": nextSchool.SqFtPerEnroll,
         "Open_Now": nextSchool.Open_Now,
-        "ProjectPhase": nextSchool.ProjectPhase
+        "ProjectPhase": nextSchool.ProjectPhase,
 
-        // ======= // ======= // ======= // ======= // ======= // ======= // =======
-        // school identity data
-        // "schoolIndex": nextIndex,
-        // "schoolCode": nextSchool.School_ID,
-        // "schoolName": nextSchool.School,
-        // "schoolWard": nextSchool.Ward,
-        // "schoolFeederMS": nextSchool.FeederMS,
-        // "schoolFeederHS": nextSchool.FeederHS,
-        // "schoolAddress": nextSchool.Address,
-        // "schoolLAT": nextSchool.latitude,
-        // "schoolLON": nextSchool.longitude,
-        // "schoolLevel": nextSchool.Level,
-        // "schoolAgency": nextSchool.Agency,
-        //
-        // // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
-        // "schoolProject": nextSchool.ProjectType,
-        // "schoolSqft": nextSchool.totalSQFT,
-        // "schoolMaxOccupancy": nextSchool.schoolMaxOccupancy,
-        // "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
-        // "unqBuilding": nextSchool.unqBuilding,
-        // "YrComplete": nextSchool.YrComplete,
-        //
-        // // student population data
-        // "schoolEnroll": nextSchool.Total_Enrolled,
-        // "studentEng": nextSchool.Limited_English,
-        // "studentAtRisk": nextSchool.At_Risk,
-        // "studentSpecEd": nextSchool.SpEd,
-        // "studentESLPer": nextSchool.ESLPer,
-        // "studentAtRiskPer": nextSchool.AtRiskPer,
-        // "studentSPEDPer": nextSchool.SPEDPer,
-        //
-        // // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
-        // "spendPast": nextSchool.MajorExp9815,
-        // "spendLifetime": nextSchool.LifetimeBudget,
-        // "spendPlanned": nextSchool.TotalAllotandPlan1621,
-        // "spendSqFt": nextSchool.SpentPerSqFt,           // Sqft
-        // "spendEnroll": nextSchool.SpentPerMaxOccupancy,       // Student
-        // "spendLTsqft": nextSchool.LTBudgetPerSqFt,
-        // "spendLTenroll": nextSchool.LTBudgetPerEnroll
+        "TotalAllotandPlan1621perMaxOcc": nextSchool.TotalAllotandPlan1621perMaxOcc,
+        "TotalAllotandPlan1621perGSF": nextSchool.TotalAllotandPlan1621perGSF,
+        "ProjectPhase": nextSchool.LifetimeBudgetperMaxOcc,
+        "LifetimeBudgetperMaxOcc": nextSchool.LifetimeBudgetperGSF
     }
     return tempSchoolData;
 }
@@ -1075,6 +1038,18 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2021</p></td>";
     htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending per Capacity</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>" + cleanedSchoolData.TotalAllotandPlan1621perMaxOcc + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending per GSF</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'" + cleanedSchoolData.TotalAllotandPlan1621perGSF + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per capacity</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>" + cleanedSchoolData.LifetimeBudgetperMaxOcc + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per GSF</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>" + cleanedSchoolData.LifetimeBudgetperGSF + "</p></td></tr>";
 
     htmlString += "</table>";
 
