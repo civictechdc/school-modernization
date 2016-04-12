@@ -442,7 +442,7 @@ function initApp(presetMode) {
                     // == high school feeder zone selected
                     if (whichFilter == "FeederHS") {
                         self.dataFilters.agency = "District";
-                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
+                        setMenuState(displayObj, self.agencyMenu, ["S", "D", "D"]);
                         setMenuState(displayObj, self.zonesMenu, ["A", "S", "A"]);
                         tempLevels = self.dataFilters.levels;
 
@@ -467,7 +467,7 @@ function initApp(presetMode) {
                     // == middle school feeder zone selected
                     } else if (whichFilter == "FeederMS") {
                         self.dataFilters.agency = "District";
-                        setMenuState(displayObj, self.agencyMenu, ["S", "A", "A"]);
+                        setMenuState(displayObj, self.agencyMenu, ["S", "D", "D"]);
                         setMenuState(displayObj, self.zonesMenu, ["A", "A", "S"]);
                         tempLevels = self.dataFilters.levels;
 
