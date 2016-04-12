@@ -829,10 +829,16 @@ function mouseoverZone(event, itemName) {
 
 // ======= ======= ======= getDataDetails ======= ======= =======
 function getDataDetails(nextSchool, nextIndex) {
-    // console.log("getDataDetails");
+    console.log("getDataDetails");
+
+    // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
+
+    // NEW DATA FIELDS
+    //  "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
 
     var tempSchoolData = {
-        // school identity data
+
+        // ======= ok =======
         "schoolIndex": nextIndex,
         "schoolCode": nextSchool.School_ID,
         "schoolName": nextSchool.School,
@@ -845,31 +851,72 @@ function getDataDetails(nextSchool, nextIndex) {
         "schoolLevel": nextSchool.Level,
         "schoolAgency": nextSchool.Agency,
 
-        // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
         "schoolProject": nextSchool.ProjectType,
         "schoolSqft": nextSchool.totalSQFT,
-        "schoolMaxOccupancy": nextSchool.schoolMaxOccupancy,
+        "schoolMaxOccupancy": nextSchool.maxOccupancy,
         "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
-        "unqBuilding": nextSchool.unqBuilding,
+        // "unqBuilding": nextSchool.unqBuilding,
         "YrComplete": nextSchool.YrComplete,
 
-        // student population data
+        console.log("  tempSchoolData.schoolMaxOccupancy: ", tempSchoolData.schoolMaxOccupancy);
+
         "schoolEnroll": nextSchool.Total_Enrolled,
         "studentEng": nextSchool.Limited_English,
         "studentAtRisk": nextSchool.At_Risk,
-        "studentSpecEd": nextSchool.SpEd,
+        "studentSpecEd": nextSchool.SPED,
         "studentESLPer": nextSchool.ESLPer,
         "studentAtRiskPer": nextSchool.AtRiskPer,
         "studentSPEDPer": nextSchool.SPEDPer,
 
-        // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
         "spendPast": nextSchool.MajorExp9815,
         "spendLifetime": nextSchool.LifetimeBudget,
         "spendPlanned": nextSchool.TotalAllotandPlan1621,
-        "spendSqFt": nextSchool.SpentPerSqFt,           // Sqft
-        "spendEnroll": nextSchool.SpentPerMaxOccupancy,       // Student
-        "spendLTsqft": nextSchool.LTBudgetPerSqFt,
-        "spendLTenroll": nextSchool.LTBudgetPerEnroll
+
+        "ProjectType16_21": nextSchool.ProjectType16_21,
+        "YrComplete1621": nextSchool.YrComplete1621,
+        "SqFtPerEnroll": nextSchool.SqFtPerEnroll,
+        "Open_Now": nextSchool.Open_Now,
+        "ProjectPhase": nextSchool.ProjectPhase
+
+        // ======= // ======= // ======= // ======= // ======= // ======= // =======
+        // school identity data
+        // "schoolIndex": nextIndex,
+        // "schoolCode": nextSchool.School_ID,
+        // "schoolName": nextSchool.School,
+        // "schoolWard": nextSchool.Ward,
+        // "schoolFeederMS": nextSchool.FeederMS,
+        // "schoolFeederHS": nextSchool.FeederHS,
+        // "schoolAddress": nextSchool.Address,
+        // "schoolLAT": nextSchool.latitude,
+        // "schoolLON": nextSchool.longitude,
+        // "schoolLevel": nextSchool.Level,
+        // "schoolAgency": nextSchool.Agency,
+        //
+        // // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
+        // "schoolProject": nextSchool.ProjectType,
+        // "schoolSqft": nextSchool.totalSQFT,
+        // "schoolMaxOccupancy": nextSchool.schoolMaxOccupancy,
+        // "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
+        // "unqBuilding": nextSchool.unqBuilding,
+        // "YrComplete": nextSchool.YrComplete,
+        //
+        // // student population data
+        // "schoolEnroll": nextSchool.Total_Enrolled,
+        // "studentEng": nextSchool.Limited_English,
+        // "studentAtRisk": nextSchool.At_Risk,
+        // "studentSpecEd": nextSchool.SpEd,
+        // "studentESLPer": nextSchool.ESLPer,
+        // "studentAtRiskPer": nextSchool.AtRiskPer,
+        // "studentSPEDPer": nextSchool.SPEDPer,
+        //
+        // // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
+        // "spendPast": nextSchool.MajorExp9815,
+        // "spendLifetime": nextSchool.LifetimeBudget,
+        // "spendPlanned": nextSchool.TotalAllotandPlan1621,
+        // "spendSqFt": nextSchool.SpentPerSqFt,           // Sqft
+        // "spendEnroll": nextSchool.SpentPerMaxOccupancy,       // Student
+        // "spendLTsqft": nextSchool.LTBudgetPerSqFt,
+        // "spendLTenroll": nextSchool.LTBudgetPerEnroll
     }
     return tempSchoolData;
 }

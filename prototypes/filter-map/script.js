@@ -3,6 +3,7 @@ function initApp(presetMode) {
     console.log('initApp');
     console.log('  presetMode: ', presetMode);
 
+    console.log('AAAAAAAAAAAAAAAGGGGGH!!!');
 
 
     // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
@@ -153,7 +154,6 @@ function initApp(presetMode) {
         for (var i = 0; i < jsonData.length; i++ ) {
             nextSchool = jsonData[i];
             nextSchoolName = nextSchool.School;
-            console.log("  nextSchoolName: ", nextSchoolName);
             selectHtml += "<option value='" + nextSchoolName + "'>" + nextSchoolName + "</option>";
         }
         selectHtml += "</select>";
@@ -655,7 +655,7 @@ function initApp(presetMode) {
             } else {
                 displayObj.activateClearButton();
                 makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, foundDataArray[0][1]);
-                hiliteSchoolMarker(foundDataArray);
+                // hiliteSchoolMarker(foundDataArray);
                 updateHoverText(null);
                 $(filterTitleContainer).css("font-size", "16px");
                 schoolText = "<span class='filterLabel'>Your school: </span>";
