@@ -189,7 +189,14 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     cleanedData.schoolIndex = schoolData.schoolIndex;
     cleanedData.schoolName = schoolData.schoolName;
     cleanedData.schoolWard = schoolData.schoolWard;
+    cleanedData.LifetimeBudgetperMaxOcc = schoolData.LifetimeBudgetperMaxOcc;
+    cleanedData.LifetimeBudgetperGSF = schoolData.LifetimeBudgetperGSF;
 
+    if ((schoolData.FutureYrComplete == "NA") || (schoolData.FutureYrComplete == null)) {
+        cleanedData.FutureYrComplete = "";
+    } else {
+        cleanedData.FutureYrComplete = schoolData.FutureYrComplete;
+    }
     if ((schoolData.schoolCode == "NA") || (schoolData.schoolCode == null)) {
         cleanedData.schoolCode = "";
     } else {

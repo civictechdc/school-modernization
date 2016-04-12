@@ -271,6 +271,7 @@ function getZoneIndex(zonesCollectionObj, displayObj, schoolData) {
             } else {
                 rootFeederMS = schoolFeederMS.split(" ")[0];
                 if (nextZone == rootFeederMS) {
+                    console.log("  schoolZoneIndex: ", schoolZoneIndex);
                     schoolZoneIndex = i;
                     break;
                 }
@@ -306,7 +307,9 @@ function makeZoneAggregator(zonesCollectionObj, displayObj, whichGeojson) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    // console.log("aggregateZoneData");
+    console.log("aggregateZoneData");
+    // console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+    // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
@@ -559,7 +562,7 @@ function doTheMath(zonesCollectionObj, displayObj) {
 
 // ======= ======= ======= assignDataColors ======= ======= =======
 function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
-    console.log("assignDataColors");
+    // console.log("assignDataColors");
 
     var nextZoneValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
     var nextExpendValue;
@@ -592,7 +595,7 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
 
 // ======= ======= ======= getZoneFormat ======= ======= =======
 function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, whichLayer) {
-    console.log("getZoneFormat");
+    // console.log("getZoneFormat");
 
     var itemColor = "white";
     var strokeColor = "purple";
@@ -829,12 +832,14 @@ function mouseoverZone(event, itemName) {
 
 // ======= ======= ======= getDataDetails ======= ======= =======
 function getDataDetails(nextSchool, nextIndex) {
-    console.log("getDataDetails");
+    // console.log("getDataDetails");
 
     // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
 
     // NEW DATA FIELDS
     //  "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
+
+    // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","FUTUREProjectType16.21","FutureYrComplete","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","TotalAllotandPlan1621perGSF","TotalAllotandPlan1621perMaxOcc","LifetimeBudgetperGSF","LifetimeBudgetperMaxOcc","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
 
     var tempSchoolData = {
 
@@ -870,24 +875,34 @@ function getDataDetails(nextSchool, nextIndex) {
         "spendLifetime": nextSchool.LifetimeBudget,
         "spendPlanned": nextSchool.TotalAllotandPlan1621,
 
-        "ProjectType16_21": nextSchool.ProjectType16_21,
-        "YrComplete1621": nextSchool.YrComplete1621,
+        "YrComplete1621": nextSchool.YrComplete,
         "SqFtPerEnroll": nextSchool.SqFtPerEnroll,
         "Open_Now": nextSchool.Open_Now,
         "ProjectPhase": nextSchool.ProjectPhase,
 
         "TotalAllotandPlan1621perMaxOcc": nextSchool.TotalAllotandPlan1621perMaxOcc,
         "TotalAllotandPlan1621perGSF": nextSchool.TotalAllotandPlan1621perGSF,
-        "ProjectPhase": nextSchool.LifetimeBudgetperMaxOcc,
-        "LifetimeBudgetperMaxOcc": nextSchool.LifetimeBudgetperGSF
+        "LifetimeBudgetperMaxOcc": nextSchool.LifetimeBudgetperMaxOcc,
+        "LifetimeBudgetperGSF": nextSchool.LifetimeBudgetperGSF,
+
+        "SpentPerMaxOccupancy": nextSchool.SpentPerMaxOccupancy,
+        "SpentPerSqFt": nextSchool.SpentPerSqFt,
+        "FutureYrComplete": nextSchool.FutureYrComplete,
+        "FutureProjectType16_21": nextSchool.FutureProjectType16_21
+
     }
+    // console.log("nextSchool.TotalAllotandPlan1621perMaxOcc: ", nextSchool.TotalAllotandPlan1621perMaxOcc);
+    // console.log("nextSchool.TotalAllotandPlan1621perGSF: ", nextSchool.TotalAllotandPlan1621perGSF);
+    // console.log("nextSchool.LifetimeBudgetperMaxOcc: ", nextSchool.LifetimeBudgetperMaxOcc);
+    // console.log("nextSchool.LifetimeBudgetperGSF: ", nextSchool.LifetimeBudgetperGSF);
+
+
     return tempSchoolData;
 }
 
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
 function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolIndex) {
     console.log("makeSchoolProfile");
-    console.log("  schoolIndex: ", schoolIndex);
 
     var nextValue;
     schoolsCollectionObj.selectedSchool = null;
@@ -1019,7 +1034,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<td class='data-value'><p class='value-text'>" + schoolMaxOccupancy + " " + schoolMaxOccupancySpan + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Past spending (FY1998-2015)</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>" + spendPast + ";</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Past facilities improvements</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
@@ -1028,28 +1043,22 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.YrComplete + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2021)</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.TotalAllotandPlan1621 + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Future facilities improvements</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.FUTUREProjectType16_21 + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Projected completion</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.FutureYrComplete + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2021</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + spendLifetime + "</p></td></tr>";
 
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending per Capacity</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>" + cleanedSchoolData.TotalAllotandPlan1621perMaxOcc + "</p></td></tr>";
-
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending per GSF</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'" + cleanedSchoolData.TotalAllotandPlan1621perGSF + "</p></td></tr>";
-
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per capacity</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>" + cleanedSchoolData.LifetimeBudgetperMaxOcc + "</p></td></tr>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per student</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.LifetimeBudgetperMaxOcc + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per GSF</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>" + cleanedSchoolData.LifetimeBudgetperGSF + "</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.LifetimeBudgetperGSF + "</p></td></tr>";
 
     htmlString += "</table>";
 

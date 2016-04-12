@@ -3,6 +3,7 @@ function initApp(presetMode) {
     console.log('initApp');
     console.log('  presetMode: ', presetMode);
 
+    console.log('AAAAAAAAAAAAAAAGGGHHH!!!');
 
     // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
@@ -422,6 +423,7 @@ function initApp(presetMode) {
                 // == expenditures filter (past, present, planed, etc.)
                 case "expend":
                     self.dataFilters.expend = whichFilter;
+                    console.log("  whichFilter: ", whichFilter);
                     if (whichFilter == "spendLifetime") {
                         setMenuState(displayObj, self.expendMenu, ["S", "A", "A"]);
                     } else if (whichFilter == "spendPast") {
@@ -869,6 +871,7 @@ r
         // var url = "../../DCSchools_FY1415_Master_321.csv ";
         // var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv";
         var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_412.csv";
+        console.log("  url: ", url);
 
         // ======= get school data =======
         if (this.jsonData == null) {
