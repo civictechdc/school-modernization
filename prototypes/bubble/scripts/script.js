@@ -22,13 +22,13 @@
             }(data))
         };
 
-        // To change the subdivides, CATEGORY
-        // District vs Charter, Grade Level, Ward, Feeder Pattern
+        // To change the subdivides, CATEGORY, this.column
+        // District vs Charter, Grade Level, Ward, Feeder Pattern, Project Type
         var subdivides = Array.prototype.slice.call(getAll('.subdivides'));
         subdivides.forEach(function(item, e){
             item.addEventListener('click', function(e){
                 subdivides.forEach(function(sel){
-                    if(sel.classList.contains('selected')){
+                    if (sel.classList.contains('selected')){
                         sel.classList.remove('selected');
                     }
                 });
@@ -39,7 +39,7 @@
                 get('#charter').classList.remove('invalid');
 
 
-                if(e.target.id === 'FeederHS'){
+                if (e.target.id === 'FeederHS'){
                     bubble.setData(schools['public']);
                     get('#both').classList.remove('selected');
                     get('#charter').classList.remove('selected');
@@ -49,8 +49,8 @@
                     get('#charter').classList.add('invalid');
                     get('#both').classList.add('invalid');
                 }
-                if(e.target.id === 'Agency'){
-                    bubble.setData(schools['both']);
+                if (e.target.id === 'Agency'){
+                    bubble.setData(schools.both);
                     get('#both').classList.add('selected');
                     get('#charter').classList.remove('selected');
                     get('#public').classList.remove('selected');
@@ -60,7 +60,17 @@
                     get('#public').classList.add('invalid');
 
                 }
-                bubble.setColumn(e.target.id);
+
+                if (e.target.id === 'ProjectType'){
+                    if (bubble.budget === 'TotalAllotandPlan1621'){
+                        bubble.setColumn(e.target.dataset.alt);
+                    } else {
+                        bubble.setColumn(e.target.id);
+                    }
+                } else {
+                    bubble.setColumn(e.target.id);
+                }
+
                 bubble.change();
                 makeSelected(e);
 
@@ -69,8 +79,8 @@
             });
         });
 
-        // To change the bubble radii, BUDGET COLUMNS
-        // Past, Future, Lifetime, Per Sq Ft
+        // To change the bubble radii, BUDGET COLUMNS, this.budget
+        // Past, Future, Lifetime, Per Sq Ft, Per Student
         var dataChange = Array.prototype.slice.call(getAll('.dataChange'));
         dataChange.forEach(function(item, e){
             item.addEventListener('click', function(e){  
@@ -80,7 +90,17 @@
                     }
                 });
 
-                bubble.setBudget(e.target.id);
+                // if(e.target.id === 'TotalAllotandPlan1621'){
+                //     if (bubble.column === 'ProjectType' || bubble.column === 'ProjectType16.21'){
+                //         bubble.setBudget('ProjectType16.21');
+                //         console.log(bubble.column);
+                //     } else {
+                //         bubble.setBudget(e.target.id);
+                //     }
+                // } else {
+                    bubble.setBudget(e.target.id);
+                // }
+
                 bubble.change();
                 makeSelected(e);
 
@@ -89,7 +109,7 @@
             });
         });
 
-        // To change the data set, SCHOOL SET
+        // To change the data set, SCHOOL SET, this.data
         // District Schools, Charter Schools, All Schools
         var schoolChange = Array.prototype.slice.call(getAll('.school'));
         schoolChange.forEach(function(item, e){
@@ -100,6 +120,7 @@
                     }
                 });
                 bubble.setData(schools[e.target.id]);
+                
                 bubble.change();
                 makeSelected(e);
 
