@@ -223,9 +223,7 @@ function initApp(presetMode) {
             nextMenu = this.filterMenusArray[i];
             for (var j = 1; j < nextMenu.length; j++) {
                 nextFilter = nextMenu[j];
-                if (nextFilter.id != "FeederMS") {
-                    this.activateFilterLink(nextFilter);
-                }
+                this.activateFilterLink(nextFilter);
             }
         }
     }

@@ -191,6 +191,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     cleanedData.schoolWard = schoolData.schoolWard;
     cleanedData.LifetimeBudgetperMaxOcc = schoolData.LifetimeBudgetperMaxOcc;
     cleanedData.LifetimeBudgetperGSF = schoolData.LifetimeBudgetperGSF;
+    cleanedData.SpentPerMaxOccupancy = schoolData.SpentPerMaxOccupancy;
 
     if ((schoolData.FutureYrComplete == "NA") || (schoolData.FutureYrComplete == null)) {
         cleanedData.FutureYrComplete = "";
