@@ -1,7 +1,7 @@
 import csv, json
 
 # Read csv
-with open('data/multischool.csv', 'rU') as file:
+with open('data/multischool_final.csv', 'rU') as file:
    reader = csv.DictReader(file)
 
    data_for_json = {
@@ -11,8 +11,8 @@ with open('data/multischool.csv', 'rU') as file:
 
    for row in reader:
       tempObj = {}
-      tempObj['name'] = row['MULTI.SCHOOL.PROJECT.TYPES'].title()
-      tempObj['value'] = row['Sum.of.Lifetime.Budget']
+      tempObj['name'] = row['projectType'].title()
+      tempObj['value'] = row['lifetimeBudget']
       data_for_json['children'].append(tempObj)
 
 # Make JSON file
