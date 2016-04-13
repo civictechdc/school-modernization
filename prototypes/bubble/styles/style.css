@@ -18,8 +18,13 @@ button {
   -webkit-border-radius: 15px; }
 
 .container {
+<<<<<<< HEAD
+  width: 90%;
+  margin: 0px -1px; }
+=======
   width: 80%;
   margin: 0px auto; }
+>>>>>>> nick
 
 .nav {
   position: fixed; }
@@ -91,9 +96,13 @@ text#tooltip_label {
 
 #legend {
   height: 200px;
-  width: 250px;
+  width: 200px;
   position: absolute;
+<<<<<<< HEAD
+  right: -3%;
+=======
   right: 16.5%;
+>>>>>>> nick
   top: 15px; }
   #legend #legend_cont {
     position: absolute;

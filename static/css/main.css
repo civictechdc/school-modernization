@@ -64,8 +64,8 @@ a {
 
 #narrative {
     font-family: 'Open Sans', sans-serif;
-    margin-left: 16.66%;
-    margin-top: 20px;
+    margin-left: 20%;
+    margin-top: 100px;
 }
 
 #narrative div.words {
@@ -177,6 +177,9 @@ html, body, .container-fluid, .row {
     background-color: #021C2A;
     text-align: center;
     padding: 20px;
+    position: fixed;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 /* ---- Nav Styles ----- */
@@ -188,11 +191,16 @@ html, body, .container-fluid, .row {
     height: 100%;
     margin-right: 20px;
     padding: 1.5%;
+    position: fixed;
+    top: 80px;
+    margin-right: 20px;
 }
 
 #navigation li {
     margin-top: 20px;
 }
+
+
 
 /* ---- Intro Styles ----- */
 
