@@ -26,29 +26,63 @@
          <p class='modHeader'>Filters</p>
          <div id="menuInner">
             
+            <!-- Budget /  bubble radius-->
             <ul class='menu'>
                <li class="title">Facility Spending</li>
-               <li id='MajorExp9815' class="row rowBehavior dataChange">PAST FY1998-2015</li>
-               <li id='TotalAllotandPlan1621' class="row rowBehavior dataChange">FUTURE FY2016-2021</li>
-               <li id='LifetimeBudget' class="row rowBehavior dataChange">TOTAL FY1998-2021</li>
+               <li id='past' 
+                     data-key='past'
+                     data-sqft='SpentPerSqFt'
+                     data-student='SpentPerMaxOccupancy'
+                     data-total='MajorExp9815'
+                     class="row rowBehavior budgetChange">PAST FY1998-2015</li>
+               <li id='future' 
+                     data-key='future'
+                     data-sqft='TotalAllotandPlan1621perGSF'
+                     data-student='TotalAllotandPlan1621perMaxOcc'
+                     data-total='TotalAllotandPlan1621'
+                     class="row rowBehavior budgetChange">FUTURE FY2016-2021</li>
+               <li id='lifetime' 
+                     data-key='lifetime'
+                     data-sqft='LifetimeBudgetperGSF'
+                     data-student='LifetimeBudgetperMaxOcc'
+                     data-total='LifetimeBudget'
+                     class="row rowBehavior budgetChange">LIFETIME FY1998-2021</li>
             </ul>
+
+            <!-- Add Per -->
             <ul class='menu'>
-               <li class="title"></li>
-               <li id='SpentPerSqFt' class="row rowBehavior dataChange">AVERAGE PER SQUARE FOOT</li>
-               <li id='SpentPerMaxOccupancy' class="row rowBehavior dataChange">AVERAGE PER STUDENT</li>
-            </ul>
+               <li class="title">** Some Title **</li>
                
-
+               <li id='persqft' 
+                     data-key='sqft'
+                     data-past='SpentPerSqFt' 
+                     data-future='TotalAllotandPlan1621perGSF' 
+                     data-lifetime='LifetimeBudgetperGSF'
+                     class="row rowBehavior perChange">AVERAGE PER SQUARE FOOT</li>
                
+               <li id='perstudent' 
+                     data-key='student'
+                     data-past='SpentPerMaxOccupancy' 
+                     data-future='TotalAllotandPlan1621perMaxOcc' 
+                     data-lifetime='LifetimeBudgetperMaxOcc'
+                     class="row rowBehavior perChange">AVERAGE PER STUDENT</li>
+               
+               <li id='total' 
+                     data-key='total'
+                     data-past='MajorExp9815' 
+                     data-future='TotalAllotandPlan1621' 
+                     data-lifetime='LifetimeBudget'
+                     class="row rowBehavior perChange">TOTAL</li>
             </ul>
 
+            <!-- Column / Splits -->
             <ul class='menu'>
                <li class="title">Category</li>
-               <li id='Agency' class="row rowBehavior subdivides">School Sector</li>
-               <li id='Level' class="row rowBehavior subdivides">Grade Level</li>
-               <li id='Ward' class="row rowBehavior subdivides">Ward</li>
-               <li id='FeederHS' class="row rowBehavior subdivides">DCPS HS Feeder</li>
-               <li id='ProjectType' class="row rowBehavior subdivides">Project Type</li>
+               <li id='Agency' class="row rowBehavior columnChange">School Sector</li>
+               <li id='Level' class="row rowBehavior columnChange">Grade Level</li>
+               <li id='Ward' class="row rowBehavior columnChange">Ward</li>
+               <li id='FeederHS' class="row rowBehavior columnChange">DCPS HS Feeder</li>
+               <li id='ProjectType' data-alt='FUTUREProjectType16_21' class="row rowBehavior columnChange">Project Type</li>
             </ul>
             
              <!-- Search Feature && Clear Button-->
@@ -59,7 +93,7 @@
                </select>
 
                <!-- Clear Button -->
-               <li id='None' class='row rowBehavior subdivides'>Clear All</li>
+               <li id='None' class='row rowBehavior columnChange'>Clear All</li>
             </ul>
          
          
@@ -72,9 +106,9 @@
          <div id="menuInner">
             <ul class='menu'>
                <li class="title">Show Only</li>
-               <li id='public' class="row rowBehavior school">District Schools</li>
-               <li id='charter' class="row rowBehavior school">Charter Schools</li>
-               <li id='both' class="row rowBehavior school">All Schools</li>
+               <li id='public' class="row rowBehavior schoolChange">District Schools</li>
+               <li id='charter' class="row rowBehavior schoolChange">Charter Schools</li>
+               <li id='both' class="row rowBehavior schoolChange">All Schools</li>
             </ul>
          </div>
       </div>
@@ -114,8 +148,9 @@
    </div>
 
    <script src='scripts/libs/d3.min.js'></script>
+   <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
    <script src='scripts/libs/underscore-min.js'></script>
    <script src='scripts/bubbleClass.js'></script>
-   <script src='scripts/script.js'></script>
+   <script src='scripts/script2.js'></script>
 </body>
 </html>
