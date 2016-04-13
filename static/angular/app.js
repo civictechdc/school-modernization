@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module("PostModern", ['ngRoute'])
-  .config(["$routeProvider", function($routeProvider, navService) {
-      console.log("ang:routeProvider");
+  .config(["$routeProvider", function($routeProvider) {
       $routeProvider.when("/intro", {
           templateUrl: 'static/angular/views/intro.html',
       })
@@ -24,6 +23,5 @@ angular.module("PostModern", ['ngRoute'])
       .when('/about', {
           templateUrl: 'static/angular/views/about.html',
       })
-      .otherwise('/intro')
-  }])
-
+      .otherwise('/intro');
+  }]);

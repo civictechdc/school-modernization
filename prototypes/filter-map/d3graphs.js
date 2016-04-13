@@ -449,6 +449,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 console.log("\n------- setSubMenu -------");
                 nextMath = $("select[name='expendMath'] option:selected").val()
                 displayObj.dataFilters.math = nextMath;
+                console.log("  nextMath: ", nextMath);
                 // clearZoneAggregator(zonesCollectionObj);
                 checkFilterSelection(displayObj, zonesCollectionObj, "math");
 
@@ -588,9 +589,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
           // Do nothing
         } else {
             $("#chart-container").css("position", "absolute");
-            $("#chart-container").css("top", "380px");
-            $("#chart-container").css("left", "100px");
-            // $("#chart-container").css("width", "360px");
+            $("#chart-container").css("top", "410px");
+            $("#chart-container").css("left", "0");
+            $("#chart-container").css("width", "520px");
             $("#chart-container").css("height", "auto");
         }
     }
