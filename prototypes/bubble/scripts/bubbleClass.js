@@ -1,11 +1,14 @@
 'use strict';
 
-function Bubble(budget){ // data
-    this.budget = budget;
-    this.money = d3.format('$,');
-    this.commas = d3.format(',');
+function Bubble(){ // data
+    
+    this.budget =  null;
     this.column = null;
     this.data = null;
+    this.per = null;
+
+    this.money = d3.format('$,');
+    this.commas = d3.format(',');
     this.sizes = {width: 1050, height: 570, padding: 100};
     this.force = null;
     this.circles = null;
@@ -25,6 +28,7 @@ function Bubble(budget){ // data
     };
 };
 
+// Getters
 Bubble.prototype.setColumn = function(column){
     this.column = column; 
 };
@@ -36,7 +40,28 @@ Bubble.prototype.setData = function(newData){
 Bubble.prototype.setBudget = function(budget){
     this.budget = budget;
 };
+Bubble.prototype.setPer = function(newPer){
+    this.per = per;
+};
 
+// Setters
+Bubble.prototype.getColumn = function(column){
+    return this.column; 
+};
+
+Bubble.prototype.getData = function(newData){
+    return this.data;
+};
+
+Bubble.prototype.getBudget = function(budget){
+    return this.budget;
+};
+
+Bubble.prototype.getPer = function(newPer){
+    return this.per;
+};
+
+// The Rest
 Bubble.prototype.make_svg = function(){
     if(document.querySelector('svg')){
         d3.select('svg').remove();
@@ -316,8 +341,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
 Bubble.prototype.make_legend = function(){
     var that = this;
     if(get('.legendSvg')){
-        // d3.select('#legend_cont.legendSvg').remove('svg');
-        // var list = d3.select('.legendSvg');
         var list = getAll('.legendSvg');
         for (var i = list.length - 1; i >= 0; i--) {
             d3.select(list[i]).remove();
@@ -419,7 +442,6 @@ Bubble.prototype.add_search_feature = function() {
         }
         // Highlight the selected node
         var circle = document.getElementById(e.target.value);
-        console.log(circle);
         circle.setAttribute('shown', true);
         circle.style.fill = '#021c2a';
     });
