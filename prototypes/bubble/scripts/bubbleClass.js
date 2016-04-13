@@ -111,8 +111,7 @@ Bubble.prototype.create_nodes = function(){
                 }   
             } else {
                 return 7;
-            }
-        }());
+            }        }());
         this.nodes.push(current);
     }
 };

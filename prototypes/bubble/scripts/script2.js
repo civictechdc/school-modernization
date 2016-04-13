@@ -38,7 +38,6 @@ d3.csv('data/data_final.csv', function(data){
             }
             var state = $(e.target).data(perState);
             bubble.setBudget(state);
-            console.log('state:' + state);
 
             // Set the budgetState
             budgetState = $(e.target).data('key');
@@ -88,13 +87,6 @@ d3.csv('data/data_final.csv', function(data){
         });
     });
 
-    /*
-    Budget =  bubble radius  =  Past, Future, Lifetime, Per Sq Ft, Per Student
-    Per    =                    Per Square Ft, Per Student, Total
-    Data   =  show school    =  District Schools, Charter Schools, All Schools
-    Column =  splits         =  Agency, Grade Level, Ward, Feeder Pattern, Project Type
-    */
-
     /* Utility Functions */
     function setInitialGraph(){
         bubble.reset_svg();
@@ -106,15 +98,12 @@ d3.csv('data/data_final.csv', function(data){
 
     function setInitialMenuStates(){
         // Quick fix for council meeting
-        [$('#future'), $('#total'), $('#Agency')].forEach(function(item){
+        [$('#future'), $('#total'), $('#Agency'), $('#both')].forEach(function(item){
             makeSelected(null, item);
         });
     }
 
     function update(e){
-        console.log('budgetState: ' + budgetState);
-        console.log('perState: ' + perState);
-
         bubble.change();
         makeSelected(e);
     }
@@ -140,7 +129,6 @@ d3.csv('data/data_final.csv', function(data){
     }
 
     function clearInactive(){
-        console.log('done');
         var $invalidsButtons = $('.invalid');
         $.each($invalidsButtons, function(i){
             $($invalidsButtons[i]).removeClass('invalid');
