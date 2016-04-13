@@ -18,13 +18,9 @@ button {
   -webkit-border-radius: 15px; }
 
 .container {
-<<<<<<< HEAD
   width: 90%;
   margin: 0px -1px; }
-=======
-  width: 80%;
-  margin: 0px auto; }
->>>>>>> nick
+
 
 .nav {
   position: fixed; }
@@ -98,12 +94,8 @@ text#tooltip_label {
   height: 200px;
   width: 200px;
   position: absolute;
-<<<<<<< HEAD
-  right: -3%;
-=======
-  right: 16.5%;
->>>>>>> nick
-  top: 15px; }
+  top: 15px;
+  left: 660px; }
   #legend #legend_cont {
     position: absolute;
     background-color: #fff;
@@ -122,7 +114,8 @@ text#tooltip_label {
   color: #fff;
   text-align: center;
   border-top-left-radius: 4px;
-  border-top-right-radius: 4px; }
+  border-top-right-radius: 4px; 
+  width: 230px;}
 
 #statusBar {
   padding-left: 25px;

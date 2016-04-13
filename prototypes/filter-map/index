@@ -189,15 +189,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     cleanedData.schoolIndex = schoolData.schoolIndex;
     cleanedData.schoolName = schoolData.schoolName;
     cleanedData.schoolWard = schoolData.schoolWard;
-    cleanedData.LifetimeBudgetperMaxOcc = schoolData.LifetimeBudgetperMaxOcc;
-    cleanedData.LifetimeBudgetperGSF = schoolData.LifetimeBudgetperGSF;
-    cleanedData.SpentPerMaxOccupancy = schoolData.SpentPerMaxOccupancy;
 
-    if ((schoolData.FutureYrComplete == "NA") || (schoolData.FutureYrComplete == null)) {
-        cleanedData.FutureYrComplete = "";
-    } else {
-        cleanedData.FutureYrComplete = schoolData.FutureYrComplete;
-    }
     if ((schoolData.schoolCode == "NA") || (schoolData.schoolCode == null)) {
         cleanedData.schoolCode = "";
     } else {
@@ -362,36 +354,6 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
         cleanedData.spendEnroll = numberWithCommas(spendEnroll);
     } else {
         cleanedData.spendEnroll = "";
-    }
-
-    // TotalAllotandPlan1621perMaxOcc, TotalAllotandPlan1621perGSF, LifetimeBudgetperMaxOcc, LifetimeBudgetperGSF
-    var TotalAllotandPlan1621perMaxOccFlag = isNumber(schoolData.TotalAllotandPlan1621perMaxOcc);
-    if (TotalAllotandPlan1621perMaxOccFlag == true) {
-        var TotalAllotandPlan1621perMaxOcc = parseInt(schoolData.TotalAllotandPlan1621perMaxOcc);
-        cleanedData.TotalAllotandPlan1621perMaxOcc = numberWithCommas(TotalAllotandPlan1621perMaxOcc);
-    } else {
-        cleanedData.TotalAllotandPlan1621perMaxOcc = "";
-    }
-    var TotalAllotandPlan1621perGSFFlag = isNumber(schoolData.TotalAllotandPlan1621perGSF);
-    if (TotalAllotandPlan1621perGSFFlag == true) {
-        var TotalAllotandPlan1621perGSF = parseInt(schoolData.TotalAllotandPlan1621perGSF);
-        cleanedData.TotalAllotandPlan1621perGSF = numberWithCommas(TotalAllotandPlan1621perGSF);
-    } else {
-        cleanedData.TotalAllotandPlan1621perGSF = "";
-    }
-    var LifetimeBudgetperMaxOccFlag = isNumber(schoolData.LifetimeBudgetperMaxOcc);
-    if (LifetimeBudgetperMaxOccFlag == true) {
-        var LifetimeBudgetperMaxOcc = parseInt(schoolData.LifetimeBudgetperMaxOcc);
-        cleanedData.LifetimeBudgetperMaxOcc = numberWithCommas(LifetimeBudgetperMaxOcc);
-    } else {
-        cleanedData.LifetimeBudgetperMaxOcc = "";
-    }
-    var LifetimeBudgetperGSFFlag = isNumber(schoolData.LifetimeBudgetperGSF);
-    if (LifetimeBudgetperGSFFlag == true) {
-        var LifetimeBudgetperGSF = parseInt(schoolData.LifetimeBudgetperGSF);
-        cleanedData.LifetimeBudgetperGSF = numberWithCommas(LifetimeBudgetperGSF);
-    } else {
-        cleanedData.LifetimeBudgetperGSF = "";
     }
 
     return cleanedData;

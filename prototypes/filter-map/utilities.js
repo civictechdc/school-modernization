@@ -5,6 +5,9 @@
 // ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
 // ======= ======= ======= ======= ======= MATH PROCESSING & DISPLAY ======= ======= ======= ======= =======
 
+// //https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv
+//https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv
+
 // ======= ======= ======= polyfill for Safari ======= ======= =======
 Number.isInteger = Number.isInteger || function(value) {
     return typeof value === "number" &&
@@ -122,8 +125,6 @@ function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
 // ======= ======= ======= setMenuState ======= ======= =======
 function setMenuState(displayObj, whichMenu, whichStates) {
     console.log("setMenuState");
-    console.log("  whichMenu: ", whichMenu);
-    console.log("  whichStates: ", whichStates);
 
     var nextState, nextFilter, nextFilterText, nextElement, checkIndex, selectedFilterText;
 
@@ -180,7 +181,6 @@ function setMenuState(displayObj, whichMenu, whichStates) {
             // }
             selectedFilterText = nextFilterText;
             displayObj.filterTitlesObject[whichMenu[0]] = selectedFilterText;
-            console.log("  selectedFilterText: ", selectedFilterText);
             $(nextElement).removeClass("deactivated");
             $(nextElement).addClass("active");
             $(nextElement).addClass("selected");
@@ -192,9 +192,6 @@ function setMenuState(displayObj, whichMenu, whichStates) {
 // ======= ======= ======= updateFilterSelections ======= ======= =======
 function updateFilterSelections(displayObj, whichMenu, filterText) {
     console.log("updateFilterSelections");
-    console.log("  filterText: ", filterText);
-    console.log("  displayObj.filterTitlesObject: ", displayObj.filterTitlesObject);
-    console.log("  displayObj.filterTitlesObject: ", displayObj.filterTitlesObject);
 
     var selectedFilterContainer = $("#filters-selections").children("h2");
     var nextFilter, checkNextFilter;
@@ -214,7 +211,6 @@ function updateFilterSelections(displayObj, whichMenu, filterText) {
     if (displayObj.filterTitlesObject.zones) {
         selectedFilterText += " by " + displayObj.filterTitlesObject.zones;
     }
-    console.log("  selectedFilterText: ", selectedFilterText);
 
     $(selectedFilterContainer).addClass("filterList");
     $(selectedFilterContainer).html(selectedFilterText);
@@ -275,6 +271,7 @@ function getZoneIndex(zonesCollectionObj, displayObj, schoolData) {
             } else {
                 rootFeederMS = schoolFeederMS.split(" ")[0];
                 if (nextZone == rootFeederMS) {
+                    console.log("  schoolZoneIndex: ", schoolZoneIndex);
                     schoolZoneIndex = i;
                     break;
                 }
@@ -285,14 +282,20 @@ function getZoneIndex(zonesCollectionObj, displayObj, schoolData) {
 }
 
 // ======= ======= ======= makeZoneAggregator ======= ======= =======
-function makeZoneAggregator(zonesCollectionObj, whichGeojson) {
+function makeZoneAggregator(zonesCollectionObj, displayObj, whichGeojson) {
     console.log("makeZoneAggregator");
 
     zonesCollectionObj.aggregatorArray = [];
     if (whichGeojson) {
-        var nextZoneName, splitZoneName, nextZoneObject;
+        var nextZoneName, splitZoneName, nextZoneObject, nextGIS_ID, startCode, nextZoneCode;
         for (var i = 0; i < whichGeojson.features.length; i++) {
             nextZoneName = whichGeojson.features[i].properties.NAME;
+            // if (displayObj.dataFilters.zones != "Ward") {
+            //     nextGIS_ID = whichGeojson.features[i].properties.GIS_ID;
+            //     startCode = nextGIS_ID.indexOf("_");
+            //     nextZoneCode = nextGIS_ID.substring(startCode + 1);
+            //     console.log("  nextZoneCode: ", nextZoneCode);
+            // }
             nextZoneObject = { zoneIndex:i, zoneName:nextZoneName, schoolCount:0, zoneAmount:0, zoneSqft:0, zoneEnroll:0, amountMin:0, amountMax:0, amountAvg:0, amountMed:0 }
             zonesCollectionObj.aggregatorArray.push(nextZoneObject);
         }
@@ -304,7 +307,9 @@ function makeZoneAggregator(zonesCollectionObj, whichGeojson) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    // console.log("aggregateZoneData");
+    console.log("aggregateZoneData");
+    // console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+    // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
@@ -357,10 +362,10 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
             if (nextSchoolExpend >= 0) {
                 if (validExpendFlag == true) {
                     zonesCollectionObj.aggregatorArray[schoolZoneIndex].schoolCount++;
+                    currentAmount = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount;
+                    aggregatedAmount = currentAmount + nextSchoolExpend;
+                    zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount = aggregatedAmount;
                 }
-                currentAmount = zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount;
-                aggregatedAmount = currentAmount + nextSchoolExpend;
-                zonesCollectionObj.aggregatorArray[schoolZoneIndex].zoneAmount = aggregatedAmount;
 
                 // ======= record max =======
                 if (nextSchoolExpend > zonesCollectionObj.aggregatorArray[schoolZoneIndex].amountMax) {
@@ -454,7 +459,7 @@ function captureSchoolData(zonesCollectionObj, displayObj, schoolData, masterInd
     var checkSchoolName = processSchoolName(schoolData.schoolName)
 
     if (displayObj.dataFilters.levels) {
-        var nextZoneName, splitZoneName, nextZoneObject;
+        var splitZoneName, nextZoneObject, nextDataObject, nextSchoolName, nextSchoolExpend, nextSchoolSqft, nextSchoolEnroll;
         for (var i = 0; i < zoneAggregator.length; i++) {
             nextDataObject = zoneAggregator[i];
             nextSchoolName = nextDataObject.zoneName;
@@ -557,7 +562,7 @@ function doTheMath(zonesCollectionObj, displayObj) {
 
 // ======= ======= ======= assignDataColors ======= ======= =======
 function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
-    console.log("assignDataColors");
+    // console.log("assignDataColors");
 
     var nextZoneValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
     var nextExpendValue;
@@ -590,7 +595,7 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
 
 // ======= ======= ======= getZoneFormat ======= ======= =======
 function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, whichLayer) {
-    console.log("getZoneFormat");
+    // console.log("getZoneFormat");
 
     var itemColor = "white";
     var strokeColor = "purple";
@@ -827,10 +832,18 @@ function mouseoverZone(event, itemName) {
 
 // ======= ======= ======= getDataDetails ======= ======= =======
 function getDataDetails(nextSchool, nextIndex) {
-    // console.log("getDataDetails");
+    console.log("getDataDetails");
+
+    // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
+
+    // NEW DATA FIELDS
+    //  "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
+
+    // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","FUTUREProjectType16.21","FutureYrComplete","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","TotalAllotandPlan1621perGSF","TotalAllotandPlan1621perMaxOcc","LifetimeBudgetperGSF","LifetimeBudgetperMaxOcc","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
 
     var tempSchoolData = {
-        // school identity data
+
+        // ======= ok =======
         "schoolIndex": nextIndex,
         "schoolCode": nextSchool.School_ID,
         "schoolName": nextSchool.School,
@@ -843,39 +856,54 @@ function getDataDetails(nextSchool, nextIndex) {
         "schoolLevel": nextSchool.Level,
         "schoolAgency": nextSchool.Agency,
 
-        // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
         "schoolProject": nextSchool.ProjectType,
         "schoolSqft": nextSchool.totalSQFT,
-        "schoolMaxOccupancy": nextSchool.schoolMaxOccupancy,
+        "schoolMaxOccupancy": nextSchool.maxOccupancy,
         "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
-        "unqBuilding": nextSchool.unqBuilding,
+        // "unqBuilding": nextSchool.unqBuilding,
         "YrComplete": nextSchool.YrComplete,
 
-        // student population data
         "schoolEnroll": nextSchool.Total_Enrolled,
         "studentEng": nextSchool.Limited_English,
         "studentAtRisk": nextSchool.At_Risk,
-        "studentSpecEd": nextSchool.SpEd,
+        "studentSpecEd": nextSchool.SPED,
         "studentESLPer": nextSchool.ESLPer,
         "studentAtRiskPer": nextSchool.AtRiskPer,
         "studentSPEDPer": nextSchool.SPEDPer,
 
-        // spending data: spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
         "spendPast": nextSchool.MajorExp9815,
         "spendLifetime": nextSchool.LifetimeBudget,
         "spendPlanned": nextSchool.TotalAllotandPlan1621,
-        "spendSqFt": nextSchool.SpentPerSqFt,           // Sqft
-        "spendEnroll": nextSchool.SpentPerMaxOccupancy,       // Student
-        "spendLTsqft": nextSchool.LTBudgetPerSqFt,
-        "spendLTenroll": nextSchool.LTBudgetPerEnroll
+
+        "YrComplete1621": nextSchool.YrComplete,
+        "SqFtPerEnroll": nextSchool.SqFtPerEnroll,
+        "Open_Now": nextSchool.Open_Now,
+        "ProjectPhase": nextSchool.ProjectPhase,
+
+        "TotalAllotandPlan1621perMaxOcc": nextSchool.TotalAllotandPlan1621perMaxOcc,
+        "TotalAllotandPlan1621perGSF": nextSchool.TotalAllotandPlan1621perGSF,
+        "LifetimeBudgetperMaxOcc": nextSchool.LifetimeBudgetperMaxOcc,
+        "LifetimeBudgetperGSF": nextSchool.LifetimeBudgetperGSF,
+
+        "SpentPerMaxOccupancy": nextSchool.SpentPerMaxOccupancy,
+        "SpentPerSqFt": nextSchool.SpentPerSqFt,
+        "FutureYrComplete": nextSchool.FutureYrComplete,
+        "FutureProjectType16_21": nextSchool.FutureProjectType16_21
+
     }
+    console.log("  nextSchool.SpentPerMaxOccupancy: ", nextSchool.SpentPerMaxOccupancy);
+    // console.log("nextSchool.TotalAllotandPlan1621perMaxOcc: ", nextSchool.TotalAllotandPlan1621perMaxOcc);
+    // console.log("nextSchool.TotalAllotandPlan1621perGSF: ", nextSchool.TotalAllotandPlan1621perGSF);
+    // console.log("nextSchool.LifetimeBudgetperMaxOcc: ", nextSchool.LifetimeBudgetperMaxOcc);
+    // console.log("nextSchool.LifetimeBudgetperGSF: ", nextSchool.LifetimeBudgetperGSF);
+
+
     return tempSchoolData;
 }
 
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
 function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolIndex) {
     console.log("makeSchoolProfile");
-    console.log("  schoolIndex: ", schoolIndex);
 
     var nextValue;
     schoolsCollectionObj.selectedSchool = null;
@@ -971,6 +999,26 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         spendSqFtSpan = " <span class='value-label'>per sqft</span>";
     }
 
+    // == spending LifetimeBudgetperMaxOcc
+    LifetimeBudgetperMaxOcc = parseInt(cleanedSchoolData.LifetimeBudgetperMaxOcc);
+    if ((LifetimeBudgetperMaxOcc == "") || (LifetimeBudgetperMaxOcc == 0)) {
+        LifetimeBudgetperMaxOcc = "<span class='value-label'>No data</span>";
+        LifetimeBudgetperMaxOccSpan = "";
+    } else {
+        LifetimeBudgetperMaxOcc = "$" + parseInt(LifetimeBudgetperMaxOcc);
+        LifetimeBudgetperMaxOccSpan = " <span class='value-label'>per student</span>";
+    }
+
+    // == spending LifetimeBudgetperMaxOcc
+    LifetimeBudgetperGSF = parseInt(cleanedSchoolData.LifetimeBudgetperGSF);
+    if ((LifetimeBudgetperGSF == "") || (LifetimeBudgetperGSF == 0)) {
+        LifetimeBudgetperGSF = "<span class='value-label'>No data</span>";
+        LifetimeBudgetperGSFSpan = "";
+    } else {
+        LifetimeBudgetperGSF = "$" + parseInt(LifetimeBudgetperGSF);
+        LifetimeBudgetperGSFSpan = " <span class='value-label'>per sqft</span>";
+    }
+
     var itemName = cleanedSchoolData.schoolName;
     if (itemName.length > 35) {
         var checkName = itemName.indexOf(", ");
@@ -1007,25 +1055,31 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     htmlString += "<td class='data-value'><p class='value-text'>" + schoolMaxOccupancy + " " + schoolMaxOccupancySpan + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Past spending (FY1998-2015)</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPast' class='value-text'>" + cleanedSchoolData.spendPast + ";</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Past facilities improvements</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.schoolProject + "</p></td></tr>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.SpentPerMaxOccupancy + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Year completed</p></td>";
     htmlString += "<td class='data-value'><p class='value-text'>" + cleanedSchoolData.YrComplete + "</p></td></tr>";
 
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2022)</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2021)</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.TotalAllotandPlan1621 + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Future facilities improvements</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.FUTUREProjectType16_21 + "</p></td></tr>";
 
     htmlString += "<tr><td class='data-key'><p class='key-text'>Projected completion</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + cleanedSchoolData.FutureYrComplete + "</p></td></tr>";
 
-    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2022</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendLifetime' class='value-text'>&nbsp;</p></td></tr>";
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget authority 1998-2021</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + spendLifetime + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per student</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + LifetimeBudgetperMaxOcc + " " + LifetimeBudgetperMaxOccSpan + "</p></td></tr>";
+
+    htmlString += "<tr><td class='data-key'><p class='key-text'>Lifetime budget per GSF</p></td>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + LifetimeBudgetperGSF + " " + LifetimeBudgetperGSFSpan + "</p></td></tr>";
 
     htmlString += "</table>";
 
@@ -1051,12 +1105,12 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     nextMath = $("select[name='expendMath'] option:selected").val()
     if (nextMath == "spendEnroll") {
         $("#profileSpendLifetime").html(spendEnroll + spendEnrollSpan);
-        $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
-        $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
+        // $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
+        // $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
     } else if (nextMath == "spendSqFt") {
         $("#profileSpendLifetime").html(spendSqFt + spendSqFtSpan);
-        $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
-        $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
+        // $("#profileSpendPlanned").html("<span class='value-label'>no future per sqft data</span>");
+        // $("#profileSpendPast").html("<span class='value-label'>no past per sqft data</span>");
     } else if (nextMath == "spendAmount") {
         $("#profileSpendLifetime").html(spendLifetime);
         $("#profileSpendPlanned").html(spendPlanned);
@@ -1188,6 +1242,14 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
         spendLifetime = "$" + spendLifetime;
     }
 
+    // == lifetime spending
+    SpentPerMaxOccupancy = cleanedSchoolData.SpentPerMaxOccupancy;
+    if (SpentPerMaxOccupancy == "") {
+        SpentPerMaxOccupancy = "<span class='value-label'>No data for lifetime spending</span>";
+    } else {
+        SpentPerMaxOccupancy = "$" + SpentPerMaxOccupancy;
+    }
+
     // == future spending
     spendPlanned = cleanedSchoolData.spendPlanned;
     if (spendPlanned == "") {
@@ -1226,7 +1288,7 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
 
     if (nextMath == "spendEnroll") {
         $("#profileSpendLifetime").html(spendEnroll + spendEnrollSpan);
-        $("#profileSpendPlanned").html("<span class='value-label'>no future per student data</span>");
+        $("#profileSpendPlanned").html(cleanedSchoolData.spendSqFt);
         $("#profileSpendPast").html("<span class='value-label'>no past per student data</span>");
     } else if (nextMath == "spendSqFt") {
         $("#profileSpendLifetime").html(spendSqFt + spendSqFtSpan);
