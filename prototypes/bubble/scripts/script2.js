@@ -1,4 +1,4 @@
-d3.csv('https://cdn.rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv', function(data){
+d3.csv('data/data_final.csv', function(data){
     var bubble = new Bubble(),
         schools = {
         both: data,
@@ -17,45 +17,49 @@ d3.csv('https://cdn.rawgit.com/codefordc/school-modernization/master/Output%20Da
             });
         }(data))
             },
-        budgetState = null;
+        initialBudgetState = 'future',
+        budgetState = null,
+        perState = 'total';
 
     // Initial
     setInitialGraph();
+    setInitialMenuStates();
 
     // States
-    // var budgetStates = {
-
-    // };
-
-
     $('.budgetChange').each(function(){
         $(this).on('click', function(e){
-            bubble.setBudget(e.target.id);
-            bubble.change();
-            makeSelected(e);
+
+            var state = $(e.target).data(perState);
+            bubble.setBudget(state);
+            console.log('state:' + state);
+
+            // Set the budgetState
+            budgetState = $(e.target).data('key');
+            update(e);
         });
     });
 
+    // Only row that doesnt work
     $('.perChange').each(function(){
         $(this).on('click', function(e){
-            
-            makeSelected(e);
+            var state = $(e.target).data(budgetState);
+            perState = $(e.target).data('key');
+            bubble.setBudget(state);
+            update(e);
         });
     });
 
     $('.columnChange').each(function(){
         $(this).on('click', function(e){
             bubble.setColumn(e.target.id);
-            bubble.change();
-            makeSelected(e);
+            update(e);
         });
     });
 
     $('.schoolChange').each(function(){
         $(this).on('click', function(e){
             bubble.setData(schools[e.target.id]);
-            bubble.change();
-            makeSelected(e);
+            update(e);
         });
     });
 
@@ -68,17 +72,35 @@ d3.csv('https://cdn.rawgit.com/codefordc/school-modernization/master/Output%20Da
 
     /* Utility Functions */
     function setInitialGraph(){
-        bubble.setBudget('MajorExp9815')
+        bubble.reset_svg();
+        bubble.setBudget('TotalAllotandPlan1621');
+        budgetState = initialBudgetState;
         bubble.setData(schools.both);
         bubble.graph();
     }
 
-    function makeSelected(e){
-        $(e.target).addClass('selected');
-        $(e.target).siblings().removeClass('selected');
+    function setInitialMenuStates(){
+        // Quick fix for council meeting
+        [$('#future'), $('#total'), $('#Agency')].forEach(function(item){
+            makeSelected(null, item);
+        });
+    }
+
+    function update(e){
+        console.log('budgetState: ' + budgetState);
+        console.log('perState: ' + perState);
+        bubble.change();
+        makeSelected(e);
+    }
+
+    function makeSelected(e, el){
+        if (el){
+            el.addClass('selected');
+            el.siblings().removeClass('selected');
+        } else {
+            $(e.target).addClass('selected');
+            $(e.target).siblings().removeClass('selected');
+        }   
     }
 
 });
-
-
-

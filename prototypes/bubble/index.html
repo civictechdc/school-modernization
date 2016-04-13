@@ -29,38 +29,50 @@
             <!-- Budget /  bubble radius-->
             <ul class='menu'>
                <li class="title">Facility Spending</li>
-               <li id='MajorExp9815' 
+               <li id='past' 
+                     data-key='past'
+                     data-sqft='SpentPerSqFt'
+                     data-student='SpentPerMaxOccupancy'
+                     data-total='MajorExp9815'
                      class="row rowBehavior budgetChange">PAST FY1998-2015</li>
-               <li id='TotalAllotandPlan1621' 
+               <li id='future' 
+                     data-key='future'
+                     data-sqft='TotalAllotandPlan1621perGSF'
+                     data-student='TotalAllotandPlan1621perMaxOcc'
+                     data-total='TotalAllotandPlan1621'
                      class="row rowBehavior budgetChange">FUTURE FY2016-2021</li>
-               <li id='LifetimeBudget' 
-                     class="row rowBehavior budgetChange">TOTAL FY1998-2021</li>
+               <li id='lifetime' 
+                     data-key='lifetime'
+                     data-sqft='LifetimeBudgetperGSF'
+                     data-student='LifetimeBudgetperMaxOcc'
+                     data-total='LifetimeBudget'
+                     class="row rowBehavior budgetChange">LIFETIME FY1998-2021</li>
             </ul>
-            
-            <!-- 
-               SpentPerSqFt
-               SpentPerMaxOccupancy
-               TotalAllotandPlan1621perGSF
-               TotalAllotandPlan1621perMaxOcc
-               LifetimeBudgetperGSF
-               LifetimeBudgetperMaxOcc 
-            -->
 
             <!-- Add Per -->
             <ul class='menu'>
                <li class="title">** Some Title **</li>
                
                <li id='persqft' 
+                     data-key='sqft'
                      data-past='SpentPerSqFt' 
                      data-future='TotalAllotandPlan1621perGSF' 
+                     data-lifetime='LifetimeBudgetperGSF'
                      class="row rowBehavior perChange">AVERAGE PER SQUARE FOOT</li>
                
                <li id='perstudent' 
+                     data-key='student'
                      data-past='SpentPerMaxOccupancy' 
                      data-future='TotalAllotandPlan1621perMaxOcc' 
+                     data-lifetime='LifetimeBudgetperMaxOcc'
                      class="row rowBehavior perChange">AVERAGE PER STUDENT</li>
                
-               <li id='total' class="row rowBehavior perChange">TOTAL</li>
+               <li id='total' 
+                     data-key='total'
+                     data-past='MajorExp9815' 
+                     data-future='TotalAllotandPlan1621' 
+                     data-lifetime='LifetimeBudget'
+                     class="row rowBehavior perChange">TOTAL</li>
             </ul>
 
             <!-- Column / Splits -->
