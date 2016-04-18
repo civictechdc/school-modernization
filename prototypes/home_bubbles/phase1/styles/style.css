@@ -12,11 +12,9 @@ circle {
 .hidden {
   display: none; }
 
-#chart {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+.chartTitle {
+  text-align: center;
+  font-size: 2em; }
 
 #tooltip {
   position: absolute;
