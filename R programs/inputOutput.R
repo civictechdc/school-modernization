@@ -1,4 +1,12 @@
-setwd ("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/InputData")
+setwd ("/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data")
+done<-read.csv("DCSchools_FY1415_Master_412.csv",stringsAsFactors=FALSE, strip.white=TRUE)
+
+colnames(done)
+colnames(done)[13]<-"FUTUREProjectType16_21"
+write.csv(done,
+          "/Users/katerabinowitz/Documents/CodeforDC/school-modernization/Output Data/DCSchools_FY1415_Master_412.csv",
+          row.names=FALSE)
+
 
 money<-function(x) {
   x<-(sub("\\$","",x))
