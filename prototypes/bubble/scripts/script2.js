@@ -3,23 +3,22 @@ d3.csv('data/data_final.csv', function(data){
         schools = {
             both: data,
             public: (function(d){
-                return d.filter(function(item){
-                    if (item.Agency === 'DCPS'){
-                        return item;
-                    }
-                });
-            }(data)),
+                    return d.filter(function(item){
+                        if (item.Agency === 'DCPS'){
+                            return item;
+                        }
+                    });
+                }(data)),
             charter: (function(d){
-                return d.filter(function(item){
-                    if (item.Agency === 'PCS'){
-                        return item;
-                    }
-                });
-            }(data))
-        },
-        initialBudgetState = 'future',
+                    return d.filter(function(item){
+                        if (item.Agency === 'PCS'){
+                            return item;
+                        }
+                    });
+                }(data))
+        };
+    var initialBudgetState = 'future',
         budgetState = null,
-        isAltProjectType = false;
         perState = 'total';
 
     // Initial
@@ -45,7 +44,6 @@ d3.csv('data/data_final.csv', function(data){
         });
     });
 
-    // Only row that doesnt work
     $('.perChange').each(function(){
         $(this).on('click', function(e){
             clearInactive();
@@ -69,8 +67,6 @@ d3.csv('data/data_final.csv', function(data){
             }
             if (e.target.id === 'ProjectType' && budgetState === 'future'){
                 bubble.setColumn(e.target.dataset.alt);
-                isAltProjectType = true;
-                bubble.getColumn();
             } else {
                 bubble.setColumn(e.target.id);
             }
@@ -97,7 +93,6 @@ d3.csv('data/data_final.csv', function(data){
     }
 
     function setInitialMenuStates(){
-        // Quick fix for council meeting
         [$('#future'), $('#total'), $('#Agency'), $('#both')].forEach(function(item){
             makeSelected(null, item);
         });

@@ -1,5 +1,4 @@
 'use strict';
-
 function Bubble(){ // data
     
     this.budget =  null;
@@ -178,10 +177,12 @@ Bubble.prototype.add_tootltips = function(d){
 
         // Total Spent
         if(d[that.budget]){
+            console.log(that.budget);
             d3.select('#majorexp').text('Total Spent: ' + that.round(d[that.budget]));
         } else {
             d3.select('#majorexp').text('');
         }
+
         // Spent per SQ FT
         var test = that.round(d.SpentPerSqFt, 0);
         d3.select('#spent_sqft').text(function(d){
