@@ -170,7 +170,12 @@ Bubble.prototype.add_tootltips = function(d){
         }
         // Year Completed
         if(d.YrComplete && d.YrComplete !== 'NA'){
-            d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
+            console.log(that.budget);
+            if (that.budget === 'TotalAllotandPlan1621'){
+                d3.select('#yearComplete').text('Projected Completion: ' + d.FutureYrComplete);
+            } else {
+                d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
+            }   
         } else {
             d3.select('#yearComplete').text('');
         }
