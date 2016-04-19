@@ -1,5 +1,4 @@
 'use strict';
-
 function Bubble(){ // data
     
     this.budget =  null;
@@ -171,7 +170,11 @@ Bubble.prototype.add_tootltips = function(d){
         }
         // Year Completed
         if(d.YrComplete && d.YrComplete !== 'NA'){
-            d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
+            if (that.budget === 'TotalAllotandPlan1621'){
+                d3.select('#yearComplete').text('Projected Completion: ' + d.FutureYrComplete);
+            } else {
+                d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
+            }   
         } else {
             d3.select('#yearComplete').text('');
         }
@@ -182,6 +185,7 @@ Bubble.prototype.add_tootltips = function(d){
         } else {
             d3.select('#majorexp').text('');
         }
+
         // Spent per SQ FT
         var test = that.round(d.SpentPerSqFt, 0);
         d3.select('#spent_sqft').text(function(d){
@@ -323,6 +327,9 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('dx', '10')
         .text(function(d,i){
             var amount = that.round(itemSums[i]);
+            
+            console.log(that.per);
+
             if (that.budget === 'SpentPerSqFt'){
                 return amount + ' per Sq. Ft.'
             }
