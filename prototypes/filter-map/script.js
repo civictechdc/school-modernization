@@ -1505,11 +1505,12 @@ r
                 var schoolCode = this.schoolCode;
                 var unqBuilding = this.unqBuilding;
                 console.log("  schoolCode: ", schoolCode);
-                if (unqBuilding == 2) {
-                    multiSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
-                } else {
-                    makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
-                }
+                makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
+                // if (unqBuilding == 2) {
+                //     multiSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
+                // } else {
+                //     makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, schoolIndex);
+                // }
             });
         }
     }

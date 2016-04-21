@@ -182,6 +182,7 @@ function displayFilterMessage(displayObj, menuObject, whichAction) {
 // ======= ======= ======= cleanupSchoolData ======= ======= =======
 function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     console.log("cleanupSchoolData");
+    console.log("  schoolData: ", schoolData);
 
     var cleanedData = {};
 
@@ -189,69 +190,73 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     cleanedData.schoolIndex = schoolData.schoolIndex;
     cleanedData.schoolName = schoolData.schoolName;
     cleanedData.schoolWard = schoolData.schoolWard;
-    cleanedData.LifetimeBudgetperMaxOcc = schoolData.LifetimeBudgetperMaxOcc;
-    cleanedData.LifetimeBudgetperGSF = schoolData.LifetimeBudgetperGSF;
-    cleanedData.SpentPerMaxOccupancy = schoolData.SpentPerMaxOccupancy;
 
-    if ((schoolData.FutureYrComplete == "NA") || (schoolData.FutureYrComplete == null)) {
-        cleanedData.FutureYrComplete = "";
-    } else {
-        cleanedData.FutureYrComplete = schoolData.FutureYrComplete;
-    }
-    if ((schoolData.schoolCode == "NA") || (schoolData.schoolCode == null)) {
+    if (schoolData.schoolCode == null) {
         cleanedData.schoolCode = "";
     } else {
         cleanedData.schoolCode = schoolData.schoolCode;
     }
-    if ((schoolData.schoolFeederMS == "NA") || (schoolData.schoolFeederMS == null)) {
+    if (schoolData.schoolFeederMS == null) {
         cleanedData.schoolFeederMS = "";
     } else {
         cleanedData.schoolFeederMS = schoolData.schoolFeederMS;
     }
-    if ((schoolData.schoolFeederHS == "NA") || (schoolData.schoolFeederHS == null)) {
+    if (schoolData.schoolFeederHS == null) {
         cleanedData.schoolFeederHS = "";
     } else {
         cleanedData.schoolFeederHS = schoolData.schoolFeederHS;
     }
-    if ((schoolData.schoolAddress == "NA") || (schoolData.schoolAddress == null)) {
+    if (schoolData.schoolAddress == null) {
         cleanedData.schoolAddress = "";
     } else {
         cleanedData.schoolAddress = schoolData.schoolAddress;
     }
-    if ((schoolData.schoolLAT == "NA") || (schoolData.schoolLAT == null)) {
+    if (schoolData.schoolLAT == null) {
         cleanedData.schoolLAT = "";
     } else {
         cleanedData.schoolLAT = schoolData.schoolLAT;
     }
-    if ((schoolData.schoolLON == "NA") || (schoolData.schoolLON == null)) {
+    if (schoolData.schoolLON == null) {
         cleanedData.schoolLON = "";
     } else {
         cleanedData.schoolLON = schoolData.schoolLON;
     }
-    if ((schoolData.schoolLevel == "NA") || (schoolData.schoolLevel == null)) {
+    if (schoolData.schoolLevel == null) {
         cleanedData.schoolLevel = "";
     } else {
         cleanedData.schoolLevel = schoolData.schoolLevel;
     }
-    if ((schoolData.schoolAgency == "NA") || (schoolData.schoolAgency == null)) {
+    if (schoolData.schoolAgency == null) {
         cleanedData.schoolAgency = "";
     } else {
         cleanedData.schoolAgency = schoolData.schoolAgency;
     }
-    if ((schoolData.YrComplete == "NA") || (schoolData.YrComplete == null)) {
+
+    if (schoolData.YrComplete == null) {
         cleanedData.YrComplete = "";
     } else {
         cleanedData.YrComplete = schoolData.YrComplete;
     }
+    if (schoolData.FUTUREProjectType16_21 == null) {
+        cleanedData.FUTUREProjectType16_21 = "";
+    } else {
+        cleanedData.FUTUREProjectType16_21 = schoolData.FUTUREProjectType16_21;
+    }
+    if (schoolData.FutureYrComplete == null) {
+        cleanedData.FutureYrComplete = "";
+    } else {
+        cleanedData.FutureYrComplete = schoolData.FutureYrComplete;
+    }
 
-    // building data: schoolProject, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
-    if ((schoolData.schoolProject == "NA") || (schoolData.schoolProject == null)) {
-        var tempSchoolProject = schoolData.schoolProject.replace(/\w\S*/g, function(txt) {
+
+    // building data: ProjectType, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
+    if (schoolData.ProjectType == null) {
+        var tempProjectType = schoolData.ProjectType.replace(/\w\S*/g, function(txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
-        cleanedData.schoolProject = tempSchoolProject;
+        cleanedData.ProjectType = tempProjectType;
     } else {
-        cleanedData.schoolProject = schoolData.schoolProject;
+        cleanedData.ProjectType = schoolData.ProjectType;
     }
     var schoolSqftflag = isNumber(schoolData.schoolSqft);
     if (schoolSqftflag == true) {
@@ -327,13 +332,13 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
         cleanedData.studentSPEDPer = "";
     }
 
-    // spendPast, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
-    var spendPastFlag = isNumber(schoolData.spendPast);
+    // MajorExp9815, spendLifetime, spendPlanned, spendSqFt, spendEnroll, spendLTsqft, spendLTenroll
+    var spendPastFlag = isNumber(schoolData.MajorExp9815);
     if (spendPastFlag == true) {
-        var spendPast = parseInt(schoolData.spendPast);
-        cleanedData.spendPast = numberWithCommas(spendPast);
+        var MajorExp9815 = parseInt(schoolData.MajorExp9815);
+        cleanedData.MajorExp9815 = numberWithCommas(MajorExp9815);
     } else {
-        cleanedData.spendPast = "";
+        cleanedData.MajorExp9815 = "";
     }
     var spendLifetimeFlag = isNumber(schoolData.spendLifetime);
     if (spendLifetimeFlag == true) {
@@ -365,6 +370,9 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     }
 
     // TotalAllotandPlan1621perMaxOcc, TotalAllotandPlan1621perGSF, LifetimeBudgetperMaxOcc, LifetimeBudgetperGSF
+
+    console.log("  schoolData.TotalAllotandPlan1621perMaxOcc: ", schoolData.TotalAllotandPlan1621perMaxOcc);
+
     var TotalAllotandPlan1621perMaxOccFlag = isNumber(schoolData.TotalAllotandPlan1621perMaxOcc);
     if (TotalAllotandPlan1621perMaxOccFlag == true) {
         var TotalAllotandPlan1621perMaxOcc = parseInt(schoolData.TotalAllotandPlan1621perMaxOcc);
@@ -372,6 +380,8 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     } else {
         cleanedData.TotalAllotandPlan1621perMaxOcc = "";
     }
+    console.log("  cleanedData.TotalAllotandPlan1621perMaxOcc: ", cleanedData.TotalAllotandPlan1621perMaxOcc);
+
     var TotalAllotandPlan1621perGSFFlag = isNumber(schoolData.TotalAllotandPlan1621perGSF);
     if (TotalAllotandPlan1621perGSFFlag == true) {
         var TotalAllotandPlan1621perGSF = parseInt(schoolData.TotalAllotandPlan1621perGSF);
@@ -393,6 +403,29 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     } else {
         cleanedData.LifetimeBudgetperGSF = "";
     }
+    var SpentPerMaxOccupancyFlag = isNumber(schoolData.SpentPerMaxOccupancy);
+    if (SpentPerMaxOccupancyFlag == true) {
+        var SpentPerMaxOccupancy = parseInt(schoolData.SpentPerMaxOccupancy);
+        cleanedData.SpentPerMaxOccupancy = numberWithCommas(SpentPerMaxOccupancy);
+    } else {
+        cleanedData.SpentPerMaxOccupancy = "";
+    }
+    var SpentPerSqFtFlag = isNumber(schoolData.SpentPerSqFt);
+    if (SpentPerSqFtFlag == true) {
+        var SpentPerSqFt = parseInt(schoolData.SpentPerSqFt);
+        cleanedData.SpentPerSqFt = numberWithCommas(SpentPerSqFt);
+    } else {
+        cleanedData.SpentPerSqFt = "";
+    }
+    var TotalAllotandPlan1621Flag = isNumber(schoolData.TotalAllotandPlan1621);
+    if (TotalAllotandPlan1621Flag == true) {
+        var TotalAllotandPlan1621 = parseInt(schoolData.TotalAllotandPlan1621);
+        cleanedData.TotalAllotandPlan1621 = numberWithCommas(TotalAllotandPlan1621);
+    } else {
+        cleanedData.TotalAllotandPlan1621 = "";
+    }
+
+    console.log("  cleanedData.LifetimeBudgetperGSF: " + cleanedData.LifetimeBudgetperGSF);
 
     return cleanedData;
 
