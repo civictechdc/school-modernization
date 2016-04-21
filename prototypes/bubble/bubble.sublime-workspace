@@ -4,6 +4,274 @@
 		"selected_items":
 		[
 			[
+				"is",
+				"isSelected"
+			],
+			[
+				"inv",
+				"invalidsButtons"
+			],
+			[
+				"make",
+				"makeInactive"
+			],
+			[
+				"per",
+				"perState"
+			],
+			[
+				"in",
+				"initialBudgetState"
+			],
+			[
+				"Ma",
+				"MajorExp9815"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"l",
+				"log"
+			],
+			[
+				"bu",
+				"budgetState"
+			],
+			[
+				"ma",
+				"makeSelected"
+			],
+			[
+				"S",
+				"SpentPerMaxOccupancy"
+			],
+			[
+				"M",
+				"SpentPerMaxOccupancy"
+			],
+			[
+				"b",
+				"b"
+			],
+			[
+				"ite",
+				"itemSums"
+			],
+			[
+				"Spent",
+				"SpentPerSqFt"
+			],
+			[
+				"bor",
+				"border_radius"
+			],
+			[
+				"padd",
+				"padding-bottom"
+			],
+			[
+				"bo",
+				"border_radius"
+			],
+			[
+				"ra",
+				"border-radius"
+			],
+			[
+				"light",
+				"lighten"
+			],
+			[
+				"le",
+				"letter-spacing"
+			],
+			[
+				"getA",
+				"getAll"
+			],
+			[
+				"d",
+				"d"
+			],
+			[
+				"sel",
+				"selectAll"
+			],
+			[
+				"sc",
+				"schoolLegend"
+			],
+			[
+				"s",
+				"schoolLegend"
+			],
+			[
+				"get",
+				"getItems"
+			],
+			[
+				"pr",
+				"prototype"
+			],
+			[
+				"nu",
+				"null"
+			],
+			[
+				"radi",
+				"radius_scale"
+			],
+			[
+				"do",
+				"docHeight"
+			],
+			[
+				"CHARTE",
+				"charter"
+			],
+			[
+				"re",
+				"remove"
+			],
+			[
+				"poin",
+				"pointer-events"
+			],
+			[
+				"add",
+				"addToList"
+			],
+			[
+				"ad",
+				"addToList"
+			],
+			[
+				"la",
+				"lastSchoolState"
+			],
+			[
+				"bud",
+				"budget_state"
+			],
+			[
+				"mo",
+				"money"
+			],
+			[
+				"im",
+				"itemSums"
+			],
+			[
+				"pa",
+				"parseInt"
+			],
+			[
+				"i",
+				"itemSums"
+			],
+			[
+				"n",
+				"numDynamic"
+			],
+			[
+				"num",
+				"numDynamic"
+			],
+			[
+				"r",
+				"radius_scale"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"fo",
+				"font-family"
+			],
+			[
+				"margin-",
+				"margin-right"
+			],
+			[
+				"text-",
+				"text-decoration"
+			],
+			[
+				"hei",
+				"height"
+			],
+			[
+				"cl",
+				"classList"
+			],
+			[
+				"bord",
+				"border"
+			],
+			[
+				"trans",
+				"translate"
+			],
+			[
+				"tr",
+				"translate"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"data",
+				"dataChange"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"sort",
+				"sortedNodes"
+			],
+			[
+				"se",
+				"selectForm"
+			],
+			[
+				"Sco",
+				"School"
+			],
+			[
+				"hi",
+				"high"
+			],
+			[
+				"co",
+				"colorRange"
+			],
+			[
+				"col",
+				"colorRange"
+			],
+			[
+				"colo",
+				"colorRange"
+			],
+			[
+				"cur",
+				"cur_budget"
+			],
+			[
+				"fi",
+				"first_run"
+			],
+			[
+				"radius",
+				"radius_scale"
+			],
+			[
 				"font",
 				"font-weight"
 			],
@@ -20,24 +288,8 @@
 				"selectAll"
 			],
 			[
-				"b",
-				"b"
-			],
-			[
 				"pad",
 				"padding"
-			],
-			[
-				"bor",
-				"border-radius"
-			],
-			[
-				"sel",
-				"selectAll"
-			],
-			[
-				"n",
-				"newData"
 			],
 			[
 				"ci",
@@ -46,26 +298,6 @@
 			[
 				"selct",
 				"selectAll"
-			],
-			[
-				"pr",
-				"proto	Prototype"
-			],
-			[
-				"se",
-				"selectAll"
-			],
-			[
-				"sc",
-				"schoolChange"
-			],
-			[
-				"data",
-				"data"
-			],
-			[
-				"bu",
-				"budget"
 			],
 			[
 				"cart",
@@ -80,10 +312,6 @@
 				"groupCircles"
 			],
 			[
-				"fo",
-				"force_gravity"
-			],
-			[
 				"class",
 				"classlist"
 			],
@@ -92,20 +320,12 @@
 				"xPosition"
 			],
 			[
-				"cur",
-				"cur:p	cursor:pointer"
-			],
-			[
 				"lighte",
 				"lighten"
 			],
 			[
 				"ta",
 				"targeted_nodes"
-			],
-			[
-				"pa",
-				"padding"
 			],
 			[
 				"uni",
@@ -122,10 +342,6 @@
 			[
 				"u",
 				"unique"
-			],
-			[
-				"for",
-				"for	for (…) {…}"
 			],
 			[
 				"fun",
@@ -156,10 +372,6 @@
 				"bubbles"
 			],
 			[
-				"d",
-				"dataset"
-			],
-			[
 				"ran",
 				"randH"
 			],
@@ -170,10 +382,6 @@
 			[
 				"my",
 				"myy"
-			],
-			[
-				"r",
-				"randW"
 			],
 			[
 				"prot",
@@ -188,20 +396,8 @@
 				"radius_scale"
 			],
 			[
-				"col",
-				"column"
-			],
-			[
-				"ra",
-				"radius_scale"
-			],
-			[
 				"raduis",
 				"radius_scale"
-			],
-			[
-				"ma",
-				"maxAmount"
 			],
 			[
 				"min",
@@ -214,10 +410,6 @@
 			[
 				"pu",
 				"public_bubble"
-			],
-			[
-				"make",
-				"make_chart"
 			],
 			[
 				"pub",
@@ -296,10 +488,6 @@
 				"maxExpend"
 			],
 			[
-				"get",
-				"getColor"
-			],
-			[
 				"sle",
 				"select"
 			],
@@ -326,212 +514,24 @@
 			[
 				"wt",
 				"Write"
-			],
-			[
-				"js",
-				"json_file"
-			],
-			[
-				"s",
-				"sizes"
-			],
-			[
-				"chi",
-				"child_dict"
-			],
-			[
-				"patter",
-				"pattern"
-			],
-			[
-				"fe",
-				"feeders"
-			],
-			[
-				"da",
-				"data_for_json"
-			],
-			[
-				"in",
-				"index"
-			],
-			[
-				"feed",
-				"feeders"
-			],
-			[
-				"fee",
-				"feeders"
-			],
-			[
-				"joi",
-				"joinedSchools"
-			],
-			[
-				"join",
-				"joined_schools"
-			],
-			[
-				"j",
-				"joined_schools"
-			],
-			[
-				"hi",
-				"high_schools"
-			],
-			[
-				"el",
-				"elementary_schools"
-			],
-			[
-				"border",
-				"border-bottom"
-			],
-			[
-				"po",
-				"position"
-			],
-			[
-				"setl",
-				"selectAll"
-			],
-			[
-				"toe",
-				"token"
-			],
-			[
-				"int",
-				"initialValue"
-			],
-			[
-				"T",
-				"TotalAllotandPlan1621"
-			],
-			[
-				"max",
-				"maxFutureSpend"
-			],
-			[
-				"ol",
-				"olddata"
-			],
-			[
-				"dis",
-				"display"
-			],
-			[
-				"newd",
-				"newdata"
-			],
-			[
-				"slec",
-				"selectAll"
-			],
-			[
-				"FeederMS",
-				"FeederMSNum"
-			],
-			[
-				"hs",
-				"hsValues"
-			],
-			[
-				"ms",
-				"msValues"
-			],
-			[
-				"valu",
-				"values"
-			],
-			[
-				"elem",
-				"elementarySchools"
-			],
-			[
-				"com",
-				"column"
-			],
-			[
-				"scho",
-				"schoolsArray"
-			],
-			[
-				"co",
-				"column"
-			],
-			[
-				"no",
-				"node"
-			],
-			[
-				"map",
-				"mapElementarySchools"
-			],
-			[
-				"DA",
-				"data"
-			],
-			[
-				"c",
-				"console"
-			],
-			[
-				"Ma",
-				"MajorExp9815"
-			],
-			[
-				"edua",
-				"educationCenters"
-			],
-			[
-				"ed",
-				"educationCenters"
-			],
-			[
-				"high",
-				"highSchools"
-			],
-			[
-				"ele",
-				"elementarySchools"
-			],
-			[
-				"temp",
-				"tempObj"
-			],
-			[
-				"add",
-				"addToLinks"
-			],
-			[
-				"m",
-				"middle"
-			],
-			[
-				"fir",
-				"firstECindex"
-			],
-			[
-				"middle",
-				"middleSchools"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "styles/style.scss",
+			"file": "scripts/bubbleClass.js",
 			"settings":
 			{
-				"buffer_size": 1677,
+				"buffer_size": 14152,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/bubbleClass.js",
+			"file": "scripts/script2.js",
 			"settings":
 			{
-				"buffer_size": 9322,
+				"buffer_size": 4122,
 				"line_ending": "Unix"
 			}
 		},
@@ -539,15 +539,7 @@
 			"file": "scripts/script.js",
 			"settings":
 			{
-				"buffer_size": 2595,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/class BubbleChart.coffee",
-			"settings":
-			{
-				"buffer_size": 6340,
+				"buffer_size": 5850,
 				"line_ending": "Unix"
 			}
 		},
@@ -555,7 +547,15 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 3084,
+				"buffer_size": 5819,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "styles/style.scss",
+			"settings":
+			{
+				"buffer_size": 4206,
 				"line_ending": "Unix"
 			}
 		}
@@ -620,14 +620,27 @@
 	"expanded_folders":
 	[
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/data",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts",
-		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/styles"
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/libs"
 	],
 	"file_history":
 	[
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script.js",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script2.js",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/data/data_final.csv",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/old_menu.html",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script_react.jsx",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/data/data_master_46.csv",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/data/data_master_321.csv",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/new_todo.txt",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/styles/style.css.map",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/to-do.txt",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/styles/style.css",
+		"/Users/nick/Library/Caches/TemporaryItems/0.png",
+		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/class BubbleChart.coffee",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/home_bubbles/phase1/styles/style.scss",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/python/makejson.py",
-		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script2.js",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script4.js",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/makejson.py",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/home_bubbles/data/multi_school.json",
@@ -636,7 +649,6 @@
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script3.js",
 		"/Applications/MAMP/htdocs/my_js_library/my.js",
 		"/Applications/MAMP/htdocs/my_js_library/README.md",
-		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/scripts/script.js",
 		"/Applications/MAMP/htdocs/school-modernization/prototypes/bubble/data/data.json",
 		"/Applications/MAMP/htdocs/pythonLearning/sum_of_dirs.py",
 		"/Applications/MAMP/htdocs/sankey/bubble_pages/index.html",
@@ -741,18 +753,7 @@
 		"/Users/nick/Scripts/spring_2015/Complex/ComplexNumber.java",
 		"/Users/nick/Scripts/spring_2015/ComputerConfiguration/ComputerConfigurationDemo.java",
 		"/Users/nick/Scripts/spring_2015/Vending/VendingMachine.java",
-		"/Users/nick/Scripts/spring_2015/ComputerConfiguration/ComputerConfiguration.java",
-		"/Users/nick/Scripts/this.html",
-		"/Applications/MAMP/htdocs/trigger/index.html",
-		"/Applications/MAMP/htdocs/trigger/advanced_2.js",
-		"/Users/nick/Scripts/spring_2015/GPS.java",
-		"/Users/nick/Scripts/fall_2014/bank_account/AccountTest.java",
-		"/Users/nick/Scripts/spring_2015/WhichProblem.java",
-		"/Users/nick/Scripts/fall_2014/DrunkardsWalk.java",
-		"/Users/nick/Scripts/spring_2015/Time.java",
-		"/Users/nick/Scripts/spring_2015/VendingMachine.java",
-		"/Users/nick/Scripts/Time/TimeTest.java",
-		"/Users/nick/Scripts/TimeTest.java"
+		"/Users/nick/Scripts/spring_2015/ComputerConfiguration/ComputerConfiguration.java"
 	],
 	"find":
 	{
@@ -767,9 +768,92 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"console.log",
+			"makeInactive",
+			"test",
+			"state",
+			"        \n",
+			"perstudent",
+			"dataset",
+			"test",
+			"update",
+			"bubble.change();\n            makeSelected(e);",
+			"bubble.change();\n        makeSelected(e);",
+			"e.target.id",
+			"$target",
+			"setInitial",
+			"school",
+			"School",
+			"school",
+			"subdivides",
+			"dataChange",
+			"budget",
+			"set",
+			"if",
+			"set",
+			"that.nodes",
+			"this",
+			"set",
+			"HEAD",
+			"this.money",
+			"that.money",
+			"round",
+			"money",
+			"            \n",
+			"money",
+			":hover",
+			"column",
+			"border-radius",
+			";\n",
+			"title",
+			"HEAD",
+			"items",
+			"headerHeight",
+			"lighterCerulean",
+			"lastSchoo",
+			"        \n",
+			"y",
+			"move_towards_centers",
+			"list",
+			"60 * (i+1) - 20;",
+			"District",
+			"p",
+			"span",
+			"021c2a",
+			"color",
+			"sideNavItem",
+			"class",
+			"title",
+			"add",
+			"15px",
+			"}\n",
+			"bold",
+			"item",
+			"row",
+			"subdivides",
+			"row",
+			"subdivides",
+			"row",
+			"add_bubbles",
+			"test",
+			"set",
+			"colo",
+			"this",
+			"colo",
+			"';\n",
+			"this.range.min",
+			"3",
+			"color",
+			"asMoney",
+			"this",
+			"d",
+			"'MajorExp9815'",
+			"){\n",
+			"1985",
+			"console",
 			"MajorExp9815",
 			"LifetimeBudget",
 			"radius_scale",
@@ -814,90 +898,7 @@
 			"- ",
 			"attr",
 			"this",
-			"asMoney",
-			"asMon",
-			"gates",
-			"        \n",
-			"@year_centers",
-			"@year",
-			"p",
-			"v",
-			"row",
-			"charter",
-			"print",
-			"add_info_to_data",
-			"that",
-			"this",
-			"runit",
-			"together",
-			"});",
-			"         \n",
-			"row",
-			"';\n",
-			"that.circles[0][i]",
-			"y",
-			"x",
-			"Math.random()",
-			"that.circles",
-			"d",
-			"px",
-			"(@",
-			"e.alpha",
-			"each()",
-			"column",
-			"radius_scale",
-			"maxAmount",
-			"set",
-			"MajorExp9815",
-			"set[i]",
-			"add_info",
-			"set[i]",
-			"random",
-			"make_chart",
-			"printData",
-			"dataset",
-			"width",
-			"};\n",
-			"c",
-			"update",
-			"set",
-			"data",
-			"test",
-			"c",
-			"trans",
-			"padding",
-			"LifetimeBudget",
-			"getColor",
-			"MajorExp9815",
-			"Past",
-			"2000",
-			"MajorExp9815",
-			"getColor",
-			"MajorExp9815",
-			"minExpendFuture",
-			"minExpendPast",
-			"maxExpendFuture",
-			"maxExpend",
-			"minExpend",
-			"TotalAllotandPlan1621",
-			"MajorExp9815",
-			"btn",
-			"subdivides",
-			"btn",
-			"past",
-			"#past",
-			"MajorExp9815",
-			";\n",
-			"padding",
-			"$_all",
-			"text",
-			"//***********************************",
-			"return",
-			"duration",
-			"h1",
-			"#tooltip",
-			"function(){",
-			"attr"
+			"asMoney"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -921,49 +922,49 @@
 			[
 				{
 					"buffer": 0,
-					"file": "styles/style.scss",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1677,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1162,
-								1162
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 659.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "scripts/bubbleClass.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9322,
+						"buffer_size": 14152,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6841,
-								6841
+								3172,
+								3172
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scripts/script2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3845,
+								3845
 							]
 						],
 						"settings":
@@ -985,15 +986,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2595,
+						"buffer_size": 5850,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								81,
-								81
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1012,54 +1013,24 @@
 			]
 		},
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 3,
-					"file": "scripts/class BubbleChart.coffee",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6340,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								251,
-								251
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2303.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3084,
+						"buffer_size": 5819,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2371,
-								2371
+								1954,
+								1954
 							]
 						],
 						"settings":
@@ -1069,10 +1040,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 819.0,
+						"translation.y": 468.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "styles/style.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4206,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								110,
+								114
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3875.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1080,7 +1081,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 23.0
 	},
 	"input":
 	{
@@ -1106,7 +1107,7 @@
 		"cols":
 		[
 			0.0,
-			0.651937172502,
+			0.572174072266,
 			1.0
 		],
 		"rows":
@@ -1128,7 +1129,7 @@
 	"project": "bubble.sublime-project",
 	"replace":
 	{
-		"height": 68.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1178,12 +1179,12 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
@@ -1201,8 +1202,8 @@
 	"show_minimap": false,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 189.0,
+	"side_bar_visible": false,
+	"side_bar_width": 225.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
