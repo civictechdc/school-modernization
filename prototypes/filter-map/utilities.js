@@ -307,9 +307,7 @@ function makeZoneAggregator(zonesCollectionObj, displayObj, whichGeojson) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    console.log("aggregateZoneData");
-    // console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
-    // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
+    // console.log("aggregateZoneData");
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
@@ -832,14 +830,7 @@ function mouseoverZone(event, itemName) {
 
 // ======= ======= ======= getDataDetails ======= ======= =======
 function getDataDetails(nextSchool, nextIndex) {
-    console.log("getDataDetails");
-
-    // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
-
-    // NEW DATA FIELDS
-    //  "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","ProjectType16.21","YrComplete1621","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
-
-    // "School_ID","Agency","Ward","School","Address","maxOccupancy","Level","totalSQFT","MajorExp9815","ProjectType","YrComplete","TotalAllotandPlan1621","FUTUREProjectType16.21","FutureYrComplete","LifetimeBudget","FeederMS","Total_Enrolled","Limited_English","At_Risk","SPED","AtRiskPer","SPEDPer","ESLPer","SqFtPerEnroll","SpentPerMaxOccupancy","SpentPerSqFt","TotalAllotandPlan1621perGSF","TotalAllotandPlan1621perMaxOcc","LifetimeBudgetperGSF","LifetimeBudgetperMaxOcc","Open_Now","ProjectPhase","FeederHS","longitude","latitude"
+    // console.log("getDataDetails");
 
     var tempSchoolData = {
 
@@ -890,12 +881,6 @@ function getDataDetails(nextSchool, nextIndex) {
         "FUTUREProjectType16_21": nextSchool.FUTUREProjectType16_21
 
     }
-    // console.log("  nextSchool.SpentPerMaxOccupancy: ", nextSchool.SpentPerMaxOccupancy);
-    // console.log("nextSchool.TotalAllotandPlan1621perMaxOcc: ", nextSchool.TotalAllotandPlan1621perMaxOcc);
-    // console.log("nextSchool.TotalAllotandPlan1621perGSF: ", nextSchool.TotalAllotandPlan1621perGSF);
-    // console.log("nextSchool.LifetimeBudgetperMaxOcc: ", nextSchool.LifetimeBudgetperMaxOcc);
-    // console.log("nextSchool.LifetimeBudgetperGSF: ", nextSchool.LifetimeBudgetperGSF);
-
 
     return tempSchoolData;
 }
@@ -1076,14 +1061,6 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         MajorExp9815 = "$" + MajorExp9815;
     }
 
-
-
-
-    console.log("MajorExp9815: ", MajorExp9815)
-
-
-
-
     var itemName = cleanedSchoolData.schoolName;
     if (itemName.length > 35) {
         var checkName = itemName.indexOf(", ");
@@ -1116,7 +1093,6 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // Past spending per GSF               == SpentPerSqFt
     // Future spending per student         == TotalAllotandPlan1621perMaxOcc
     // Future spending per GSF             == TotalAllotandPlan1621perGSF
-
 
     var htmlString = "<table id='profile'>";
     htmlString += "<tr><td class='profile-banner' colspan=2>";

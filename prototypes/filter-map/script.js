@@ -3,8 +3,6 @@ function initApp(presetMode) {
     console.log('initApp');
     console.log('  presetMode: ', presetMode);
 
-    console.log('AAAAAAAAAAAAAAAGGGHHH!!!');
-
     // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= OBJECTS ======= ======= ======= ======= =======
@@ -24,14 +22,6 @@ function initApp(presetMode) {
         filterMenu.District = { id:"District", category:"schools", label:"DCPS Schools", text:"District Schools", column:"Agency", value:"DCPS" };
         filterMenu.Charter = { id:"Charter", category:"schools", label:"Charter Schools", text:"Public Charter Schools", column:"Agency", value:"PCS" };
         filterMenu.All = { id:"All", category:"schools", label:"All Schools", text:"District and Charter Schools", column:"Agency", value:"Both" };
-
-
-        // High
-        // Includes 2014-15 high schools, 6-12 MS/HS, adult, and alternative education schools.
-        // Middle
-        // Includes 2014-15 middle schools and special education schools.
-        // Elem
-        // Includes 2014-15 early childhood, elementary and elem/middle grade schools.
 
         // == PK_K, Elem, Middle, High, ES_MS, MS_HS, Alt, SPED
         filterMenu.EMH = { id:"EMH", category:"schools", label:"All Levels", text:"All Grade Levels", column:"Level", value:"EMH" };
