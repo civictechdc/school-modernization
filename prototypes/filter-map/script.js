@@ -29,8 +29,8 @@ function initApp(presetMode) {
         filterMenu.Middle = { id:"Middle", category:"schools", label:"Middle Schools", text:"Middle Schools, Special Ed", column:"Level", value:"MS" };
         filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools, 6-12 MS/HS, Adult, Alternative Schools", column:"Level", value:"HS" };
 
-        // == spendPast, spendLifetime, spendPlanned
-        filterMenu.spendPast = { id:"spendPast", category:"expenditures", label:"Past Spending", text:"Total facility spending (1998-2015)", column:"MajorExp9815", value:null };
+        // == MajorExp9815, spendLifetime, spendPlanned
+        filterMenu.MajorExp9815 = { id:"MajorExp9815", category:"expenditures", label:"Past Spending", text:"Total facility spending (1998-2015)", column:"MajorExp9815", value:null };
         filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Planned facility spending (2016-2021)", column:"TotalAllotandPlan1621", value:null };
         filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total facility spending (1998-2021)", column:"LifetimeBudget", value:null };
 
@@ -51,7 +51,7 @@ function initApp(presetMode) {
         this.displayMode = null;
         this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter, filterMenu.All];
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
-        this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.spendPast, filterMenu.spendPlanned];
+        this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.MajorExp9815, filterMenu.spendPlanned];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
         this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
         this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.zonesMenu, this.expendMenu];
@@ -416,7 +416,7 @@ function initApp(presetMode) {
                     console.log("  whichFilter: ", whichFilter);
                     if (whichFilter == "spendLifetime") {
                         setMenuState(displayObj, self.expendMenu, ["S", "A", "A"]);
-                    } else if (whichFilter == "spendPast") {
+                    } else if (whichFilter == "MajorExp9815") {
                         setMenuState(displayObj, self.expendMenu, ["A", "S", "A"]);
                     } else if (whichFilter == "spendPlanned") {
                         setMenuState(displayObj, self.expendMenu, ["A", "A", "S"]);

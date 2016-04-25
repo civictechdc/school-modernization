@@ -307,7 +307,8 @@ function makeZoneAggregator(zonesCollectionObj, displayObj, whichGeojson) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    // console.log("aggregateZoneData");
+    console.log("aggregateZoneData");
+    console.dir(schoolData);
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
@@ -319,14 +320,19 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
     if (displayObj.dataFilters.zones) {
         schoolZoneIndex = getZoneIndex(zonesCollectionObj, displayObj, schoolData);
     }
+    // console.log("  schoolZoneIndex: ", schoolZoneIndex);
 
     // == identify column holding selected expend filter data
     if (schoolZoneIndex != null) {
 
         // == defaults to lifetime budget expenditure if no expenditure selected
         nextSchoolExpend = schoolData.spendLifetime;
+        // console.log("  nextSchoolExpend--1: ", nextSchoolExpend);
+        // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
         if (displayObj.dataFilters.expend == null) {
-            if ((nextSchoolExpend == "NA") || (nextSchoolExpend == null)) {
+            if (nextSchoolExpend == "NA") {
+                validExpendFlag = false;
+            } else if (nextSchoolExpend == null) {
                 nextSchoolExpend = 0;
                 validExpendFlag = false;
             } else {
@@ -340,6 +346,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
                 nextSchoolExpend = parseInt(schoolData[displayObj.dataFilters.expend]);
             }
         }
+        // console.log("  schoolData[displayObj.dataFilters.expend]: ", schoolData[displayObj.dataFilters.expend]);
 
         nextSchoolSqft = schoolData.schoolSqft;
         if ((nextSchoolSqft == "NA") || (nextSchoolSqft == null)) {
@@ -354,6 +361,9 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
         } else {
             nextSchoolEnroll = parseInt(schoolData.schoolEnroll);
         }
+        // console.log("  nextSchoolExpend: ", nextSchoolExpend);
+        // console.log("  nextSchoolSqft: ", nextSchoolSqft);
+        // console.log("  nextSchoolEnroll: ", nextSchoolEnroll);
 
         // == aggregate new value into zone total
         if (Number.isInteger(nextSchoolExpend)) {
@@ -389,7 +399,7 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
 
         } else {
             console.log("ERROR: nextSchoolExpend NaN " + schoolData.schoolName);
-            nextSchoolExpend = 0;
+            nextSchoolExpend = "NA";
         }
 
         // == aggregate new value into zone total
