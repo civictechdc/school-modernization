@@ -978,6 +978,9 @@ r
         var schoolFeederMS = nextSchool.FeederMS;
         var shortName = processSchoolName(school);
 
+        // == value testing
+        // testFilterMatch(school, schoolType, schoolLevel, schoolWard, schoolFeederMS, schoolFeederHS);
+
         // == check agency match
         if (displayObj.dataFilters.agency) {
             if (displayObj.dataFilters.agency != "All") {
@@ -1031,9 +1034,9 @@ r
         }
     }
 
-    // ======= ======= ======= checkFilterMatch ======= ======= =======
-    function checkFilterMatch(school, schoolType, schoolLevel, schoolWard, schoolFeederMS, schoolFeederHS) {
-        console.log("checkFilterMatch");
+    // ======= ======= ======= testFilterMatch ======= ======= =======
+    function testFilterMatch(school, schoolType, schoolLevel, schoolWard, schoolFeederMS, schoolFeederHS) {
+        console.log("testFilterMatch");
 
         console.log("******* school: ", school);
         console.log("  schoolAgency: ", schoolType);

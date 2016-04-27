@@ -431,6 +431,9 @@ function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterInd
             console.log("ERROR: nextSchoolEnroll NaN " + schoolData.schoolName);
             nextSchoolEnroll = 0;
         }
+
+        // == check values for testing
+        // showAggratedData(schoolData, currentAmount, nextSchoolExpend, aggregatedAmount, currentSqft, nextSchoolSqft, aggregatedSqft, currentEnroll, nextSchoolEnroll, aggregatedEnroll);
         return null;
 
     // == rejected schools
@@ -1140,7 +1143,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
 
     // Future spending (FY2016-2021)       ==
     htmlString += "<tr><td class='data-key'><p class='key-text'>Future spending (FY2016-2021)</p></td>";
-    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + TotalAllotandPlan1621 + "</p></td></tr>";
+    htmlString += "<td class='data-value'><p id='profileSpendPlanned' class='value-text'>" + spendPlanned + "</p></td></tr>";
 
     // Future facilities improvements      == FUTUREProjectType16_21
     htmlString += "<tr><td class='data-key'><p class='key-text'>Future facilities improvements</p></td>";
