@@ -17,10 +17,6 @@ button {
   border-radius: 15px;
   -webkit-border-radius: 15px; }
 
-.container {
-  width: 80%;
-  margin: 0px auto; }
-
 .nav {
   position: fixed; }
 
