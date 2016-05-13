@@ -1,0 +1,20 @@
+---
+title: "schoolmodTables"
+author: "KR"
+date: "May 13, 2016"
+output: html_document
+---
+
+```{r}
+schoolMod<-read.csv("https://raw.githubusercontent.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_412.csv",
+         stringsAsFactors=FALSE, strip.white=TRUE)
+
+schoolModN<-sapply(schoolMod, is.numeric)
+
+schoolModChar<-schoolMod[,(schoolModN==FALSE)]
+schoolModChar<-schoolModChar[-c(1:2)]
+lapply(schoolModChar, table)
+
+schoolModNum<-schoolMod[ , schoolModN]
+lapply(schoolModNum, summary)
+```
