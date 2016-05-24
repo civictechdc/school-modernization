@@ -1,5 +1,5 @@
 'use strict';
-function Bubble(){ // data
+function Bubble(){
     
     this.budget =  null;
     this.column = null;
@@ -85,7 +85,7 @@ Bubble.prototype.create_nodes = function(){
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.color = (function(){
-             if(current[this.budget] === '0'){
+            if(current[this.budget] === '0'){
                 return '#787385';
             }
             if(current['Agency'] === 'DCPS'){
@@ -103,7 +103,6 @@ Bubble.prototype.create_nodes = function(){
             var amount= current[that.budget].trim();
             if (amount !== 'NA'){
                 if(amount > 0){
-                    // console.log(radius_scale(amount));
                     return radius_scale(amount);
                 } else {
                     return 5;
@@ -155,13 +154,21 @@ Bubble.prototype.add_tootltips = function(d){
     this.circles.on('mouseenter', function(d){
         // GET THE X/Y COOD OF OBJECT
         var tooltipPadding = 180, // 160,
-            xPosition = d3.select(this)[0][0]['cx'].animVal.value + tooltipPadding + 20,
-            yPosition = d3.select(this)[0][0]['cy'].animVal.value + tooltipPadding;
+            xPosition = d3.select(this)[0][0]['cx'].animVal.value,
+            yPosition = d3.select(this)[0][0]['cy'].animVal.value;//+ tooltipPadding;
         
         // TOOLTIP INFO
         d3.select('#school').text(camel(d.School));
         d3.select('#agency').text('Agency: ' + d.Agency);
         d3.select('#ward').text('Ward: ' + d.Ward);
+
+        // Enrollment
+        d3.select('#enrolled').text('Enrollment (2014-15): ' + d['Total_Enrolled']);
+        // Building Sq Foot
+        d3.select('#buildingsize').text('Bldg sq ft 2016: ' + that.commas(d['totalSQFT']) + ' sq ft.');
+
+
+
         // Project Type
         if(d.ProjectType && d.ProjectType !== 'NA'){
             d3.select('#project').text('Project: ' + d.ProjectType);
@@ -202,6 +209,7 @@ Bubble.prototype.add_tootltips = function(d){
         } else {
             d3.select('#hs').text('');
         }
+
 
         // Make the tooltip visisble
         d3.select('#tooltip')
@@ -245,47 +253,55 @@ Bubble.prototype.group_bubbles = function(d){
 };
 
 Bubble.prototype.move_towards_centers = function(alpha, column) {
+
     // Make an array of unique items
     var that = this,
-        items = _.uniq(_.pluck(this.nodes, column)).sort();
-    var unique = [];
-    for (var i = 0; i < items.length; i++) { 
-        unique.push({name: items[i]}); 
-    }
-
+        items = _.uniq(_.pluck(this.nodes, column)).sort(),
+        unique = [];
+        
+    items.forEach(function(item){
+        unique.push({name: item});
+    });
+    
     // Calculate the sums of all the unique values of the current budget
-    var itemSums = items.map(function(x){
+    var itemSums = items.map(function(uniqueItem){
 
-        // Makes an array of all the nodes with matching x
-        var arr = that.nodes.filter(function(node){
-            if(node[column] === x){
+        // Makes an array of all the nodes with matching uniqueItem
+        var uniqueItems = that.nodes.filter(function(node){
+            if(node[column] === uniqueItem){
                 return node;
             }
         });
-        
+
         // returns the sums of the column values
-        var sums = _.reduce(arr, function(a,b){
+        var sums = _.reduce(uniqueItems, function(a,b){
             var budget = b[that.budget];
+            // if(b['Ward'] === '6'){
+            //     console.log(b['School']);
+            // }
             if(budget === 'NA'){
                 return a;
             }
+
             return a + parseInt(b[that.budget]);
         }, 0);
 
         // return the averages og the column values
         if (that.budget === 'SpentPerSqFt' || that.budget === 'SpentPerMaxOccupancy'){
-            return sums / arr.length;
+            return sums / uniqueItems.length;
+        } else {
+            return sums;
         }
-
-        return sums;
+        
     });
+
 
     // Assign unique_item a point to occupy
     var width = this.sizes.width,
         height = this.sizes.height,
         padding = this.sizes.padding;
+    
     for (var i in unique){
-
         // Make the grid here
         unique[i].x = (i * width / unique.length) * 0.50 + 250;
         unique[i].y = this.center.y;
@@ -319,7 +335,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     text.append('tspan')
         .text(function(d, i){
             return d.name;
-        })
+        });
 
     // Add the budget's sum for the group
     text.append('tspan')
@@ -327,9 +343,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('dx', '10')
         .text(function(d,i){
             var amount = that.round(itemSums[i]);
-            
-            console.log(that.per);
-
             if (that.budget === 'SpentPerSqFt'){
                 return amount + ' per Sq. Ft.'
             }

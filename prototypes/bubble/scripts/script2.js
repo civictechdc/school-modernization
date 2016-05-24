@@ -1,22 +1,26 @@
-d3.csv('data/data_final.csv', function(data){
+d3.csv('https://cdn.rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_412.csv', function(data){
     var bubble = new Bubble(),
         schools = {
+
             both: data,
+
             public: (function(d){
-                    return d.filter(function(item){
-                        if (item.Agency === 'DCPS'){
-                            return item;
-                        }
-                    });
-                }(data)),
+                return d.filter(function(item){
+                    if (item.Agency === 'DCPS'){
+                        return item;
+                    }
+                });
+            }(data)),
+
             charter: (function(d){
-                    return d.filter(function(item){
-                        if (item.Agency === 'PCS'){
-                            return item;
-                        }
-                    });
-                }(data))
+                return d.filter(function(item){
+                    if (item.Agency === 'PCS'){
+                        return item;
+                    }
+                });
+            }(data))
         };
+        
     var initialBudgetState = 'future',
         budgetState = null,
         perState = 'total';
