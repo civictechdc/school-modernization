@@ -1,6 +1,7 @@
 'use strict';
 function Bubble(){ // data
-    
+    console.log("Bubble");
+
     this.budget =  null;
     this.column = null;
     this.data = null;
@@ -27,41 +28,9 @@ function Bubble(){ // data
     };
 };
 
-// Getters
-Bubble.prototype.setColumn = function(column){
-    this.column = column; 
-};
-
-Bubble.prototype.setData = function(newData){
-    this.data = newData;
-};
-
-Bubble.prototype.setBudget = function(budget){
-    this.budget = budget;
-};
-Bubble.prototype.setPer = function(newPer){
-    this.per = per;
-};
-
-// Setters
-Bubble.prototype.getColumn = function(column){
-    return this.column; 
-};
-
-Bubble.prototype.getData = function(newData){
-    return this.data;
-};
-
-Bubble.prototype.getBudget = function(budget){
-    return this.budget;
-};
-
-Bubble.prototype.getPer = function(newPer){
-    return this.per;
-};
-
-// The Rest
+// == The Rest
 Bubble.prototype.make_svg = function(){
+    console.log("make_svg");
     if(document.querySelector('svg')){
         d3.select('svg').remove();
     }
@@ -70,18 +39,43 @@ Bubble.prototype.make_svg = function(){
         .attr('height', this.sizes.height);
 };
 
+Bubble.prototype.set_force = function() {
+    console.log("set_force");
+    var that = this;
+    this.force = d3.layout.force()
+        .nodes(this.data)
+        .links([])
+        .size([this.sizes.width, this.sizes.height])
+        .gravity(this.force_gravity) // -0.01
+        .charge(function(d){ return that.charge(d) || -15; })
+        .friction(0.9); // 0.9
+};
+
 Bubble.prototype.create_nodes = function(){
+    console.log("\n*** create_nodes");
+    // console.log("  this: ", this);   // bubble holding object
+
+    // == clear previous nodes (school selection)
     if(this.nodes.length){
         this.nodes = [];
     }
+
     var that = this, min, max;
         this.max = max = d3.max(this.data, function(d){ return +d[that.budget]; }),
         this.min = min = d3.min(this.data, function(d){ return +d[that.budget]; });
     var radius_scale = d3.scale.linear().domain([min, max]).range([that.range.min, that.range.max]);
-    this.radius_scale = radius_scale;
+        this.radius_scale = radius_scale;
+
+    // == sample school
+    var schoolIndex = 1;
+    console.log("SAMPLE SCHOOL");
+    console.log("  this.budget: ", this.budget);
+    console.log("  this.data[1]['Agency']: ", this.data[schoolIndex]['Agency']);
+    console.log("  this.data[schoolIndex][this.budget]: ", this.data[schoolIndex][this.budget]);
 
     for(var i = 0, j = this.data.length; i < j; i++){
         var current = this.data[i];
+        // console.log("  this.data[i]: ", this.data[i]);
         current.myx = this.center.x;
         current.myy = this.center.y;
         current.color = (function(){
@@ -99,15 +93,16 @@ Bubble.prototype.create_nodes = function(){
 
             }
         }).call(this);
+        
         current.radius = (function(){
-            var amount= current[that.budget].trim();
+            var amount = current[that.budget].trim();
             if (amount !== 'NA'){
                 if(amount > 0){
                     // console.log(radius_scale(amount));
                     return radius_scale(amount);
                 } else {
                     return 5;
-                }   
+                }
             } else {
                 return 7;
             }        }());
@@ -116,6 +111,7 @@ Bubble.prototype.create_nodes = function(){
 };
 
 Bubble.prototype.create_bubbles = function(set){
+    console.log("create_bubbles");
     var that = this;
     this.circles = this.svg.append('g').attr('id', 'groupCircles')
     .selectAll('circle')
@@ -137,31 +133,34 @@ Bubble.prototype.create_bubbles = function(set){
     .attr('cy', function(d,i){
         return set[i].myy;
     })
-    .attr('r', function(d,i){ 
+    .attr('r', function(d,i){
         return set[i].radius;})
     ;
 };
 
-Bubble.prototype.update = function() {
-    d3.selectAll('.circle').data(this.data).exit()
-    .transition()
-    .duration(3000)
-    .style('opacity', '0')
-    .remove();
+Bubble.prototype.charge = function(d) {
+    console.log("charge");
+    var charge = (-Math.pow(d.radius, 1.8) / 2.05); // 1.3
+    if(charge == NaN){
+        charge = -35;
+    }
+    return charge;
 };
 
 Bubble.prototype.add_tootltips = function(d){
+    console.log("add_tootltips");
     var that = this;
     this.circles.on('mouseenter', function(d){
         // GET THE X/Y COOD OF OBJECT
         var tooltipPadding = 180, // 160,
             xPosition = d3.select(this)[0][0]['cx'].animVal.value + tooltipPadding + 20,
             yPosition = d3.select(this)[0][0]['cy'].animVal.value + tooltipPadding;
-        
+
         // TOOLTIP INFO
         d3.select('#school').text(camel(d.School));
         d3.select('#agency').text('Agency: ' + d.Agency);
         d3.select('#ward').text('Ward: ' + d.Ward);
+
         // Project Type
         if(d.ProjectType && d.ProjectType !== 'NA'){
             d3.select('#project').text('Project: ' + d.ProjectType);
@@ -174,7 +173,7 @@ Bubble.prototype.add_tootltips = function(d){
                 d3.select('#yearComplete').text('Projected Completion: ' + d.FutureYrComplete);
             } else {
                 d3.select('#yearComplete').text('Year Completed: ' + d.YrComplete);
-            }   
+            }
         } else {
             d3.select('#yearComplete').text('');
         }
@@ -197,7 +196,7 @@ Bubble.prototype.add_tootltips = function(d){
 
         // Spent per Maximum Occupancy
         d3.select('#expPast').text('Spent per Maximum Occupancy: ' + that.round(d.SpentPerMaxOccupancy));
-        if(d.FeederHS && d.FeederHS !== "NA"){ 
+        if(d.FeederHS && d.FeederHS !== "NA"){
             d3.select('#hs').text('High School: ' + camel(d.FeederHS));
         } else {
             d3.select('#hs').text('');
@@ -214,56 +213,38 @@ Bubble.prototype.add_tootltips = function(d){
     });
 }
 
-Bubble.prototype.set_force = function() {
-    var that = this;
-    this.force = d3.layout.force()
-        .nodes(this.data)
-        .links([])
-        .size([this.sizes.width, this.sizes.height])
-        .gravity(this.force_gravity) // -0.01
-        .charge(function(d){ return that.charge(d) || -15; })
-        .friction(0.9); // 0.9
-};
-
-Bubble.prototype.charge = function(d) {
-    var charge = (-Math.pow(d.radius, 1.8) / 2.05); // 1.3
-    if(charge == NaN){
-        charge = -35;
-    }
-    return charge;
-};
-
-Bubble.prototype.group_bubbles = function(d){
-    var that = this;
-    this.force.on('tick', function(e){
-        that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
-            .attr('cx', function(d){ return d.x;})
-            .attr('cy', function(d){ return d.y;});
-        })
-        ;   
-    this.force.start();
+Bubble.prototype.update = function() {
+    console.log("update");
+    d3.selectAll('.circle').data(this.data).exit()
+    .transition()
+    .duration(3000)
+    .style('opacity', '0')
+    .remove();
 };
 
 Bubble.prototype.move_towards_centers = function(alpha, column) {
-    // Make an array of unique items
+    // console.log("move_towards_centers");
+    // == Make an array of unique items
     var that = this,
         items = _.uniq(_.pluck(this.nodes, column)).sort();
     var unique = [];
-    for (var i = 0; i < items.length; i++) { 
-        unique.push({name: items[i]}); 
+    for (var i = 0; i < items.length; i++) {
+        unique.push({name: items[i]});
     }
 
-    // Calculate the sums of all the unique values of the current budget
+    // == Calculate the sums of all the unique values of the current budget
     var itemSums = items.map(function(x){
+        console.log("itemSums");
 
-        // Makes an array of all the nodes with matching x
+        // == Makes an array of all the nodes with matching x
         var arr = that.nodes.filter(function(node){
+            // console.log("  node[column]: ", node[column]);
             if(node[column] === x){
                 return node;
             }
         });
-        
-        // returns the sums of the column values
+
+        // == returns the sums of the column values
         var sums = _.reduce(arr, function(a,b){
             var budget = b[that.budget];
             if(budget === 'NA'){
@@ -272,7 +253,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
             return a + parseInt(b[that.budget]);
         }, 0);
 
-        // return the averages og the column values
+        // == return the averages og the column values
         if (that.budget === 'SpentPerSqFt' || that.budget === 'SpentPerMaxOccupancy'){
             return sums / arr.length;
         }
@@ -280,18 +261,18 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         return sums;
     });
 
-    // Assign unique_item a point to occupy
+    // == Assign unique_item a point to occupy
     var width = this.sizes.width,
         height = this.sizes.height,
         padding = this.sizes.padding;
     for (var i in unique){
 
-        // Make the grid here
+        // == Make the grid here
         unique[i].x = (i * width / unique.length) * 0.50 + 250;
         unique[i].y = this.center.y;
     }
 
-    // Attach the target coordinates to each node
+    // == Attach the target coordinates to each node
     _.each(this.nodes, function(node){
         for (var i = 0; i < unique.length; i++) {
             if (node[column] === unique[i].name){
@@ -303,7 +284,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         }
     });
 
-    // Add Text
+    // == Add Text
     var text = this.svg.selectAll('text')
         .data(unique)
         .enter()
@@ -315,19 +296,19 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('class', 'sub_titles')
         ;
 
-    // Add the label for the group
+    // == Add the label for the group
     text.append('tspan')
         .text(function(d, i){
             return d.name;
         })
 
-    // Add the budget's sum for the group
+    // == Add the budget's sum for the group
     text.append('tspan')
         .attr('class', 'splitValue')
         .attr('dx', '10')
         .text(function(d,i){
             var amount = that.round(itemSums[i]);
-            
+
             console.log(that.per);
 
             if (that.budget === 'SpentPerSqFt'){
@@ -337,11 +318,23 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         })
         ;
 
-    // Send the nodes the their corresponding point
+    // == Send the nodes the their corresponding point
     return function(d){
         d.x = d.x + (d.target.x - d.x) * (that.damper + 0.02) * alpha;
         d.y = d.y + (d.target.y - d.y) * (that.damper + 0.02) * alpha;
     }
+};
+
+Bubble.prototype.group_bubbles = function(d){
+    console.log("group_bubbles");
+    var that = this;
+    this.force.on('tick', function(e){
+        that.circles.each(that.move_towards_centers(e.alpha/2, that.column))
+            .attr('cx', function(d){ return d.x;})
+            .attr('cy', function(d){ return d.y;});
+        })
+        ;
+    this.force.start();
 };
 
 Bubble.prototype.make_legend = function(){
@@ -354,8 +347,8 @@ Bubble.prototype.make_legend = function(){
     }
     var numDynamic = [d3.round(this.max), d3.round(this.max/2), 0],
         multiplier = [1, 2.2, 2.85, 3.3];
-    
-    // Circle Radius Conparison Legend
+
+    // == Circle Radius Conparison Legend
     var legend = d3.select('#legend_cont')
         .append('svg')
         .attr('class', 'legendSvg')
@@ -389,7 +382,7 @@ Bubble.prototype.make_legend = function(){
         })
         ;
 
-    // District vs Charter Legend
+    // == District vs Charter Legend
     var schools = ['District Schools', 'Charter Schools'];
     var schoolLegend = d3.select('#legend_cont')
         .append('svg')
@@ -427,31 +420,66 @@ Bubble.prototype.make_legend = function(){
         ;
 };
 
-Bubble.prototype.add_search_feature = function() {  
-    // Populate the <select> element with the schools
+Bubble.prototype.add_search_feature = function() {
+    // == Populate the <select> element with the schools
     for(var i=0, j=this.nodes.length; i<j; i++){
         var option = document.createElement('option'),
             newOption = get('select').appendChild(option),
             sortedNodes = _.sortBy(this.nodes, 'School');
         newOption.setAttribute('school', sortedNodes[i]['School'])
-        newOption.innerHTML = sortedNodes[i]['School'];  
+        newOption.innerHTML = sortedNodes[i]['School'];
     }
 
-    // Fool with the select bar
+    // == Fool with the select bar
     var selectForm = get('#select');
     selectForm.addEventListener('change', function(e){
-        // Un-highlight the previously selected node
+        // == Un-highlight the previously selected node
         if(get('[shown=true]')){
             var last = get('[shown=true]');
             last.style.fill = last.getAttribute('color');
             last.removeAttribute('shown');
         }
-        // Highlight the selected node
+        // == Highlight the selected node
         var circle = document.getElementById(e.target.value);
         circle.setAttribute('shown', true);
         circle.style.fill = '#021c2a';
     });
 };
+
+
+// == Setters
+Bubble.prototype.setColumn = function(column){
+    this.column = column;
+};
+
+Bubble.prototype.setData = function(newData){
+    this.data = newData;
+};
+
+Bubble.prototype.setBudget = function(budget){
+    this.budget = budget;
+};
+Bubble.prototype.setPer = function(newPer){
+    this.per = per;
+};
+
+// == Getters
+Bubble.prototype.getColumn = function(column){
+    return this.column;
+};
+
+Bubble.prototype.getData = function(newData){
+    return this.data;
+};
+
+Bubble.prototype.getBudget = function(budget){
+    return this.budget;
+};
+
+Bubble.prototype.getPer = function(newPer){
+    return this.per;
+};
+
 
 Bubble.prototype.reset_svg = function() {
     d3.selectAll('#groupCircles').remove();
@@ -466,9 +494,9 @@ Bubble.prototype.graph = function(){
     this.create_bubbles(this.nodes);
     this.update();
     this.add_tootltips();
-    this.group_bubbles(); 
+    this.group_bubbles();
     this.make_legend();
-    this.add_search_feature();  
+    this.add_search_feature();
 };
 
 Bubble.prototype.change = function(){
@@ -476,7 +504,7 @@ Bubble.prototype.change = function(){
     this.create_nodes();
     this.create_bubbles(this.nodes);
     this.add_tootltips();
-    this.group_bubbles(); 
+    this.group_bubbles();
     this.make_legend();
     this.add_search_feature();
 };
@@ -485,4 +513,3 @@ Bubble.prototype.change = function(){
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
-

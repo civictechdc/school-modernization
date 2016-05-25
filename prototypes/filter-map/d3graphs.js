@@ -3,13 +3,7 @@
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount) {
     console.log("\n----- makeRankChart -----");
 
-    // ======= ======= ======= chart html ======= ======= =======
-    if (displayObj.displayMode != "storyMap") {
-        var chartHtml = makeChartHtml(displayObj);
-        var messageHtml = makeMessageHtml(displayObj);
-    } else {
-        var chartHtml = "<div id='chart'></div>";
-    }
+    var chartHtml = "<div id='chart'></div>";
 
     // ======= remove previous chart or profile html if any =======
     if ($('#profile-container').find('#profile').length) {
@@ -22,14 +16,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     if ($('#chart-container').find('#chart').length) {
         $("#chart").remove();
         $("#chart-container").append(chartHtml);
-        $("#chart").append(messageHtml);
         updateChartStyle();
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
         });
     } else {
         $("#chart-container").append(chartHtml);
-        $("#chart").append(messageHtml);
         updateChartStyle();
         $("#chart-container").fadeIn( "slow", function() {
             console.log("*** FADEIN chart-container ***");
@@ -49,24 +41,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     var labelSubtitleArray = [];
     var barTicks = zonesCollectionObj.dataBins;
     var fillColors = zonesCollectionObj.dataColorsArray;
-    if (displayObj.displayMode != "storyMap") {
-        var schoolCircleX = 50;
-    } else {
-        var schoolCircleX = -30;
-    }
+    var schoolCircleX = 50;
 
     // ======= chart formatting =======
-    if (displayObj.displayMode != "storyMap") {
-        var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
-            chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
-            chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
-        var yAxisLabel = "left";
-    } else {
-        var chartPadding = {top: 20, right: 10, bottom: 40, left: 80},
-            chartW = 150 - chartPadding.left - chartPadding.right,       // outer width of chart
-            chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
-        var yAxisLabel = "right";
-    }
+    var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
+        chartW = 360 - chartPadding.left - chartPadding.right,       // outer width of chart
+        chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+    var yAxisLabel = "left";
 
     // ======= ======= ======= data variables ======= ======= =======
     var dataObjectsArray = zonesCollectionObj.aggregatorArray;
@@ -180,7 +161,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         }))
         .range([0, chartW]);
 
-        // ======= ======= ======= Y SCALE ======= ======= =======
+    // ======= ======= ======= Y SCALE ======= ======= =======
+    yAxisTranslate = 0;
     var yScale = d3.scale.linear()      // maps input domain to output range
         .domain([0, d3.max(barScaleArray, function(d, i) {
             return d;
@@ -200,13 +182,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         .attr("height", chartH + (chartPadding.top + chartPadding.bottom))
         .append("g")
             .attr("transform", "translate(" + chartPadding.left + "," + chartPadding.top + ")");
-
-    // ======= yAxis =======
-    if (displayObj.displayMode != "storyMap") {
-        yAxisTranslate = 0;
-    } else {
-        yAxisTranslate = 0;
-    }
 
     svg.append("g")                 // g group element to contain about-to-be-generated axis elements
         .attr("class", "yAxis")     // assign class of yAxis to new g element, so we can target it with CSS:
@@ -228,11 +203,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .append("rect")
             .attr("class", "bar")
             .attr("x", function(d) {
-                if (displayObj.displayMode != "storyMap") {
-                    return 4;
-                } else {
-                    return 10;
-                }
+                return 10;
             })
             .attr("width", barW)
             .attr("y", function(d, i) {
@@ -468,13 +439,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             $(this).off("mouseover").on("mouseover", function(event){
                 console.log("\n======= showLabel ======= ");
                 $("#chart-message").css("display", "none");
-                if (displayObj.displayMode != "storyMap") {
-                    targetLabel = $('#dataChartLabel_' + i);
-                    $(targetLabel).attr("visibility", "visible");
-                } else {
-                    $("#data-title").text(labelTitleArray[i]);
-                    $("#data-subtitle").text(labelSubtitleArray[i]);
-                }
+                targetLabel = $('#dataChartLabel_' + i);
+                $(targetLabel).attr("visibility", "visible");
                 targetMarkerIndex = this.id.split("_")[1];
                 if (displayObj.dataFilters.zones == null) {
                     schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
@@ -490,13 +456,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             // ======= ======= ======= mouseout ======= ======= =======
             $(this).off("mouseout").on("mouseout", function(event){
                 // console.log("\n======= hideLabel ======= ");
-                if (displayObj.displayMode != "storyMap") {
-                    targetLabel = $('#dataChartLabel_' + i);
-                    $(targetLabel).attr("visibility", "hidden");
-                } else {
-                    $("#data-title").text("");
-                    $("#data-subtitle").text("");
-                }
+                targetLabel = $('#dataChartLabel_' + i);
+                $(targetLabel).attr("visibility", "hidden");
                 targetMarkerIndex = this.id.split("_")[1];
                 if (displayObj.dataFilters.zones == null) {
                     schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
@@ -532,11 +493,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
         var zoneName = zoneFeature.getProperty('itemName');
         var zoneIndex = zoneFeature.getProperty('index');
-        if (displayObj.displayMode != "storyMap") {
-            var itemColor = zoneFeature.getProperty('itemColor');
-        } else {
-            var itemColor = "white";
-        }
+        var itemColor = zoneFeature.getProperty('itemColor');
 
         if (onOrOff == "on") {
             map.data.overrideStyle(zoneFeature, {
@@ -585,15 +542,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     function updateChartStyle() {
         console.log("updateChartStyle");
 
-        if (displayObj.displayMode == "storyMap") {
-          // Do nothing
-        } else {
-            $("#chart-container").css("position", "absolute");
-            $("#chart-container").css("top", "410px");
-            $("#chart-container").css("left", "0");
-            $("#chart-container").css("width", "520px");
-            $("#chart-container").css("height", "auto");
-        }
+        $("#chart-container").css("position", "absolute");
+        $("#chart-container").css("top", "410px");
+        $("#chart-container").css("left", "0");
+        $("#chart-container").css("width", "520px");
+        $("#chart-container").css("height", "auto");
     }
 
     // ======= stringToInt =======

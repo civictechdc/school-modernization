@@ -1,6 +1,29 @@
 'use strict';
 (function(){
-    d3.csv('https://cdn.rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_46.csv', function(data){
+    console.log("init");
+
+    var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_412.csv";
+
+    // ======= get school data =======
+    $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "text"
+    }).done(function(textData){
+        console.log("*** ajax success ***");
+        jsonData = CSV2JSON(textData);
+        console.dir(jsonData);
+
+    // == errors/fails
+    }).fail(function(){
+        console.log("*** ajax fail ***");
+    }).error(function() {
+        console.log("*** ajax error ***");
+    });
+
+    var data = textData;
+    d3.csv(url, function(data){
+        console.log("csvTOd3");
         var bubble = new Bubble('LifetimeBudget'); // data
 
         // Filter the data
@@ -83,7 +106,7 @@
         // Past, Future, Lifetime, Per Sq Ft, Per Student
         var dataChange = Array.prototype.slice.call(getAll('.dataChange'));
         dataChange.forEach(function(item, e){
-            item.addEventListener('click', function(e){  
+            item.addEventListener('click', function(e){
                 dataChange.forEach(function(sel){
                     if(sel.classList.contains('selected')){
                         sel.classList.remove('selected');
@@ -113,14 +136,14 @@
         // District Schools, Charter Schools, All Schools
         var schoolChange = Array.prototype.slice.call(getAll('.school'));
         schoolChange.forEach(function(item, e){
-            item.addEventListener('click', function(e){ 
+            item.addEventListener('click', function(e){
                 schoolChange.forEach(function(sel){
                     if(sel.classList.contains('selected')){
                         sel.classList.remove('selected');
                     }
                 });
                 bubble.setData(schools[e.target.id]);
-                
+
                 bubble.change();
                 makeSelected(e);
 
@@ -134,10 +157,10 @@
         get('#Agency').classList.add('selected');
 
         get('#LifetimeBudget').classList.add('selected');
-        
+
         bubble.setData(schools.both);
         get('#both').classList.add('selected');
-        
+
         bubble.graph();
 
     });
@@ -149,4 +172,3 @@ function makeSelected(e){e.target.classList.add('selected');}
 function get(sel){return document.querySelector(sel);}
 function getAll(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel));}
 function camel(str){ return str.replace(/(\-[a-z])/g, function($1){return $1.toUpperCase();});}
-

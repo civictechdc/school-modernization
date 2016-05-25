@@ -32,50 +32,45 @@ function getZoneUrls(displayObj, zonesCollectionObj) {
     console.log("getZoneUrls");
 
     var feederFlag = false;
-    if (displayObj.displayMode == "storyMap") {
-        var websitePrefix = "prototypes/filter-map/";
-    } else {
-        var websitePrefix = "";
-    }
 
     if (displayObj.dataFilters.zones) {
         if (displayObj.dataFilters.zones == "Ward") {
             zonesCollectionObj.zoneA = "Ward";
-            urlA = websitePrefix + "Data_Geo/Ward__2012.geojson";
+            urlA = "Data_Geo/Ward__2012.geojson";
             urlB = null;
         } else if (displayObj.dataFilters.zones == "FeederHS") {
             zonesCollectionObj.zoneA = "FeederHS";
-            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Senior_High__New.geojson";
+            urlA = "Data_Geo/School_Attendance_Zones_Senior_High__New.geojson";
             if (displayObj.dataFilters.levels == "MS") {
                 feederFlag = true;
-                urlB = websitePrefix + "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
+                urlB = "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
             } else if (displayObj.dataFilters.levels == "ES") {
                 feederFlag = true;
-                urlB = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
+                urlB = "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
             } else if (displayObj.dataFilters.levels == null) {
                 urlB = null;
             }
         } else if (displayObj.dataFilters.zones == "FeederMS") {
             feederFlag = true;
             zonesCollectionObj.zoneA = "FeederMS";
-            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
-            urlB = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
+            urlA = "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
+            urlB = "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
         } else if (displayObj.dataFilters.zones == "Elementary") {
-            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
+            urlA = "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
         }
     } else {
         if (displayObj.dataFilters.levels == "HS") {
             zonesCollectionObj.zoneA = "FeederHS";
-            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Senior_High__New.geojson";
+            urlA = "Data_Geo/School_Attendance_Zones_Senior_High__New.geojson";
         } else if (displayObj.dataFilters.levels == "MS") {
             zonesCollectionObj.zoneA = "FeederMS";
-            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
+            urlA = "Data_Geo/School_Attendance_Zones_Middle_School__New.geojson";
         } else if (displayObj.dataFilters.levels == "ES") {
             zonesCollectionObj.zoneA = "Elementary";
-            urlA = websitePrefix + "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
+            urlA = "Data_Geo/School_Attendance_Zones_Elementary__New.geojson";
         } else {
             zonesCollectionObj.zoneA = "Ward";
-            urlA = websitePrefix + "Data_Geo/Ward__2012.geojson";
+            urlA = "Data_Geo/Ward__2012.geojson";
         }
         urlB = null;
     }
@@ -165,7 +160,7 @@ function setMenuState(displayObj, whichMenu, whichStates) {
             $(nextElement).addClass("active");
             $(nextElement).removeClass("selected");
             $(nextElement).removeClass("deactivated");
-            displayObj.activateFilterLink(nextFilter);
+            activateFilterLink(nextFilter);
         } else if (nextState == "D") {
             // if (checkIndex > -1) {
             //     displayObj.filterTitlesArray.splice(checkIndex, 1);
@@ -307,8 +302,8 @@ function makeZoneAggregator(zonesCollectionObj, displayObj, whichGeojson) {
 
 // ======= ======= ======= aggregateZoneData ======= ======= =======
 function aggregateZoneData(zonesCollectionObj, displayObj, schoolData, masterIndex) {
-    console.log("aggregateZoneData");
-    console.dir(schoolData);
+    // console.log("aggregateZoneData");
+    // console.dir(schoolData);
 
     var schoolWard = nextZoneIndex = nextSchoolExpend = currentAmount = aggregatedAmount = 0;
     var currentSqft = currentEnroll = aggregatedSqft = aggregatedEnroll = 0;
