@@ -186,7 +186,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
 
     var cleanedData = {};
 
-    // schoolIndex, schoolName, schoolWard, schoolCode, schoolFeederMS, schoolFeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, YrComplete
+    // schoolIndex, schoolName, schoolWard, schoolCode, FeederMS, FeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, YrComplete
     cleanedData.schoolIndex = schoolData.schoolIndex;
     cleanedData.schoolName = schoolData.schoolName;
     cleanedData.schoolWard = schoolData.schoolWard;
@@ -196,15 +196,15 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     } else {
         cleanedData.schoolCode = schoolData.schoolCode;
     }
-    if (schoolData.schoolFeederMS == null) {
-        cleanedData.schoolFeederMS = "";
+    if (schoolData.FeederMS == null) {
+        cleanedData.FeederMS = "";
     } else {
-        cleanedData.schoolFeederMS = schoolData.schoolFeederMS;
+        cleanedData.FeederMS = schoolData.FeederMS;
     }
-    if (schoolData.schoolFeederHS == null) {
-        cleanedData.schoolFeederHS = "";
+    if (schoolData.FeederHS == null) {
+        cleanedData.FeederHS = "";
     } else {
-        cleanedData.schoolFeederHS = schoolData.schoolFeederHS;
+        cleanedData.FeederHS = schoolData.FeederHS;
     }
     if (schoolData.schoolAddress == null) {
         cleanedData.schoolAddress = "";

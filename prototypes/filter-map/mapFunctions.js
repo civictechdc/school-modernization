@@ -1,7 +1,6 @@
 // ======= ======= ======= initMap ======= ======= =======
 function initMap(zonesCollectionObj, displayObj) {
     console.log('initMap');
-    console.log('  displayObj.displayMode: ', displayObj.displayMode);
 
     // ======= map styles =======
     var styleArray = [
@@ -208,6 +207,38 @@ function initOverlay(zonesCollectionObj, displayObj) {
     // google.maps.event.addDomListener(window, 'load', initMap);
 }
 
+// ======= ======= ======= hiliteSchoolMarker ======= ======= =======
+function hiliteSchoolMarker(schoolsCollectionObj, foundDataArray) {
+    console.log("hiliteSchoolMarker");
+
+    var schoolIndex = foundDataArray[0][0];
+    var flashCounter = 0;
+    var schoolMarker = schoolsCollectionObj.schoolMarkersArray[schoolIndex];
+    console.dir(schoolMarker);
+
+    var hilite = setInterval(flashMarker, 500);
+
+    function flashMarker() {
+        flashCounter++;
+        schoolMarker.icon.fillColor = "purple";
+        schoolMarker.icon.strikeColor = "black";
+        schoolMarker.icon.strokeWeight = 6;
+        schoolMarker.icon.scale = .6;
+        schoolMarker.setMap(map);
+        if (flashCounter > 4) {
+            clearInterval(hilite);
+        }
+        setTimeout(resetMarker, 400);
+    }
+r
+    function resetMarker() {
+        schoolMarker.icon.fillColor = schoolMarker.defaultColor;
+        schoolMarker.icon.scale = 0.2;
+        schoolMarker.icon.strikeColor = "purple";
+        schoolMarker.icon.strokeWeight = 2;
+        schoolMarker.setMap(map);
+    }
+}
 
 
 // // ======= ======= ======= getZoneData ======= ======= =======

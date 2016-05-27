@@ -3,7 +3,9 @@
 function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount) {
     console.log("\n----- makeRankChart -----");
 
-    var chartHtml = "<div id='chart'></div>";
+    var chartHtml = "<div id='chart'>";
+    chartHtml += makeChartHtml();
+    chartHtml += "</div>";
 
     // ======= remove previous chart or profile html if any =======
     if ($('#profile-container').find('#profile').length) {

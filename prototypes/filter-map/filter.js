@@ -1,7 +1,6 @@
 // ======= ======= ======= activateFilterLink ======= ======= =======
 function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
     console.log("activateFilterLink");
-    console.log("  nextItem: ", nextItem);
 
     // == id ties DOM element to menu object
     var self = displayObj;
@@ -28,6 +27,12 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
     // ======= ======= ======= selectFilter ======= ======= =======
     $(nextElement).off("click").on("click", function(event){
         console.log("\n======= selectFilter ======= ");
+
+        // var filterState = ["A", "A", "A"];
+        // var menuItems = ["menuItem1", "menuItem2", "menuItem3"];
+        // var menuCategories = ["agency", "level", "zone", "expend"];
+        // console.log("======= filterState: "; filterState);
+
 
         var classList = $(this).attr('class').split(/\s+/);
         var whichCategory = classList[1];
@@ -106,13 +111,13 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
 
             // == wards or feeder zones for map
             case "zones":
-            console.log("  ======= ======= dataFilters.levels: ", self.dataFilters.levels);
                 self.dataFilters.zones = whichFilter;
                 zonesCollectionObj.zoneA = whichFilter;
                 zonesCollectionObj.zoneGeojson_AB = null;
                 zonesCollectionObj.aggregatorArray = [];
                 var tempAgency = self.dataFilters.agency;
                 var tempLevels = self.dataFilters.levels;
+                console.log("  whichFilter: ", whichFilter);
                 console.log("  tempAgency: ", tempAgency);
                 console.log("  tempLevels: ", tempLevels);
 
