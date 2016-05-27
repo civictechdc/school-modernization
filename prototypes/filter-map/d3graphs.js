@@ -439,7 +439,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
-                console.log("\n======= showLabel ======= ");
+                // console.log("\n======= showLabel ======= ");
                 $("#chart-message").css("display", "none");
                 targetLabel = $('#dataChartLabel_' + i);
                 $(targetLabel).attr("visibility", "visible");

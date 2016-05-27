@@ -29,7 +29,7 @@ function initApp(presetMode) {
         filterMenu.High = { id:"High", category:"schools", label:"High Schools", text:"High Schools, 6-12 MS/HS, Adult, Alternative Schools", column:"Level", value:"HS" };
 
         // == MajorExp9815, spendLifetime, spendPlanned
-        filterMenu.MajorExp9815 = { id:"MajorExp9815", category:"expenditures", label:"Past Spending", text:"Total facility spending (1998-2015)", column:"MajorExp9815", value:null };
+        filterMenu.MajorExp9815 = { id:"MajorExp9815", category:"expenditures", label:"Past Spending", text:"Past facility spending (1998-2015)", column:"MajorExp9815", value:null };
         filterMenu.spendPlanned = { id:"spendPlanned", category:"expenditures", label:"Future Spend", text:"Planned facility spending (2016-2021)", column:"TotalAllotandPlan1621", value:null };
         filterMenu.spendLifetime = { id:"spendLifetime", category:"expenditures", label:"Total Spend", text:"Total facility spending (1998-2021)", column:"LifetimeBudget", value:null };
 
@@ -61,7 +61,7 @@ function initApp(presetMode) {
         this.schoolNamesArray = [];
         this.categoryLabels = ["sector", "schools", "spending", "location"];
         this.groupLabels = ["who", "what", "when", "where"];
-        this.dataFilters = { "agency": "All", "levels": null, "expend": null, "zones": "Ward", "math": "spendAmount", "selectedZone": null  };
+        this.dataFilters = { agency: "All", levels: null, expend: null, zones: "Ward", math: "spendAmount", selectedZone: null  };
     }
     function ZonesCollection() {
         console.log("ZonesCollection");
@@ -437,11 +437,6 @@ function initApp(presetMode) {
             self.zoneGeojson_A = geoJsonData;
             console.dir(geoJsonData);
 
-            // == aggregate for urlA zones
-            // if (self.aggregatorArray.length == 0) {
-            //     makeZoneAggregator(self, displayObj, self.zoneGeojson_A);
-            // }
-
             // == get secondary map data for urlB
             if (feederFlag == true) {
                 self.getFeederZones(urlB);
@@ -559,61 +554,22 @@ function initApp(presetMode) {
             schoolIndex = i;
             nextSchool = jsonData[i];
             selectedSchool = this.checkFilterMatch(nextSchool);
-            // selectedSchool = filteredSchools[0];
-            // closedSchool = filteredSchools[1];
-
-            // if (closedSchool) {
-            //     closedData = getDataDetails(nextSchool, schoolIndex);
-            //     closedSchoolsArray.push(closedData);
-            // }
 
             // == build arrays of selected/not selected schools
             if (selectedSchool == true) {
                 schoolData = getDataDetails(nextSchool, schoolIndex);
                 selectedSchoolsArray.push(schoolData);
-                // rejectedAggregatorCode = aggregateZoneData(zonesCollectionObj, displayObj, schoolData, schoolIndex);
-                // if (rejectedAggregatorCode) {
-                //     rejectedAggregatorArray.push(rejectedAggregatorCode);
-                // }
             } else {
                 rejectedSchoolsArray.push(schoolData);
             }
         }
-        // this.closedSchoolsArray = closedSchoolsArray;
         this.selectedSchoolsArray = selectedSchoolsArray;
+        var aggregatedValues = aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter);
+        zonesCollectionObj.aggregator = aggregatedValues;
+        console.dir(aggregatedValues);
         console.log("  selectedSchoolsArray: ", selectedSchoolsArray.length);
         console.log("  rejectedSchoolsArray: ", rejectedSchoolsArray.length);
         console.log("  rejectedAggregatorArray: ", rejectedAggregatorArray.length);
-
-        if (expendFilter){
-            var aggregatedValues = aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter);
-            zonesCollectionObj.aggregator = aggregatedValues;
-            console.dir(aggregatedValues);
-
-            // zoneDataObject = { zoneIndex:, zoneName:, schoolCount:, zoneAmount:, zoneSqft:, zoneEnroll:, amountMin:, amountMax:, amountAvg:, amountMed: }
-
-            var zoneDataObject;
-            var aggregatorArray = _.map(aggregatedValues, function(value, key){
-                // console.log("_.map");
-                zoneDataObject = { zoneIndex:value.schoolIndex, zoneName:key, schoolCount:value.schoolCount, zoneAmount:value.zoneAmount, zoneSqft:value.zoneSqft, zoneEnroll:value.zoneEnroll, amountMin:value.amountMin, amountMax:value.amountMax, amountAvg:null, amountMed:null }
-
-                // console.log(key, ":", value.zoneAmount);
-                // console.log("\n== key: ", key);
-                // console.log(" value: ", value);
-                // console.log(" schoolCount: ", value.schoolCount);
-                // console.log(" zoneAmount: ", value.zoneAmount);
-                console.log(key, " enroll: ", value.zoneEnroll);
-                // console.log(" zoneSqft: ", value.zoneSqft);
-                // console.log(" amountMin: ", value.amountMin);
-                // console.log(" amountMax: ", value.amountMax);
-                // console.log(" zoneDataObject: ", zoneDataObject);
-
-                return zoneDataObject;
-            });
-            zonesCollectionObj.aggregatorArray = aggregatorArray;
-            console.log(" aggregatorArray: ", aggregatorArray);
-        }
-
 
 
         // ======= make map layers ======
@@ -715,8 +671,6 @@ function initApp(presetMode) {
         console.log("\n----- makeZoneLayer -----");
 
         var self = this;
-        var colorIndex = -1;
-        var featureIndex = -1;
         var itemOpacity = 0.5;
         var strokeColor = "purple";
         var strokeWeight = 2;
@@ -744,110 +698,154 @@ function initApp(presetMode) {
             zoneBcount = 0;
         }
 
-        // ======= ======= ======= calculate min, max, increment, average, median ======= ======= =======
-        if (displayObj.dataFilters.expend) {
-            this.dataIncrement = doTheMath(this, displayObj);
-        }
-
-        // ======= FEATURES DATA LOOP =======
-        map.data.forEach(function(feature) {
-            featureIndex++;
-
-            // ======= get and validate name for each feature =======
+        // ======= FEATURES POSITIONING LOOP =======
+        map.data.forEach(function(feature, featureIndex) {
             zoneName = removeAbbreviations(feature.getProperty('NAME'))
-
-            // ======= get center lat lng of feature =======
             centerLatLng = makeZoneGeometry(feature);
-
-            // ======= set feature properties =======
             feature.setProperty('itemName', zoneName);
             feature.setProperty('center', centerLatLng);
             feature.setProperty('index', featureIndex);
-
-            // ======= store feature properties =======
             self.zoneFeaturesArray.push(feature);
         });
-        console.log("*** new features Ct ", self.zoneFeaturesArray.length);
+        console.log("  self.zoneFeaturesArray: ", self.zoneFeaturesArray);
+
+        // ======= FEATURES DATA LOOP =======
+        // zoneDataObject == zoneIndex: zoneName: schoolCount: zoneAmount: zoneSqft: zoneEnroll: amountMin: amountMax: amountAvg: amountMed: }
+        var zoneDataObject;
+        console.log(" this.aggregator: ", this.aggregator);
+        var aggregatorArray = _.map(zonesCollectionObj.aggregator, function(value, key){
+            zoneDataObject = { zoneIndex:value.zoneIndex, zoneName:key, schoolCount:value.schoolCount, zoneAmount:value.zoneAmount, zoneSqft:value.zoneSqft, zoneEnroll:value.zoneEnroll, amountMin:value.amountMin, amountMax:value.amountMax, amountAvg:null, amountMed:null }
+            // console.log(key, " value: ", value);
+            // console.log(key, ":", value.zoneAmount);
+            // console.log(key, " schoolCount: ", value.zoneIndex);
+            // console.log(key, " zoneIndex: ", value.zoneIndex);
+            // console.log(key, " zoneName: ", value.zoneName);
+            // console.log(key, " zoneAmount: ", value.zoneAmount);
+            // console.log(key, " enroll: ", value.zoneEnroll);
+            // console.log(key, " zoneSqft: ", value.zoneSqft);
+            // console.log(key, " amountMin: ", value.amountMin);
+            // console.log(key, " amountMax: ", value.amountMax);
+            // console.log(key, " zoneDataObject: ", zoneDataObject);
+            return zoneDataObject;
+        });
+        this.aggregatorArray = aggregatorArray;
+        
+        console.log(" this.aggregatorArray: ", this.aggregatorArray);
+        if (displayObj.dataFilters.agency == "Charter") {
+            this.aggregatorArray.push({ zoneIndex:2, zoneName:"3", schoolCount:0, zoneAmount:0, zoneSqft:0, zoneEnroll:0, amountMin:0, amountMax:0, amountAvg:null, amountMed:null });
+            console.log(" this.aggregatorArray: ", this.aggregatorArray);
+        }
+
+        // ======= ======= ======= calculate perSqft, perStudent, min, max, average, median, increment ======= ======= =======
+        if (displayObj.dataFilters.expend) {
+            this.dataIncrement = calcPerAmounts(this, displayObj);
+        }
 
         // ======= FEATURES FORMATTING LOOPS =======
-        var featureIndex = -1;
-        var dataDelayCount = 0;
         if (zoneBcount > 0) {
+            var featureIndex = -1;
 
             // == elementary or middle school zones in feeder areas
             console.log("*** LOWER ZONES ***");
             for (var i = 0; i < zoneBcount; i++) {
-                var start = new Date().getTime();
-                feature = self.zoneFeaturesArray[i];
-                nextName = feature.getProperty('itemName');
                 featureIndex++;
-
-                zoneFormatArray = getZoneFormat(self, displayObj, featureIndex, nextName, "lower");
-
-                feature.setProperty('itemColor', zoneFormatArray[0]);
-                feature.setProperty('strokeColor', zoneFormatArray[1]);
-                feature.setProperty('strokeWeight', zoneFormatArray[2]);
-                feature.setProperty('itemOpacity', zoneFormatArray[3]);
-
-                setFeatureStyle(feature);
-
-                var end = new Date().getTime();
-                var time = end - start;
-                if (time > 0) {
-                    dataDelayCount++;
-                }
+                setZoneProperties("lower", i);
             }
 
             // == feeder zones or wards
             console.log("*** UPPER ZONES ***");
             for (var i = zoneBcount; i < self.zoneFeaturesArray.length; i++) {
-                var start = new Date().getTime();
-                feature = self.zoneFeaturesArray[i];
-                nextName = feature.getProperty('itemName');
                 featureIndex++;
-
                 zoneAIndex = featureIndex - zoneBcount;
-                zoneFormatArray = getZoneFormat(self, displayObj, zoneAIndex, nextName, "upper");
-
-                feature.setProperty('itemColor', zoneFormatArray[0]);
-                feature.setProperty('strokeColor', zoneFormatArray[1]);
-                feature.setProperty('strokeWeight', zoneFormatArray[2]);
-                feature.setProperty('itemOpacity', zoneFormatArray[3]);
-
-                setFeatureStyle(feature);
-
-                var end = new Date().getTime();
-                var time = end - start;
-                if (time > 0) {
-                    dataDelayCount++;
-                }
+                setZoneProperties("upper", zoneAIndex);
             }
 
-        // == single zone layer
         } else {
-            for (var i = 0; i < self.zoneFeaturesArray.length; i++) {
-                var start = new Date().getTime();
-                feature = self.zoneFeaturesArray[i];
-                nextName = feature.getProperty('itemName');
-                featureIndex++;
-                colorIndex++;
+            self.aggregatorArray.forEach(function(zone, featureIndex) {
+                // console.log("  zone: ", zone);
 
-                zoneFormatArray = getZoneFormat(self, displayObj, featureIndex, nextName, "single");
-
-                feature.setProperty('itemColor', zoneFormatArray[0]);
-                feature.setProperty('strokeColor', zoneFormatArray[1]);
-                feature.setProperty('strokeWeight', zoneFormatArray[2]);
-                feature.setProperty('itemOpacity', zoneFormatArray[3]);
-
-                setFeatureStyle(feature);
-
-                var end = new Date().getTime();
-                var time = end - start;
-                if (time > 0) {
-                    dataDelayCount++;
+                // == build map feature if not "City-Wide"
+                if (zone.zoneIndex != null) {
+                    setZoneProperties("single", zone.zoneIndex);
+                    // feature = self.zoneFeaturesArray[zone.zoneIndex];
+                    // nextName = feature.getProperty('itemName');
+                    // zoneFormatArray = getZoneFormat(self, displayObj, zone.zoneIndex, nextName, "single");
+                    // feature.setProperty('itemColor', zoneFormatArray[0]);
+                    // feature.setProperty('strokeColor', zoneFormatArray[1]);
+                    // feature.setProperty('strokeWeight', zoneFormatArray[2]);
+                    // feature.setProperty('itemOpacity', zoneFormatArray[3]);
+                    // setFeatureStyle(feature);
+                    // [itemColor, strokeColor, strokeWeight, itemOpacity];
+                    // console.log("  zoneFormatArray: ", zoneFormatArray);
                 }
-            }
+            });
         }
+
+
+        // ======= ======= ======= setZoneProperties ======= ======= =======
+        function setZoneProperties(whichLayer, zoneIndex) {
+            // console.log("setZoneProperties");
+            // console.log("  whichLayer: ", whichLayer);
+            // console.log("  zoneIndex: ", zoneIndex);
+            // console.log("  self.zoneFeaturesArray: ", self.zoneFeaturesArray);
+            feature = self.zoneFeaturesArray[zoneIndex];
+            nextName = feature.getProperty('itemName');
+            zoneFormatArray = getZoneFormat(self, displayObj, zoneIndex, nextName, whichLayer);
+            feature.setProperty('itemColor', zoneFormatArray[0]);
+            feature.setProperty('strokeColor', zoneFormatArray[1]);
+            feature.setProperty('strokeWeight', zoneFormatArray[2]);
+            feature.setProperty('itemOpacity', zoneFormatArray[3]);
+            setFeatureStyle(feature);
+            // [itemColor, strokeColor, strokeWeight, itemOpacity];
+            // console.log("  zoneFormatArray: ", zoneFormatArray);
+        }
+
+        // if (zoneBcount > 0) {
+        //
+        //     // == elementary or middle school zones in feeder areas
+        //     console.log("*** LOWER ZONES ***");
+        //     for (var i = 0; i < zoneBcount; i++) {
+        //         featureIndex++;
+        //         feature = self.zoneFeaturesArray[i];
+        //         nextName = feature.getProperty('itemName');
+        //         featureIndex = i;
+        //         zoneFormatArray = getZoneFormat(self, displayObj, featureIndex, nextName, "lower");
+        //         feature.setProperty('itemColor', zoneFormatArray[0]);
+        //         feature.setProperty('strokeColor', zoneFormatArray[1]);
+        //         feature.setProperty('strokeWeight', zoneFormatArray[2]);
+        //         feature.setProperty('itemOpacity', zoneFormatArray[3]);
+        //         setFeatureStyle(feature);
+        //     }
+        //
+        //     // == feeder zones or wards
+        //     console.log("*** UPPER ZONES ***");
+        //     for (var i = zoneBcount; i < self.zoneFeaturesArray.length; i++) {
+        //         featureIndex++;
+        //         feature = self.zoneFeaturesArray[i];
+        //         nextName = feature.getProperty('itemName');
+        //         zoneAIndex = featureIndex - zoneBcount;
+        //         zoneFormatArray = getZoneFormat(self, displayObj, zoneAIndex, nextName, "upper");
+        //         feature.setProperty('itemColor', zoneFormatArray[0]);
+        //         feature.setProperty('strokeColor', zoneFormatArray[1]);
+        //         feature.setProperty('strokeWeight', zoneFormatArray[2]);
+        //         feature.setProperty('itemOpacity', zoneFormatArray[3]);
+        //         setFeatureStyle(feature);
+        //     }
+        //
+        // // == single zone layer
+        // } else {
+        //     for (var i = 0; i < self.zoneFeaturesArray.length; i++) {
+        //         featureIndex++;
+        //         feature = self.zoneFeaturesArray[i];
+        //         nextName = feature.getProperty('itemName');
+        //         zoneFormatArray = getZoneFormat(self, displayObj, featureIndex, nextName, "single");
+        //         feature.setProperty('itemColor', zoneFormatArray[0]);
+        //         feature.setProperty('strokeColor', zoneFormatArray[1]);
+        //         feature.setProperty('strokeWeight', zoneFormatArray[2]);
+        //         feature.setProperty('itemOpacity', zoneFormatArray[3]);
+        //         setFeatureStyle(feature);
+        //     }
+        // }
 
         // ======= ======= ======= setFeatureStyle ======= ======= =======
         function setFeatureStyle(feature) {
@@ -1102,7 +1100,8 @@ function initApp(presetMode) {
         if (agency) {
             displayObj.dataFilters.agency = agency;
             if (zonesCollectionObj.aggregatorArray.length > 0) {
-                clearZoneAggregator();
+                zonesCollectionObj.aggregatorArray = [];
+                // clearZoneAggregator();
             }
         }
 
