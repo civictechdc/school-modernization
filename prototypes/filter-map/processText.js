@@ -4,6 +4,18 @@
 // ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
 // ======= ======= ======= ======= ======= TEXT PROCESSING & DISPLAY ======= ======= ======= ======= =======
 
+// ======= ======= ======= initAutoComplete ======= ======= =======
+function initAutoComplete(displayObj) {
+    console.log('initAutoComplete');
+    $(function() {
+        console.log("autocomplete");
+        $("#searchWindow").autocomplete({
+            source: displayObj.schoolNamesArray
+        });
+    });
+    $('#searchWindow').css('z-index', 999);
+}
+
 // ======= ======= ======= removeAbbreviations ======= ======= =======
 function removeAbbreviations(longName) {
     // console.log("removeAbbreviations");

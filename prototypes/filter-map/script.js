@@ -564,7 +564,7 @@ function initApp(presetMode) {
             }
         }
         this.selectedSchoolsArray = selectedSchoolsArray;
-        var aggregatedValues = aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter);
+        var aggregatedValues = aggregateZoneData(displayObj, zonesCollectionObj, selectedSchoolsArray, partitionKey, expendFilter);
         zonesCollectionObj.aggregator = aggregatedValues;
         console.dir(aggregatedValues);
         console.log("  selectedSchoolsArray: ", selectedSchoolsArray.length);
@@ -646,21 +646,6 @@ function initApp(presetMode) {
         }
     }
 
-    // ======= ======= ======= testFilterMatch ======= ======= =======
-    function testFilterMatch(school, schoolType, schoolLevel, Ward, FeederMS, FeederHS) {
-        console.log("testFilterMatch");
-
-        console.log("******* school: ", school);
-        console.log("  schoolAgency: ", schoolType);
-        console.log("  schoolLevel: ", schoolLevel);
-        console.log("  Ward: ", Ward);
-        console.log("  FeederMS: ", FeederMS);
-        console.log("  FeederHS: ", FeederHS);
-        console.log("  displayObj.dataFilters.agency: ", displayObj.dataFilters.agency);
-        console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
-        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
-    }
-
 
 
     // ======= ======= ======= ======= ======= ZONE LAYER ======= ======= ======= ======= =======
@@ -678,11 +663,9 @@ function initApp(presetMode) {
 
         // ======= ======= ======= cleanup ======= ======= =======
         de_activateZoneListeners(this);
-        var featureCount = 0
         map.data.forEach(function(feature) {
             if (feature) {
-                featureCount++;
-                itemName = feature.getProperty('itemName');
+                zoneName = feature.getProperty('zoneName');
                 map.data.remove(feature);
             }
         });
@@ -698,47 +681,137 @@ function initApp(presetMode) {
             zoneBcount = 0;
         }
 
-        // ======= FEATURES POSITIONING LOOP =======
-        map.data.forEach(function(feature, featureIndex) {
-            zoneName = removeAbbreviations(feature.getProperty('NAME'))
-            centerLatLng = makeZoneGeometry(feature);
-            feature.setProperty('itemName', zoneName);
-            feature.setProperty('center', centerLatLng);
-            feature.setProperty('index', featureIndex);
-            self.zoneFeaturesArray.push(feature);
-        });
-        console.log("  self.zoneFeaturesArray: ", self.zoneFeaturesArray);
-
-        // ======= FEATURES DATA LOOP =======
-        // zoneDataObject == zoneIndex: zoneName: schoolCount: zoneAmount: zoneSqft: zoneEnroll: amountMin: amountMax: amountAvg: amountMed: }
+        // ======= ======= ======= AGGREGATOR OBJECT-to-ARRAY/CALC AVG ======= ======= =======
         var zoneDataObject;
+        var zoneIndex = -1;
         console.log(" this.aggregator: ", this.aggregator);
         var aggregatorArray = _.map(zonesCollectionObj.aggregator, function(value, key){
-            zoneDataObject = { zoneIndex:value.zoneIndex, zoneName:key, schoolCount:value.schoolCount, zoneAmount:value.zoneAmount, zoneSqft:value.zoneSqft, zoneEnroll:value.zoneEnroll, amountMin:value.amountMin, amountMax:value.amountMax, amountAvg:null, amountMed:null }
-            // console.log(key, " value: ", value);
-            // console.log(key, ":", value.zoneAmount);
-            // console.log(key, " schoolCount: ", value.zoneIndex);
-            // console.log(key, " zoneIndex: ", value.zoneIndex);
-            // console.log(key, " zoneName: ", value.zoneName);
-            // console.log(key, " zoneAmount: ", value.zoneAmount);
-            // console.log(key, " enroll: ", value.zoneEnroll);
-            // console.log(key, " zoneSqft: ", value.zoneSqft);
-            // console.log(key, " amountMin: ", value.amountMin);
-            // console.log(key, " amountMax: ", value.amountMax);
-            // console.log(key, " zoneDataObject: ", zoneDataObject);
+
+            zoneIndex++;
+
+            zoneDataObject = {
+                featureIndex:null,
+                zoneIndex:zoneIndex,
+                zoneName:value.zoneName,
+                schoolCount:value.schoolCount,
+                SqFtPerEnroll:value.SqFtPerEnroll,
+
+                zoneAmount:value.zoneAmount,
+                amountMin:value.amountMin,
+                amountMax:value.amountMax,
+                amountAvg:parseInt(value.zoneAmount/value.schoolCount),
+                amountMed:value.amountMed,
+
+                zonePastPerEnroll:value.zonePastPerEnroll,
+                zoneFuturePerEnroll:value.zoneFuturePerEnroll,
+                zoneTotalPerEnroll:value.zoneTotalPerEnroll,
+                zoneEnroll:value.zoneEnroll,
+                enrollMin:value.enrollMin,
+                enrollMax:value.enrollMax,
+                enrollAvg:parseInt(value.zoneEnroll/value.schoolCount),
+                enrollMed:value.enrollMed,
+
+                zonePastPerSqft:value.zonePastPerSqft,
+                zoneFuturePerSqft:value.zoneFuturePerSqft,
+                zoneTotalPerSqft:value.zoneTotalPerSqft,
+                zoneSqft:value.zoneSqft,
+                sqftMin:value.sqftMin,
+                sqftMax:value.sqftMax,
+                sqftAvg:parseInt(value.zoneSqft/value.schoolCount),
+                sqftMed:value.sqftMed }
+
+                // console.log(key, " value: ", value);
+                // console.log(key, ":", value.zoneAmount);
+                // console.log(key, " zoneDataObject: ", zoneDataObject);
+
+                // console.log(key, " featureIndex: ", value.featureIndex);
+                // console.log(key, " zoneIndex: ", value.zoneIndex);
+                // console.log(key, " zoneName: ", value.zoneName);
+                // console.log(key, " schoolCount: ", value.schoolCount);
+                // console.log(key, " SqFtPerEnroll: ", value.SqFtPerEnroll);
+                // console.log(key, " zoneAmount: ", value.zoneAmount);
+                // console.log(key, " amountMin: ", value.amountMin);
+                // console.log(key, " amountMax: ", value.amountMax);
+                // console.log(key, " amountAvg: ", value.amountAvg);
+                // console.log(key, " amountMed: ", value.amountMed);
+                // console.log(key, " zonePastPerEnroll: ", value.zonePastPerEnroll);
+                // console.log(key, " zoneFuturePerEnroll: ", value.zoneFuturePerEnroll);
+                // console.log(key, " zoneTotalPerEnroll: ", value.zoneTotalPerEnroll);
+                // console.log(key, " zoneEnroll: ", value.zoneEnroll);
+                // console.log(key, " enrollMin: ", value.enrollMin);
+                // console.log(key, " enrollMax: ", value.enrollMax);
+                // console.log(key, " enrollAvg: ", value.enrollAvg);
+                // console.log(key, " enrollMed: ", value.enrollMed);
+                // console.log(key, " zonePastPerSqft: ", value.zonePastPerSqft);
+                // console.log(key, " zoneFuturePerSqft: ", value.zoneFuturePerSqft);
+                // console.log(key, " zoneTotalPerSqft: ", value.zoneTotalPerSqft);
+                // console.log(key, " zoneSqft: ", value.zoneSqft);
+                // console.log(key, " sqftMin: ", value.sqftMin);
+                // console.log(key, " sqftMax: ", value.sqftMax);
+                // console.log(key, " sqftAvg: ", value.sqftAvg);
+                // console.log(key, " sqftMed: ", value.sqftMed);
+
             return zoneDataObject;
         });
         this.aggregatorArray = aggregatorArray;
-        
-        console.log(" this.aggregatorArray: ", this.aggregatorArray);
+
+        // == no Charter schools in zone 3; add "empty" zone 3 to prevent missing item error
         if (displayObj.dataFilters.agency == "Charter") {
-            this.aggregatorArray.push({ zoneIndex:2, zoneName:"3", schoolCount:0, zoneAmount:0, zoneSqft:0, zoneEnroll:0, amountMin:0, amountMax:0, amountAvg:null, amountMed:null });
-            console.log(" this.aggregatorArray: ", this.aggregatorArray);
+            this.aggregatorArray.push({
+                featureIndex:null,
+                zoneIndex:2,
+                zoneName:"3",
+                schoolCount:0,
+                SqFtPerEnroll:0,
+                zoneAmount:0,
+                amountMin:0,
+                amountMax:0,
+                amountAvg:null,
+                amountMed:null,
+                zonePastPerEnroll:0,
+                zoneFuturePerEnroll:0,
+                zoneTotalPerEnroll:0,
+                zoneEnroll:0,
+                enrollMin:0,
+                enrollMax:0,
+                enrollAvg:null,
+                enrollMed:null,
+                zonePastPerSqft:0,
+                zoneFuturePerSqft:0,
+                zoneTotalPerSqft:0,
+                zoneSqft:0,
+                sqftMin:0,
+                sqftMax:0,
+                sqftAvg:null,
+                sqftMed:null
+            });
         }
+        console.log(" this.aggregatorArray: ", this.aggregatorArray);
+
+        // ======= ======= ======= FEATURE PROPERTIES LOOP ======= ======= =======
+        var featureIndex = -1;
+        var zoneIndex;
+        map.data.forEach(function(feature) {
+            featureIndex++;
+            zoneName = removeAbbreviations(feature.getProperty('NAME'))
+            zoneIndex = getZoneIndex(zoneName, zonesCollectionObj.aggregatorArray);
+            centerLatLng = makeZoneGeometry(feature);
+            feature.setProperty('center', centerLatLng);
+            feature.setProperty('zoneName', zoneName);
+            feature.setProperty('zoneIndex', zoneIndex);
+            feature.setProperty('featureIndex', featureIndex);
+            setFeatureIndex(featureIndex, zonesCollectionObj.aggregatorArray[zoneIndex]);
+            // console.log("    zoneName: ", feature.getProperty('zoneName'));
+            // console.log("    zoneIndex: ", feature.getProperty('zoneIndex'));
+            // console.log("    featureIndex: ", feature.getProperty('featureIndex'));
+            zonesCollectionObj.zoneFeaturesArray.push([featureIndex, feature]);
+        });
+        console.log("  zonesCollectionObj.zoneFeaturesArray: ", zonesCollectionObj.zoneFeaturesArray);
 
         // ======= ======= ======= calculate perSqft, perStudent, min, max, average, median, increment ======= ======= =======
         if (displayObj.dataFilters.expend) {
-            this.dataIncrement = calcPerAmounts(this, displayObj);
+            // this.dataIncrement = calcPerAmounts(this, displayObj);
+            this.dataIncrement = calcDataIncrement(this, displayObj);
         }
 
         // ======= FEATURES FORMATTING LOOPS =======
@@ -754,29 +827,19 @@ function initApp(presetMode) {
 
             // == feeder zones or wards
             console.log("*** UPPER ZONES ***");
-            for (var i = zoneBcount; i < self.zoneFeaturesArray.length; i++) {
+            for (var i = zoneBcount; i < zonesCollectionObj.zoneFeaturesArray.length; i++) {
                 featureIndex++;
                 zoneAIndex = featureIndex - zoneBcount;
                 setZoneProperties("upper", zoneAIndex);
             }
 
         } else {
-            self.aggregatorArray.forEach(function(zone, featureIndex) {
-                // console.log("  zone: ", zone);
+            zonesCollectionObj.aggregatorArray.forEach(function(zone, featureIndex) {
+                // console.log("  zone.zoneIndex: ", zone.zoneIndex);
 
                 // == build map feature if not "City-Wide"
                 if (zone.zoneIndex != null) {
                     setZoneProperties("single", zone.zoneIndex);
-                    // feature = self.zoneFeaturesArray[zone.zoneIndex];
-                    // nextName = feature.getProperty('itemName');
-                    // zoneFormatArray = getZoneFormat(self, displayObj, zone.zoneIndex, nextName, "single");
-                    // feature.setProperty('itemColor', zoneFormatArray[0]);
-                    // feature.setProperty('strokeColor', zoneFormatArray[1]);
-                    // feature.setProperty('strokeWeight', zoneFormatArray[2]);
-                    // feature.setProperty('itemOpacity', zoneFormatArray[3]);
-                    // setFeatureStyle(feature);
-                    // [itemColor, strokeColor, strokeWeight, itemOpacity];
-                    // console.log("  zoneFormatArray: ", zoneFormatArray);
                 }
             });
         }
@@ -787,10 +850,10 @@ function initApp(presetMode) {
             // console.log("setZoneProperties");
             // console.log("  whichLayer: ", whichLayer);
             // console.log("  zoneIndex: ", zoneIndex);
-            // console.log("  self.zoneFeaturesArray: ", self.zoneFeaturesArray);
-            feature = self.zoneFeaturesArray[zoneIndex];
-            nextName = feature.getProperty('itemName');
-            zoneFormatArray = getZoneFormat(self, displayObj, zoneIndex, nextName, whichLayer);
+            // console.log("  zonesCollectionObj.zoneFeaturesArray: ", zonesCollectionObj.zoneFeaturesArray);
+            feature = zonesCollectionObj.zoneFeaturesArray[zoneIndex][1];
+            nextName = feature.getProperty('zoneName');
+            zoneFormatArray = getZoneFormat(zonesCollectionObj, displayObj, zoneIndex, nextName, whichLayer);
             feature.setProperty('itemColor', zoneFormatArray[0]);
             feature.setProperty('strokeColor', zoneFormatArray[1]);
             feature.setProperty('strokeWeight', zoneFormatArray[2]);
@@ -885,8 +948,8 @@ function initApp(presetMode) {
         // ======= ======= ======= mouseover ======= ======= =======
         var zoneMouseover = map.data.addListener('mouseover', function(event) {
             // console.log("--- mouseover ---");
-            var itemName = event.feature.getProperty('itemName');
-            updateHoverText(itemName);
+            var zoneName = event.feature.getProperty('zoneName');
+            updateHoverText(zoneName);
             displayFilterMessage("Select zone or school");
             if (map.get('clickedZone')!= event.feature ) {
                 map.data.overrideStyle(event.feature, {
@@ -901,7 +964,7 @@ function initApp(presetMode) {
         // ======= ======= ======= mouseout ======= ======= =======
         var zoneMouseout = map.data.addListener('mouseout', function(event) {
             // console.log("--- mouseout ---");
-            var featureIndex = event.feature.getProperty('index');
+            var featureIndex = event.feature.getProperty('featureIndex');
             var itemColor = event.feature.getProperty('itemColor');
             if (map.get('clickedZone')!= event.feature ) {
                 map.data.overrideStyle(event.feature, {

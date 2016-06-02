@@ -50,7 +50,8 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
             // == agency filter (all, district, charter)
             case "agency":
                 self.dataFilters.agency = whichFilter;
-                clearZoneAggregator(zonesCollectionObj);
+                zonesCollectionObj.aggregatorArray = [];
+                // clearZoneAggregator(zonesCollectionObj);
                 if (whichFilter == "All") {
                     setMenuState(displayObj, self.agencyMenu, ["A", "A", "S"]);
                     resetMenuState(displayObj, "zones");
@@ -106,7 +107,8 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
                 } else if (whichFilter == "spendPlanned") {
                     setMenuState(displayObj, self.expendMenu, ["A", "A", "S"]);
                 }
-                clearZoneAggregator(zonesCollectionObj);
+                zonesCollectionObj.aggregatorArray = [];
+                // clearZoneAggregator(zonesCollectionObj);
                 break;
 
             // == wards or feeder zones for map
@@ -289,4 +291,36 @@ function clearFilterSelctions(displayObj, zonesCollectionObj) {
     displayObj.filterTitlesArray = [displayObj.agencyMenu[1].text, displayObj.zonesMenu[1].text];
     console.log("  displayObj.filterTitlesArray: ", displayObj.filterTitlesArray);
     updateFilterSelections(displayObj);
+}
+
+// ======= ======= ======= filterExpendData ======= ======= =======
+function filterExpendData(displayObj, zonesCollectionObj, zoneIndex) {
+    // console.log("filterExpendData");
+    var nextZoneValue;
+    if (displayObj.dataFilters.expend == "spendLifetime") {
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneTotalPerSqft;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneTotalPerEnroll;
+        }
+    } else if (displayObj.dataFilters.expend == "MajorExp9815") {
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zonePastPerSqft;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zonePastPerEnroll;
+        }
+    } else if (displayObj.dataFilters.expend == "spendPlanned") {
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneFuturePerSqft;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneFuturePerEnroll;
+        }
+    }
+    return nextZoneValue;
 }

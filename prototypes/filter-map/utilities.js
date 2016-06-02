@@ -201,39 +201,21 @@ Number.isInteger = Number.isInteger || function(value) {
            Math.floor(value) === value;
 };
 
-// ======= ======= ======= calcPerAmounts ======= ======= =======
-function calcPerAmounts(zonesCollectionObj, displayObj) {
-    console.log("calcPerAmounts");
+// ======= ======= ======= calcDataIncrement ======= ======= =======
+function calcDataIncrement(zonesCollectionObj, displayObj) {
+    console.log("calcDataIncrement");
 
     var nextSpendAmount, nextZoneValue, nextZoneSqft, nextZoneEnroll;
+
+    // zoneIndex, zoneName, schoolCount, SqFtPerEnroll
+    // zoneAmount, amountMin, amountMax, amountAvg, amountMed
+    // zonePastPerEnroll, zoneFuturePerEnroll, zoneTotalPerEnroll, zoneEnroll, enrollMin, enrollMax, enrollAvg, enrollMed
+    // zonePastPerSqft, zoneFuturePerSqft, zoneTotalPerSqft, zoneSqft, sqftMin, sqftMax, sqftAvg, sqftMed
 
     // == gather selected expenditure (past/future/total) and sqft/enrollment values from aggregator array
     var zoneValuesArray = [];
     for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
-        nextSpendAmount = zonesCollectionObj.aggregatorArray[i].zoneAmount;
-
-        // == past/future/total amounts for each zone
-        if (displayObj.dataFilters.math == "spendAmount") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[i].zoneAmount;
-
-        // == calculate spending per sqft for each zone
-        } else if (displayObj.dataFilters.math == "spendSqFt") {
-            nextZoneSqft = zonesCollectionObj.aggregatorArray[i].zoneSqft;
-            if (nextZoneSqft != 0) {
-                nextZoneValue = nextSpendAmount/nextZoneSqft;
-            } else {
-                nextZoneValue = 0;
-            }
-
-        // == calculate spending per student for each zone
-        } else if (displayObj.dataFilters.math == "spendEnroll") {
-            nextZoneEnroll = zonesCollectionObj.aggregatorArray[i].zoneEnroll;
-            if (nextZoneEnroll != 0) {
-                nextZoneValue = nextSpendAmount/nextZoneEnroll;
-            } else {
-                nextZoneValue = 0;
-            }
-        }
+        var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
         zoneValuesArray.push(nextZoneValue);
     }
     console.log("  zoneValuesArray: ", zoneValuesArray);
@@ -247,8 +229,35 @@ function calcPerAmounts(zonesCollectionObj, displayObj) {
     return dataIncrement;
 }
 
+// ======= ======= ======= getZoneIndex ======= ======= =======
+function getZoneIndex(zoneName, aggregatorArray) {
+    // console.log("getZoneIndex");
+    // console.log("  zoneName: ", zoneName);
+
+    var checkName;
+    for (var i = 0; i < aggregatorArray.length; i++) {
+        checkName = aggregatorArray[i].zoneName;
+        // console.log("  zoneIndex1: ", i);
+        // console.log("  zoneIndex2: ", zone.zoneIndex);
+        // console.log("  checkName: ", checkName);
+        if (zoneName == checkName) {
+            // console.log("  MATCH: ", i);
+            return i;
+            // break;
+        }
+    }
+    return null;
+}
+
+// ======= ======= ======= setFeatureIndex ======= ======= =======
+function setFeatureIndex(featureIndex, aggZoneObject) {
+    // console.log("setFeatureIndex");
+    aggZoneObject.featureIndex = featureIndex;
+    // console.log("  aggZoneObject: ", aggZoneObject);
+}
+
 // ======= ======= ======= aggregateZoneData ======= ======= =======
-function aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter) {
+function aggregateZoneData(displayObj, zonesCollectionObj, selectedSchoolsArray, partitionKey, expendFilter) {
     console.log("\n----- aggregateZoneData -----");
     console.log("  partitionKey: ", partitionKey);
     console.log("  expendFilter: ", expendFilter);
@@ -258,7 +267,7 @@ function aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter) {
 
     selectedSchoolsArray.forEach(function(school) {
         var zone = school[partitionKey];
-        // console.log("  zone: ", zone);
+        console.log("  zone: ", zone);
         if ((zone) && (zone != "NA")) {
             if (!zones[zone]) {
                 zones[zone] = [];
@@ -272,50 +281,107 @@ function aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter) {
     var zeroAmountArray = [];
     var aggregatedValues = {};
     var zoneIndex = -1;
+    var featureIndex;
 
     // == aggregate total values for each zone
     for (zone in zones) {
         if (zone != "City-Wide") {
             zoneIndex++;
         }
-        // console.log("  zoneIndex: ", zoneIndex);
+        if (partitionKey == "Ward") {
+            zoneName = "Ward " + zone;
+        } else {
+            var feederFlag = zone.indexOf(" HS");
+            if (feederFlag > -1) {
+                zoneName = zone.slice(0,feederFlag);
+            }
+        }
+        // console.log("  agg zoneName: ", zoneName);
         // console.log("  zone: ", zone);
-        zoneNamesArray.push(zone);
+        zoneNamesArray.push(zoneName);
 
-        // zoneDataObject = { zoneIndex:, zoneName:, schoolCount:, zoneAmount:, zoneSqft:, zoneEnroll:, amountMin:, amountMax:, amountAvg:, amountMed: }
+        // featureIndex, zoneIndex, zoneName, schoolCount, SqFtPerEnroll
+        // zoneAmount, amountMin, amountMax, amountAvg, amountMed
+        // zonePastPerEnroll, zoneFuturePerEnroll, zoneTotalPerEnroll, zoneEnroll, enrollMin, enrollMax, enrollAvg, enrollMed
+        // zonePastPerSqft, zoneFuturePerSqft, zoneTotalPerSqft, zoneSqft, sqftMin, sqftMax, sqftAvg, sqftMed
+
         var zoneDataObject = {
+            featureIndex: null,
             zoneIndex: zoneIndex,
-            zoneName: zone,
+            zoneName: zoneName,
             schoolCount: zones[zone].length,
+            SqFtPerEnroll: 0,
+
             zoneAmount: 0,
-            zoneEnroll: 0,
-            zoneSqft: 0,
-            amountMax: 0,
             amountMin: 0,
+            amountMax: 0,
             amountAvg: 0,
-            amountMed: 0
+            amountMed: 0,
+
+            zonePastPerEnroll: 0,
+            zoneFuturePerEnroll: 0,
+            zoneTotalPerEnroll: 0,
+            zoneEnroll: 0,
+            enrollMin: 0,
+            enrollMax: 0,
+            enrollAvg: 0,
+            enrollMed: 0,
+
+            zonePastPerSqft: 0,
+            zoneFuturePerSqft: 0,
+            zoneTotalPerSqft: 0,
+            zoneSqft: 0,
+            sqftMin: 0,
+            sqftMax: 0,
+            sqftAvg: 0,
+            sqftMed: 0
         };
         if (zone == "City-Wide") {
             zoneDataObject.zoneIndex = null;
         }
+
+        // console.log("  * math: ", displayObj.dataFilters.math);
         var schoolsInZone = zones[zone];
         schoolsInZone.forEach(function(school, index) {
             // console.log("  school[expendFilter]: ", school[expendFilter]);
             // console.log("  school.schoolEnroll: ", school.schoolEnroll);
+            // console.log("  school.schoolSqft: ", school.schoolSqft);
 
+            // ======= ======= ======= EXPENDITURE (past/future/total) ======= ======= =======
             if (school[expendFilter] != "NA") {
-                var filteredAmount = parseInt(school[expendFilter]);
-                if (filteredAmount > zoneDataObject.amountMax) {
-                    zoneDataObject.amountMax = filteredAmount;
+                zoneDataObject.zoneAmount += parseInt(school[expendFilter]);
+                // zoneDataObject.zonePast += parseInt(school.MajorExp9815);
+                // zoneDataObject.zoneFuture += parseInt(school.TotalAllotandPlan1621);
+                // zoneDataObject.zoneTotal += parseInt(school.LifetimeBudget);
+                // console.log("  expendFilter: ", zoneDataObject.zoneAmount);
+
+                // == calculate past/future/total median
+                if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
+                    if (zoneDataObject.schoolCount % 2 == 0) {
+                        var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
+                        var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
+                        var amountMed = (parseInt(schoolA[expendFilter]) + parseInt(schoolB[expendFilter]))/2;
+                        // console.log("  schoolA[expendFilter]:", schoolA[expendFilter]);
+                        // console.log("  schoolB[expendFilter]:", schoolB[expendFilter]);
+                    } else {
+                        var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
+                        var amountMed = parseInt(schoolA[expendFilter]);
+                    }
+                    zoneDataObject.amountMed = parseInt(amountMed);
+                    // console.log("  zoneDataObject.amountMed: ", zoneDataObject.amountMed);
+                }
+
+                // == calculate past/future/total min/max
+                if (parseInt(school[expendFilter]) > zoneDataObject.amountMax) {
+                    zoneDataObject.amountMax = parseInt(school[expendFilter]);
                 }
                 if (index == 0) {
-                    zoneDataObject.amountMin = filteredAmount;
+                    zoneDataObject.amountMin = parseInt(school[expendFilter]);
                 } else {
-                    if (filteredAmount <= zoneDataObject.amountMin) {
-                        zoneDataObject.amountMin = filteredAmount;
+                    if (parseInt(school[expendFilter]) <= zoneDataObject.amountMin) {
+                        zoneDataObject.amountMin = parseInt(school[expendFilter]);
                     }
                 }
-                zoneDataObject.zoneAmount += filteredAmount;
             } else if (school[expendFilter] == "NA"){
                 console.log("  NA index: ", school.schoolIndex);
                 amountNAarray.push(school);
@@ -324,29 +390,144 @@ function aggregateZoneData(selectedSchoolsArray, partitionKey, expendFilter) {
                 zeroAmountArray.push(school);
             }
 
+            // ======= ======= ======= ENROLLMENT ======= ======= =======
             if (school.schoolEnroll != "NA") {
-                var filteredEnroll = parseInt(school.schoolEnroll);
-                zoneDataObject.zoneEnroll += filteredEnroll;
+                zoneDataObject.zoneEnroll += parseInt(school.schoolEnroll);
+
+                // == calculate enrollment median
+                if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
+                    if (zoneDataObject.schoolCount % 2 == 0) {
+                        var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
+                        var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
+                        var enrollMed = (parseInt(schoolA.schoolEnroll) + parseInt(schoolB.schoolEnroll))/2;
+                        // console.log("  schoolA.schoolEnroll:", schoolA.schoolEnroll);
+                        // console.log("  schoolB.schoolEnroll:", schoolB.schoolEnroll);
+                    } else {
+                        var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
+                        var enrollMed = parseInt(schoolA.schoolEnroll);
+                        // console.log("  schoolA.schoolEnroll:", schoolA.schoolEnroll);
+                    }
+                    zoneDataObject.enrollMed = enrollMed;
+                    // console.log("  zoneDataObject.enrollMed: ", zoneDataObject.enrollMed);
+                }
+
+                // == calculate enrollment min/max
+                if (parseInt(school.schoolEnroll) > zoneDataObject.enrollMax) {
+                    zoneDataObject.enrollMax = parseInt(school.schoolEnroll);
+                }
+                if (index == 0) {
+                    zoneDataObject.enrollMin = parseInt(school.schoolEnroll);
+                } else {
+                    if (parseInt(school.schoolEnroll) <= zoneDataObject.enrollMin) {
+                        zoneDataObject.enrollMin = parseInt(school.schoolEnroll);
+                    }
+                }
             } else if (school.schoolEnroll == "NA"){
                 // console.log("  NA index: ", index);
             } else {
                 // console.log("  0 VALUE index: ", index);
             }
+            if (school.SpentPerMaxOccupancy != "NA") {
+                zoneDataObject.zonePastPerEnroll += parseInt(school.SpentPerMaxOccupancy);
+            }
+            if (school.TotalAllotandPlan1621perMaxOcc != "NA") {
+                zoneDataObject.zoneFuturePerEnroll += parseInt(school.TotalAllotandPlan1621perMaxOcc);
+            }
+            if (school.LifetimeBudgetperMaxOcc != "NA") {
+                zoneDataObject.zoneTotalPerEnroll += parseInt(school.LifetimeBudgetperMaxOcc);
+            }
+            // console.log("  past/enroll: ", zoneDataObject.zonePastPerEnroll);
+            // console.log("  future/enroll: ", zoneDataObject.zoneFuturePerEnroll);
+            // console.log("  total/enroll: ", zoneDataObject.zoneTotalPerEnroll);
 
+            // ======= ======= ======= SQFT ======= ======= =======
             if (school.schoolSqft != "NA") {
-                var filteredSqft = parseInt(school.schoolSqft);
-                zoneDataObject.zoneSqft += filteredSqft;
+                zoneDataObject.zoneSqft += parseInt(school.schoolSqft);
+
+                // == calculate sqft median
+                if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
+                    if (zoneDataObject.schoolCount % 2 == 0) {
+                        var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
+                        var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
+                        var sqftMed = (parseInt(schoolA.schoolSqft) + parseInt(schoolB.schoolSqft))/2;
+                        // console.log("  schoolA.schoolSqft:", schoolA.schoolSqft);
+                        // console.log("  schoolB.schoolSqft:", schoolB.schoolSqft);
+                    } else {
+                        var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
+                        var sqftMed = parseInt(schoolA.schoolSqft);
+                        // console.log("  schoolA.schoolSqft:", schoolA.schoolSqft);
+                    }
+                    zoneDataObject.sqftMed = sqftMed;
+                    // console.log("  zoneDataObject.sqftMed: ", zoneDataObject.sqftMed);
+                }
+
+                // == calculate sqft min/max
+                if (parseInt(school.schoolSqft) > zoneDataObject.sqftMax) {
+                    zoneDataObject.sqftMax = parseInt(school.schoolSqft);
+                }
+                if (index == 0) {
+                    zoneDataObject.sqftMin = parseInt(school.schoolSqft);
+                } else {
+                    if (parseInt(school.schoolSqft) <= zoneDataObject.sqftMin) {
+                        zoneDataObject.sqftMin = parseInt(school.schoolSqft);
+                    }
+                }
             } else if (school.schoolSqft == "NA"){
                 // console.log("  NA index: ", index);
             } else {
                 // console.log("  0 VALUE index: ", index);
             }
+            if (school.SpentPerSqFt != "NA") {
+                zoneDataObject.zonePastPerSqft += parseInt(school.SpentPerSqFt);
+            }
+            if (school.TotalAllotandPlan1621perGSF != "NA") {
+                zoneDataObject.zoneFuturePerSqft += parseInt(school.TotalAllotandPlan1621perGSF);
+            }
+            if (school.LifetimeBudgetperGSF != "NA") {
+                zoneDataObject.zoneTotalPerSqft += parseInt(school.LifetimeBudgetperGSF);
+            }
+            // console.log("  past/sqft: ", zoneDataObject.zonePastPerSqft);
+            // console.log("  future/sqft: ", zoneDataObject.zoneFuturePerSqft);
+            // console.log("  total/sqft: ", zoneDataObject.zoneTotalPerSqft);
+
         });
         // console.dir(zoneDataObject);
         aggregatedValues[zone] = zoneDataObject;
     }
     console.log("  zoneNamesArray: ", zoneNamesArray);
     return aggregatedValues;
+}
+
+// ======= ======= ======= calcMinMedMax ======= ======= =======
+function calcMinMedMax(zonesCollectionObj, zoneDataObject, schoolsInZone) {
+    console.log("calcMinMedMax");
+
+    // == median
+    if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
+        if (zoneDataObject.schoolCount % 2 == 0) {
+            var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
+            var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
+            var amountMed = (parseInt(schoolA[expendFilter]) + parseInt(schoolB[expendFilter]))/2;
+            console.log("  schoolA[expendFilter]:", schoolA[expendFilter]);
+            console.log("  schoolB[expendFilter]:", schoolB[expendFilter]);
+        } else {
+            var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
+            var amountMed = parseInt(schoolA[expendFilter]);
+        }
+    }
+
+    // == min/max
+    if (filteredAmount > zoneDataObject.amountMax) {
+        amountMax = filteredAmount;
+    }
+    if (index == 0) {
+        amountMin = filteredAmount;
+    } else {
+        if (filteredAmount <= zoneDataObject.amountMin) {
+            amountMin = filteredAmount;
+        }
+    }
+    return [amountMin, amountMed, amountMax];
 }
 
 // ======= ======= ======= getZoneFormat ======= ======= =======
@@ -414,25 +595,26 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
 function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
     // console.log("assignDataColors");
 
-    var nextZoneValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
+    var nextExpendValue = filterExpendData(displayObj, zonesCollectionObj, featureIndex);
+    // var nextZoneValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
     // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
     // console.log("  zonesCollectionObj.dataIncrement: ", zonesCollectionObj.dataIncrement);
-    var nextExpendValue;
-    if (displayObj.dataFilters.math == "spendAmount") {
-        nextExpendValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
-    } else if (displayObj.dataFilters.math == "spendEnroll") {
-        if (zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll != 0) {
-            nextExpendValue = parseFloat(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll));
-        } else {
-            nextExpendValue = 0;
-        }
-    } else if (displayObj.dataFilters.math == "spendSqFt") {
-        if (zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft != 0) {
-            nextExpendValue = parseFloat(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft));
-        } else {
-            nextExpendValue = 0;
-        }
-    }
+    // var nextExpendValue;
+    // if (displayObj.dataFilters.math == "spendAmount") {
+    //     nextExpendValue = zonesCollectionObj.aggregatorArray[featureIndex].zoneAmount;
+    // } else if (displayObj.dataFilters.math == "spendEnroll") {
+    //     if (zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll != 0) {
+    //         nextExpendValue = parseFloat(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneEnroll));
+    //     } else {
+    //         nextExpendValue = 0;
+    //     }
+    // } else if (displayObj.dataFilters.math == "spendSqFt") {
+    //     if (zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft != 0) {
+    //         nextExpendValue = parseFloat(nextZoneValue/(zonesCollectionObj.aggregatorArray[featureIndex].zoneSqft));
+    //     } else {
+    //         nextExpendValue = 0;
+    //     }
+    // }
 
     for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
         binMin = (zonesCollectionObj.dataIncrement * i);
@@ -663,8 +845,8 @@ function getDataDetails(nextSchool, nextIndex) {
         "studentSPEDPer": nextSchool.SPEDPer,
 
         "MajorExp9815": nextSchool.MajorExp9815,
-        "spendLifetime": nextSchool.LifetimeBudget,
         "spendPlanned": nextSchool.TotalAllotandPlan1621,
+        "spendLifetime": nextSchool.LifetimeBudget,
 
         "YrComplete": nextSchool.YrComplete,
         "SqFtPerEnroll": nextSchool.SqFtPerEnroll,
@@ -675,9 +857,9 @@ function getDataDetails(nextSchool, nextIndex) {
         "TotalAllotandPlan1621perGSF": nextSchool.TotalAllotandPlan1621perGSF,
         "LifetimeBudgetperMaxOcc": nextSchool.LifetimeBudgetperMaxOcc,
         "LifetimeBudgetperGSF": nextSchool.LifetimeBudgetperGSF,
-
         "SpentPerMaxOccupancy": nextSchool.SpentPerMaxOccupancy,
         "SpentPerSqFt": nextSchool.SpentPerSqFt,
+
         "FutureYrComplete": nextSchool.FutureYrComplete,
         "FUTUREProjectType16_21": nextSchool.FUTUREProjectType16_21
 
@@ -1296,6 +1478,53 @@ function initFloatingWindows() {
         window.removeEventListener('mousemove', popupMove, true);
     }
 }
+
+// // ======= ======= ======= calcPerAmounts ======= ======= =======
+// function calcPerAmounts(zonesCollectionObj, displayObj) {
+//     console.log("calcPerAmounts");
+//
+//     var nextSpendAmount, nextZoneValue, nextZoneSqft, nextZoneEnroll;
+//
+//     // == gather selected expenditure (past/future/total) and sqft/enrollment values from aggregator array
+//     var zoneValuesArray = [];
+//     for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
+//         nextSpendAmount = zonesCollectionObj.aggregatorArray[i].zoneAmount;
+//
+//         // == past/future/total amounts for each zone
+//         if (displayObj.dataFilters.math == "spendAmount") {
+//             nextZoneValue = zonesCollectionObj.aggregatorArray[i].zoneAmount;
+//
+//         // == calculate spending per sqft for each zone
+//         } else if (displayObj.dataFilters.math == "spendSqFt") {
+//             nextZoneSqft = zonesCollectionObj.aggregatorArray[i].zoneSqft;
+//             if (nextZoneSqft != 0) {
+//                 nextZoneValue = nextSpendAmount/nextZoneSqft;
+//             } else {
+//                 nextZoneValue = 0;
+//             }
+//
+//         // == calculate spending per student for each zone
+//         } else if (displayObj.dataFilters.math == "spendEnroll") {
+//             nextZoneEnroll = zonesCollectionObj.aggregatorArray[i].zoneEnroll;
+//             if (nextZoneEnroll != 0) {
+//                 nextZoneValue = nextSpendAmount/nextZoneEnroll;
+//             } else {
+//                 nextZoneValue = 0;
+//             }
+//         }
+//         zoneValuesArray.push(nextZoneValue);
+//     }
+//     console.log("  zoneValuesArray: ", zoneValuesArray);
+//
+//     // == get lowest/highest values, divide by number of data bins
+//     var fillOpacity = 1;
+//     var maxValue = Math.max.apply(Math, zoneValuesArray);
+//     var minValue = Math.min.apply(Math, zoneValuesArray);
+//     var dataIncrement = parseFloat(maxValue/zonesCollectionObj.dataBins);
+//     console.log("  dataIncrement: ", dataIncrement);
+//     return dataIncrement;
+// }
+//
 
 // ======= ======= ======= clearZoneAggregator ======= ======= =======
 // function clearZoneAggregator(zonesCollectionObj) {
