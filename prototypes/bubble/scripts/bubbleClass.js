@@ -96,11 +96,10 @@ Bubble.prototype.create_nodes = function(){
             if(current['Agency'] === 'PCS'){
                 // return '#425165';
                 return 'orange';
-
             }
         }).call(this);
         current.radius = (function(){
-            var amount= current[that.budget].trim();
+            var amount = current[that.budget];
             if (amount !== 'NA'){
                 if(amount > 0){
                     return radius_scale(amount);
@@ -276,9 +275,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         // returns the sums of the column values
         var sums = _.reduce(uniqueItems, function(a,b){
             var budget = b[that.budget];
-            // if(b['Ward'] === '6'){
-            //     console.log(b['School']);
-            // }
+            
             if(budget === 'NA'){
                 return a;
             }
