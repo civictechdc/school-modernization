@@ -69,7 +69,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= ======= ======= label/title formatting ======= ======= =======
     labelTextArray = updateChartText(displayObj, subtitle);
-    console.log("  labelTextArray: ", labelTextArray);
+    // console.log("  labelTextArray: ", labelTextArray);
     mathText = labelTextArray[0];
     schoolText = labelTextArray[1];
     agencyText = labelTextArray[2];
@@ -81,13 +81,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     }
 
     // ======= ======= ======= check math ======= ======= =======
-    console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
-    console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
-    console.log("  aggregatorArray: ", aggregatorArray);
-    console.log("  circleValuesArray: ", circleValuesArray);
-    console.log("  barScaleArray: ", barScaleArray);
-    console.log("  dataMax: ", dataMax);
-    console.log("  dataMin: ", dataMin);
+    // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
+    // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    // console.log("  aggregatorArray: ", aggregatorArray);
+    // console.log("  circleValuesArray: ", circleValuesArray);
+    // console.log("  barScaleArray: ", barScaleArray);
+    // console.log("  dataMax: ", dataMax);
+    // console.log("  dataMin: ", dataMin);
 
     // ======= ======= ======= X SCALE ======= ======= =======
     var xScaleLabels = ["scale", "amount", "school"];
@@ -177,9 +177,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .append("circle")
             .attr("id", (function(d, i) {
                 // console.log("  i: ", i);
-                // console.log("  d.zoneIndex: ", d.zoneIndex);
                 // console.log("  d.featureIndex: ", d.featureIndex);
-                circleId = "dataChartValue_" + d.zoneIndex;
+                circleId = "dataChartValue_" + d.featureIndex;
                 return circleId;
             }))
             .attr("class", "dataChartValue")
@@ -188,10 +187,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             })
             .attr("cy", function(d, i) {
                 var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
-                console.log("  i: ", i);
-                console.log("  d.zoneIndex: ", d.zoneIndex);
-                console.log("  d.featureIndex: ", d.featureIndex);
-                console.log("  nextZoneValue: ", nextZoneValue);
+                // console.log("  i: ", i);
+                // console.log("  d.featureIndex: ", d.featureIndex);
+                // console.log("  nextZoneValue: ", nextZoneValue);
                 // return yScale(circleValuesArray[i]);
                 return yScale(nextZoneValue);
             })
@@ -249,14 +247,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         console.log("activateChartCircles");
 
         $('.dataChartValue').each(function(i) {
-            console.log("  i: ", i);
+            // console.log("  i: ", i);
             var targetCircleId = $(this).attr('id');
             var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
-            var zoneIndex = zoneFeature[1].getProperty('zoneIndex');
-            var featureIndex = zoneFeature[1].getProperty('featureIndex');
-            console.log("  targetCircleId: ", targetCircleId);
-            console.log("  zoneIndex: ", zoneIndex);
-            console.log("  featureIndex: ", featureIndex);
+            var featureIndex = zoneFeature.getProperty('featureIndex');
+            // console.log("  targetCircleId: ", targetCircleId);
+            // console.log("  featureIndex: ", featureIndex);
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
@@ -265,8 +261,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 var targetLabel = $('#dataChartLabel_' + i);
                 var targetCircleId = $(this).attr('id');
                 var subIndex = targetCircleId.indexOf("_") + 1;
-                var zoneIndex = targetCircleId.substring(subIndex, targetCircleId.length);
-                var featureIndex = aggregatorArray[zoneIndex].featureIndex;
+                var featureIndex = parseInt(targetCircleId.substring(subIndex, targetCircleId.length));
                 $(targetLabel).attr("visibility", "visible");
                 targetMarkerIndex = this.id.split("_")[1];
                 if (displayObj.dataFilters.zones == null) {
@@ -276,8 +271,10 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     schoolMarker.setMap(map);
                 } else {
                     multiLayerOffset = zoneBcount;
-                    console.log("  featureIndex: ", featureIndex);
-                    toggleFeatureHilite((featureIndex + multiLayerOffset), "on");
+                    var featureOffset = featureIndex + multiLayerOffset;
+                    // console.log("  featureIndex: ", featureIndex);
+                    // console.log("  featureOffset: ", featureOffset);
+                    toggleFeatureHilite(featureOffset, "on");
                 }
             });
 
@@ -289,8 +286,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 targetMarkerIndex = this.id.split("_")[1];
                 var targetCircleId = $(this).attr('id');
                 var subIndex = targetCircleId.indexOf("_") + 1;
-                var zoneIndex = targetCircleId.substring(subIndex, targetCircleId.length);
-                var featureIndex = aggregatorArray[zoneIndex].featureIndex;
+                var featureIndex = parseInt(targetCircleId.substring(subIndex, targetCircleId.length));
                 if (displayObj.dataFilters.zones == null) {
                     schoolMarker = schoolsCollectionObj.schoolMarkersArray[targetMarkerIndex];
                     schoolMarker.icon.fillColor = schoolMarker.defaultColor;
@@ -299,8 +295,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 } else {
                     multiLayerOffset = zoneBcount;
                     var zoneFeature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
-                    var zoneIndex = zoneFeature[0];
-                    toggleFeatureHilite((featureIndex + multiLayerOffset), "off");
+                    var featureOffset = featureIndex + multiLayerOffset;
+                    toggleFeatureHilite(featureOffset, "off");
                 }
             });
 
@@ -324,25 +320,23 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= toggleFeatureHilite =======
     function toggleFeatureHilite(featureIndex, onOrOff) {
         console.log("toggleFeatureHilite");
+        // console.log("  featureIndex: ", featureIndex);
         var zoneFeature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
-        var zoneName = zoneFeature[1].getProperty('zoneName');
-        var itemColor = zoneFeature[1].getProperty('itemColor');
-        var zoneIndex = zoneFeature[1].getProperty('zoneIndex');
-        var featureIndex = zoneFeature[1].getProperty('featureIndex');
-        console.log("  zoneName: ", zoneName);
-        console.log("  zoneIndex: ", zoneIndex);
-        console.log("  featureIndex: ", featureIndex);
+        var zoneName = zoneFeature.getProperty('zoneName');
+        var itemColor = zoneFeature.getProperty('itemColor');
+        // console.log("  zoneName: ", zoneName);
+        // console.log("  feature/name: ", featureIndex, zoneName);
 
         if (onOrOff == "on") {
             updateHoverText(zoneName);
-            map.data.overrideStyle(zoneFeature[1], {
+            map.data.overrideStyle(zoneFeature, {
                 fillOpacity: 0.1,
                 fillColor: "white",
                 strokeColor: "red"
             });
         } else {
             updateHoverText(null);
-            map.data.revertStyle(zoneFeature[1]);
+            map.data.revertStyle(zoneFeature);
         }
     }
 
@@ -478,7 +472,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 // clearZoneAggregator(zonesCollectionObj);
                 checkFilterSelection(displayObj, zonesCollectionObj, "math");
 
-                zonesCollectionObj.getZoneData();
+                zonesCollectionObj.importZoneDataA();
             }
         });
     }

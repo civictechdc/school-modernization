@@ -194,7 +194,7 @@ function displayFilterMessage(displayObj, menuObject, whichAction) {
 // ======= ======= ======= cleanupSchoolData ======= ======= =======
 function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     console.log("cleanupSchoolData");
-    console.log("  schoolData: ", schoolData);
+    // console.log("  schoolData: ", schoolData);
 
     var cleanedData = {};
 
@@ -382,8 +382,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     }
 
     // TotalAllotandPlan1621perMaxOcc, TotalAllotandPlan1621perGSF, LifetimeBudgetperMaxOcc, LifetimeBudgetperGSF
-
-    console.log("  schoolData.TotalAllotandPlan1621perMaxOcc: ", schoolData.TotalAllotandPlan1621perMaxOcc);
+    // console.log("  schoolData.TotalAllotandPlan1621perMaxOcc: ", schoolData.TotalAllotandPlan1621perMaxOcc);
 
     var TotalAllotandPlan1621perMaxOccFlag = isNumber(schoolData.TotalAllotandPlan1621perMaxOcc);
     if (TotalAllotandPlan1621perMaxOccFlag == true) {
@@ -392,7 +391,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     } else {
         cleanedData.TotalAllotandPlan1621perMaxOcc = "";
     }
-    console.log("  cleanedData.TotalAllotandPlan1621perMaxOcc: ", cleanedData.TotalAllotandPlan1621perMaxOcc);
+    // console.log("  cleanedData.TotalAllotandPlan1621perMaxOcc: ", cleanedData.TotalAllotandPlan1621perMaxOcc);
 
     var TotalAllotandPlan1621perGSFFlag = isNumber(schoolData.TotalAllotandPlan1621perGSF);
     if (TotalAllotandPlan1621perGSFFlag == true) {
@@ -436,8 +435,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     } else {
         cleanedData.TotalAllotandPlan1621 = "";
     }
-
-    console.log("  cleanedData.LifetimeBudgetperGSF: " + cleanedData.LifetimeBudgetperGSF);
+    // console.log("  cleanedData.LifetimeBudgetperGSF: " + cleanedData.LifetimeBudgetperGSF);
 
     return cleanedData;
 

@@ -203,44 +203,87 @@ function initOverlay(zonesCollectionObj, displayObj) {
         this.div_.parentNode.removeChild(this.div_);
         this.div_ = null;
     };
-
-    // google.maps.event.addDomListener(window, 'load', initMap);
 }
 
 // ======= ======= ======= hiliteSchoolMarker ======= ======= =======
-function hiliteSchoolMarker(schoolsCollectionObj, foundDataArray) {
+function hiliteSchoolMarker(schoolsCollectionObj, foundDataArray, schoolIndex) {
     console.log("hiliteSchoolMarker");
 
-    var schoolIndex = foundDataArray[0][0];
-    var flashCounter = 0;
+    if (foundDataArray) {
+        schoolIndex = foundDataArray[0][0];
+    }
+    console.log("  schoolIndex: ", schoolIndex);
+
     var schoolMarker = schoolsCollectionObj.schoolMarkersArray[schoolIndex];
-    console.dir(schoolMarker);
-
-    var hilite = setInterval(flashMarker, 500);
-
-    function flashMarker() {
-        flashCounter++;
-        schoolMarker.icon.fillColor = "purple";
-        schoolMarker.icon.strikeColor = "black";
-        schoolMarker.icon.strokeWeight = 6;
-        schoolMarker.icon.scale = .6;
-        schoolMarker.setMap(map);
-        if (flashCounter > 4) {
-            clearInterval(hilite);
-        }
-        setTimeout(resetMarker, 400);
-    }
-r
-    function resetMarker() {
-        schoolMarker.icon.fillColor = schoolMarker.defaultColor;
-        schoolMarker.icon.scale = 0.2;
-        schoolMarker.icon.strikeColor = "purple";
-        schoolMarker.icon.strokeWeight = 2;
-        schoolMarker.setMap(map);
-    }
+    schoolMarker.icon.fillColor = "purple";
+    schoolMarker.icon.strikeColor = "black";
+    schoolMarker.icon.strokeWeight = 6;
+    schoolMarker.icon.scale = .6;
+    schoolMarker.setMap(map);
+    schoolsCollectionObj.selectedMarker = schoolMarker;
 }
 
+// ======= ======= ======= resetMarker ======= ======= =======
+function resetMarker(schoolMarker) {
+    console.log("resetMarker");
+    schoolMarker.icon.fillColor = schoolMarker.defaultColor;
+    schoolMarker.icon.scale = 0.2;
+    schoolMarker.icon.strikeColor = "purple";
+    schoolMarker.icon.strokeWeight = 2;
+    schoolMarker.setMap(map);
+}
 
+// ======= ======= ======= makeZoneGeometry ======= ======= =======
+function makeZoneGeometry(feature) {
+    // console.log("makeZoneGeometry");
+
+    var polyCount = 0;
+    var multiPolyCount = 0;
+    var polygonArray = [];
+
+    // ======= traverse geometry paths for each feature =======
+    feature.getGeometry().getArray().forEach(function(path) {
+        featureType = feature.getGeometry().getType();
+        featureBounds = new google.maps.LatLngBounds();
+        if (featureType == "Polygon") {
+            polyCount++;
+            polygonArray.push(path);
+
+            path.getArray().forEach(function(latLng) {
+                featureBounds.extend(latLng);
+            });
+        } else {
+            multiPolyCount++;
+            polygonArray.push(path.j[0]);
+
+            path.j[0].getArray().forEach(function(latLng) {
+                featureBounds.extend(latLng);
+            });
+        }
+    });
+
+    // == get center of each feature
+    centerLat = featureBounds.getCenter().lat();
+    centerLng = featureBounds.getCenter().lng();
+    centerLatLng = new google.maps.LatLng({lat: centerLat, lng: centerLng});
+    return centerLatLng;
+}
+
+// // ======= ======= ======= mouseoverZone ======= ======= =======
+// function mouseoverZone(event, itemName) {
+//     console.log("mouseoverZone");
+//     updateHoverText(itemName);
+//     displayFilterMessage("Select zone or school");
+//     if (map.get('clickedZone')!= event.feature ) {
+//         map.data.overrideStyle(event.feature, {
+//             fillColor: "white",
+//             fillOpacity: 0.5,
+//             strokePosition: "center",
+//             strokeWeight: 8
+//         });
+//     }
+// }
+//
 // // ======= ======= ======= getZoneData ======= ======= =======
 // ZonesCollection.prototype.getZoneData = function() {
 //     console.log("\n----- getZoneData -----");

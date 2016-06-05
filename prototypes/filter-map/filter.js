@@ -1,3 +1,141 @@
+
+// ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
+// ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
+// ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
+
+// ======= ======= ======= checkFilterSelection ======= ======= =======
+function checkFilterSelection(displayObj, zonesCollectionObj, whichCategory) {
+    console.log("##### checkFilterSelection");
+
+    console.log("  whichCategory: ", whichCategory);
+    console.log("  zoneA: ", zonesCollectionObj.zoneA);
+    console.log("  * agency: ", displayObj.dataFilters.agency);
+    console.log("  * levels: ", displayObj.dataFilters.levels);
+    console.log("  * expend: ", displayObj.dataFilters.expend);
+    console.log("  * zones: ", displayObj.dataFilters.zones);
+    console.log("  * math: ", displayObj.dataFilters.math);
+}
+
+// ======= ======= ======= updateFilterItem ======= ======= =======
+function updateFilterItem(displayObj, whichCategory, whichFilter, onOrOff) {
+    console.log("updateFilterItem");
+
+    var nextMenu, nextCategory;
+
+    for (var i = 0; i < displayObj.filterMenusArray.length; i++) {
+        nextMenu = displayObj.filterMenusArray[i];
+        nextCategory = nextMenu[0];
+        if (nextCategory == whichCategory) {
+            for (var j = 1; j < nextMenu.length; j++) {
+                nextFilterObject = nextMenu[j];
+                if ((nextFilterObject.id == whichFilter) && (onOrOff == undefined)) {
+                    $("#" + nextFilterObject.id).addClass("selected");
+                } else if ((nextFilterObject.id == whichFilter) && (onOrOff == "off")) {
+                    $("#" + nextFilterObject.id).addClass("deactivated");
+                } else if ((nextFilterObject.id == whichFilter) && (onOrOff == "on")) {
+                    $("#" + nextFilterObject.id).removeClass("deactivated");
+                } else {
+                    $("#" + nextFilterObject.id).removeClass("selected");
+                }
+            }
+            break;
+        }
+    }
+}
+
+// ======= ======= ======= setMenuState ======= ======= =======
+function setMenuState(displayObj, whichMenu, whichStates) {
+    console.log("setMenuState");
+
+    var nextState, nextFilter, nextFilterText, nextElement, checkIndex, selectedFilterText;
+
+    // == loop through states for each filter on menu
+    for (var i = 0; i < whichStates.length; i++) {
+        nextState = whichStates[i];
+        nextFilter = whichMenu[i+1];
+
+        // == avoid duplicate "schools" descriptior in filter list
+        if (whichMenu[0] == "agency") {
+            if (displayObj.filterTitlesObject.levels) {
+                nextFilterText = nextFilter.id;
+                if (nextFilterText == "All") {
+                    (nextFilterText = "District and Charter");
+                }
+            } else {
+                nextFilterText = nextFilter.text;
+            }
+        } else if (whichMenu[0] == "levels") {
+            var checkIndex = displayObj.filterTitlesObject.agency.indexOf("Schools");
+            if (checkIndex > -1) {
+                displayObj.filterTitlesObject.agency = displayObj.filterTitlesObject.agency.substring(0, checkIndex);
+            }
+            nextFilterText = nextFilter.text;
+        } else {
+            nextFilterText = nextFilter.text;
+        }
+
+        // == see if filter is in filter list
+        nextElement = $("#" + nextFilter.id);
+        checkIndex = $.inArray(nextFilterText, displayObj.filterTitlesArray);
+
+        // == set filter menu state; leave only selected filters in filterTitlesArray
+        if (nextState == "A") {
+            // if (checkIndex > -1) {
+            //     displayObj.filterTitlesArray.splice(checkIndex, 1);
+            // }
+            $(nextElement).addClass("active");
+            $(nextElement).removeClass("selected");
+            $(nextElement).removeClass("deactivated");
+            activateFilterLink(nextFilter);
+        } else if (nextState == "D") {
+            // if (checkIndex > -1) {
+            //     displayObj.filterTitlesArray.splice(checkIndex, 1);
+            // }
+            $(nextElement).removeClass("active");
+            $(nextElement).removeClass("selected");
+            $(nextElement).addClass("deactivated");
+            $(nextElement).off("click");
+
+        } else if (nextState == "S") {
+            // if (checkIndex == -1) {
+            //     displayObj.filterTitlesArray.push(nextFilterText);
+            // }
+            selectedFilterText = nextFilterText;
+            displayObj.filterTitlesObject[whichMenu[0]] = selectedFilterText;
+            $(nextElement).removeClass("deactivated");
+            $(nextElement).addClass("active");
+            $(nextElement).addClass("selected");
+        }
+    }
+    updateFilterSelections(displayObj, whichMenu, selectedFilterText);
+}
+
+// ======= ======= ======= updateFilterSelections ======= ======= =======
+function updateFilterSelections(displayObj, whichMenu, filterText) {
+    console.log("updateFilterSelections");
+
+    // == displays current user filter selections as string in #filters-selections div
+    var selectedFilterContainer = $("#filters-selections").children("h2");
+    var nextFilter, checkNextFilter;
+
+    var selectedFilterText = "<span class='filterLabel'>Data for: </span>";
+    if (displayObj.filterTitlesObject.expend) {
+        selectedFilterText += displayObj.filterTitlesObject.expend + " for";
+    }
+    if (displayObj.filterTitlesObject.agency) {
+        selectedFilterText += " " + displayObj.filterTitlesObject.agency;
+    }
+    if (displayObj.filterTitlesObject.levels) {
+        selectedFilterText += " " + displayObj.filterTitlesObject.levels;
+    }
+    if (displayObj.filterTitlesObject.zones) {
+        selectedFilterText += " by " + displayObj.filterTitlesObject.zones;
+    }
+
+    $(selectedFilterContainer).addClass("filterList");
+    $(selectedFilterContainer).html(selectedFilterText);
+}
+
 // ======= ======= ======= activateFilterLink ======= ======= =======
 function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
     console.log("activateFilterLink");
@@ -216,7 +354,7 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
 
         updateHoverText(null);
         checkFilterSelection(self, zonesCollectionObj, whichCategory);
-        zonesCollectionObj.getZoneData();
+        zonesCollectionObj.importZoneDataA();
     });
 }
 
