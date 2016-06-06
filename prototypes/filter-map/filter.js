@@ -80,26 +80,17 @@ function setMenuState(displayObj, whichMenu, whichStates) {
 
         // == set filter menu state; leave only selected filters in filterTitlesArray
         if (nextState == "A") {
-            // if (checkIndex > -1) {
-            //     displayObj.filterTitlesArray.splice(checkIndex, 1);
-            // }
             $(nextElement).addClass("active");
             $(nextElement).removeClass("selected");
             $(nextElement).removeClass("deactivated");
             activateFilterLink(nextFilter);
         } else if (nextState == "D") {
-            // if (checkIndex > -1) {
-            //     displayObj.filterTitlesArray.splice(checkIndex, 1);
-            // }
             $(nextElement).removeClass("active");
             $(nextElement).removeClass("selected");
             $(nextElement).addClass("deactivated");
             $(nextElement).off("click");
 
         } else if (nextState == "S") {
-            // if (checkIndex == -1) {
-            //     displayObj.filterTitlesArray.push(nextFilterText);
-            // }
             selectedFilterText = nextFilterText;
             displayObj.filterTitlesObject[whichMenu[0]] = selectedFilterText;
             $(nextElement).removeClass("deactivated");
@@ -170,7 +161,6 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
         // var menuItems = ["menuItem1", "menuItem2", "menuItem3"];
         // var menuCategories = ["agency", "level", "zone", "expend"];
         // console.log("======= filterState: "; filterState);
-
 
         var classList = $(this).attr('class').split(/\s+/);
         var whichCategory = classList[1];

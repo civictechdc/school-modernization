@@ -63,8 +63,6 @@ function initMap(zonesCollectionObj, displayObj) {
             zoom: zoom
         });
 
-        // map.setOptions({ minZoom: 10, maxZoom: 11 });
-
         var historicalOverlay = new google.maps.GroundOverlay(
             'images/mapMask.png',
             imageBounds);

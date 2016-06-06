@@ -272,8 +272,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 } else {
                     multiLayerOffset = zoneBcount;
                     var featureOffset = featureIndex + multiLayerOffset;
-                    // console.log("  featureIndex: ", featureIndex);
-                    // console.log("  featureOffset: ", featureOffset);
                     toggleFeatureHilite(featureOffset, "on");
                 }
             });
@@ -324,8 +322,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         var zoneFeature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
         var zoneName = zoneFeature.getProperty('zoneName');
         var itemColor = zoneFeature.getProperty('itemColor');
-        // console.log("  zoneName: ", zoneName);
-        // console.log("  feature/name: ", featureIndex, zoneName);
 
         if (onOrOff == "on") {
             updateHoverText(zoneName);
@@ -469,7 +465,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 nextMath = $("select[name='expendMath'] option:selected").val()
                 displayObj.dataFilters.math = nextMath;
                 console.log("  nextMath: ", nextMath);
-                // clearZoneAggregator(zonesCollectionObj);
                 checkFilterSelection(displayObj, zonesCollectionObj, "math");
 
                 zonesCollectionObj.importZoneDataA();
