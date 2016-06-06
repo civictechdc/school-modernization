@@ -69,7 +69,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= ======= ======= label/title formatting ======= ======= =======
     labelTextArray = updateChartText(displayObj, subtitle);
-    // console.log("  labelTextArray: ", labelTextArray);
     mathText = labelTextArray[0];
     schoolText = labelTextArray[1];
     agencyText = labelTextArray[2];
@@ -176,8 +175,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         .enter()
             .append("circle")
             .attr("id", (function(d, i) {
-                // console.log("  i: ", i);
-                // console.log("  d.featureIndex: ", d.featureIndex);
                 circleId = "dataChartValue_" + d.featureIndex;
                 return circleId;
             }))
@@ -187,19 +184,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             })
             .attr("cy", function(d, i) {
                 var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
-                // console.log("  i: ", i);
-                // console.log("  d.featureIndex: ", d.featureIndex);
-                // console.log("  nextZoneValue: ", nextZoneValue);
-                // return yScale(circleValuesArray[i]);
                 return yScale(nextZoneValue);
             })
             .attr("r", function(d) {
                 return schoolCircleR;
             })
             .style('fill', function(d, i){
-                // colorIndex = assignChartColors(circleValuesArray[i]);
                 var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
-                // colorIndex = assignChartColors(circleValuesArray[i]);
                 colorIndex = assignChartColors(nextZoneValue);
                 whichColor = dataColorsArray[colorIndex];
                 return whichColor;
@@ -247,12 +238,6 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         console.log("activateChartCircles");
 
         $('.dataChartValue').each(function(i) {
-            // console.log("  i: ", i);
-            var targetCircleId = $(this).attr('id');
-            var zoneFeature = zonesCollectionObj.zoneFeaturesArray[i];
-            var featureIndex = zoneFeature.getProperty('featureIndex');
-            // console.log("  targetCircleId: ", targetCircleId);
-            // console.log("  featureIndex: ", featureIndex);
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
@@ -318,21 +303,22 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= toggleFeatureHilite =======
     function toggleFeatureHilite(featureIndex, onOrOff) {
         console.log("toggleFeatureHilite");
-        // console.log("  featureIndex: ", featureIndex);
-        var zoneFeature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
-        var zoneName = zoneFeature.getProperty('zoneName');
-        var itemColor = zoneFeature.getProperty('itemColor');
+        if (featureIndex < zonesCollectionObj.zoneFeaturesArray.length) {
+            var zoneFeature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
+            var zoneName = zoneFeature.getProperty('zoneName');
+            var itemColor = zoneFeature.getProperty('itemColor');
 
-        if (onOrOff == "on") {
-            updateHoverText(zoneName);
-            map.data.overrideStyle(zoneFeature, {
-                fillOpacity: 0.1,
-                fillColor: "white",
-                strokeColor: "red"
-            });
-        } else {
-            updateHoverText(null);
-            map.data.revertStyle(zoneFeature);
+            if (onOrOff == "on") {
+                updateHoverText(zoneName);
+                map.data.overrideStyle(zoneFeature, {
+                    fillOpacity: 0.1,
+                    fillColor: "white",
+                    strokeColor: "red"
+                });
+            } else {
+                updateHoverText(null);
+                map.data.revertStyle(zoneFeature);
+            }
         }
     }
 
