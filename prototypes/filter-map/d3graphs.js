@@ -135,7 +135,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .style("text-anchor", "start")
             .style("font-size", "10px");
 
-    // ======= ======= ======= RECTS ======= ======= =======
+    // ======= ======= ======= DATA INCREMENTS ======= ======= =======
     svg.selectAll(".bar")
         .data(barScaleArray)
         .enter()

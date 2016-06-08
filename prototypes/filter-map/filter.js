@@ -351,6 +351,7 @@ function activateFilterLink(displayObj, zonesCollectionObj, nextItem) {
 // ======= ======= ======= resetMenuState ======= ======= =======
 function resetMenuState(displayObj, whichMenu) {
     console.log("resetMenuState");
+    console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
     // == restore levels menu for new zones selection (e.g. deactivate HS for feeders)
     if (whichMenu == "zones") {

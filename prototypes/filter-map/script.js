@@ -549,7 +549,6 @@ function initApp(presetMode) {
         var itemColor, itemOpacity, centerLatLng, zoneName;
 
         // ======= ======= ======= cleanup ======= ======= =======
-        de_activateZoneListeners(this);
         map.data.forEach(function(feature) {
             if (feature) {
                 zoneName = feature.getProperty('zoneName');
@@ -573,16 +572,16 @@ function initApp(presetMode) {
         console.log("  zoneABcount: ", zoneBcount);
 
         // ======= ======= ======= ZONE AGGREGATOR ======= ======= =======
-        zonesCollectionObj.zoneFeaturesArray = makeZoneFeatures();
-        var zoneSchoolsArray = makeZonePartitions();
-        addZonePartitions(zoneSchoolsArray);
-        schoolsCollectionObj.selectedSchoolsArray = selectFilteredSchools(zoneSchoolsArray);
+        zonesCollectionObj.zoneFeaturesArray = makeZoneFeatures();          // map zone GIS array
+        var zoneSchoolsObject = makeZonePartitions();                       // object with empty arrays for schools in each zone
+        addZonePartitions(zoneSchoolsObject);                               // add CityWide object for FeederHS zone
+        schoolsCollectionObj.selectedSchoolsArray = selectAgencyLevel();    // filter schools by agency/level match
 
-        // ======= make map layers ======
+        // ======= aggregate zone data and make map layers ======
         if (schoolsCollectionObj.selectedSchoolsArray.length > 0) {
             schoolsCollectionObj.makeSchoolLayer();
-            partitionSelectedSchools(zoneSchoolsArray);
-            var zoneTotalsObject = aggregateAllZones(zoneSchoolsArray);
+            partitionExpendMath(zoneSchoolsObject);
+            var zoneTotalsObject = aggregateAllZones(zoneSchoolsObject);
             zonesCollectionObj.aggregator = zoneTotalsObject;
             zonesCollectionObj.aggregatorArray = zoneObjectToArray(zoneTotalsObject);
             // console.log("  ...selectedSchoolsArray: ", schoolsCollectionObj.selectedSchoolsArray);
@@ -601,6 +600,134 @@ function initApp(presetMode) {
             if (displayObj.dataFilters.expend) {
                 makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zoneBcount);
             }
+        }
+    }
+
+    // ======= ======= ======= partitionExpendMath ======= ======= =======
+    function partitionExpendMath(zoneSchools) {
+        console.log("partitionExpendMath");
+        console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
+        console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+        var partitionKey = displayObj.dataFilters.zones;
+        schoolsCollectionObj.selectedSchoolsArray.forEach(function(school) {
+            var zone = school[partitionKey];
+            var zoneName = standardizeZoneName(zone);
+            console.log("  zone/zoneName: ", zone, zoneName);
+            if ((zoneName) && (zoneName != "NA")) {
+                if (displayObj.dataFilters.expend) {
+                    var selectedSchool = expendMathFilters(school);
+                    if (selectedSchool) {
+                        zoneSchools[zoneName].push(school);
+                    }
+                } else {
+                    zoneSchools[zoneName].push(school);
+                }
+            }
+        });
+    }
+
+    // ======= ======= ======= expendMathFilters ======= ======= =======
+    function expendMathFilters(nextSchool) {
+        console.log("expendMathFilters");
+        // expend: MajorExp9815, spendPlanned, spendLifetime
+        // math: spendAmount, spendEnroll, spendSqFt
+
+        // == check expend (past/future/total) and math (amount/perEnroll/perSqft) filter matches
+        var expendMatch, mathMatch;
+
+        // == past
+        if (displayObj.dataFilters.expend == "MajorExp9815") {
+            if (nextSchool.MajorExp9815 != "NA") {
+                expendMatch = true;
+            } else {
+                expendMatch = false;
+            }
+            if (displayObj.dataFilters.math) {
+                if (displayObj.dataFilters.math == "spendAmount") {
+                    if (nextSchool.MajorExp9815 != "NA") {
+                        mathMatch = true;
+                    }
+                } else if (displayObj.dataFilters.math == "spendEnroll") {
+                    if (nextSchool.SpentPerMaxOccupancy != "NA") {
+                        mathMatch = true;
+                    } else {
+                        mathMatch = false;
+                    }
+                } else if (displayObj.dataFilters.math == "spendSqFt") {
+                    if (nextSchool.SpentPerSqFt != "NA") {
+                        mathMatch = true;
+                    } else {
+                        mathMatch = false;
+                    }
+                }
+            } else {
+                mathMatch = true;
+            }
+
+        // == future
+        } else if (displayObj.dataFilters.expend == "spendPlanned") {
+            if (nextSchool.TotalAllotandPlan1621 != "NA") {
+                expendMatch = true;
+            } else {
+                expendMatch = false;
+            }
+            if (displayObj.dataFilters.math) {
+                if (displayObj.dataFilters.math == "spendAmount") {
+                    if (nextSchool.TotalAllotandPlan1621 != "NA") {
+                        mathMatch = true;
+                    }
+                } else if (displayObj.dataFilters.math == "spendEnroll") {
+                    if (nextSchool.TotalAllotandPlan1621perMaxOcc != "NA") {
+                        mathMatch = true;
+                    } else {
+                        mathMatch = false;
+                    }
+                } else if (displayObj.dataFilters.math == "spendSqFt") {
+                    if (nextSchool.TotalAllotandPlan1621perGSF != "NA") {
+                        mathMatch = true;
+                    } else {
+                        mathMatch = false;
+                    }
+                }
+            } else {
+                mathMatch = true;
+            }
+
+        // == total
+        } else if (displayObj.dataFilters.expend == "spendLifetime") {
+            if (nextSchool.LifetimeBudget != "NA") {
+                expendMatch = true;
+            } else {
+                expendMatch = false;
+            }
+            if (displayObj.dataFilters.math) {
+                if (displayObj.dataFilters.math == "spendAmount") {
+                    if (nextSchool.LifetimeBudget != "NA") {
+                        mathMatch = true;
+                    }
+                } else if (displayObj.dataFilters.math == "spendEnroll") {
+                    if (nextSchool.LifetimeBudgetperMaxOcc != "NA") {
+                        mathMatch = true;
+                    } else {
+                        mathMatch = false;
+                    }
+                } else if (displayObj.dataFilters.math == "spendSqFt") {
+                    if (nextSchool.LifetimeBudgetperGSF != "NA") {
+                        mathMatch = true;
+                    } else {
+                        mathMatch = false;
+                    }
+                }
+            } else {
+                mathMatch = true;
+            }
+        }
+
+        // == return match result
+        if ((expendMatch == true) && (mathMatch == true)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -697,6 +824,8 @@ function initApp(presetMode) {
         console.log("zoneObjectToArray");
         var dataCheckString = "     past     future     total \n";
         var zoneDataObject;
+
+        // == create array and calculate average, perEnroll and perSqft values
         var aggregatorArray = _.map(zoneTotalsObject, function(value, key){
             zoneDataObject = {
                 featureIndex:value.featureIndex,
@@ -710,18 +839,18 @@ function initApp(presetMode) {
                 amountAvg:parseInt(value.zoneAmount/value.schoolCount),
                 amountMed:value.amountMed,
 
-                zonePastPerEnroll:value.zonePastPerEnroll,
-                zoneFuturePerEnroll:value.zoneFuturePerEnroll,
-                zoneTotalPerEnroll:value.zoneTotalPerEnroll,
+                zonePastPerEnroll:parseInt(value.zonePastPerEnroll/value.schoolCount),
+                zoneFuturePerEnroll:parseInt(value.zoneFuturePerEnroll/value.schoolCount),
+                zoneTotalPerEnroll:parseInt(value.zoneTotalPerEnroll/value.schoolCount),
                 zoneEnroll:value.zoneEnroll,
                 enrollMin:value.enrollMin,
                 enrollMax:value.enrollMax,
                 enrollAvg:parseInt(value.zoneEnroll/value.schoolCount),
                 enrollMed:value.enrollMed,
 
-                zonePastPerSqft:value.zonePastPerSqft,
-                zoneFuturePerSqft:value.zoneFuturePerSqft,
-                zoneTotalPerSqft:value.zoneTotalPerSqft,
+                zonePastPerSqft:parseInt(value.zonePastPerSqft/value.schoolCount),
+                zoneFuturePerSqft:parseInt(value.zoneFuturePerSqft/value.schoolCount),
+                zoneTotalPerSqft:parseInt(value.zoneTotalPerSqft/value.schoolCount),
                 zoneSqft:value.zoneSqft,
                 sqftMin:value.sqftMin,
                 sqftMax:value.sqftMax,
@@ -729,14 +858,20 @@ function initApp(presetMode) {
                 sqftMed:value.sqftMed
             }
 
-            // == Enroll
+            // == Dollar Amount
             // dataCheckString += value.zoneName + ": " + value.zoneAmount + "\n";
 
             // == Enroll
-            // dataCheckString += value.zoneName + ": " + value.zonePastPerEnroll + ": " + value.zoneFuturePerEnroll + ": " + value.zoneTotalPerEnroll + "\n";
+            // dataCheckString += value.zoneName + ": " + value.schoolCount + ": " +
+            // parseInt(value.zonePastPerEnroll/value.schoolCount) + ": " +
+            // parseInt(value.zoneFuturePerEnroll/value.schoolCount) + ": " +
+            // parseInt(value.zoneTotalPerEnroll/value.schoolCount) + "\n";
 
             // == Sqft
-            // dataCheckString += value.zoneName + ": " + value.zonePastPerSqft + ": " + value.zoneFuturePerSqft + ": " + value.zoneTotalPerSqft + "\n";
+            dataCheckString += value.zoneName + ": " + value.schoolCount + ": " +
+            parseInt(value.zonePastPerSqft/value.schoolCount) + ": " +
+            parseInt(value.zoneFuturePerSqft/value.schoolCount) + ": " +
+            parseInt(value.zoneTotalPerSqft/value.schoolCount) + "\n";
 
             // console.log(key, " value: ", value);
             // console.log(key, ":", value.zoneAmount);
@@ -776,7 +911,8 @@ function initApp(presetMode) {
 
     // ======= ======= ======= aggregateEachZone ======= ======= =======
     function aggregateEachZone(schoolsInZone, zoneDataObject, zoneTotals) {
-        // console.log("aggregateEachZone");
+        console.log("aggregateEachZone");
+        console.log("  schoolsInZone.length: ", schoolsInZone.length);
         var amountNAarray = [];
         var zeroAmountArray = [];
         var expendFilter = displayObj.dataFilters.expend;
@@ -918,7 +1054,7 @@ function initApp(presetMode) {
         var featureIndex = -1;
         var zoneTotals = {};
         for (zone in zoneSchools) {
-            // console.log("*** zone: ", zone);
+            console.log("*** zone: ", zone);
             featureIndex++;
             // featureIndex, zoneName, schoolCount, SqFtPerEnroll
             // zoneAmount, amountMin, amountMax, amountAvg, amountMed
@@ -960,28 +1096,15 @@ function initApp(presetMode) {
         return zoneTotals;
     }
 
-    // ======= ======= ======= partitionSelectedSchools ======= ======= =======
-    function partitionSelectedSchools(zoneSchools) {
-        console.log("partitionSelectedSchools");
-        var partitionKey = displayObj.dataFilters.zones;
-        schoolsCollectionObj.selectedSchoolsArray.forEach(function(school) {
-            var zone = school[partitionKey];
-            var zoneName = standardizeZoneName(zone);
-            if ((zoneName) && (zoneName != "NA")) {
-                zoneSchools[zoneName].push(school);
-            }
-        });
-    }
-
-    // ======= ======= ======= selectFilteredSchools ======= ======= =======
-    function selectFilteredSchools() {
-        console.log("selectFilteredSchools");
+    // ======= ======= ======= selectAgencyLevel ======= ======= =======
+    function selectAgencyLevel() {
+        console.log("selectAgencyLevel");
         var selectedSchoolsArray = [];
         var jsonData = schoolsCollectionObj.jsonData;
         for (var i = 0; i < (jsonData.length - 1); i++) {
             schoolIndex = i;
             nextSchool = jsonData[i];
-            selectedSchool = checkFilterMatch(nextSchool);
+            selectedSchool = agencyLevelFilters(nextSchool);
 
             // == build arrays of selected/not selected schools
             if (selectedSchool == true) {
@@ -1022,9 +1145,9 @@ function initApp(presetMode) {
         return zoneFeaturesArray;
     }
 
-    // ======= ======= ======= checkFilterMatch ======= ======= =======
-    function checkFilterMatch(nextSchool) {
-        console.log("checkFilterMatch");
+    // ======= ======= ======= agencyLevelFilters ======= ======= =======
+    function agencyLevelFilters(nextSchool) {
+        console.log("agencyLevelFilters");
 
         var checkAgency = false;
         var agencyMatch, levelsMatch;
