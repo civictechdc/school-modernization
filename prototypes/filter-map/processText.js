@@ -131,34 +131,23 @@ function updateChartText(displayObj, subtitle) {
 }
 
 // ======= ======= ======= updateHoverText ======= ======= =======
-function updateHoverText(itemName, schoolType) {
+function updateHoverText(itemName, schoolType, schoolCode) {
     // console.log("updateHoverText");
 
     var filterTitleContainer = $("#mouseover-text").children("h2");
-    // console.log("  $(filterTitleContainer).css(): ", $(filterTitleContainer).css());
     var filterText = $(filterTitleContainer).text();
     if (itemName) {
-        // if (itemName.length > 63) {
-        //     var checkName = itemName.indexOf(", ");
-        //     if (checkName > -1) {
-        //         splitZoneName = itemName.split(", ");
-        //         if (splitZoneName.length > 2) {
-        //             itemName = splitZoneName[0] + ", " + splitZoneName[1];
-        //         } else {
-        //             itemName = splitZoneName[0];
-        //         }
-        //     }
-        //     if (itemName.length > 63) {
-        //         itemName = itemName.substring(0, 63) + "...";
-        //     }
-        // }
         $("#mouseover-text").children("h2").css("visibility", "visible");
         if (schoolType == "DCPS") {
             $("#mouseover-text").children("h2").css("color", "#7aa25c");
         } else if (schoolType == "PCS") {
             $("#mouseover-text").children("h2").css("color", "orange");
         }
-        $(filterTitleContainer).html(itemName);
+        if (schoolCode) {
+            $(filterTitleContainer).html(itemName + " " + schoolCode);
+        } else {
+            $(filterTitleContainer).html(itemName);
+        }
     } else {
         $("#mouseover-text").children("h2").css("visibility", "hidden");
         $(filterTitleContainer).text("&nbsp;");
@@ -198,10 +187,10 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
 
     var cleanedData = {};
 
-    // schoolIndex, schoolName, schoolWard, schoolCode, FeederMS, FeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, YrComplete
+    // schoolIndex, schoolName, Ward, schoolCode, FeederMS, FeederHS, schoolAddress, schoolLAT, schoolLON, schoolLevel, YrComplete
     cleanedData.schoolIndex = schoolData.schoolIndex;
     cleanedData.schoolName = schoolData.schoolName;
-    cleanedData.schoolWard = schoolData.schoolWard;
+    cleanedData.Ward = schoolData.Ward;
 
     if (schoolData.schoolCode == null) {
         cleanedData.schoolCode = "";
@@ -261,7 +250,7 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     }
 
 
-    // building data: ProjectType, schoolSqft, schoolMaxOccupancy, schoolSqFtPerEnroll, unqBuilding
+    // building data: ProjectType, totalSQFT, maxOccupancy, schoolSqFtPerEnroll, unqBuilding
     if (schoolData.ProjectType == null) {
         var tempProjectType = schoolData.ProjectType.replace(/\w\S*/g, function(txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -270,19 +259,19 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     } else {
         cleanedData.ProjectType = schoolData.ProjectType;
     }
-    var schoolSqftflag = isNumber(schoolData.schoolSqft);
+    var schoolSqftflag = isNumber(schoolData.totalSQFT);
     if (schoolSqftflag == true) {
-        var schoolSqft = parseInt(schoolData.schoolSqft);
-        cleanedData.schoolSqft = numberWithCommas(schoolSqft);
+        var totalSQFT = parseInt(schoolData.totalSQFT);
+        cleanedData.totalSQFT = numberWithCommas(totalSQFT);
     } else {
-        cleanedData.schoolSqft = "";
+        cleanedData.totalSQFT = "";
     }
-    var schoolMaxOccupancyFlag = isNumber(schoolData.schoolMaxOccupancy);
+    var schoolMaxOccupancyFlag = isNumber(schoolData.maxOccupancy);
     if (schoolMaxOccupancyFlag == true) {
-        var schoolMaxOccupancy = parseInt(schoolData.schoolMaxOccupancy);
-        cleanedData.schoolMaxOccupancy = numberWithCommas(schoolMaxOccupancy);
+        var maxOccupancy = parseInt(schoolData.maxOccupancy);
+        cleanedData.maxOccupancy = numberWithCommas(maxOccupancy);
     } else {
-        cleanedData.schoolMaxOccupancy = "";
+        cleanedData.maxOccupancy = "";
     }
     var schoolSqFtPerEnrollFlag = isNumber(schoolData.schoolSqFtPerEnroll);
     if (schoolSqFtPerEnrollFlag == true) {

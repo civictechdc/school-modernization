@@ -217,6 +217,37 @@ function getScaleFactor(dataMax) {
     return [scaleFactor, scaleLabel];
 }
 
+// ======= ======= ======= filterExpendData ======= ======= =======
+function filterExpendData(displayObj, zonesCollectionObj, zoneIndex) {
+    // console.log("filterExpendData");
+    var nextZoneValue;
+    if (displayObj.dataFilters.expend == "spendLifetime") {
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneTotalPerSqft;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneTotalPerEnroll;
+        }
+    } else if (displayObj.dataFilters.expend == "MajorExp9815") {
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zonePastPerSqft;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zonePastPerEnroll;
+        }
+    } else if (displayObj.dataFilters.expend == "spendPlanned") {
+        if (displayObj.dataFilters.math == "spendAmount") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+        } else if (displayObj.dataFilters.math == "spendSqFt") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneFuturePerSqft;
+        } else if (displayObj.dataFilters.math == "spendEnroll") {
+            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneFuturePerEnroll;
+        }
+    }
+    return nextZoneValue;
+}
 
 
 // ======= ======= ======= ======= ======= CLEAR DISPLAY ======= ======= ======= ======= =======
@@ -256,6 +287,10 @@ function removeMarkers(schoolsCollectionObj) {
         }
     }
     schoolsCollectionObj.schoolMarkersArray = [];
+    if (schoolsCollectionObj.selectedMarker) {
+        schoolsCollectionObj.selectedMarker.setMap(null);
+        schoolsCollectionObj.selectedMarker = null;
+    }
 }
 
 // ======= ======= ======= de_activateZoneListeners ======= ======= =======
@@ -296,8 +331,8 @@ function getDataDetails(nextSchool, nextIndex) {
         "schoolAgency": nextSchool.Agency,
 
         "ProjectType": nextSchool.ProjectType,
-        "schoolSqft": nextSchool.totalSQFT,
-        "schoolMaxOccupancy": nextSchool.maxOccupancy,
+        "totalSQFT": nextSchool.totalSQFT,
+        "maxOccupancy": nextSchool.maxOccupancy,
         "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
 
         "schoolEnroll": nextSchool.Total_Enrolled,
@@ -344,9 +379,16 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     }
     if (schoolMarker) {
         var schoolIndex = schoolMarker.schoolIndex;
-        schoolsCollectionObj.selectedMarker = schoolMarker;
-        hiliteSchoolMarker(schoolsCollectionObj, null, schoolMarker.schoolIndex);
+    } else {
+        var schoolCode = schoolData.School_ID;
+        console.log("  schoolCode: ", schoolCode);
+        var schoolData = getSchoolFromCode(schoolsCollectionObj, schoolCode);
+        var schoolDetails = getDataDetails(schoolData, null);
+        var schoolMarker = schoolsCollectionObj.setSchoolMarker(schoolDetails, null);
     }
+    console.log("  schoolMarker: ", schoolMarker);
+    schoolsCollectionObj.selectedMarker = schoolMarker;
+    hiliteSchoolMarker(schoolsCollectionObj, schoolMarker);
 
     if ((typeof schoolIndex === 'undefined') || (typeof schoolIndex === 'null')) {
         console.log("*** SCHOOL SEARCH ***");
@@ -358,18 +400,18 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     schoolsCollectionObj.selectedSchool = cleanedSchoolData;
 
     // == school sqft
-    var schoolSqft = cleanedSchoolData.schoolSqft;
-    if (schoolSqft == "") {
-        schoolSqft = "No data";
+    var totalSQFT = cleanedSchoolData.totalSQFT;
+    if (totalSQFT == "") {
+        totalSQFT = "No data";
         var schoolSqftSpan = "";
     } else {
         var schoolSqftSpan = "<span class='value-label'>sqft</span>";
     }
 
     // == capacity
-    var schoolMaxOccupancy = cleanedSchoolData.schoolMaxOccupancy;
-    if (schoolMaxOccupancy == "") {
-        schoolMaxOccupancy = "No data";
+    var maxOccupancy = cleanedSchoolData.maxOccupancy;
+    if (maxOccupancy == "") {
+        maxOccupancy = "No data";
         var schoolMaxOccupancySpan = "";
     } else {
         var schoolMaxOccupancySpan = "<span class='value-label'>students</span>";
@@ -563,11 +605,11 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
 
     // Bldg sq ft 2016                     == totalSQFT
     htmlString += "<tr><td class='data-key'><p class='key-text'>Bldg sq ft 2016</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + schoolSqft + " " + schoolSqftSpan + "</p></td></tr>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + totalSQFT + " " + schoolSqftSpan + "</p></td></tr>";
 
     // Bldg capacity 2016                  == maxOccupancy
     htmlString += "<tr><td class='data-key'><p class='key-text'>Bldg capacity 2016</p></td>";
-    htmlString += "<td class='data-value'><p class='value-text'>" + schoolMaxOccupancy + " " + schoolMaxOccupancySpan + "</p></td></tr>";
+    htmlString += "<td class='data-value'><p class='value-text'>" + maxOccupancy + " " + schoolMaxOccupancySpan + "</p></td></tr>";
 
     // Past spending (FY1998-2015)         == MajorExp9815
     htmlString += "<tr><td class='data-key'><p class='key-text'>Past spending (FY1998-2015)</p></td>";

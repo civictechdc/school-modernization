@@ -4,7 +4,8 @@ function Display() {
     this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter, filterMenu.All];
     this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
     this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.MajorExp9815, filterMenu.spendPlanned];
-    this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
+    // this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
+    this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS];
     this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
     this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.zonesMenu, this.expendMenu];
     this.filterTitlesObject = { "agency":"All", "levels":null, "expend":null, "zones": "Ward" };
@@ -30,4 +31,16 @@ function ZonesCollection() {
     this.defaultColor = "white";
     this.dataIncrement = 0;
     this.dataBins = 8;
+}
+function SchoolsCollection() {
+    console.log("SchoolsCollection");
+    this.dataSource = null;
+    this.schoolColorsArray = [];
+    this.sharedAddressArray = [];
+    this.schoolMarkersArray = [];
+    this.selectedSchoolsArray = [];
+    this.closedSchoolsArray = [];
+    this.selectedSchool = null;
+    this.jsonData = null;         // geojson data
+    this.active = false;
 }
