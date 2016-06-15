@@ -46,7 +46,7 @@ function initMap(zonesCollectionObj, displayObj) {
 
     // ======= index map =======
     if (displayObj.displayMode != "storyMap") {
-        console.log("*** toolMap ***");
+        // console.log("*** toolMap ***");
         var mapContainer = document.getElementById('toolMap-container');
         var zoom = 12;
 

@@ -150,8 +150,6 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
                 itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                 strokeColor = "black";
                 strokeWeight = 4;
-                console.log("  colorIndex: ", colorIndex);
-                // console.log("  itemColor: ", itemColor);
             } else {
                 itemColor = "white";
                 strokeColor = "purple";
@@ -164,7 +162,11 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
             if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
                 if (displayObj.dataFilters.expend) {
                     colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
-                    itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                    if (colorIndex >= 0) {
+                        itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                    } else {
+                        itemColor = "red";
+                    }
                     strokeColor = "black";
                     strokeWeight = 2;
                     itemOpacity = 0.8;
@@ -191,9 +193,10 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
     for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
         binMin = (zonesCollectionObj.dataIncrement * i);
         binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+        if (isNaN(nextExpendValue)) {
+            nextExpendValue = 0;
+        }
         if ((binMin <= nextExpendValue) && (nextExpendValue <= (binMax + 1))) {
-            // console.log("  i: ", i);
-            // console.log("  nextExpendValue: ", nextExpendValue);
             var colorIndex = i;
             break;
         }
@@ -221,30 +224,15 @@ function getScaleFactor(dataMax) {
 function filterExpendData(displayObj, zonesCollectionObj, zoneIndex) {
     // console.log("filterExpendData");
     var nextZoneValue;
-    if (displayObj.dataFilters.expend == "spendLifetime") {
-        if (displayObj.dataFilters.math == "spendAmount") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
-        } else if (displayObj.dataFilters.math == "spendSqFt") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneTotalPerSqft;
-        } else if (displayObj.dataFilters.math == "spendEnroll") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneTotalPerEnroll;
-        }
-    } else if (displayObj.dataFilters.expend == "MajorExp9815") {
-        if (displayObj.dataFilters.math == "spendAmount") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
-        } else if (displayObj.dataFilters.math == "spendSqFt") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zonePastPerSqft;
-        } else if (displayObj.dataFilters.math == "spendEnroll") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zonePastPerEnroll;
-        }
-    } else if (displayObj.dataFilters.expend == "spendPlanned") {
-        if (displayObj.dataFilters.math == "spendAmount") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
-        } else if (displayObj.dataFilters.math == "spendSqFt") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneFuturePerSqft;
-        } else if (displayObj.dataFilters.math == "spendEnroll") {
-            nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneFuturePerEnroll;
-        }
+    if (displayObj.dataFilters.math == "spendAmount") {
+        nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].zoneAmount;
+    } else if (displayObj.dataFilters.math == "spendSqFt") {
+        nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].expendPerSqft;
+    } else if (displayObj.dataFilters.math == "spendEnroll") {
+        nextZoneValue = zonesCollectionObj.aggregatorArray[zoneIndex].expendPerEnroll;
+    }
+    if (isNaN(nextZoneValue)) {
+        nextZoneValue = 0;
     }
     return nextZoneValue;
 }
@@ -370,8 +358,8 @@ function getDataDetails(nextSchool, nextIndex) {
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
 function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolMarker) {
     console.log("makeSchoolProfile");
-    console.log("  schoolData: ", schoolData);
-    console.log("  schoolMarker: ", schoolMarker);
+    // console.log("  schoolData: ", schoolData);
+    // console.log("  schoolMarker: ", schoolMarker);
 
     var nextValue;
     if (schoolsCollectionObj.selectedMarker) {
@@ -381,12 +369,12 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
         var schoolIndex = schoolMarker.schoolIndex;
     } else {
         var schoolCode = schoolData.School_ID;
-        console.log("  schoolCode: ", schoolCode);
+        // console.log("  schoolCode: ", schoolCode);
         var schoolData = getSchoolFromCode(schoolsCollectionObj, schoolCode);
         var schoolDetails = getDataDetails(schoolData, null);
         var schoolMarker = schoolsCollectionObj.setSchoolMarker(schoolDetails, null);
     }
-    console.log("  schoolMarker: ", schoolMarker);
+    // console.log("  schoolMarker: ", schoolMarker);
     schoolsCollectionObj.selectedMarker = schoolMarker;
     hiliteSchoolMarker(schoolsCollectionObj, schoolMarker);
 
@@ -668,7 +656,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     // == remove previous chart or profile html if any
     if ($('#chart-container').find('#chart').length) {
         $("#chart-container").fadeOut( "fast", function() {
-            console.log("*** FADEOUT chart-container ***");
+            // console.log("*** FADEOUT chart-container ***");
         });
     }
     if ($('#legend-container').find('#legend').length) {
@@ -680,7 +668,7 @@ function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj,
     } else {
         $("#profile-container").append(htmlString);
         $("#profile-container").fadeIn( "slow", function() {
-            console.log("*** FADEIN profile-container ***");
+            // console.log("*** FADEIN profile-container ***");
         });
     }
 

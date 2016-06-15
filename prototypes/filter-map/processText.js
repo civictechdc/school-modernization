@@ -84,14 +84,6 @@ function updateChartText(displayObj, subtitle) {
 
     // == math label
     if (displayObj.dataFilters.math) {
-        // if (displayObj.displayMode != "storyMap") {
-        //     mathText = filterMenu[displayObj.dataFilters.math].label;
-        // } else {
-        //     mathText = filterMenu[displayObj.dataFilters.math].label;
-        // }
-        // if (mathText == "dollar amount") {
-        //     mathText = "";
-        // }
         mathText = "";
     } else {
         mathText = "";

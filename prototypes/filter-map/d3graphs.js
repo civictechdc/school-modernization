@@ -31,8 +31,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // ======= ======= ======= circle Y positioning ======= ======= =======
     for (var i = 0; i < aggregatorArray.length; i++) {
         var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
+        if (isNaN(nextZoneValue)) {
+            nextZoneValue = 0;
+        }
         circleValuesArray.push(nextZoneValue);
     }
+    console.log("  circleValuesArray: ", circleValuesArray);
 
     // ======= ======= ======= data variables ======= ======= =======
     var dataMin = d3.min(circleValuesArray);
@@ -184,6 +188,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             })
             .attr("cy", function(d, i) {
                 var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
+                if (isNaN(nextZoneValue)) {
+                    nextZoneValue = 0;
+                }
                 return yScale(nextZoneValue);
             })
             .attr("r", function(d) {
@@ -241,7 +248,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
             // ======= ======= ======= mouseover ======= ======= =======
             $(this).off("mouseover").on("mouseover", function(event){
-                console.log("\n======= showLabel ======= ");
+                // console.log("\n======= showLabel ======= ");
                 $("#chart-message").css("display", "none");
                 var targetLabel = $('#dataChartLabel_' + i);
                 var targetCircleId = $(this).attr('id');
@@ -302,7 +309,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     // ======= toggleFeatureHilite =======
     function toggleFeatureHilite(featureIndex, onOrOff) {
-        console.log("toggleFeatureHilite");
+        // console.log("toggleFeatureHilite");
         if (featureIndex < zonesCollectionObj.zoneFeaturesArray.length) {
             var zoneFeature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
             var zoneName = zoneFeature.getProperty('zoneName');
@@ -450,8 +457,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 console.log("\n------- setSubMenu -------");
                 nextMath = $("select[name='expendMath'] option:selected").val()
                 displayObj.dataFilters.math = nextMath;
-                console.log("  nextMath: ", nextMath);
-                checkFilterSelection(displayObj, zonesCollectionObj, "math");
+                // console.log("  nextMath: ", nextMath);
+                // checkFilterSelection("math");
 
                 zonesCollectionObj.importZoneDataA();
             }
@@ -506,13 +513,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             $("#chart-container").append(chartHtml);
             updateChartStyle();
             $("#chart-container").fadeIn( "slow", function() {
-                console.log("*** FADEIN chart-container ***");
+                // console.log("*** FADEIN chart-container ***");
             });
         } else {
             $("#chart-container").append(chartHtml);
             updateChartStyle();
             $("#chart-container").fadeIn( "slow", function() {
-                console.log("*** FADEIN chart-container ***");
+                // console.log("*** FADEIN chart-container ***");
             });
         }
     }
