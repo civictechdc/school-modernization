@@ -989,14 +989,12 @@ function initApp(presetMode) {
         // ======= aggregate zone data and make map layers ======
         if (schoolsCollectionObj.selectedSchoolsArray.length > 0) {
             schoolsCollectionObj.makeSchoolLayer();
-            partitionExpendMath(zoneSchoolsObject);
+            buildPartitionSchoolArrays(zoneSchoolsObject);
             var zoneTotalsObject = aggregateAllZones(zoneSchoolsObject);
             zonesCollectionObj.aggregator = zoneTotalsObject;
             zonesCollectionObj.aggregatorArray = zoneObjectToArray(zoneTotalsObject);
-            // console.log("  ...selectedSchoolsArray: ", schoolsCollectionObj.selectedSchoolsArray);
-            // console.log("  ...zoneFeaturesArray: ", zonesCollectionObj.zoneFeaturesArray);
-            // console.log("  ...aggregator: ", zonesCollectionObj.aggregator);
             console.log("  ...aggregatorArray: ", zonesCollectionObj.aggregatorArray);
+            printZoneData();
             setDataIncrement();
             formatZoneFeatures(zoneBcount);
         } else {
@@ -1142,132 +1140,37 @@ function initApp(presetMode) {
         }
     }
 
-    // ======= ======= ======= partitionExpendMath ======= ======= =======
-    function partitionExpendMath(zoneSchools) {
-        console.log("partitionExpendMath");
-        console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
-        console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    // ======= ======= ======= buildPartitionSchoolArrays ======= ======= =======
+    function buildPartitionSchoolArrays(zoneSchools) {
+        console.log("buildPartitionSchoolArrays");
         var partitionKey = displayObj.dataFilters.zones;
+        var schoolCount = 0;
         schoolsCollectionObj.selectedSchoolsArray.forEach(function(school) {
             var zone = school[partitionKey];
             var zoneName = standardizeZoneName(zone);
             if ((zoneName) && (zoneName != "NA")) {
-                if (displayObj.dataFilters.expend) {
-                    var selectedSchool = expendMathFilters(school);
-                    if (selectedSchool) {
-                        zoneSchools[zoneName].push(school);
-                    }
-                } else {
-                    zoneSchools[zoneName].push(school);
-                }
+                schoolCount++;
+                zoneSchools[zoneName].push(school);
             }
         });
-    }
-
-    // ======= ======= ======= expendMathFilters ======= ======= =======
-    function expendMathFilters(nextSchool) {
-        console.log("expendMathFilters");
-        // expend: MajorExp9815, spendPlanned, spendLifetime
-        // math: spendAmount, spendEnroll, spendSqFt
-
-        // == check expend (past/future/total) and math (amount/perEnroll/perSqft) filter matches
-        var expendMatch = false;
-        var mathMatch = false;
-
-        // == past
-        if (displayObj.dataFilters.expend == "MajorExp9815") {
-            if (nextSchool.MajorExp9815 != "NA") {
-                expendMatch = true;
-
-                // == expenditure per student (max capacity) or per sqft
-                if (displayObj.dataFilters.math) {
-                    if (displayObj.dataFilters.math == "spendEnroll") {
-                        if ((nextSchool.maxOccupancy != "NA") && (nextSchool.Open_Now > 0)) {
-                            mathMatch = true;
-                        }
-                    } else if (displayObj.dataFilters.math == "spendSqFt") {
-                        if ((nextSchool.totalSQFT != "NA") && (nextSchool.Open_Now > 0)) {
-                            mathMatch = true;
-                        }
-                    } else {
-                        mathMatch = true;
-                    }
-                } else {
-                    mathMatch = true;
-                }
-            }
-
-        // == future
-        } else if (displayObj.dataFilters.expend == "spendPlanned") {
-            if (nextSchool.TotalAllotandPlan1621 != "NA") {
-                expendMatch = true;
-
-                // == expenditure per student (max capacity) or per sqft
-                if (displayObj.dataFilters.math) {
-                    if (displayObj.dataFilters.math == "spendEnroll") {
-                        if ((nextSchool.maxOccupancy != "NA") && (nextSchool.Open_Now > 0)) {
-                            mathMatch = true;
-                        }
-                    } else if (displayObj.dataFilters.math == "spendSqFt") {
-                        if ((nextSchool.totalSQFT != "NA") && (nextSchool.Open_Now > 0)) {
-                            mathMatch = true;
-                        }
-                    } else {
-                        mathMatch = true;
-                    }
-                } else {
-                    mathMatch = true;
-                }
-            }
-
-        // == total
-        } else if (displayObj.dataFilters.expend == "spendLifetime") {
-            if (nextSchool.LifetimeBudget != "NA") {
-                expendMatch = true;
-
-                // == expenditure per student (max capacity) or per sqft
-                if (displayObj.dataFilters.math) {
-                    if (displayObj.dataFilters.math == "spendEnroll") {
-                        if ((nextSchool.maxOccupancy != "NA") && (nextSchool.Open_Now > 0)) {
-                            mathMatch = true;
-                        }
-                    } else if (displayObj.dataFilters.math == "spendSqFt") {
-                        if ((nextSchool.totalSQFT != "NA") && (nextSchool.Open_Now > 0)) {
-                            mathMatch = true;
-                        }
-                    } else {
-                        mathMatch = true;
-                    }
-                } else {
-                    mathMatch = true;
-                }
-            }
-        }
-
-        // == return match result
-        if ((expendMatch == true) && (mathMatch == true)) {
-            return true;
-        } else {
-            return false;
-        }
+        // console.log("  schoolCount: ", schoolCount);
     }
 
     // ======= ======= ======= aggregateAllZones ======= ======= =======
-    function aggregateAllZones(zoneSchools) {
-        // console.log("aggregateAllZones");
+    function aggregateAllZones(zoneSchoolsObject) {
+        console.log("aggregateAllZones");
+        console.log("  zoneSchoolsObject: ", zoneSchoolsObject);
         var featureIndex = -1;
         var zoneTotals = {};
-        for (zone in zoneSchools) {
-            // console.log("*** zone: ", zone);
+
+        // == initialize aggregator object for each zone
+        for (zone in zoneSchoolsObject) {
             featureIndex++;
-            // featureIndex, zoneName, schoolCount, SqFtPerEnroll
-            // zoneAmount, amountMin, amountMax, amountAvg, amountMed
-            // zonePastPerEnroll, zoneFuturePerEnroll, zoneTotalPerEnroll, zoneEnroll, enrollMin, enrollMax, enrollAvg, enrollMed
-            // zonePastPerSqft, zoneFuturePerSqft, zoneTotalPerSqft, zoneSqft, sqftMin, sqftMax, sqftAvg, sqftMed
+
             var zoneDataObject = {
                 featureIndex: featureIndex,
                 zoneName: zone,
-                schoolCount: zoneSchools[zone].length,
+                schoolCount: zoneSchoolsObject[zone].length,
                 SqFtPerEnroll: 0,
 
                 zoneAmount: 0,
@@ -1296,7 +1199,7 @@ function initApp(presetMode) {
                 sqftMed: 0,
                 expendPerSqft: 0
             };
-            var schoolsInZone = zoneSchools[zone];
+            var schoolsInZone = zoneSchoolsObject[zone];
             aggregateEachZone(schoolsInZone, zoneDataObject, zoneTotals);
         }
         return zoneTotals;
@@ -1305,7 +1208,7 @@ function initApp(presetMode) {
     // ======= ======= ======= aggregateEachZone ======= ======= =======
     function aggregateEachZone(schoolsInZone, zoneDataObject, zoneTotals) {
         // console.log("aggregateEachZone");
-        // console.log("  schoolsInZone.length: ", schoolsInZone.length);
+        var zoneSchoolNamesArray = [];
         var amountNAarray = [];
         var zeroAmountArray = [];
         var expendFilter = displayObj.dataFilters.expend;
@@ -1318,137 +1221,57 @@ function initApp(presetMode) {
                 // zoneDataObject.zonePast += parseInt(school.MajorExp9815);
                 // zoneDataObject.zoneFuture += parseInt(school.TotalAllotandPlan1621);
                 // zoneDataObject.zoneTotal += parseInt(school.LifetimeBudget);
-
-                // == calculate past/future/total median
-                if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
-                    if (zoneDataObject.schoolCount % 2 == 0) {
-                        var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
-                        var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
-                        var amountMed = (parseInt(schoolA[expendFilter]) + parseInt(schoolB[expendFilter]))/2;
-                    } else {
-                        var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
-                        var amountMed = parseInt(schoolA[expendFilter]);
-                    }
-                    zoneDataObject.amountMed = parseInt(amountMed);
-                }
-
-                // == calculate past/future/total min/max
-                if (parseInt(school[expendFilter]) > zoneDataObject.amountMax) {
-                    zoneDataObject.amountMax = parseInt(school[expendFilter]);
-                }
-                if (index == 0) {
-                    zoneDataObject.amountMin = parseInt(school[expendFilter]);
-                } else {
-                    if (parseInt(school[expendFilter]) <= zoneDataObject.amountMin) {
-                        zoneDataObject.amountMin = parseInt(school[expendFilter]);
-                    }
-                }
-            } else if (school[expendFilter] == "NA"){
-                console.log("  NA index: ", school.schoolIndex);
-                amountNAarray.push(school);
-            } else {
-                console.log("  0 VALUE index: ", school.schoolIndex);
-                zeroAmountArray.push(school);
             }
 
             // ======= ======= ======= ENROLLMENT ======= ======= =======
-            if (school.maxOccupancy != "NA") {
+            if ((school.maxOccupancy != "NA") && (school.Open_Now > 0)) {
                 zoneDataObject.zoneEnroll += parseInt(school.maxOccupancy);
-
-                // == calculate enrollment median
-                if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
-                    if (zoneDataObject.schoolCount % 2 == 0) {
-                        var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
-                        var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
-                        var enrollMed = (parseInt(schoolA.maxOccupancy) + parseInt(schoolB.maxOccupancy))/2;
-                    } else {
-                        var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
-                        var enrollMed = parseInt(schoolA.maxOccupancy);
-                    }
-                    zoneDataObject.enrollMed = enrollMed;
-                }
-
-                // == calculate enrollment min/max
-                if (parseInt(school.maxOccupancy) > zoneDataObject.enrollMax) {
-                    zoneDataObject.enrollMax = parseInt(school.maxOccupancy);
-                }
-                if (index == 0) {
-                    zoneDataObject.enrollMin = parseInt(school.maxOccupancy);
-                } else {
-                    if (parseInt(school.maxOccupancy) <= zoneDataObject.enrollMin) {
-                        zoneDataObject.enrollMin = parseInt(school.maxOccupancy);
-                    }
-                }
-            } else if (school.maxOccupancy == "NA"){
-                // console.log("  NA index: ", index);
-            } else {
-                // console.log("  0 VALUE index: ", index);
+                zoneSchoolNamesArray.push(school.schoolName)
             }
-            // if (school.SpentPerMaxOccupancy != "NA") {
-            //     zoneDataObject.zonePastPerEnroll += parseInt(school.SpentPerMaxOccupancy);
-            // }
-            // if (school.TotalAllotandPlan1621perMaxOcc != "NA") {
-            //     zoneDataObject.zoneFuturePerEnroll += parseInt(school.TotalAllotandPlan1621perMaxOcc);
-            // }
-            // if (school.LifetimeBudgetperMaxOcc != "NA") {
-            //     zoneDataObject.zoneTotalPerEnroll += parseInt(school.LifetimeBudgetperMaxOcc);
-            // }
 
             // ======= ======= ======= SQFT ======= ======= =======
-            if (school.totalSQFT != "NA") {
+            if ((school.totalSQFT != "NA") && (school.Open_Now > 0)) {
                 zoneDataObject.zoneSqft += parseInt(school.totalSQFT);
-
-                // == calculate sqft median
-                if (index == Math.ceil(zoneDataObject.schoolCount/2)) {
-                    if (zoneDataObject.schoolCount % 2 == 0) {
-                        var schoolA = schoolsInZone[zoneDataObject.schoolCount/2 - 1];
-                        var schoolB = schoolsInZone[zoneDataObject.schoolCount/2];
-                        var sqftMed = (parseInt(schoolA.totalSQFT) + parseInt(schoolB.totalSQFT))/2;
-                    } else {
-                        var schoolA = schoolsInZone[Math.ceil(zoneDataObject.schoolCount/2)];
-                        var sqftMed = parseInt(schoolA.totalSQFT);
-                    }
-                    zoneDataObject.sqftMed = sqftMed;
-                }
-
-                // == calculate sqft min/max
-                if (parseInt(school.totalSQFT) > zoneDataObject.sqftMax) {
-                    zoneDataObject.sqftMax = parseInt(school.totalSQFT);
-                }
-                if (index == 0) {
-                    zoneDataObject.sqftMin = parseInt(school.totalSQFT);
-                } else {
-                    if (parseInt(school.totalSQFT) <= zoneDataObject.sqftMin) {
-                        zoneDataObject.sqftMin = parseInt(school.totalSQFT);
-                    }
-                }
-            } else if (school.totalSQFT == "NA"){
-                // console.log("  NA index: ", index);
-            } else {
-                // console.log("  0 VALUE index: ", index);
             }
-            // if (school.SpentPerSqFt != "NA") {
-            //     zoneDataObject.zonePastPerSqft += parseInt(school.SpentPerSqFt);
-            // }
-            // if (school.TotalAllotandPlan1621perGSF != "NA") {
-            //     zoneDataObject.zoneFuturePerSqft += parseInt(school.TotalAllotandPlan1621perGSF);
-            // }
-            // if (school.LifetimeBudgetperGSF != "NA") {
-            //     zoneDataObject.zoneTotalPerSqft += parseInt(school.LifetimeBudgetperGSF);
-            // }
         });
         zoneDataObject.expendPerEnroll = parseInt(zoneDataObject.zoneAmount/zoneDataObject.zoneEnroll);
         zoneDataObject.expendPerSqft = parseInt(zoneDataObject.zoneAmount/zoneDataObject.zoneSqft);
+        zoneDataObject.zoneSchoolNamesArray = zoneSchoolNamesArray;
         zoneTotals[zone] = zoneDataObject;
+        console.log("  zoneDataObject: ", zoneDataObject);
+    }
+
+    // ======= ======= ======= printZoneData ======= ======= =======
+    //  zoneDataObject.zoneAmount, zoneDataObject.zoneEnroll, zoneDataObject.zoneTotalPerEnroll, zoneDataObject.zoneSqft, zoneDataObject.expendPerSqft
+    function printZoneData() {
+        console.log("printZoneData");
+        console.log("  zonesCollectionObj.aggregatorArray: ", zonesCollectionObj.aggregatorArray);
+
+        var zoneDataString = makeDataString("zoneAmount");
+        var zoneDataString = makeDataString("zoneEnroll");
+        var zoneDataString = makeDataString("zoneSqft");
+        var zoneDataString = makeDataString("expendPerEnroll");
+        var zoneDataString = makeDataString("expendPerSqft");
+
+        // ======= ======= ======= makeDataString ======= ======= =======
+        function makeDataString(zoneData) {
+            console.log("makeDataString");
+            var zoneDataString = "zone     " + zoneData + "\n";
+            zonesCollectionObj.aggregatorArray.forEach(function(zoneDataObject) {
+                zoneDataString +=
+                zoneDataObject.zoneName + ": " + zoneDataObject[zoneData] + "\n";
+            });
+            console.log(zoneDataString);
+            return zoneDataString;
+        }
     }
 
     // ======= ======= ======= zoneObjectToArray ======= ======= =======
     function zoneObjectToArray(zoneTotalsObject) {
         console.log("zoneObjectToArray");
-        var zoneDataObject, dataCheckString;
+        var zoneDataObject;
 
         // == create array and calculate average, perEnroll and perSqft values
-        dataCheckString = "zone  amount  enrollORsqft  amount per... \n";
         var aggregatorArray = _.map(zoneTotalsObject, function(value, key){
             zoneDataObject = {
                 featureIndex:value.featureIndex,
@@ -1483,64 +1306,8 @@ function initApp(presetMode) {
                 expendPerSqft:value.expendPerSqft
             }
 
-            // == Dollar Amount
-            // dataCheckString += value.zoneName + ": " + value.zoneAmount + "\n";
-
-            // == Enroll
-            // dataCheckString += value.zoneName + ": " +
-            // value.zoneAmount + ": " +
-            // value.zoneEnroll + ": " +
-            // zoneDataObject.expendPerEnroll + "\n";
-
-            // dataCheckString += value.zoneName + ": " + value.schoolCount + ": " +
-            // parseInt(value.zonePastPerEnroll/value.schoolCount) + ": " +
-            // parseInt(value.zoneFuturePerEnroll/value.schoolCount) + ": " +
-            // parseInt(value.zoneTotalPerEnroll/value.schoolCount) + "\n";
-
-            // == Sqft
-            dataCheckString += value.zoneName + ": " +
-            value.zoneAmount + ": " +
-            value.zoneSqft + ": " +
-            zoneDataObject.expendPerSqft + "\n";
-
-            // dataCheckString += value.zoneName + ": " + value.schoolCount + ": " +
-            // parseInt(value.zonePastPerSqft/value.schoolCount) + ": " +
-            // parseInt(value.zoneFuturePerSqft/value.schoolCount) + ": " +
-            // parseInt(value.zoneTotalPerSqft/value.schoolCount) + "\n";
-
-            // console.log(key, " value: ", value);
-            // console.log(key, ":", value.zoneAmount);
-            // console.log(key, " zoneDataObject: ", zoneDataObject);
-            //
-            // console.log(key, " featureIndex: ", value.featureIndex);
-            // console.log(key, "*** zoneName: ", value.zoneName);
-            // console.log(key, " schoolCount: ", value.schoolCount);
-            // console.log(key, " SqFtPerEnroll: ", value.SqFtPerEnroll);
-            // console.log(key, " zoneAmount: ", value.zoneAmount);
-            // console.log(key, " amountMin: ", value.amountMin);
-            // console.log(key, " amountMax: ", value.amountMax);
-            // console.log(key, " amountAvg: ", value.amountAvg);
-            // console.log(key, " amountMed: ", value.amountMed);
-            // console.log(key, " zonePastPerEnroll: " value.zonePastPerEnroll);
-            // console.log(key, " zoneFuturePerEnroll: ", value.zoneFuturePerEnroll);
-            // console.log(key, " zoneTotalPerEnroll: ", value.zoneTotalPerEnroll);
-            // console.log(key, " zoneEnroll: ", value.zoneEnroll);
-            // console.log(key, " enrollMin: ", value.enrollMin);
-            // console.log(key, " enrollMax: ", value.enrollMax);
-            // console.log(key, " enrollAvg: ", value.enrollAvg);
-            // console.log(key, " enrollMed: ", value.enrollMed);
-            // console.log(key, " zonePastPerSqft: ", value.zonePastPerSqft);
-            // console.log(key, " zoneFuturePerSqft: ", value.zoneFuturePerSqft);
-            // console.log(key, " zoneTotalPerSqft: ", value.zoneTotalPerSqft);
-            // console.log(key, " zoneSqft: ", value.zoneSqft);
-            // console.log(key, " sqftMin: ", value.sqftMin);
-            // console.log(key, " sqftMax: ", value.sqftMax);
-            // console.log(key, " sqftAvg: ", value.sqftAvg);
-            // console.log(key, " sqftMed: ", value.sqftMed);
-
             return zoneDataObject;
         });
-        console.log(dataCheckString);
         return aggregatorArray;
     }
 

@@ -318,11 +318,11 @@ function getDataDetails(nextSchool, nextIndex) {
         "schoolLevel": nextSchool.Level,
         "schoolAgency": nextSchool.Agency,
 
-        "ProjectType": nextSchool.ProjectType,
         "totalSQFT": nextSchool.totalSQFT,
         "maxOccupancy": nextSchool.maxOccupancy,
-        "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
 
+        "ProjectType": nextSchool.ProjectType,
+        "schoolSqFtPerEnroll": nextSchool.SqFtPerEnroll,
         "schoolEnroll": nextSchool.Total_Enrolled,
         "studentEng": nextSchool.Limited_English,
         "studentAtRisk": nextSchool.At_Risk,
