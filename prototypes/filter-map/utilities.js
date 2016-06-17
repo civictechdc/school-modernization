@@ -147,7 +147,11 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
         } else if (whichLayer == "upper") {
             if (displayObj.dataFilters.expend) {
                 colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
-                itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                if (colorIndex >= 0) {
+                    itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
+                } else {
+                    itemColor = "red";
+                }
                 strokeColor = "black";
                 strokeWeight = 4;
             } else {
@@ -162,6 +166,7 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
             if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
                 if (displayObj.dataFilters.expend) {
                     colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
+                    console.log("  colorIndex: ", colorIndex);
                     if (colorIndex >= 0) {
                         itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                     } else {
@@ -170,8 +175,6 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
                     strokeColor = "black";
                     strokeWeight = 2;
                     itemOpacity = 0.8;
-                    // console.log("  colorIndex: ", colorIndex);
-                    // console.log("  itemColor: ", itemColor);
                 } else {
                     return [itemColor, strokeColor, strokeWeight, itemOpacity];
                 }
@@ -200,6 +203,9 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
             var colorIndex = i;
             break;
         }
+    }
+    if (nextExpendValue < 0) {
+        colorIndex = -1;
     }
     return colorIndex;
 }

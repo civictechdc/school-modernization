@@ -1234,11 +1234,19 @@ function initApp(presetMode) {
                 zoneDataObject.zoneSqft += parseInt(school.totalSQFT);
             }
         });
-        zoneDataObject.expendPerEnroll = parseInt(zoneDataObject.zoneAmount/zoneDataObject.zoneEnroll);
-        zoneDataObject.expendPerSqft = parseInt(zoneDataObject.zoneAmount/zoneDataObject.zoneSqft);
+        if (zoneDataObject.zoneEnroll > 0) {
+            zoneDataObject.expendPerEnroll = parseInt(zoneDataObject.zoneAmount/zoneDataObject.zoneEnroll);
+        } else {
+            zoneDataObject.expendPerEnroll = 0;
+        }
+        if (zoneDataObject.zoneSqft > 0) {
+            zoneDataObject.expendPerSqft = parseInt(zoneDataObject.zoneAmount/zoneDataObject.zoneSqft);
+        } else {
+            zoneDataObject.expendPerSqft = 0;
+        }
         zoneDataObject.zoneSchoolNamesArray = zoneSchoolNamesArray;
         zoneTotals[zone] = zoneDataObject;
-        console.log("  zoneDataObject: ", zoneDataObject);
+        // console.log("  zoneDataObject: ", zoneDataObject);
     }
 
     // ======= ======= ======= printZoneData ======= ======= =======
@@ -1303,7 +1311,9 @@ function initApp(presetMode) {
                 sqftMax:value.sqftMax,
                 sqftAvg:parseInt(value.zoneSqft/value.schoolCount),
                 sqftMed:value.sqftMed,
-                expendPerSqft:value.expendPerSqft
+                expendPerSqft:value.expendPerSqft,
+
+                zoneSchoolNamesArray:value.zoneSchoolNamesArray
             }
 
             return zoneDataObject;

@@ -5,6 +5,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
 
     var chartHtml = "<div id='chart'>";
     chartHtml += makeChartHtml();
+    chartHtml += makeMessageHtml();
     chartHtml += "</div>";
     clearChartContainer(chartHtml);
 
