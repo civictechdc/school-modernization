@@ -235,9 +235,9 @@ Bubble.prototype.group_bubbles = function (d) {
     this.force.start();
 };
 Bubble.prototype.calcMaxOccupancySums = function () {
-    var maxOccupancySums = [], wardSums, feederSums, levelSums, data = this.data;
+    var maxOccupancySums = {}, wardSums = [], feederSums = [], levelSums = [], data = this.data;
+    // Wards
     var numWards = 8;
-    var items = this.getUnique(this.nodes, 'Ward'), temp_sum;
     var _loop_2 = function(wardIndex) {
         var sumForThisWard = 0;
         data.forEach(function (node) {
@@ -247,14 +247,49 @@ Bubble.prototype.calcMaxOccupancySums = function () {
                 }
             }
         });
-        console.log("Ward " + wardIndex + ": " + sumForThisWard);
+        wardSums.push(sumForThisWard);
     };
     for (var wardIndex = 1; wardIndex <= numWards; wardIndex++) {
         _loop_2(wardIndex);
     }
     ;
-    console.log(wardSums);
+    // Feeders
+    var itemsFeeders = this.getUnique(this.nodes, 'FeederHS'), lenFeeders = itemsFeeders.length;
+    var _loop_3 = function(feeder) {
+        var sumForThisFeeder = 0;
+        data.forEach(function (node) {
+            if (itemsFeeders[feeder] === node['FeederHS']) {
+                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
+                    sumForThisFeeder += parseInt(node['maxOccupancy']);
+                }
+            }
+        });
+        feederSums.push(sumForThisFeeder);
+    };
+    for (var feeder = 0; feeder < lenFeeders; feeder++) {
+        _loop_3(feeder);
+    }
+    ;
+    // Levels
+    var itemsLevels = this.getUnique(this.nodes, 'Level'), lenLevels = itemsLevels.length;
+    var _loop_4 = function(level) {
+        var sumForThisLevels = 0;
+        data.forEach(function (node) {
+            if (itemsLevels[level] === node['Level']) {
+                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
+                    sumForThisLevels += parseInt(node['maxOccupancy']);
+                }
+            }
+        });
+        levelSums.push(sumForThisLevels);
+    };
+    for (var level = 0; level < lenLevels; level++) {
+        _loop_4(level);
+    }
+    ;
+    // Add values for the export
     _a = [wardSums, feederSums, levelSums], maxOccupancySums['ward'] = _a[0], maxOccupancySums['feeder'] = _a[1], maxOccupancySums['level'] = _a[2];
+    console.log(maxOccupancySums);
     return maxOccupancySums;
     var _a;
 };
@@ -296,7 +331,7 @@ Bubble.prototype.move_towards_centers = function (alpha, column) {
     var width = this.sizes.width, height = this.sizes.height, padding = this.sizes.padding;
     for (var i in unique) {
         // Make the grid here
-        unique[i].x = (i * width / unique.length) * 0.50 + 250;
+        unique[i].x = (parseInt(i) * width / unique.length) * 0.50 + 250;
         unique[i].y = this.center.y;
     }
     // Attach the target coordinates to each node
