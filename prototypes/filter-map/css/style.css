@@ -717,7 +717,7 @@ a.value-text:hover {
 #chart-message {
     position: absolute;
     top: 60px;
-    left: 160px;
+    left: 300px;
     width: 160px;
     z-index: 999;
 }
