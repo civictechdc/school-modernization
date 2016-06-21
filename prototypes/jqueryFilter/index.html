@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <meta name="author" content="">
+    <meta name="description" content="">
+
+  <!-- ======= ======= ======= styles ======= ======= ======= -->
+	<title>DCPS MapTool</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.structure.min.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.theme.min.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+
+</head>
+<body>
+
+<!-- ======= ======= ======= header ======= ======= ======= -->
+<div class="container">
+
+	<!-- ======= ======= ======= content ======= ======= ======= -->
+	<div class="row content">
+
+		<!-- ======= filters ======= -->
+		<div class="column col-md-12 mapCol">
+            <div id="filter-container">
+                <table id="filters-table">
+                    <tr id="drag_bar" class="filters-banner">
+                        <td class="title-text" colspan="4">
+							<p id="filter-title">Filters</p>
+							<div id='clear-button'><span class='btn-text'>clear</span></div>
+                        </td>
+                    </tr>
+                    <tr class="filter-row">
+                        <td class="filter-label">School Sector</td>
+                        <td><div id="District"
+							data-category='agency'
+							class="filter active"><a href="#" class="filter-link">District-DCPS</a></div></td>
+						<td><div id="Charter"
+							data-category='agency'
+							class="filter active"><a href="#" class="filter-link">Charter-PCS</a></div></td>
+						<td><div id="All"
+							data-category='agency'
+							class="filter active"><a href="#" class="filter-link">Both</a></div></td>
+                    </tr>
+                    <tr class="filter-row">
+                        <td class="filter-label">Grade Level</td>
+                        <td><div id="High"
+							data-category='levels'
+							class="filter active"><a href="#" class="filter-link">High</a></div></td>
+                        <td><div id="Middle"
+							data-category='levels'
+							class="filter active"><a href="#" class="filter-link">Middle</a></div></td>
+                        <td><div id="Elem"
+							data-category='levels'
+							class="filter active"><a href="#" class="filter-link">Elem</a></div></td>
+                    </tr>
+                    <tr class="filter-row">
+                        <td class="filter-label">Boundary</td>
+                        <td><div id="Ward"
+							data-category='zones'
+							class="filter active"><a href="#" class="filter-link">Ward</a></div></td>
+                        <td><div id="FeederHS"
+							data-category='zones'
+							class="filter active"><a href="#" class="filter-link">DCPS HS Feeder</a></div></td>
+						<td><div>&nbsp;</div></td>
+                    </tr>
+                    <tr class="filter-row">
+                        <td class="filter-label">Fiscal Years</td>
+						<td><div id="MajorExp9815"
+							data-category='expend'
+							class="filter active"><a href="#" class="filter-link">PAST FY1998-2015</a></div></td>
+                        <td><div id="spendPlanned"
+							data-category='expend'
+							class="filter active"><a href="#" class="filter-link">FUTURE FY2016-21</a></div></td>
+						<td><div id="spendLifetime"
+							data-category='expend'
+							class="filter active"><a href="#" class="filter-link">TOTAL FY1998-2021</a></div></td>
+                    </tr>
+                </table>
+            </div>
+
+			<div id="filters-selections"><h2 id="filter-selection-text">your filters</h2></div>
+		</div>
+	</div>
+</div>
+
+<!-- ======= ======= ======= scripts ======= ======= ======= -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<script type="text/javascript" src="script.js"></script>
+
+</body>
+</html>
