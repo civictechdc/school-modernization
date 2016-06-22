@@ -458,7 +458,7 @@ hr {
     margin-left: 15px;
 }
 
-/* ======= search ======= */
+/* ======= select ======= */
 #school-select {
     position: relative;
     width: 80%;
@@ -717,7 +717,7 @@ a.value-text:hover {
 #chart-message {
     position: absolute;
     top: 60px;
-    left: 300px;
+    left: 365px;
     width: 160px;
     z-index: 999;
 }
