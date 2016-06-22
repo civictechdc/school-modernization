@@ -9,49 +9,14 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     chartHtml += "</div>";
     clearChartContainer(chartHtml);
 
-    // ======= ======= ======= formatting variables ======= ======= =======
-    var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber, circleValue, nextDataObject, yAxisTranslate;
-    var barW = 20;
-    var mathText = null;
-    var schoolCircleX = 50;
-    var schoolCircleR = 6;
-    var barScaleArray = [];
-    var labelTitleArray = [];
-    var circleValuesArray = [];
-    var labelSubtitleArray = [];
-    var barTicks = zonesCollectionObj.dataBins;
+    // ======= ======= ======= data source/display ======= ======= =======
     var aggregatorArray = zonesCollectionObj.aggregatorArray;
     var dataColorsArray = zonesCollectionObj.dataColorsArray;
 
-    // ======= chart formatting =======
-    var chartPadding = {top: 20, right: 10, bottom: 40, left: 60},
-        chartW = 520 - chartPadding.left - chartPadding.right,       // outer width of chart
-        chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
-    var yAxisLabel = "left";
-
-    // ======= ======= ======= extract zone values ======= ======= =======
-    var nextZoneValue;
-    var zoneIndex = -1;
-    aggregatorArray.sort(function(a, b) {
-        zoneIndex++;
-        if (displayObj.dataFilters.math == "spendAmount") {
-            nextZoneValueA = a.zoneAmount;
-            nextZoneValueB = b.zoneAmount;
-        } else if (displayObj.dataFilters.math == "spendSqFt") {
-            nextZoneValueA = a.expendPerSqft;
-            nextZoneValueB = b.expendPerSqft;
-        } else if (displayObj.dataFilters.math == "spendEnroll") {
-            nextZoneValueA = a.expendPerEnroll;
-            nextZoneValueB = b.expendPerEnroll;
-        }
-        if (isNaN(nextZoneValueA)) {
-            nextZoneValueA = 0;
-        }
-        if (isNaN(nextZoneValueB)) {
-            nextZoneValueB = 0;
-        }
-        return nextZoneValueB - nextZoneValueA;
-    });
+    // ======= ======= ======= sort aggregatorArray by zone values ======= ======= =======
+    if (displayObj.dataFilters.zones == "Ward") {
+        sortByWard(aggregatorArray);
+    }
 
     // ======= ======= ======= data variables ======= ======= =======
     var dataMin = d3.min(aggregatorArray, function(d) {
@@ -65,6 +30,10 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         }
         return nextZoneValue;
     });
+    if (dataMin < 0) {
+        dataMin = 0;
+    }
+
     var dataMax = d3.max(aggregatorArray, function(d) {
         var nextZoneValue;
         if (displayObj.dataFilters.math == "spendAmount") {
@@ -76,6 +45,25 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         }
         return nextZoneValue;
     });
+
+    // ======= ======= ======= formatting variables ======= ======= =======
+    var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber, circleValue, nextDataObject, yAxisTranslate;
+    var barW = 20;
+    var mathText = null;
+    var barIncrement = null;
+    var schoolCircleX = 50;
+    var schoolCircleR = 6;
+    var barScaleArray = [];
+    var labelTitleArray = [];
+    var circleValuesArray = [];
+    var labelSubtitleArray = [];
+    var barTicks = zonesCollectionObj.dataBins;
+
+    // ======= chart formatting =======
+    var chartPadding = {top: 20, right: 10, bottom: 20, left: 60},
+        chartW = 520 - chartPadding.left - chartPadding.right,       // outer width of chart
+        chartH = 300 - chartPadding.top - chartPadding.bottom;      // outer height of chart
+    var yAxisLabel = "left";
 
     // ======= bar formatting =======
     var barIncrement = dataMax/barTicks;
@@ -118,37 +106,33 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         agencyText = agencyText + " ";
     }
 
-    // ======= ======= ======= check math ======= ======= =======
-    // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
-    // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
-    // console.log("  aggregatorArray: ", aggregatorArray);
-    // console.log("  circleValuesArray: ", circleValuesArray);
-    // console.log("  barScaleArray: ", barScaleArray);
-    // console.log("  dataMax: ", dataMax);
-    // console.log("  dataMin: ", dataMin);
-
-    // ======= ======= ======= X SCALE ======= ======= =======
-    var xScaleLabels = ["scale", "amount", "school"];
-    var xScale = d3.scale.ordinal()         // maps input domain to output range
-        .domain(xScaleLabels.map(function(d) {
-            return d;;
-        }))
-        .range([0, chartW]);
-
     // ======= ======= ======= Y SCALE ======= ======= =======
     yAxisTranslate = 0;
     var yScale = d3.scale.linear()      // maps input domain to output range
         .domain([0, d3.max(barScaleArray, function(d, i) {
             return d;
         })])
-        .range([chartH + chartPadding.bottom, chartPadding.top]);
-
+        .range([chartH, chartPadding.top]);
+        // .range([chartH + chartPadding.bottom, chartPadding.top]);
     var yAxis = d3.svg.axis()
         .scale(yScale)          // specify left scale
         .orient(yAxisLabel)
         .tickPadding(4)
         .tickSize(30, 0)
         .tickValues(barScaleArray);
+
+    // ======= ======= ======= check math ======= ======= =======
+    // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
+    // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
+    // console.log("  aggregatorArray: ", aggregatorArray);
+    // console.log("  circleValuesArray: ", circleValuesArray);
+    console.log("  barScaleArray: ", barScaleArray);
+    // console.log("  barIncrement: ", parseInt(barIncrement));
+    // console.log("  ...yScale(barIncrement): ", parseInt(yScale(barIncrement)));
+    console.log("  dataMax: ", dataMax);
+    console.log("  dataMin: ", dataMin);
+    console.log("  chartH: ", chartH);
+    console.log("  chartW: ", chartW);
 
     // ======= ======= ======= SVG ======= ======= =======
     var svg = d3.select("#chart").append("svg")
@@ -186,13 +170,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             .attr("width", barW)
             .attr("y", function(d, i) {
                 if (i < (barTicks)) {
-                    return yScale(d);
+                    return parseInt(yScale(d));
                 } else {
                     return null;
                 }
             })
             .attr("height", function(d, i) {
-                barH = ((chartH + 20)/barTicks) - 2;
+                barH = parseInt((chartH/barTicks) - 2);
+                // barH = parseInt(((chartH + 20)/barTicks) - 2);
+                // var barH = chartH - parseInt(yScale(((chartH + 20)/barTicks) - 2));
                 if (i < (barTicks + 1)) {
                     return barH;
                 } else {
@@ -213,15 +199,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         .data(aggregatorArray)
         .enter()
             .append("rect")
-            .attr("id", (function(d) {
-                barId = "dataChartValue_" + d.featureIndex;
+            .attr("id", (function(d, i) {
+                barId = "dataChartValue_" + i;
                 return barId;
             }))
             .attr("class", "dataChartValue")
             .attr("x", function(d, i) {
                 return schoolCircleX + (i * 25);
             })
-            .attr("y", function(d) {
+            .attr("y", function(d, i) {
                 var nextZoneValue;
                 if (displayObj.dataFilters.math == "spendAmount") {
                     nextZoneValue = d.zoneAmount;
@@ -230,13 +216,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 } else if (displayObj.dataFilters.math == "spendEnroll") {
                     nextZoneValue = d.expendPerEnroll;
                 }
-                if (isNaN(nextZoneValue)) {
+                if (isNaN(nextZoneValue) || (nextZoneValue < 0)) {
                     nextZoneValue = 0;
                 }
-                return yScale(nextZoneValue);
+                return parseInt(yScale(nextZoneValue));
             })
             .attr("width", barW)
-            .attr("height", function(d) {
+            .attr("height", function(d, i) {
                 var nextZoneValue;
                 if (displayObj.dataFilters.math == "spendAmount") {
                     nextZoneValue = d.zoneAmount;
@@ -245,7 +231,10 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 } else if (displayObj.dataFilters.math == "spendEnroll") {
                     nextZoneValue = d.expendPerEnroll;
                 }
-                var barH = nextZoneValue;
+                if (isNaN(nextZoneValue) || (nextZoneValue < 0)) {
+                    nextZoneValue = 0;
+                }
+                var barH = chartH - parseInt(yScale(nextZoneValue));
                 return barH;
             })
             .style('fill', function(d){
@@ -257,8 +246,12 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 } else if (displayObj.dataFilters.math == "spendEnroll") {
                     nextZoneValue = d.expendPerEnroll;
                 }
+                if (isNaN(nextZoneValue) || (nextZoneValue < 0)) {
+                    nextZoneValue = 0;
+                }
                 colorIndex = assignChartColors(nextZoneValue);
                 whichColor = dataColorsArray[colorIndex];
+                // console.log(d.zoneName, " chart: ", i, colorIndex, whichColor);
                 return whichColor;
             });
 
@@ -296,15 +289,16 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     return labelOffsetX;
                 })
                 .attr("y", function(d, i) {
-                    var nextZoneValue;
-                    if (displayObj.dataFilters.math == "spendAmount") {
-                        nextZoneValue = d.zoneAmount;
-                    } else if (displayObj.dataFilters.math == "spendSqFt") {
-                        nextZoneValue = d.expendPerSqft;
-                    } else if (displayObj.dataFilters.math == "spendEnroll") {
-                        nextZoneValue = d.expendPerEnroll;
-                    }
-                    return yScale(nextZoneValue) - 20;
+                    // var nextZoneValue;
+                    // if (displayObj.dataFilters.math == "spendAmount") {
+                    //     nextZoneValue = d.zoneAmount;
+                    // } else if (displayObj.dataFilters.math == "spendSqFt") {
+                    //     nextZoneValue = d.expendPerSqft;
+                    // } else if (displayObj.dataFilters.math == "spendEnroll") {
+                    //     nextZoneValue = d.expendPerEnroll;
+                    // }
+                    // return yScale(nextZoneValue) - 20;
+                    return yScale(dataMax) - 20;
                 })
                 .attr("font-family", "sans-serif")
                 .attr("font-size", "12px")
@@ -312,13 +306,13 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                 .attr("visibility", "hidden")
                 .call(insertLabelText);
 
-    activateChartCircles(labelTitleArray, labelSubtitleArray);
+    activateChartElements(labelTitleArray, labelSubtitleArray);
     activateMessageHide();
     activateSubmenu();
 
-    // ======= activateChartCircles =======
-    function activateChartCircles(labelTitleArray, labelSubtitleArray) {
-        console.log("activateChartCircles");
+    // ======= activateChartElements =======
+    function activateChartElements(labelTitleArray, labelSubtitleArray) {
+        console.log("activateChartElements");
 
         $('.dataChartValue').each(function(i) {
 
@@ -430,6 +424,9 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     function assignChartColors(zoneAmount) {
         // console.log("assignChartColors");
         var binMin = binMax = colorIndex = null;
+        if (zoneAmount < 0) {
+            zoneAmount = 0;
+        }
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
             binMax = (zonesCollectionObj.dataIncrement * (i + 1));
@@ -615,3 +612,27 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
         return d;
     }
 }
+
+// // ======= ======= ======= extract zone values ======= ======= =======
+// var nextZoneValue;
+// var zoneIndex = -1;
+// aggregatorArray.sort(function(a, b) {
+//     zoneIndex++;
+//     if (displayObj.dataFilters.math == "spendAmount") {
+//         nextZoneValueA = a.zoneAmount;
+//         nextZoneValueB = b.zoneAmount;
+//     } else if (displayObj.dataFilters.math == "spendSqFt") {
+//         nextZoneValueA = a.expendPerSqft;
+//         nextZoneValueB = b.expendPerSqft;
+//     } else if (displayObj.dataFilters.math == "spendEnroll") {
+//         nextZoneValueA = a.expendPerEnroll;
+//         nextZoneValueB = b.expendPerEnroll;
+//     }
+//     if (isNaN(nextZoneValueA)) {
+//         nextZoneValueA = 0;
+//     }
+//     if (isNaN(nextZoneValueB)) {
+//         nextZoneValueB = 0;
+//     }
+//     return nextZoneValueB - nextZoneValueA;
+// });

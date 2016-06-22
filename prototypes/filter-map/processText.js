@@ -84,7 +84,7 @@ function updateChartText(displayObj, subtitle) {
 
     // == math label
     if (displayObj.dataFilters.math) {
-        mathText = "";
+        mathText = filterMenu[displayObj.dataFilters.math].text;
     } else {
         mathText = "";
     }
@@ -156,6 +156,32 @@ function displayHoverMessage(displayObj, textMessage) {
     $("#mouseover-text").children("h2").css("color", "purple");
 }
 
+// ======= ======= ======= updateFilterText ======= ======= =======
+function updateFilterText(displayObj, whichMenu, filterText) {
+    console.log("updateFilterText");
+
+    // == displays current user filter selections as string in #filters-selections div
+    var selectedFilterContainer = $("#filters-selections").children("h2");
+    var nextFilter, checkNextFilter;
+
+    var selectedFilterText = "<span class='filterLabel'>Data for: </span>";
+    if (displayObj.filterTitlesObject.expend) {
+        selectedFilterText += displayObj.filterTitlesObject.expend + " for";
+    }
+    if (displayObj.filterTitlesObject.agency) {
+        selectedFilterText += " " + displayObj.filterTitlesObject.agency;
+    }
+    if (displayObj.filterTitlesObject.levels) {
+        selectedFilterText += " " + displayObj.filterTitlesObject.levels;
+    }
+    if (displayObj.filterTitlesObject.zones) {
+        selectedFilterText += " by " + displayObj.filterTitlesObject.zones;
+    }
+
+    $(selectedFilterContainer).addClass("filterList");
+    $(selectedFilterContainer).html(selectedFilterText);
+}
+
 // ======= ======= ======= displayFilterMessage ======= ======= =======
 function displayFilterMessage(displayObj, menuObject, whichAction) {
     console.log("displayFilterMessage");
@@ -175,7 +201,6 @@ function displayFilterMessage(displayObj, menuObject, whichAction) {
 // ======= ======= ======= cleanupSchoolData ======= ======= =======
 function cleanupSchoolData(schoolsCollectionObj, schoolData) {
     console.log("cleanupSchoolData");
-    // console.log("  schoolData: ", schoolData);
 
     var cleanedData = {};
 

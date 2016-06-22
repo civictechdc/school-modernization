@@ -150,8 +150,9 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
                 if (colorIndex >= 0) {
                     itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                 } else {
-                    itemColor = "red";
+                    itemColor = "#b2bdc7";
                 }
+                console.log(zoneName, " map: ", i, colorIndex, itemColor);
                 strokeColor = "black";
                 strokeWeight = 4;
             } else {
@@ -159,6 +160,7 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
                 strokeColor = "purple";
                 strokeWeight = 2;
             }
+            // itemOpacity = 1;
             itemOpacity = 0.7;
 
         // ======= ======= ======= SINGLE LAYER (Wards) ======= ======= =======
@@ -166,14 +168,16 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
             if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
                 if (displayObj.dataFilters.expend) {
                     colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
-                    console.log("  colorIndex: ", colorIndex);
+                    itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                     if (colorIndex >= 0) {
                         itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                     } else {
-                        itemColor = "red";
+                        itemColor = "#b2bdc7";
                     }
+                    // console.log(zoneName, " map: ", i, colorIndex, itemColor);
                     strokeColor = "black";
                     strokeWeight = 2;
+                    // itemOpacity = 1;
                     itemOpacity = 0.8;
                 } else {
                     return [itemColor, strokeColor, strokeWeight, itemOpacity];
@@ -192,20 +196,27 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
     // console.log("assignDataColors");
 
     var nextExpendValue = filterExpendData(displayObj, zonesCollectionObj, featureIndex);
+    // console.log("  featureIndex: ", featureIndex, nextExpendValue);
 
-    for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
-        binMin = (zonesCollectionObj.dataIncrement * i);
-        binMax = (zonesCollectionObj.dataIncrement * (i + 1));
-        if (isNaN(nextExpendValue)) {
-            nextExpendValue = 0;
-        }
-        if ((binMin <= nextExpendValue) && (nextExpendValue <= (binMax + 1))) {
-            var colorIndex = i;
-            break;
-        }
-    }
     if (nextExpendValue < 0) {
         colorIndex = -1;
+    } else {
+        for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
+            binMin = (zonesCollectionObj.dataIncrement * i);
+            binMax = (zonesCollectionObj.dataIncrement * (i + 1));
+            // console.log(i, "  bins: ", parseInt(binMin), "   ", nextExpendValue, "   ", parseInt(binMax));
+            if (isNaN(nextExpendValue)) {
+                nextExpendValue = 0;
+            }
+            if ((binMin <= nextExpendValue) && (nextExpendValue <= (binMax + 1))) {
+                if (nextExpendValue < 0) {
+                    var colorIndex = -1;
+                } else {
+                    var colorIndex = i;
+                }
+                break;
+            }
+        }
     }
     return colorIndex;
 }
@@ -241,6 +252,40 @@ function filterExpendData(displayObj, zonesCollectionObj, zoneIndex) {
         nextZoneValue = 0;
     }
     return nextZoneValue;
+}
+
+// ======= ======= ======= sortByWard ======= ======= =======
+function sortByWard(aggregatorArray, arrayType) {
+    console.log("sortByWard");
+
+    aggregatorArray.sort(function(a, b) {
+        if (arrayType == "map") {
+            var zoneNameA = a.getProperty('NAME');
+            var zoneNameB = b.getProperty('NAME');
+            var nextZoneValueA = zoneNameA.substring(zoneNameA.length-1, zoneNameA.length);
+            var nextZoneValueB = zoneNameB.substring(zoneNameB.length-1, zoneNameB.length);
+        } else if (arrayType == "chart") {
+            var nextZoneValueA = a.zoneName.substring(a.zoneName.length-1, a.zoneName.length);
+            var nextZoneValueB = b.zoneName.substring(b.zoneName.length-1, b.zoneName.length);
+        }
+        if (isNaN(nextZoneValueA)) {
+            nextZoneValueA = 0;
+        }
+        if (isNaN(nextZoneValueB)) {
+            nextZoneValueB = 0;
+        }
+        return nextZoneValueA - nextZoneValueB;
+    });
+}
+
+// ======= ======= ======= setFeatureIndexes ======= ======= =======
+function setFeatureIndexes(featureArray) {
+    console.log("setFeatureIndexes");
+    var featureIndex = -1;
+    featureArray.forEach(function(feature) {
+        featureIndex++;
+        feature.setProperty('featureIndex', featureIndex);
+    });
 }
 
 
@@ -364,32 +409,31 @@ function getDataDetails(nextSchool, nextIndex) {
 // ======= ======= ======= makeSchoolProfile ======= ======= =======
 function makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, schoolMarker) {
     console.log("makeSchoolProfile");
-    // console.log("  schoolData: ", schoolData);
-    // console.log("  schoolMarker: ", schoolMarker);
 
     var nextValue;
+
+    // == clear existing selected (hilite) marker
     if (schoolsCollectionObj.selectedMarker) {
         resetMarker(schoolsCollectionObj.selectedMarker);
     }
+
+    // == get school data from clicked marker (via school index)
     if (schoolMarker) {
         var schoolIndex = schoolMarker.schoolIndex;
-    } else {
-        var schoolCode = schoolData.School_ID;
-        // console.log("  schoolCode: ", schoolCode);
-        var schoolData = getSchoolFromCode(schoolsCollectionObj, schoolCode);
-        var schoolDetails = getDataDetails(schoolData, null);
-        var schoolMarker = schoolsCollectionObj.setSchoolMarker(schoolDetails, null);
+        var cleanedSchoolData = cleanupSchoolData(schoolsCollectionObj, schoolsCollectionObj.selectedSchoolsArray[schoolIndex]);
+        schoolsCollectionObj.selectedMarker = schoolMarker;
+        hiliteSchoolMarker(schoolsCollectionObj, schoolMarker);
     }
-    // console.log("  schoolMarker: ", schoolMarker);
-    schoolsCollectionObj.selectedMarker = schoolMarker;
-    hiliteSchoolMarker(schoolsCollectionObj, schoolMarker);
 
-    if ((typeof schoolIndex === 'undefined') || (typeof schoolIndex === 'null')) {
-        console.log("*** SCHOOL SEARCH ***");
+    // == hilite marker and display profile from select or search function
+    if (schoolData) {
         var tempSchoolData = getDataDetails(schoolData, null);
         var cleanedSchoolData = cleanupSchoolData(schoolsCollectionObj, tempSchoolData);
-    } else {
-        var cleanedSchoolData = cleanupSchoolData(schoolsCollectionObj, schoolsCollectionObj.selectedSchoolsArray[schoolIndex]);
+        if (!schoolMarker) {
+            var schoolMarker = schoolsCollectionObj.setSchoolMarker(tempSchoolData, null);
+            schoolsCollectionObj.selectedMarker = schoolMarker;
+            hiliteSchoolMarker(schoolsCollectionObj, schoolMarker);
+        }
     }
     schoolsCollectionObj.selectedSchool = cleanedSchoolData;
 
