@@ -979,7 +979,7 @@ function initApp(presetMode) {
             displayFilterMessage("Sorry, no schools matched criteria.  Click CLEAR");
             clearProfileChart();
         }
-        // console.log(displayObj.zoneDataString);
+        console.log(displayObj.zoneDataString);
 
         // ======= ======= ======= show rankings chart ======= ======= =======
         if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
