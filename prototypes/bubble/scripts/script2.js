@@ -1,10 +1,9 @@
-d3.csv('data/data_master_412.csv', function(data){
+/// <reference path="./bubbleClass.ts"/>
 
+d3.csv('data/data_master_412.csv', function(data){
     var bubble = new Bubble(),
         schools = {
-
             both: data,
-
             public: (function(d){
                 return d.filter(function(item){
                     if (item.Agency === 'DCPS'){
@@ -12,7 +11,6 @@ d3.csv('data/data_master_412.csv', function(data){
                     }
                 });
             }(data)),
-
             charter: (function(d){
                 return d.filter(function(item){
                     if (item.Agency === 'PCS'){
@@ -72,10 +70,8 @@ d3.csv('data/data_master_412.csv', function(data){
             }
             if (e.target.id === 'ProjectType' && budgetState === 'future'){
                 bubble.setColumn(e.target.dataset.alt);
-            } else {
-                bubble.setColumn(e.target.id);
             }
-            
+            bubble.setColumn(e.target.id);
             update(e);
         });
     });
@@ -94,6 +90,7 @@ d3.csv('data/data_master_412.csv', function(data){
         bubble.setBudget('TotalAllotandPlan1621');
         budgetState = initialBudgetState;
         bubble.setData(schools.both);
+        bubble.setColumn('Agency');
         bubble.graph();
     }
 

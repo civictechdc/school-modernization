@@ -29,7 +29,7 @@ function Bubble(){
     };
 };
 
-// Getters
+// Setters
 Bubble.prototype.setColumn = function(column){
     this.column = column; 
 };
@@ -45,20 +45,20 @@ Bubble.prototype.setPer = function(newPer){
     this.per = newPer;
 };
 
-// Setters
-Bubble.prototype.getColumn = function(column){
+// Getters
+Bubble.prototype.getColumn = function(){
     return this.column; 
 };
 
-Bubble.prototype.getData = function(newData){
+Bubble.prototype.getData = function(){
     return this.data;
 };
 
-Bubble.prototype.getBudget = function(budget){
+Bubble.prototype.getBudget = function(){
     return this.budget;
 };
 
-Bubble.prototype.getPer = function(newPer){
+Bubble.prototype.getPer = function(){
     return this.per;
 };
 
@@ -253,60 +253,29 @@ Bubble.prototype.group_bubbles = function(d) {
 
 Bubble.prototype.calcMaxOccupancySums = function() {
     let maxOccupancySums: Object = {},
-        wardSums: number[] = [],
-        feederSums: number[] = [],
-        levelSums: number[] = [],
         data = this.data;
 
-    // Wards
-    const numWards = 8;
-    for (let wardIndex: number = 1; wardIndex <= numWards; wardIndex++) {
-        let sumForThisWard: number = 0;
-        data.forEach(function(node: Object){                
-            if (wardIndex === parseInt(node['Ward'])) {
-                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                    sumForThisWard += parseInt(node['maxOccupancy']);                
+    let columns: string[] = [ 'FeederHS', 'Ward', 'Level' ],
+        columnMap: Object = { FeederHS: 'feeder', Ward: 'ward', Level: 'level' };
+    columns.forEach((column: string) => {
+        let items: string[] = this.getUnique(this.nodes, column),
+            lenItems: number = items.length,
+            columnSums: number[] = [];
+        for (let index = 0; index < lenItems; index++) {
+            let sumForThisColumn: number = 0;
+            data.forEach(function(node: Object){
+                if (items[index] === node[column]){
+                    if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
+                        sumForThisColumn += parseInt(node['maxOccupancy']);                
+                    }
                 }
-            }
-        });
-        wardSums.push(sumForThisWard);      
-    };
-
-    // Feeders
-    let itemsFeeders: string[] = this.getUnique(this.nodes, 'FeederHS'),
-        lenFeeders: number = itemsFeeders.length;
-
-    for (let feeder = 0; feeder < lenFeeders; feeder++) {
-        let sumForThisFeeder: number = 0;
-        data.forEach(function(node: Object){
-            if (itemsFeeders[feeder] === node['FeederHS']){
-                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                    sumForThisFeeder += parseInt(node['maxOccupancy']);                
-                }
-            }
-        });
-        feederSums.push(sumForThisFeeder);
-    };
-    
-    // Levels
-    let itemsLevels: string[] = this.getUnique(this.nodes, 'Level'),
-        lenLevels: number = itemsLevels.length;
-    for (let level = 0; level < lenLevels; level++) {
-        let sumForThisLevels: number = 0;
-        data.forEach(function(node: Object){
-            if (itemsLevels[level] === node['Level']){
-                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                    sumForThisLevels += parseInt(node['maxOccupancy']);                
-                }
-            }
-        });
-        levelSums.push(sumForThisLevels);
-    };
-
-    // Add values for the export
-    [maxOccupancySums['ward'], maxOccupancySums['feeder'], maxOccupancySums['level']] = [wardSums, feederSums, levelSums];
+            });
+            columnSums.push(sumForThisColumn);
+        };
+        maxOccupancySums[columnMap[column]] = columnSums;
+        console.log(maxOccupancySums);
+    });
     console.log(maxOccupancySums);
-    
     return maxOccupancySums;
 };
 
@@ -320,40 +289,42 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     // Make an array of unique items
     let that = this,
         items = this.getUnique(this.nodes, column),
-        unique = [];
+        unique = [],
+        maxOccupancySums: Object = this.calcMaxOccupancySums();
         
     items.forEach(function(item){
         unique.push({name: item});
     });
     
     // Calculate the sums of all the unique values of the current budget
-    let itemSums = items.map(function(uniqueItem){
+    let itemSums = items.map((uniqueItem, index) => {
 
         // Makes an array of all the nodes with matching uniqueItem
-        let uniqueItems = that.nodes.filter(function(node){
+        let uniqueItems = this.nodes.filter(function(node){
             if(node[column] === uniqueItem){
                 return node;
             }
         });
 
         // returns the sums of the column values
-        let sums = _.reduce(uniqueItems, function(a,b){
-            let budget = b[that.budget];
+        let sum = _.reduce(uniqueItems, (a,b) => {
+            let budget = b[this.budget];
             
             if(budget === 'NA'){
                 return a;
             }
-
-            return a + parseInt(b[that.budget]);
+            return a + parseInt(b[this.budget]);
         }, 0);
-       
-        // return the averages of the column values
-        if (that.budget === 'SpentPerSqFt' || that.budget === 'SpentPerMaxOccupancy'){
-            return sums / uniqueItems.length;
-        } else {
-            return sums;
-        }
+
+        let col = this.column.toLowerCase();
+        // console.log(a);      
         
+        if (this.budget === 'SpentPerMaxOccupancy' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
+            console.log(`${this.column}: ${maxOccupancySums[col]}`);
+            return sum / parseInt(maxOccupancySums[col][index]);
+        }
+
+        return sum;
     });
 
 
@@ -369,8 +340,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     }
 
     // Attach the target coordinates to each node
-    
-
     _.each(this.nodes, function(node: Object){
         for (let i = 0; i < unique.length; i++) {
             if (node[column] === unique[i].name){                

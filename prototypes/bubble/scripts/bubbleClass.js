@@ -26,7 +26,7 @@ function Bubble() {
     };
 }
 ;
-// Getters
+// Setters
 Bubble.prototype.setColumn = function (column) {
     this.column = column;
 };
@@ -39,17 +39,17 @@ Bubble.prototype.setBudget = function (budget) {
 Bubble.prototype.setPer = function (newPer) {
     this.per = newPer;
 };
-// Setters
-Bubble.prototype.getColumn = function (column) {
+// Getters
+Bubble.prototype.getColumn = function () {
     return this.column;
 };
-Bubble.prototype.getData = function (newData) {
+Bubble.prototype.getData = function () {
     return this.data;
 };
-Bubble.prototype.getBudget = function (budget) {
+Bubble.prototype.getBudget = function () {
     return this.budget;
 };
-Bubble.prototype.getPer = function (newPer) {
+Bubble.prototype.getPer = function () {
     return this.per;
 };
 // The Rest
@@ -235,97 +235,66 @@ Bubble.prototype.group_bubbles = function (d) {
     this.force.start();
 };
 Bubble.prototype.calcMaxOccupancySums = function () {
-    var maxOccupancySums = {}, wardSums = [], feederSums = [], levelSums = [], data = this.data;
-    // Wards
-    var numWards = 8;
-    var _loop_2 = function(wardIndex) {
-        var sumForThisWard = 0;
-        data.forEach(function (node) {
-            if (wardIndex === parseInt(node['Ward'])) {
-                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                    sumForThisWard += parseInt(node['maxOccupancy']);
+    var _this = this;
+    var maxOccupancySums = {}, data = this.data;
+    var columns = ['FeederHS', 'Ward', 'Level'], columnMap = { FeederHS: 'feeder', Ward: 'ward', Level: 'level' };
+    columns.forEach(function (column) {
+        var items = _this.getUnique(_this.nodes, column), lenItems = items.length, columnSums = [];
+        var _loop_2 = function(index) {
+            var sumForThisColumn = 0;
+            data.forEach(function (node) {
+                if (items[index] === node[column]) {
+                    if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
+                        sumForThisColumn += parseInt(node['maxOccupancy']);
+                    }
                 }
-            }
-        });
-        wardSums.push(sumForThisWard);
-    };
-    for (var wardIndex = 1; wardIndex <= numWards; wardIndex++) {
-        _loop_2(wardIndex);
-    }
-    ;
-    // Feeders
-    var itemsFeeders = this.getUnique(this.nodes, 'FeederHS'), lenFeeders = itemsFeeders.length;
-    var _loop_3 = function(feeder) {
-        var sumForThisFeeder = 0;
-        data.forEach(function (node) {
-            if (itemsFeeders[feeder] === node['FeederHS']) {
-                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                    sumForThisFeeder += parseInt(node['maxOccupancy']);
-                }
-            }
-        });
-        feederSums.push(sumForThisFeeder);
-    };
-    for (var feeder = 0; feeder < lenFeeders; feeder++) {
-        _loop_3(feeder);
-    }
-    ;
-    // Levels
-    var itemsLevels = this.getUnique(this.nodes, 'Level'), lenLevels = itemsLevels.length;
-    var _loop_4 = function(level) {
-        var sumForThisLevels = 0;
-        data.forEach(function (node) {
-            if (itemsLevels[level] === node['Level']) {
-                if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                    sumForThisLevels += parseInt(node['maxOccupancy']);
-                }
-            }
-        });
-        levelSums.push(sumForThisLevels);
-    };
-    for (var level = 0; level < lenLevels; level++) {
-        _loop_4(level);
-    }
-    ;
-    // Add values for the export
-    _a = [wardSums, feederSums, levelSums], maxOccupancySums['ward'] = _a[0], maxOccupancySums['feeder'] = _a[1], maxOccupancySums['level'] = _a[2];
+            });
+            columnSums.push(sumForThisColumn);
+        };
+        for (var index = 0; index < lenItems; index++) {
+            _loop_2(index);
+        }
+        ;
+        maxOccupancySums[columnMap[column]] = columnSums;
+        console.log(maxOccupancySums);
+    });
     console.log(maxOccupancySums);
     return maxOccupancySums;
-    var _a;
 };
 Bubble.prototype.getUnique = function (data, column) {
     var items = _.uniq(_.pluck(data, column)).sort();
     return items;
 };
 Bubble.prototype.move_towards_centers = function (alpha, column) {
+    var _this = this;
     // Make an array of unique items
-    var that = this, items = this.getUnique(this.nodes, column), unique = [];
+    var that = this, items = this.getUnique(this.nodes, column), unique = [], maxOccupancySums = this.calcMaxOccupancySums();
     items.forEach(function (item) {
         unique.push({ name: item });
     });
     // Calculate the sums of all the unique values of the current budget
-    var itemSums = items.map(function (uniqueItem) {
+    var itemSums = items.map(function (uniqueItem, index) {
         // Makes an array of all the nodes with matching uniqueItem
-        var uniqueItems = that.nodes.filter(function (node) {
+        var uniqueItems = _this.nodes.filter(function (node) {
             if (node[column] === uniqueItem) {
                 return node;
             }
         });
         // returns the sums of the column values
-        var sums = _.reduce(uniqueItems, function (a, b) {
-            var budget = b[that.budget];
+        var sum = _.reduce(uniqueItems, function (a, b) {
+            var budget = b[_this.budget];
             if (budget === 'NA') {
                 return a;
             }
-            return a + parseInt(b[that.budget]);
+            return a + parseInt(b[_this.budget]);
         }, 0);
-        // return the averages of the column values
-        if (that.budget === 'SpentPerSqFt' || that.budget === 'SpentPerMaxOccupancy') {
-            return sums / uniqueItems.length;
+        var col = _this.column.toLowerCase();
+        // console.log(a);      
+        if (_this.budget === 'SpentPerMaxOccupancy' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
+            console.log(_this.column + ": " + maxOccupancySums[col]);
+            return sum / parseInt(maxOccupancySums[col][index]);
         }
-        else {
-            return sums;
-        }
+        return sum;
     });
     // Assign unique_item a point to occupy
     var width = this.sizes.width, height = this.sizes.height, padding = this.sizes.padding;
