@@ -237,6 +237,8 @@ Bubble.prototype.group_bubbles = function (d) {
 Bubble.prototype.calcMaxOccupancySums = function () {
     var _this = this;
     var maxOccupancySums = {}, data = this.data;
+    // These are the CSV columns we want to iterate through, and a mapping to what we want to access them 
+    // as in the returned maxOccupancySums object
     var columns = ['FeederHS', 'Ward', 'Level'], columnMap = { FeederHS: 'feeder', Ward: 'ward', Level: 'level' };
     columns.forEach(function (column) {
         var items = _this.getUnique(_this.nodes, column), lenItems = items.length, columnSums = [];
@@ -256,9 +258,7 @@ Bubble.prototype.calcMaxOccupancySums = function () {
         }
         ;
         maxOccupancySums[columnMap[column]] = columnSums;
-        console.log(maxOccupancySums);
     });
-    console.log(maxOccupancySums);
     return maxOccupancySums;
 };
 Bubble.prototype.getUnique = function (data, column) {
@@ -289,8 +289,7 @@ Bubble.prototype.move_towards_centers = function (alpha, column) {
             return a + parseInt(b[_this.budget]);
         }, 0);
         var col = _this.column.toLowerCase();
-        // console.log(a);      
-        if (_this.budget === 'SpentPerMaxOccupancy' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
+        if (_this.per === 'perstudent' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
             console.log(_this.column + ": " + maxOccupancySums[col]);
             return sum / parseInt(maxOccupancySums[col][index]);
         }

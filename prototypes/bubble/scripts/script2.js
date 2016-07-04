@@ -19,10 +19,15 @@ d3.csv('data/data_master_412.csv', function(data){
                 });
             }(data))
         };
-        
+    var budgetMap = {
+        past: 'MajorExp9815',
+        future: 'TotalAllotandPlan1621',
+        lifetime: 'LifetimeBudget'
+    };
+
     var initialBudgetState = 'future',
-        budgetState = null,
-        perState = 'total';
+        budgetState = null;
+        // perState = 'total';
 
     // Initial
     setInitialGraph();
@@ -38,11 +43,11 @@ d3.csv('data/data_master_412.csv', function(data){
             if (isSelected($('#ProjectType')) && e.target.id !== 'future'){
                 bubble.setColumn('ProjectType');
             }
-            var state = $(e.target).data(perState);
-            bubble.setBudget(state);
+            var state = e.target.id;
+            bubble.setBudget(budgetMap[state]);
 
             // Set the budgetState
-            budgetState = $(e.target).data('key');
+            budgetState = $(e.target).id;
             update(e);
         });
     });
@@ -50,9 +55,7 @@ d3.csv('data/data_master_412.csv', function(data){
     $('.perChange').each(function(){
         $(this).on('click', function(e){
             clearInactive();
-            var state = $(e.target).data(budgetState);
-            perState = $(e.target).data('key');
-            bubble.setBudget(state);
+            bubble.setPer(e.target.id);
             update(e);
         });
     });
