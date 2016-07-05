@@ -1,7 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 'use strict';
-function Bubble() {
-    this.budget = null;
+function Bubble(){ // data
+    this.budget =  null;
     this.column = null;
     this.data = null;
     this.per = null;
@@ -65,6 +65,7 @@ Bubble.prototype.create_nodes = function () {
     if (this.nodes.length) {
         this.nodes = [];
     }
+
     var that = this, min, max;
     this.max = max = d3.max(this.data, function (d) { return +d[that.budget]; }),
         this.min = min = d3.min(this.data, function (d) { return +d[that.budget]; });
@@ -459,7 +460,7 @@ Bubble.prototype.add_search_feature = function () {
             last.style.fill = last.getAttribute('color');
             last.removeAttribute('shown');
         }
-        // Highlight the selected node
+        // == Highlight the selected node
         var circle = document.getElementById(e.target.value);
         circle.style.fill = '#021c2a';
     });
