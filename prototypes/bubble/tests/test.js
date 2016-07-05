@@ -39,9 +39,24 @@ describe('calcMaxOccupancySums tests', function(){
         expect(sums).to.be.an('object');
     });
 
-    it('should have "ward", "level", and "feeder" properties', function(){
+    it('should have "ward", "level", and "feederhs" properties', function(){
         expect(sums).to.have.property('level');
-        expect(sums).to.have.property('feeder');
+        expect(sums).to.have.property('feederhs');
+        expect(sums).to.have.property('ward');
+    });
+});
+
+// calcTotalSqFtSums
+describe('calcTotalSqFtSums tests', function(){
+    var sums = bubble_test.calcTotalSqFtSums();
+    
+    it('should return an object', function(){   
+        expect(sums).to.be.an('object');
+    });
+
+    it('should have "ward", "level", and "feederhs" properties', function(){
+        expect(sums).to.have.property('level');
+        expect(sums).to.have.property('feederhs');
         expect(sums).to.have.property('ward');
     });
 });

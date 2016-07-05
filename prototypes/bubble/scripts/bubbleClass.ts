@@ -276,12 +276,11 @@ Bubble.prototype.calcMaxOccupancySums = function() {
         };
         maxOccupancySums[columnMap[column]] = columnSums;
     });
-    console.log(maxOccupancySums);
     return maxOccupancySums;
 };
 
-Bubble.prototype.calcTotalSQFT = function() {
-    let totalSQFT: Object = {},
+Bubble.prototype.calcTotalSqFtSums = function() {
+    let totalSqFtSums: Object = {},
         data = this.data;
 
     // These are the CSV columns we want to iterate through, and a mapping to what we want to access them 
@@ -297,16 +296,16 @@ Bubble.prototype.calcTotalSQFT = function() {
             let sumForThisColumn: number = 0;
             data.forEach(function(node: Object){
                 if (items[index] === node[column]){
-                    if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                        sumForThisColumn += parseInt(node['maxOccupancy']);                
+                    if (node['totalSQFT'] !== 'NA' && node['Open_Now'] !== '0') {
+                        sumForThisColumn += parseInt(node['totalSQFT']);                
                     }
                 }
             });
             columnSums.push(sumForThisColumn);
         };
-        totalSQFT[columnMap[column]] = columnSums;
+        totalSqFtSums[columnMap[column]] = columnSums;
     });
-    return totalSQFT;
+    return totalSqFtSums;
 };
 
 Bubble.prototype.getUnique = (data: Object[], column: string) => {
@@ -320,6 +319,7 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
     let that = this,
         items = this.getUnique(this.nodes, column),
         unique = [],
+        totalSqFtSums: Object = this.calcTotalSqFtSums(),
         maxOccupancySums: Object = this.calcMaxOccupancySums();
         
     items.forEach(function(item){
@@ -347,11 +347,12 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         }, 0);
 
         let col = this.column.toLowerCase();
-        console.log(col);
-        
         if (this.per === 'perstudent' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
-            console.log(`${this.column}: ${maxOccupancySums[col]}`);
             return sum / parseInt(maxOccupancySums[col][index]);
+        }
+
+        if (this.per === 'persqft' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
+            return sum / parseInt(totalSqFtSums[col][index]);
         }
 
         return sum;
@@ -538,6 +539,7 @@ Bubble.prototype.graph = function(){
     this.make_legend();
     this.add_search_feature();
     this.calcMaxOccupancySums();
+    this.calcTotalSqFtSums();
 };
 
 Bubble.prototype.change = function(){
