@@ -1508,8 +1508,20 @@ function initApp(presetMode) {
                 console.log("--- click ---");
                 // console.log("  schoolMarker.schoolIndex: ", schoolMarker.schoolIndex);
                 makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, this);
+                setYourschoolText(this.schoolName);
             });
         }
+    }
+
+    // ======= ======= ======= setYourschoolText ======= ======= =======
+    function setYourschoolText(schoolName) {
+        console.log("setYourschoolText");
+        updateHoverText(null);
+        var filterTitleContainer = $("#filters-selections").children("h2");
+        $(filterTitleContainer).css("font-size", "16px");
+        schoolText = "<span class='filterLabel'>Your school: </span>";
+        schoolText += schoolName;
+        $(filterTitleContainer).html(schoolText);
     }
 
     // ======= ======= ======= setFilterSelections ======= ======= =======
