@@ -37,8 +37,8 @@ button {
 }
 
 .container {
-   width: 80%;
-   margin: 0px auto;
+   // width: 80%;
+   //     margin: 0px auto;
    // margin-left: 10%;
    // margin-top: 15%;
 }
@@ -182,6 +182,7 @@ text {
   text-align: center;
   border-top-left-radius: $border_radius;
   border-top-right-radius: $border_radius;
+  text-align: center;
 }
 
 
