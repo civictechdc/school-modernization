@@ -457,11 +457,11 @@ function cleanupSchoolData(schoolsCollectionObj, schoolData) {
 
 // ======= ======= ======= cleanupSchoolName ======= ======= =======
 function cleanupSchoolName(nextSchool) {
-    console.log("cleanupSchoolName");
+    // console.log("cleanupSchoolName");
     var currentName = nextSchool.School;
-    console.log("  currentName: ", currentName);
+    // console.log("  currentName: ", currentName);
     var newName1 = currentName.replace(", ", "_");
-    console.log("  newName1: ", newName1);
+    // console.log("  newName1: ", newName1);
     return newName1;
 }
 
