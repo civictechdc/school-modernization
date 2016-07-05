@@ -1,0 +1,2247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="612pt"
+   height="792pt"
+   id="svg5073"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="schoolMod_menu.svg">
+  <defs
+     id="defs5075">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5116"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5119"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     inkscape:document-units="in"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3728995"
+     inkscape:cx="287.56658"
+     inkscape:cy="717.60535"
+     inkscape:current-layer="layer1"
+     id="namedview5077"
+     showgrid="false"
+     inkscape:window-width="1370"
+     inkscape:window-height="818"
+     inkscape:window-x="19"
+     inkscape:window-y="20"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5079">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       style="display:inline"
+       transform="matrix(3.5227182,0,0,6.1738901,-1171.113,-533.4594)"
+       id="g4933">
+      <rect
+         y="93.214287"
+         x="201.42856"
+         height="9"
+         width="16"
+         id="rect4935"
+         style="fill:#2b0000;fill-opacity:1" />
+      <rect
+         style="fill:#2b0000;fill-opacity:1"
+         id="rect4937"
+         width="16"
+         height="9"
+         x="219.42856"
+         y="93.214287" />
+      <rect
+         y="93.214287"
+         x="237.42856"
+         height="9"
+         width="16"
+         id="rect4939"
+         style="fill:#2b0000;fill-opacity:1" />
+      <rect
+         style="fill:#2b0000;fill-opacity:1"
+         id="rect4941"
+         width="16"
+         height="9"
+         x="255.42856"
+         y="93.214287" />
+      <rect
+         y="93.214287"
+         x="273.42859"
+         height="9"
+         width="16"
+         id="rect4943"
+         style="fill:#2b0000;fill-opacity:1" />
+      <rect
+         style="fill:#2b0000;fill-opacity:1"
+         id="rect4945"
+         width="16"
+         height="9"
+         x="291.42859"
+         y="93.214287" />
+    </g>
+    <g
+       style="display:inline"
+       transform="matrix(3.5227182,0,0,6.1738901,-1170.9489,-533.4594)"
+       id="g4947">
+      <rect
+         style="fill:#ff8200;fill-opacity:1"
+         id="rect4949"
+         width="16"
+         height="9"
+         x="200.71428"
+         y="92.5" />
+      <rect
+         y="92.5"
+         x="218.71428"
+         height="9"
+         width="16"
+         id="rect4951"
+         style="fill:#ff9100;fill-opacity:1" />
+      <rect
+         style="fill:#ffa000;fill-opacity:1"
+         id="rect4953"
+         width="16"
+         height="9"
+         x="236.71428"
+         y="92.5" />
+      <rect
+         y="92.5"
+         x="254.71428"
+         height="9"
+         width="16"
+         id="rect4955"
+         style="fill:#ffaf00;fill-opacity:1" />
+      <rect
+         style="fill:#ffbe00;fill-opacity:1"
+         id="rect4957"
+         width="16"
+         height="9"
+         x="272.71429"
+         y="92.5" />
+      <rect
+         y="92.5"
+         x="290.71429"
+         height="9"
+         width="16"
+         id="rect4959"
+         style="fill:#ffcd00;fill-opacity:1" />
+    </g>
+    <g
+       id="g4163"
+       transform="matrix(3.5227182,0,0,6.1738901,-1250.3787,-205.53558)"
+       style="display:inline">
+      <rect
+         y="92.5"
+         x="200.71428"
+         height="9"
+         width="16"
+         id="rect4165"
+         style="fill:#ff8200;fill-opacity:1" />
+      <rect
+         style="fill:#ff9100;fill-opacity:1"
+         id="rect4167"
+         width="16"
+         height="9"
+         x="218.71428"
+         y="92.5" />
+      <rect
+         y="92.5"
+         x="236.71428"
+         height="9"
+         width="16"
+         id="rect4169"
+         style="fill:#ffa000;fill-opacity:1" />
+      <rect
+         style="fill:#ffaf00;fill-opacity:1"
+         id="rect4171"
+         width="16"
+         height="9"
+         x="254.71428"
+         y="92.5" />
+      <rect
+         y="92.5"
+         x="272.71429"
+         height="9"
+         width="16"
+         id="rect4173"
+         style="fill:#ffbe00;fill-opacity:1" />
+      <rect
+         style="fill:#ffcd00;fill-opacity:1"
+         id="rect4175"
+         width="16"
+         height="9"
+         x="290.71429"
+         y="92.5" />
+    </g>
+    <rect
+       y="175.78517"
+       x="-544.43335"
+       height="60"
+       width="60"
+       id="rect4179"
+       style="fill:#ff8200;fill-opacity:1;display:inline" />
+    <rect
+       style="fill:#ff9100;fill-opacity:1;display:inline"
+       id="rect4181"
+       width="60"
+       height="60"
+       x="-479.43338"
+       y="175.78517" />
+    <rect
+       y="175.78517"
+       x="-414.43338"
+       height="60"
+       width="60"
+       id="rect4183"
+       style="fill:#ffa000;fill-opacity:1;display:inline" />
+    <rect
+       style="fill:#ffaf00;fill-opacity:1;display:inline"
+       id="rect4185"
+       width="60"
+       height="60"
+       x="-349.43338"
+       y="175.78517" />
+    <rect
+       y="175.78517"
+       x="-284.43338"
+       height="60"
+       width="60"
+       id="rect4187"
+       style="fill:#ffbe00;fill-opacity:1;display:inline" />
+    <rect
+       style="fill:#ffcd00;fill-opacity:1;display:inline"
+       id="rect4189"
+       width="60"
+       height="60"
+       x="-219.43336"
+       y="175.78517" />
+    <rect
+       y="175.78517"
+       x="-154.43336"
+       height="60"
+       width="60"
+       id="rect4197"
+       style="fill:#ffdc00;fill-opacity:1;display:inline" />
+    <rect
+       y="278.41476"
+       x="-547.53101"
+       height="60"
+       width="60"
+       id="rect4213"
+       style="fill:#000000;fill-opacity:1;display:inline" />
+    <rect
+       style="fill:#000000;fill-opacity:1;display:inline"
+       id="rect4215"
+       width="60"
+       height="60"
+       x="-480.34647"
+       y="278.41476" />
+    <rect
+       y="278.41476"
+       x="-413.1619"
+       height="60"
+       width="60"
+       id="rect4217"
+       style="fill:#000000;fill-opacity:1;display:inline" />
+    <rect
+       style="fill:#000000;fill-opacity:1;display:inline"
+       id="rect4219"
+       width="60"
+       height="60"
+       x="-345.97733"
+       y="278.41476" />
+    <rect
+       y="278.41476"
+       x="-278.79276"
+       height="60"
+       width="60"
+       id="rect4221"
+       style="fill:#000000;fill-opacity:1;display:inline" />
+    <rect
+       style="fill:#000000;fill-opacity:1;display:inline"
+       id="rect4223"
+       width="60"
+       height="60"
+       x="-211.60817"
+       y="278.41476" />
+    <rect
+       y="278.41476"
+       x="-144.4236"
+       height="60"
+       width="60"
+       id="rect4225"
+       style="fill:#000000;fill-opacity:1;display:inline" />
+    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-1285.5094,602.73774)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot4620"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4622"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="26.840042"
+           width="251.30472"
+           id="rect4624" /></flowRegion><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4626">1      2       3      4       5       6     7</flowPara></flowRoot>    <g
+       style="display:inline"
+       id="g5051"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_1.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         style="fill:#7800ff;fill-opacity:1"
+         id="rect4560"
+         width="60"
+         height="60"
+         x="60"
+         y="50" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4550"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         transform="matrix(1.7969626,0,0,1.4137351,-1260.0762,-462.71985)"><flowRegion
+           id="flowRegion4552"><rect
+             id="rect4554"
+             width="15.688178"
+             height="27.708103"
+             x="744.40613"
+             y="368.93756"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+           id="flowPara4556"
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">2</flowPara></flowRoot>      <g
+         id="g4763"
+         transform="translate(-4.9999924,-60)">
+        <rect
+           style="fill:#ff9100;fill-opacity:1"
+           id="rect4765"
+           width="60"
+           height="60"
+           x="64.999992"
+           y="50" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4767"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           transform="matrix(1.7969626,0,0,1.4137351,-1255.0762,-462.71985)"><flowRegion
+             id="flowRegion4769"><rect
+               id="rect4771"
+               width="15.688178"
+               height="27.708103"
+               x="744.40613"
+               y="368.93756"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+             id="flowPara4773"
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">2</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g5038"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_0.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         y="49.999996"
+         x="0"
+         height="60"
+         width="60"
+         id="rect4558"
+         style="fill:#6400ff;fill-opacity:1" />
+      <flowRoot
+         transform="matrix(1.7969626,0,0,1.4137351,-1317.3711,-462.91475)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot4572"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4574"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="28.576178"
+             width="15.005232"
+             id="rect4576" /></flowRegion><flowPara
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+           id="flowPara4578">1</flowPara></flowRoot>      <g
+         transform="translate(0,-60)"
+         id="g4775">
+        <rect
+           y="49.999996"
+           x="0"
+           height="60"
+           width="60"
+           id="rect4777"
+           style="fill:#ff8200;fill-opacity:1" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-1317.3711,-462.91475)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot4779"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4781"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="28.576178"
+               width="15.005232"
+               id="rect4783" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara4785">1</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g5064"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         y="50"
+         x="120"
+         height="60"
+         width="60"
+         id="rect4562"
+         style="fill:#8c00ff;fill-opacity:1" />
+      <flowRoot
+         transform="matrix(1.7969626,0,0,1.4137351,-1199.7988,-462.93034)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot4580"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4582"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="27.708103"
+             width="15.688178"
+             id="rect4584" /></flowRegion><flowPara
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+           id="flowPara4586">3</flowPara></flowRoot>      <g
+         id="g4787"
+         transform="translate(-9.9999847,-60)">
+        <rect
+           y="50"
+           x="129.99998"
+           height="60"
+           width="60"
+           id="rect4789"
+           style="fill:#ffa000;fill-opacity:1" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-1189.7988,-462.93034)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot4791"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4793"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="27.708103"
+               width="15.688178"
+               id="rect4795" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara4797">3</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g5077"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_3.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         style="fill:#a000ff;fill-opacity:1"
+         id="rect4564"
+         width="60"
+         height="60"
+         x="180"
+         y="50" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4588"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         transform="matrix(1.7969626,0,0,1.4137351,-1139.6105,-462.83679)"><flowRegion
+           id="flowRegion4590"><rect
+             id="rect4592"
+             width="15.688178"
+             height="26.840027"
+             x="744.40613"
+             y="368.93756"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+           id="flowPara4594"
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">4</flowPara></flowRoot>      <g
+         id="g4799"
+         transform="translate(-14.999985,-60)">
+        <rect
+           style="fill:#ffaf00;fill-opacity:1"
+           id="rect4801"
+           width="60"
+           height="60"
+           x="194.99998"
+           y="50" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4803"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           transform="matrix(1.7969626,0,0,1.4137351,-1124.6105,-462.83679)"><flowRegion
+             id="flowRegion4805"><rect
+               id="rect4807"
+               width="15.688178"
+               height="26.840027"
+               x="744.40613"
+               y="368.93756"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+             id="flowPara4809"
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">4</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g5090"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_4.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         y="50"
+         x="240"
+         height="60"
+         width="60"
+         id="rect4566"
+         style="fill:#b400ff;fill-opacity:1" />
+      <flowRoot
+         transform="matrix(1.7969626,0,0,1.4137351,-1080.0366,-463.07846)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot4596"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4598"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="28.576178"
+             width="15.005232"
+             id="rect4600" /></flowRegion><flowPara
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+           id="flowPara4602">5</flowPara></flowRoot>      <g
+         id="g4811"
+         transform="translate(-20,-60)">
+        <rect
+           y="50"
+           x="260"
+           height="60"
+           width="60"
+           id="rect4813"
+           style="fill:#ffbe00;fill-opacity:1" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-1060.0366,-463.07846)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot4815"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4817"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="28.576178"
+               width="15.005232"
+               id="rect4819" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara4821">5</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g5103"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_5.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         style="fill:#c800ff;fill-opacity:1"
+         id="rect4568"
+         width="60"
+         height="60"
+         x="300"
+         y="50" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4604"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         transform="matrix(1.7969626,0,0,1.4137351,-1019.9078,-462.91475)"><flowRegion
+           id="flowRegion4606"><rect
+             id="rect4608"
+             width="14.322285"
+             height="27.708103"
+             x="744.40613"
+             y="368.93756"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+           id="flowPara4610"
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">6</flowPara></flowRoot>      <g
+         id="g4823"
+         transform="translate(-25,-60)">
+        <rect
+           style="fill:#ffcd00;fill-opacity:1"
+           id="rect4825"
+           width="60"
+           height="60"
+           x="325"
+           y="50" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4827"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           transform="matrix(1.7969626,0,0,1.4137351,-994.90776,-462.91475)"><flowRegion
+             id="flowRegion4829"><rect
+               id="rect4831"
+               width="14.322285"
+               height="27.708103"
+               x="744.40613"
+               y="368.93756"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+             id="flowPara4833"
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">6</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g5116"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/db_GRAPHICS/ SVGs/setting1_6.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-548.54668,465.84589)">
+      <rect
+         y="50"
+         x="360"
+         height="60"
+         width="60"
+         id="rect4570"
+         style="fill:#dc00ff;fill-opacity:1" />
+      <flowRoot
+         transform="matrix(1.7969626,0,0,1.4137351,-960.74011,-463.09405)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot4612"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4614"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="26.840027"
+             width="16.371124"
+             id="rect4616" /></flowRegion><flowPara
+           style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+           id="flowPara4618">7</flowPara></flowRoot>      <g
+         id="g4835"
+         transform="translate(-30,-60)">
+        <rect
+           y="50"
+           x="390"
+           height="60"
+           width="60"
+           id="rect4837"
+           style="fill:#ffdc00;fill-opacity:1" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-930.74011,-463.09405)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot4839"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4841"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="26.840027"
+               width="16.371124"
+               id="rect4843" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara4845">7</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       style="display:inline"
+       id="g3609"
+       inkscape:export-filename="/Users/thomasbeach/Desktop/ GA_FEWD/website/images/toggle1_0.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-815.2187,-96.699039)">
+      <rect
+         y="-160"
+         x="660"
+         height="60"
+         width="60"
+         id="rect4319"
+         style="fill:#ffdc00;fill-opacity:1" />
+      <g
+         id="g5248">
+        <rect
+           style="fill:#ff8200;fill-opacity:1"
+           id="rect4307"
+           width="60"
+           height="60"
+           x="600"
+           y="-160" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-729.09665,-672.98491)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot4351"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4353"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="69.375771"
+               width="418.62665"
+               id="rect4355" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara4357">To</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(0.39898682,-7.0310631)"
+         id="g3601">
+        <rect
+           y="-32.968937"
+           x="-719.60101"
+           height="60"
+           width="60"
+           id="rect4369"
+           style="fill:#00d400;fill-opacity:1"
+           transform="scale(-1,1)" />
+        <rect
+           y="-32.968941"
+           x="-659.60101"
+           height="60"
+           width="60"
+           id="rect4367"
+           style="fill:#55ff55;fill-opacity:1"
+           transform="scale(-1,1)" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-669.49565,-545.95385)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot4458"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4460"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="69.375771"
+               width="418.62665"
+               id="rect4462" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara4464">To</flowPara></flowRoot>      </g>
+      <g
+         id="g3593">
+        <rect
+           transform="scale(-1,1)"
+           style="fill:#5555ff;fill-opacity:1"
+           id="rect4506"
+           width="60"
+           height="60"
+           x="-720"
+           y="-100" />
+        <rect
+           transform="scale(-1,1)"
+           style="fill:#aaaaff;fill-opacity:1"
+           id="rect4504"
+           width="60"
+           height="60"
+           x="-660"
+           y="-100" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4508"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           transform="matrix(1.7969626,0,0,1.4137351,-729.09664,-612.98491)"><flowRegion
+             id="flowRegion4510"><rect
+               id="rect4512"
+               width="418.62665"
+               height="69.375771"
+               x="744.40613"
+               y="368.93756"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+             id="flowPara4514"
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">To</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(0.39898682,-8.4762039)"
+         id="g3585">
+        <rect
+           y="28.476204"
+           x="-719.60101"
+           height="60"
+           width="60"
+           id="rect3573"
+           style="fill:#5555ff;fill-opacity:1"
+           transform="scale(-1,1)" />
+        <rect
+           y="28.476204"
+           x="-659.60101"
+           height="60"
+           width="60"
+           id="rect3575"
+           style="fill:#aaaaff;fill-opacity:1"
+           transform="scale(-1,1)" />
+        <flowRoot
+           transform="matrix(1.7969626,0,0,1.4137351,-669.49565,-484.50871)"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           id="flowRoot3577"
+           xml:space="preserve"><flowRegion
+             id="flowRegion3579"><rect
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+               y="368.93756"
+               x="744.40613"
+               height="69.375771"
+               width="418.62665"
+               id="rect3581" /></flowRegion><flowPara
+             style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+             id="flowPara3583">To</flowPara></flowRoot>      </g>
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3542"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-1240.122,-468.89742)"><flowRegion
+         id="flowRegion3544"><rect
+           id="rect3546"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara3548"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara5922">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara5924">W   H   M</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:6.2369709;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 1055.9268,396.78714 0,-195.24928"
+       id="path4413"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       style="display:inline"
+       id="g4072"
+       transform="translate(-863.33851,182.08469)">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         transform="translate(28.83388,621.98784)"
+         id="g5067">
+        <rect
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           y="-393.9693"
+           x="-2194.8713"
+           height="122.67872"
+           width="91.647591"
+           id="rect5039"
+           style="fill:none;stroke:#000000;stroke-width:1.54861736;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           transform="scale(-1,1)" />
+        <rect
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           transform="scale(-1,1)"
+           style="fill:#c2c2e7;fill-opacity:1;stroke:#000000;stroke-width:0.29614064;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           id="rect5065"
+           width="90.186943"
+           height="24.09087"
+           x="-2193.8164"
+           y="-393.27008" />
+      </g>
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot5041"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         transform="matrix(1.2617664,0,0,0.96589671,1202.2543,-122.84828)"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"><flowRegion
+           id="flowRegion5043"><rect
+             id="rect5045"
+             width="64.91674"
+             height="129.89043"
+             x="744.40613"
+             y="368.93756"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5047">person</flowPara><flowPara
+           id="flowPara5061"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+           id="flowPara5049"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">* id</flowPara><flowPara
+           id="flowPara5051"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">first_name</flowPara><flowPara
+           id="flowPara5053"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">last_name</flowPara><flowPara
+           id="flowPara5055"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">user_name</flowPara><flowPara
+           id="flowPara5057"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">password</flowPara><flowPara
+           id="flowPara5059"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">category</flowPara><flowPara
+           id="flowPara5063"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /></flowRoot>      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         transform="matrix(1.4263856,0,0,0.98404002,-606.97346,656.58237)"
+         id="g5071">
+        <rect
+           transform="scale(-1,1)"
+           style="fill:none;stroke:#000000;stroke-width:1.30713141;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           id="rect5073"
+           width="91.647591"
+           height="122.67872"
+           x="-2194.8713"
+           y="-393.9693"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           y="-393.27008"
+           x="-2193.8164"
+           height="24.09087"
+           width="90.186943"
+           id="rect5075"
+           style="fill:#c2c2e7;fill-opacity:1;stroke:#000000;stroke-width:0.24996153;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+      </g>
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         transform="matrix(1.2617664,0,0,0.96589671,1463.2313,-81.965995)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot5077"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5079"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="114.59199"
+             width="92.242729"
+             id="rect5081" /></flowRegion><flowPara
+           id="flowPara5083"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">patient</flowPara><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5085" /><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5087">* id</flowPara><flowPara
+           id="flowPara5117"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">person_id (doctor) room </flowPara><flowPara
+           id="flowPara5130"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">bed </flowPara><flowPara
+           id="flowPara5132"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">diagnosis</flowPara><flowPara
+           id="flowPara5115"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5099" /></flowRoot>      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         id="g5157"
+         transform="matrix(1.5118738,0,0,1.3898649,-609.85679,935.33473)">
+        <rect
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           y="-393.9693"
+           x="-2194.8713"
+           height="122.67872"
+           width="91.647591"
+           id="rect5159"
+           style="fill:none;stroke:#000000;stroke-width:1.0683167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           transform="scale(-1,1)" />
+        <rect
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           transform="scale(-1,1)"
+           style="fill:#c2c2e7;fill-opacity:1;stroke:#000000;stroke-width:0.20429322;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           id="rect5161"
+           width="90.186943"
+           height="24.09087"
+           x="-2193.8164"
+           y="-393.27008" />
+      </g>
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot5163"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         transform="matrix(1.2617664,0,0,0.96589671,1642.1488,42.740365)"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"><flowRegion
+           id="flowRegion5165"><rect
+             id="rect5167"
+             width="98.098267"
+             height="170.68629"
+             x="744.40613"
+             y="368.93756"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5181">prescription </flowPara><flowPara
+           id="flowPara5230"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+           id="flowPara5232"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">* id </flowPara><flowPara
+           id="flowPara5226"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">patient_id </flowPara><flowPara
+           id="flowPara5222"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">person_id (doctor) </flowPara><flowPara
+           id="flowPara5220"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">generic_name</flowPara><flowPara
+           id="flowPara5218"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">dose </flowPara><flowPara
+           id="flowPara5216"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">route</flowPara><flowPara
+           id="flowPara5214"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">frequency</flowPara><flowPara
+           id="flowPara5238"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">side_effects</flowPara><flowPara
+           id="flowPara5240"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">info_url </flowPara><flowPara
+           id="flowPara5242"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /></flowRoot>      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path5234"
+         d="m 2223.6702,272.4885 21.1799,0 0,183.35048 325.0988,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path5236"
+         d="m 2523.5592,305.98241 25.7023,0 0,137.94588 20.1949,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         id="g5331"
+         transform="matrix(1.2391786,0,0,0.98783446,158.5402,770.41017)">
+        <rect
+           transform="scale(-1,1)"
+           style="fill:none;stroke:#000000;stroke-width:1.3997004;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           id="rect5333"
+           width="91.647591"
+           height="122.67872"
+           x="-2194.8713"
+           y="-393.9693"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           y="-393.27008"
+           x="-2193.8164"
+           height="24.09087"
+           width="90.186943"
+           id="rect5335"
+           style="fill:#c2c2e7;fill-opacity:1;stroke:#000000;stroke-width:0.26766339;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+      </g>
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         transform="matrix(1.2617664,0,0,0.96589671,1832.0514,31.351995)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot5248"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5250"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="143.14909"
+             width="104.73463"
+             id="rect5252" /></flowRegion><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5268">events</flowPara><flowPara
+           id="flowPara5307"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+           id="flowPara5321"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">* id </flowPara><flowPara
+           id="flowPara5315"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">prescription_id</flowPara><flowPara
+           id="flowPara5400"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">appointment_id </flowPara><flowPara
+           id="flowPara5313"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">start_timeDate </flowPara><flowPara
+           id="flowPara5311"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">stop_ timeDate </flowPara><flowPara
+           id="flowPara5309"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">event_type</flowPara><flowPara
+           id="flowPara5329"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5270" /></flowRoot>      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path5342"
+         d="m 2708.3576,434.53993 56.479,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         transform="matrix(1.6294588,0,0,1.301932,-867.01546,1108.5511)"
+         id="g5344">
+        <rect
+           transform="scale(-1,1)"
+           style="fill:none;stroke:#000000;stroke-width:1.06323254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           id="rect5346"
+           width="91.647591"
+           height="122.67872"
+           x="-2194.8713"
+           y="-393.9693"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <rect
+           y="-393.27008"
+           x="-2193.8164"
+           height="24.09087"
+           width="90.186943"
+           id="rect5348"
+           style="fill:#c2c2e7;fill-opacity:1;stroke:#000000;stroke-width:0.20332098;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           transform="scale(-1,1)"
+           inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+      </g>
+      <flowRoot
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         transform="matrix(1.2617664,0,0,0.96589671,1632.2976,250.59963)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowRoot5350"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5352"><rect
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+             y="368.93756"
+             x="744.40613"
+             height="170.68629"
+             width="98.098267"
+             id="rect5354" /></flowRegion><flowPara
+           id="flowPara5356"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">appointment</flowPara><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5358" /><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5360">* id </flowPara><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5362">patient_id </flowPara><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5364">person_id (provider) </flowPara><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5366">appt_type</flowPara><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5376">purpose</flowPara><flowPara
+           id="flowPara5394"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">description</flowPara><flowPara
+           id="flowPara5396"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">location</flowPara><flowPara
+           id="flowPara5398"
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+           style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+           id="flowPara5378" /></flowRoot>      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         inkscape:connector-curvature="0"
+         id="path5402"
+         d="m 2708.3576,643.38432 24.6278,0 0,-198.99324 30.5386,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         inkscape:connector-curvature="0"
+         id="path5404"
+         d="m 2524.2041,310.42126 16.718,0 0,342.71811 18.8077,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path5406"
+         d="m 2223.5887,276.54391 11.1453,0.12314 0,387.61763 323.6026,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <g
+         transform="translate(-101.46685,-258.03248)"
+         id="g5473">
+        <g
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+           transform="matrix(0.97868072,0,0,0.70474041,313.05605,747.04758)"
+           id="g5427">
+          <rect
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+             y="-393.9693"
+             x="-2194.8713"
+             height="122.67872"
+             width="91.647591"
+             id="rect5429"
+             style="fill:none;stroke:#000000;stroke-width:1.8647002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+             transform="scale(-1,1)" />
+          <rect
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="/Users/thomasbeach/Desktop/Handoff_diag.png"
+             transform="scale(-1,1)"
+             style="fill:#c2c2e7;fill-opacity:1;stroke:#000000;stroke-width:0.35658488;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+             id="rect5431"
+             width="90.186943"
+             height="24.09087"
+             x="-2193.8164"
+             y="-393.27008" />
+        </g>
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot5433"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           transform="matrix(1.2617664,0,0,0.96589671,1442.5926,116.5049)"
+           inkscape:export-filename="/Users/thomasbeach/_wdi/projects/Project4_spec/ERD.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"><flowRegion
+             id="flowRegion5435"><rect
+               id="rect5437"
+               width="59.451557"
+               height="75.835915"
+               x="744.40613"
+               y="368.93756"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+             style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+             id="flowPara5439">assignment</flowPara><flowPara
+             id="flowPara5441"
+             style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /><flowPara
+             id="flowPara5443"
+             style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">* id</flowPara><flowPara
+             id="flowPara5453"
+             style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial">person_id</flowPara><flowPara
+             style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial"
+             id="flowPara5471">patient_id</flowPara><flowPara
+             id="flowPara5455"
+             style="font-size:10.86992168px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;writing-mode:lr-tb;text-anchor:start;font-family:Arial;-inkscape-font-specification:Arial" /></flowRoot>      </g>
+      <path
+         sodipodi:nodetypes="cccc"
+         transform="translate(0,-540)"
+         inkscape:connector-curvature="0"
+         id="path5487"
+         d="m 2360.3356,815.6238 14.7767,0 0,27.51558 17.7321,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         transform="translate(0,-540)"
+         inkscape:connector-curvature="0"
+         id="path5491"
+         d="m 2223.4046,807.67524 30.5386,0 0,48.27063 137.9161,0 0,0.98512"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         transform="translate(0,-540)"
+         inkscape:connector-curvature="0"
+         id="path5493"
+         d="m 2223.4046,802.74966 46.3004,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4388-1"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.2617664,0,0,0.96589671,-922.67217,705.99051)"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4390-6"><rect
+           id="rect4392-8"
+           width="553.27997"
+           height="32.495575"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara4394-6"
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">     login     profile     genre     group     category       title       search </flowPara></flowRoot>    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       transform="matrix(1.2617664,0,0,0.96589671,-127.53839,-278.97667)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot4618"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4620"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="568.35992"
+           width="107.35218"
+           id="rect4622" /></flowRegion><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4624"> organize</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4653" /><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4655">genre</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#008080;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4699">  genre1</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4657">groups</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#008080;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4701">   group1</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#008080;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4703">   group2</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4697">categories</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#008080;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4715">   cat1</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#008080;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4717">   cat2</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#008080;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4719">   cat3</flowPara><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4705" /><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4707" /><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4709" /><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4711" /><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4627" /></flowRoot>    <rect
+       transform="scale(-1,1)"
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4629"
+       width="111.12181"
+       height="34.927776"
+       x="-658.10608"
+       y="-102.58424"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.39930576;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4651"
+       width="159.60069"
+       height="89.600693"
+       x="-871.73669"
+       y="-237.40181"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       transform="matrix(1.2617664,0,0,0.96589671,-131.92176,59.966127)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot4659"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4661"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="185.19568"
+           width="311.91611"
+           id="rect4663" /></flowRegion><flowPara
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold"
+         id="flowPara4675">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc euismod massa justo, sit amet interdum nulla lacinia non. Aliquam vel gravida neque, ut scelerisque purus. </flowPara></flowRoot>    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       y="721.87012"
+       x="-862.28406"
+       height="18.448418"
+       width="18.44842"
+       id="rect4936"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4950"
+       width="18.44842"
+       height="18.448418"
+       x="-862.28406"
+       y="761.87012"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       y="801.87012"
+       x="-862.28406"
+       height="18.448418"
+       width="18.44842"
+       id="rect4964"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4978"
+       width="18.44842"
+       height="18.448418"
+       x="-862.28406"
+       y="841.87012"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       y="881.87012"
+       x="-862.28406"
+       height="18.448418"
+       width="18.44842"
+       id="rect4992"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect4994"
+       width="18.44842"
+       height="18.448418"
+       x="-862.28406"
+       y="921.87012"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4996"
+       style="font-size:18.11653709px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.2617664,0,0,0.96589671,-63.860444,602.66995)"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4998"><rect
+           id="rect5000"
+           width="46.740532"
+           height="33.909454"
+           x="744.40613"
+           y="368.93756"
+           style="font-size:18.11653709px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara5002"
+         style="font-size:18.11653709px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC">group </flowPara></flowRoot>    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       y="961.87012"
+       x="-862.28406"
+       height="18.448418"
+       width="18.44842"
+       id="rect5004"
+       style="fill:#89a02c;fill-opacity:1;stroke:#000000;stroke-width:1.55158162;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_photo.png"
+       transform="matrix(1.2617664,0,0,0.96589671,-63.860444,562.66995)"
+       style="font-size:18.11653709px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot5006"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5008"><rect
+           style="font-size:18.11653709px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="33.909454"
+           width="46.740532"
+           id="rect5010" /></flowRegion><flowPara
+         style="font-size:18.11653709px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+         id="flowPara5012">group </flowPara></flowRoot>    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="-125.10012"
+       x="-867.13342"
+       height="89.600693"
+       width="159.60069"
+       id="rect5022"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.39930576;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m -142.65143,1143.5983 -439.5637,0 0,-1.332"
+       id="path5106"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5108"
+       d="m -142.65143,903.59831 -439.5637,0 0,-1.332"
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend);display:inline"
+       d="m -560.90293,904.59151 0,238.43009"
+       id="path5110"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5742"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.2617664,0,0,0.96589671,-1557.3614,649.85843)"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5744"><rect
+           id="rect5746"
+           width="95.291031"
+           height="30.203979"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara5748"
+         style="font-size:22.58650208px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:-1.88220847px;fill:#ff0000;font-family:Arial Rounded MT Bold;-inkscape-font-specification:Arial Rounded MT Bold">240</flowPara></flowRoot>    <g
+       style="display:inline"
+       id="g4765"
+       transform="translate(-1083.6513,361.96339)">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+         y="259.05164"
+         x="-732.99945"
+         height="123.70827"
+         width="61.708256"
+         id="rect3851"
+         style="fill:none;stroke:#000000;stroke-width:0.29174504;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         transform="scale(-1,1)" />
+      <path
+         style="fill:none;stroke:#4ef135;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 717.98452,352.58402 -31.6784,-31.67825 31.6784,-31.67826"
+         id="path3853"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       style="display:inline"
+       id="g4769"
+       transform="translate(-1083.6513,361.96339)">
+      <g
+         transform="translate(-810.99063,-4.1879257)"
+         id="g3891">
+        <path
+           style="fill:none;stroke:#ff0000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           d="m 1599.5358,302.80925 -45.0307,45.03074"
+           id="path3859"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3861"
+           d="m 1555.1979,302.3474 44.5689,44.56888"
+           style="fill:none;stroke:#ff0000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      </g>
+      <rect
+         transform="scale(-1,1)"
+         style="fill:none;stroke:#000000;stroke-width:0.29174504;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect3899"
+         width="61.708256"
+         height="123.70827"
+         x="-796.99945"
+         y="259.05164"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+    </g>
+    <g
+       style="display:inline"
+       id="g4755"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/blackjack2/hitmeBW.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-1083.6513,361.96339)">
+      <rect
+         transform="scale(-1,1)"
+         style="fill:none;stroke:#000000;stroke-width:0.29174504;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect3913"
+         width="61.708256"
+         height="123.70827"
+         x="-592.99945"
+         y="259.05164"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3915"
+         d="m 577.98452,352.58402 -31.6784,-31.67825 31.6784,-31.67826"
+         style="fill:none;stroke:#000000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    </g>
+    <g
+       style="display:inline"
+       id="g4759"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/blackjack2/holdBW.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       transform="translate(-1083.6513,361.96339)">
+      <g
+         style="fill:#000000;stroke:#000000;stroke-opacity:1"
+         id="g3919"
+         transform="translate(-950.99063,-4.1879257)">
+        <path
+           inkscape:connector-curvature="0"
+           id="path3921"
+           d="m 1599.5358,302.80925 -45.0307,45.03074"
+           style="fill:#000000;stroke:#000000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+        <path
+           style="fill:#000000;stroke:#000000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           d="m 1555.1979,302.3474 44.5689,44.56888"
+           id="path3923"
+           inkscape:connector-curvature="0" />
+      </g>
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+         y="259.05164"
+         x="-656.99945"
+         height="123.70827"
+         width="61.708256"
+         id="rect3925"
+         style="fill:none;stroke:#000000;stroke-width:0.29174504;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         transform="scale(-1,1)" />
+    </g>
+    <g
+       style="display:inline"
+       id="g4176"
+       transform="translate(-1166.511,246.72363)">
+      <rect
+         transform="scale(-1,1)"
+         style="fill:none;stroke:#000000;stroke-width:0.16640054;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect5664"
+         width="49.833599"
+         height="49.833599"
+         x="-679.69702"
+         y="536.08685"
+         inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <g
+         id="g5390"
+         inkscape:export-filename="/Users/thomasbeach/Desktop/_WEB_DEV/_WEB_PROJECTS/_blackjack4/images/chipsOut.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         transform="matrix(0.65246449,0,0,0.65246449,271.87294,387.71968)">
+        <path
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/blackjack2/hitmeBW.png"
+           style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           d="M 579.2639,289.67567 556.33124,266.74312 579.2639,243.81056"
+           id="path5392"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path5394"
+           d="m 525.2481,266.40739 0.0681,0"
+           style="fill:none;stroke:#000000;stroke-width:0.36522871px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+      </g>
+      <g
+         transform="matrix(-0.65246449,0,0,0.65246449,1038.6845,387.71968)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/Users/thomasbeach/Desktop/_WEB_DEV/_WEB_PROJECTS/_blackjack4/images/chipsIn.png"
+         id="g5396">
+        <path
+           inkscape:connector-curvature="0"
+           id="path5398"
+           d="M 579.2639,289.67567 556.33124,266.74312 579.2639,243.81056"
+           style="fill:none;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/blackjack2/hitmeBW.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.36522871px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           d="m 525.2481,266.40739 0.0681,0"
+           id="path5400"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-1040.122,-468.89742)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot5957"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5959"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect5961" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara5963">A   D   C</flowPara><flowPara
+         id="flowPara5965"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara5967"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-1240.122,-248.89742)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot5981"
+       xml:space="preserve"><flowRegion
+         id="flowRegion5983"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect5985" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara5987">A   D   C</flowPara><flowPara
+         id="flowPara5989"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara5991"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5993"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-1040.122,-248.89742)"><flowRegion
+         id="flowRegion5995"><rect
+           id="rect5997"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara5999"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6001">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6003">W   H   M</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-840.122,-248.89742)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot6005"
+       xml:space="preserve"><flowRegion
+         id="flowRegion6007"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect6009" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6011">A   D   C</flowPara><flowPara
+         id="flowPara6013"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara6015"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6017"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-1240.122,-108.89742)"><flowRegion
+         id="flowRegion6019"><rect
+           id="rect6021"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6023"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6025">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6027">W   H   M</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-1040.122,-108.89742)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot6029"
+       xml:space="preserve"><flowRegion
+         id="flowRegion6031"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect6033" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6035">A   D   C</flowPara><flowPara
+         id="flowPara6037"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara6039"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6041"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-840.122,-108.89742)"><flowRegion
+         id="flowRegion6043"><rect
+           id="rect6045"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6047"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6049">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6051">W   H   M</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-1240.122,31.10258)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot6053"
+       xml:space="preserve"><flowRegion
+         id="flowRegion6055"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect6057" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6059">A   D   C</flowPara><flowPara
+         id="flowPara6061"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara6063"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6065"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-1040.122,31.10258)"><flowRegion
+         id="flowRegion6067"><rect
+           id="rect6069"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6071"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6073">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6075">W   H   M</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-840.122,31.10258)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot6077"
+       xml:space="preserve"><flowRegion
+         id="flowRegion6079"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect6081" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6083">A   D   C</flowPara><flowPara
+         id="flowPara6085"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara6087"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6089"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-1240.122,171.10258)"><flowRegion
+         id="flowRegion6091"><rect
+           id="rect6093"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6095"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6097">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6099">W   H   M</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.7969626,0,0,1.4137351,-1040.122,171.10258)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot6101"
+       xml:space="preserve"><flowRegion
+         id="flowRegion6103"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="93.876625"
+           width="70.72036"
+           id="rect6105" /></flowRegion><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6107">A   D   C</flowPara><flowPara
+         id="flowPara6109"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">H   M   E</flowPara><flowPara
+         id="flowPara6111"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">W   H   M</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6113"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-840.122,171.10258)"><flowRegion
+         id="flowRegion6115"><rect
+           id="rect6117"
+           width="70.72036"
+           height="93.876625"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6119"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">A   D   C</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6121">H   M   E</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6123">W   H   M</flowPara></flowRoot>    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="64.147774"
+       x="-223.56378"
+       height="30.6359"
+       width="30.635899"
+       id="rect6125"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#62a2b5;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6907"
+       width="30.635899"
+       height="30.6359"
+       x="-171.99409"
+       y="150.21965"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="150.21965"
+       x="-223.99409"
+       height="30.6359"
+       width="30.635899"
+       id="rect6909"
+       style="fill:#62a2b5;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="150.21965"
+       x="-119.99409"
+       height="30.6359"
+       width="30.635899"
+       id="rect6911"
+       style="fill:#50ce49;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="-49.78035"
+       x="-151.99409"
+       height="30.6359"
+       width="30.635899"
+       id="rect6913"
+       style="fill:#62a2b5;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#50ce49;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6915"
+       width="30.635899"
+       height="30.6359"
+       x="-99.994087"
+       y="-49.78035"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6917"
+       width="30.635899"
+       height="30.6359"
+       x="-203.56378"
+       y="-49.852234"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6919"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.7969626,0,0,1.4137351,-1260.122,-584.89742)"><flowRegion
+         id="flowRegion6921"><rect
+           id="rect6923"
+           width="70.720337"
+           height="36.996262"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6925"
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono">S   D   S</flowPara><flowPara
+         style="font-size:15.05766773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:200%;letter-spacing:-1.88220847px;writing-mode:lr-tb;text-anchor:start;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+         id="flowPara6929" /></flowRoot>    <rect
+       transform="scale(-1,1)"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6933"
+       width="30.635899"
+       height="30.6359"
+       x="-371.56378"
+       y="64.147774"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#50ce49;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6935"
+       width="30.635899"
+       height="30.6359"
+       x="-319.99408"
+       y="150.21965"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6937"
+       width="30.635899"
+       height="30.6359"
+       x="-171.56378"
+       y="370.14777"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="328.21967"
+       x="-119.99409"
+       height="30.6359"
+       width="30.635899"
+       id="rect6939"
+       style="fill:#62a2b5;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#50ce49;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6941"
+       width="30.635899"
+       height="30.6359"
+       x="-171.99408"
+       y="328.21967"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="286.14777"
+       x="-423.56378"
+       height="30.6359"
+       width="30.635899"
+       id="rect6943"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="370.21967"
+       x="-371.99408"
+       height="30.6359"
+       width="30.635899"
+       id="rect6945"
+       style="fill:#62a2b5;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#62a2b5;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6947"
+       width="30.635899"
+       height="30.6359"
+       x="-423.99408"
+       y="370.21967"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:#50ce49;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect6949"
+       width="30.635899"
+       height="30.6359"
+       x="-319.99408"
+       y="370.21967"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       y="328.21967"
+       x="-371.99408"
+       height="30.6359"
+       width="30.635899"
+       id="rect6951"
+       style="fill:#50ce49;fill-opacity:0.55111108;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="scale(-1,1)" />
+    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       transform="matrix(1.2617664,0,0,0.96589671,-856.94662,-344.88793)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot4659-7"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4661-7"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="55.940426"
+           width="120.88104"
+           id="rect4663-0" /></flowRegion><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara4675-9">select C</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara6980"> * deactivate zH, zM</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara6982"> * select zW </flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6986"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.2617664,0,0,0.96589671,-656.94662,-344.88793)"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion6988"><rect
+           id="rect6990"
+           width="120.88104"
+           height="55.940426"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara6992"
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial">select D</flowPara><flowPara
+         id="flowPara6994"
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"> * activate zH, zM</flowPara><flowPara
+         id="flowPara6996"
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"> * select zW </flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6998"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       transform="matrix(1.2617664,0,0,0.96589671,-839.46537,-129.98663)"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion7000"><rect
+           id="rect7002"
+           width="94.326393"
+           height="68.760193"
+           x="744.40613"
+           y="368.93756"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC" /></flowRegion><flowPara
+         id="flowPara7004"
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial">select zH</flowPara><flowPara
+         id="flowPara7006"
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"> * deactivate H</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara7022"> * activate M</flowPara><flowPara
+         id="flowPara7008"
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"> * select zW </flowPara></flowRoot>    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/thomasbeach/_wdi/_projects2.0/specs/wireframe_grid.png"
+       transform="matrix(1.2617664,0,0,0.96589671,-652.57631,-153.29496)"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+       id="flowRoot7010"
+       xml:space="preserve"><flowRegion
+         id="flowRegion7012"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Yuppy TC;-inkscape-font-specification:Yuppy TC"
+           y="368.93756"
+           x="744.40613"
+           height="85.350426"
+           width="122.03558"
+           id="rect7014" /></flowRegion><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara7016">select C</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara7018"> * activate H</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara7020"> * select zW</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara7024"> * activate zW</flowPara><flowPara
+         style="font-size:12.68157578px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:0px;font-family:Arial;-inkscape-font-specification:Arial"
+         id="flowPara7026"> * deactivate zH, zM </flowPara></flowRoot>  </g>
+</svg>

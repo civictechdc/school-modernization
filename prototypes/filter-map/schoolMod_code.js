@@ -51,7 +51,6 @@ function initApp(presetMode) {
         this.agencyMenu = ["agency", filterMenu.District, filterMenu.Charter, filterMenu.All];
         this.levelsMenu = ["levels", filterMenu.High, filterMenu.Middle, filterMenu.Elem];
         this.expendMenu = ["expend", filterMenu.spendLifetime, filterMenu.MajorExp9815, filterMenu.spendPlanned];
-        // this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS, filterMenu.FeederMS, filterMenu.Elementary];
         this.zonesMenu = ["zones", filterMenu.Ward, filterMenu.FeederHS];
         this.expendMathMenu = ["expendMath", filterMenu.spendAmount, filterMenu.spendEnroll, filterMenu.spendSqFt];
         this.filterMenusArray = [this.agencyMenu, this.levelsMenu, this.zonesMenu, this.expendMenu];
@@ -76,7 +75,6 @@ function initApp(presetMode) {
         this.mapListenersArray = [];
         this.zoneFeaturesArray = [];
         this.indexColorsArray = ["green", "red", "orange", "purple", "salmon", "blue", "yellow", "tomato", "darkkhaki", "goldenrod"];
-        // this.dataColorsArray = ["red", "#b2bdc7", "#99a8b5", "#7f92a2", "#667c90", "#4c677d", "#32516a", "#193b58", "#002646"];
         this.dataColorsArray = ["#b2bdc7", "#99a8b5", "#7f92a2", "#667c90", "#4c677d", "#32516a", "#193b58", "#002646"];
         this.defaultColor = "white";
         this.dataIncrement = 0;
@@ -107,226 +105,25 @@ function initApp(presetMode) {
         displayObj = new Display();
     }
 
-
-
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= DISPLAY ======= ======= ======= ======= =======
 
-
-    // ======= ======= ======= makeSearchAndHoverDisplay ======= ======= =======
-    Display.prototype.makeSearchAndHoverDisplay = function() {
-        console.log("makeSearchAndHoverDisplay");
-
-        var filterContainer = ("#filter-container ");
-        var menuHtml = "";
-        this.makeColorLegend();
-        menuHtml += this.makeSearchDisplay();
-        menuHtml += this.makeHoverDisplay();
-        $(filterContainer).append(menuHtml);
-        this.activateSearchButton("searchButton");
-        this.activateSearchWindow("searchWindow");
-    }
-
-    // ======= ======= ======= makeColorLegend ======= ======= =======
-    Display.prototype.makeColorLegend = function() {
-        console.log("makeColorLegend");
-        var legendHtml = "<div id='legend'>";
-        legendHtml += "<div><p class='legend-text'>District Schools</p><div class=legend-color-dcps>&nbsp;</div></div>";
-        legendHtml += "<div><p class='legend-text'>Charter Schools</p><div class=legend-color-pcs>&nbsp;</div></div>";
-        legendHtml += "</div>";
-        $("body").append(legendHtml);
-    }
-
-    // ======= ======= ======= makeSelectBox ======= ======= =======
-    Display.prototype.makeSelectBox = function(jsonData) {
-        console.log("makeSelectBox");
-
-        var selectHtml = "<select id='school-select'>";
-
-        var nextSchool, nextSchoolName;
-        for (var i = 0; i < jsonData.length; i++ ) {
-            nextSchool = jsonData[i];
-            nextSchoolName = nextSchool.School;
-            selectHtml += "<option value='" + nextSchoolName + "'>" + nextSchoolName + "</option>";
-        }
-        selectHtml += "</select>";
-
-        var filterContainer = ("#filter-container ");
-        var selectBox = $("#filter-container").children("select");
-        if (selectBox) {
-            $(filterContainer).append(selectHtml);
-            this.activateSelectBox();
-        }
-
-    }
-
-    // ======= ======= ======= makeSearchDisplay ======= ======= =======
-    Display.prototype.makeSearchDisplay = function() {
-        // console.log("makeSearchDisplay");
-        var searchHtml = "<div id='search' class='category'>";
-        searchHtml += "<input id='searchWindow' type='text' placeholder='  school name'/ >";
-        searchHtml += "<input type='button' id='searchButton' value='search'/ ></div>";
-        return searchHtml;
-    }
-
-    // ======= ======= ======= makeHoverDisplay ======= ======= =======
-    Display.prototype.makeHoverDisplay = function() {
-        // console.log("makeHoverDisplay");
-        var hoverHtml = "<div id='mouseover-text'><h2>&nbsp;</h2></div>";
-        return hoverHtml;
-    }
-
-    // ======= ======= ======= makeMathSelect ======= ======= =======
-    Display.prototype.makeMathSelect = function(whichMenu, chartOrProfile) {
-        console.log("makeMathSelect");
-
-        // == filter-container  bar container
-        var subMenuContainer = $("#sub-nav-container");
-
-        // == build sub-menu; attach to chart or profile div
-        var nextCategory = whichMenu[0];
-        if (chartOrProfile == "chart") {
-            var subMenuHtml = "<select id='expendMathC' name='expendMath'>";
-        } else if (chartOrProfile == "profile") {
-            var subMenuHtml = "<select id='expendMathP' name='expendMath'>";
-        }
-
-        var nextItem, nextId, nextText;
-        for (var i = 1; i < whichMenu.length; i++) {
-            nextItem = whichMenu[i];
-            nextId = nextItem.id;
-            nextText = nextItem.text;
-            if (displayObj.dataFilters.math == nextId) {
-                subMenuHtml += "<option selected='selected' value='" + nextId + "'>" + nextText + "</option>";
-            } else {
-                subMenuHtml += "<option value='" + nextId + "'>" + nextText + "</option>";
-            }
-        }
-        subMenuHtml += "</select>";
-        return subMenuHtml;
-    }
-
-    // ======= ======= ======= activateClearButton ======= ======= =======
-    Display.prototype.activateClearButton = function() {
-        console.log("activateClearButton");
-
-        var self = this;
-        $("#clear-button").fadeIn( "slow", function() {
-            // console.log("*** FADEIN ***");
-        });
-
-        // ======= ======= ======= selectFilter ======= ======= =======
-        $("#clear-button").off("click").on("click", function(event){
-            console.log("\n======= clear ======= ");
-
-            // == clear menus (html) and filters (displayObj)
-            checkFilterSelection();
-            clearFilterSelctions(displayObj, zonesCollectionObj);
-            clearProfileChart();
-            checkFilterSelection();
-            $("#searchWindow").val('');
-            updateHoverText(null);
-
-            // == load default map
-            zonesCollectionObj.importZoneDataA();
-            if (schoolsCollectionObj.selectedMarker) {
-                resetMarker(schoolsCollectionObj.selectedMarker);
-            }
-        });
-    }
-
-    // ======= ======= ======= activateFilterMenus ======= ======= =======
-    Display.prototype.activateFilterMenus = function() {
-        console.log("activateFilterMenus");
-
-        var nextMenu, nextFilter;
-        for (var i = 0; i < this.filterMenusArray.length; i++) {
-            nextMenu = this.filterMenusArray[i];
-            for (var j = 1; j < nextMenu.length; j++) {
-                nextFilter = nextMenu[j];
-                activateFilterLink(nextFilter);
-            }
-        }
-    }
-
-    // ======= ======= ======= activateSearchWindow ======= ======= =======
-    Display.prototype.activateSearchWindow = function(windowId) {
-        console.log("activateSearchWindow");
-
-        $("#" + windowId).on('input',function(e){
-            console.log("input");
-            clearProfileChart();
-        });
-    }
-
-    // ======= ======= ======= activateSearchButton ======= ======= =======
-    Display.prototype.activateSearchButton = function(buttonId) {
-        console.log("activateSearchButton");
-
-        var self = this;
-        var buttonElement = $("#" + buttonId);
-
-        // ======= selectFilter =======
-        $(buttonElement).off("click").on("click", function(event){
-            console.log("\n======= search =======");
-            findSearchSchool();
-        });
-        // ======= selectFilter =======
-        $( window ).bind('keypress', function(event){
-            if ( event.keyCode == 13 ) {
-                console.log("\n======= search =======");
-                findSearchSchool();
-            }
-        });
-    }
-
-    // ======= ======= ======= activateCloseButton ======= ======= =======
-    Display.prototype.activateCloseButton = function(buttonId) {
-        console.log("activateCloseButton");
-
-        var self = this;
-        var buttonElement = $("#close-X");
-
-        // ======= selectFilter =======
-        $(buttonElement).off("click").on("click", function(event){
-            console.log("\n======= close =======");
-
-            // == remove previous chart or profile html if any
-            $("#profile-container").fadeOut( "fast", function() {
-                    console.log("*** FADEOUT profile-container ***");
-                    $("#profile").remove();
-            });
-            if ($('#chart-container').find('#chart').length) {
-                $("#chart-container").fadeIn( "slow", function() {
-                    console.log("*** FADEIN chart-container ***");
-                });
-            }
-            if ($('#legend-container').find('#legend').length) {
-                $("#legend").remove();
-            }
-            var selectedFilterContainer = $("#filters-selections").children("h2");
-            $(selectedFilterContainer).html("");
-            resetMarker(schoolsCollectionObj.selectedMarker);
-        });
-    }
+    Display.prototype.makeSearchAndHoverDisplay = function()
+    Display.prototype.makeColorLegend = function()
+    Display.prototype.makeSelectBox = function(jsonData)
+    Display.prototype.makeSearchDisplay = function()
+    Display.prototype.makeHoverDisplay = function()
+    Display.prototype.makeMathSelect = function(whichMenu, chartOrProfile)
+    Display.prototype.activateClearButton = function()
+    Display.prototype.activateFilterMenus = function()
+    Display.prototype.activateSearchWindow = function(windowId)
+    Display.prototype.activateSearchButton = function(buttonId)
+    Display.prototype.activateCloseButton = function(buttonId)
 
     // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= FILTERS ======= ======= ======= ======= =======
-
-    // ======= ======= ======= checkFilterSelection ======= ======= =======
-    function checkFilterSelection(whichCategory) {
-        console.log("##### checkFilterSelection");
-
-        console.log("  whichCategory: ", whichCategory);
-        console.log("  zoneA: ", zonesCollectionObj.zoneA);
-        console.log("  * agency: ", displayObj.dataFilters.agency);
-        console.log("  * levels: ", displayObj.dataFilters.levels);
-        console.log("  * expend: ", displayObj.dataFilters.expend);
-        console.log("  * zones: ", displayObj.dataFilters.zones);
-        console.log("  * math: ", displayObj.dataFilters.math);
-    }
 
     // ======= ======= ======= activateFilterLink ======= ======= =======
     function activateFilterLink(nextItem) {
@@ -341,7 +138,6 @@ function initApp(presetMode) {
 
         // ======= ======= ======= mouseover ======= ======= =======
         $(nextElement).off("mouseover").on("mouseover", function(event){
-            // console.log("\n======= mouseover ======= ");
             var whichFilter = this.id;
             var menuObject = filterMenu[whichFilter];
             var whichText = menuObject.text;
@@ -350,20 +146,14 @@ function initApp(presetMode) {
 
         // ======= ======= ======= mouseout ======= ======= =======
         $(nextElement).off("mouseout").on("mouseout", function(event){
-            // console.log("\n======= mouseout ======= ");
             updateHoverText("");
         });
 
         // ======= ======= ======= selectFilter ======= ======= =======
         $(nextElement).off("click").on("click", function(event){
-            console.log("\n======= selectFilter ======= ");
-
             var whichFilter = nextElement.data("filter");
             var whichCategory = nextElement.data("category");
             var whichState = nextElement.data("state");
-            console.log("  whichFilter: ", whichFilter);
-            console.log("  whichCategory: ", whichCategory);
-
             var menuObject = filterMenu[whichFilter];
             var whichValue = menuObject.value;
             var whichText = menuObject.text;
@@ -420,6 +210,7 @@ function initApp(presetMode) {
                 // == expenditures filter (past, present, planed, etc.)
                 case "expend":
                     self.dataFilters.expend = whichFilter;
+                    console.log("  whichFilter: ", whichFilter);
                     if (whichFilter == "spendLifetime") {
                         setMenuState(self.expendMenu, ["S", "A", "A"]);
                     } else if (whichFilter == "MajorExp9815") {
@@ -438,7 +229,6 @@ function initApp(presetMode) {
                     zonesCollectionObj.aggregatorArray = [];
                     var tempAgency = self.dataFilters.agency;
                     var tempLevels = self.dataFilters.levels;
-                    var levelObject;
 
                     // == high school feeder zone selected
                     if (whichFilter == "FeederHS") {
@@ -490,12 +280,6 @@ function initApp(presetMode) {
                             levelObject = filterMenu[null];
                         }
 
-                        // == middle school feeder zones apply to elementary schools only
-                        // self.dataFilters.levels = "ES";
-                        // setMenuState(self.zonesMenu, ["A", "A", "S"]);
-                        // setMenuState(self.levelsMenu, ["D", "D", "S"]);
-                        // levelObject = filterMenu["Elem"];
-
                     // == elementary zone selected
                     } else if (whichFilter == "Elementary") {
                         self.dataFilters.levels = "ES";
@@ -538,9 +322,8 @@ function initApp(presetMode) {
 
     // ======= ======= ======= setMenuState ======= ======= =======
     function setMenuState(whichMenu, whichStates) {
-        console.log("setMenuState");
 
-        var nextState, nextFilter, nextFilterText, checkIndex, nextElement, selectedFilterText;
+        var nextState, nextFilter, nextFilterText, nextElement, checkIndex, selectedFilterText;
 
         // == loop through states for each filter on menu
         for (var i = 0; i < whichStates.length; i++) {
@@ -558,7 +341,7 @@ function initApp(presetMode) {
                     nextFilterText = nextFilter.text;
                 }
             } else if (whichMenu[0] == "levels") {
-                checkIndex = displayObj.filterTitlesObject.agency.indexOf("Schools");
+                var checkIndex = displayObj.filterTitlesObject.agency.indexOf("Schools");
                 if (checkIndex > -1) {
                     displayObj.filterTitlesObject.agency = displayObj.filterTitlesObject.agency.substring(0, checkIndex);
                 }
@@ -569,7 +352,6 @@ function initApp(presetMode) {
 
             // == see if filter is in filter list
             nextElement = $("#" + nextFilter.id);
-            // checkIndex = $.inArray(nextFilterText, displayObj.filterTitlesArray);
 
             // == set filter menu state; leave only selected filters in filterTitlesArray
             if (nextState == "A") {
@@ -595,8 +377,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= resetMenuState ======= ======= =======
     function resetMenuState(whichMenu) {
-        console.log("resetMenuState");
-        console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
         // == restore levels menu for new zones selection (e.g. deactivate HS for feeders)
         if (whichMenu == "zones") {
@@ -644,8 +424,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= clearFilterSelctions ======= ======= =======
     function clearFilterSelctions(displayObj, zonesCollectionObj) {
-        console.log("clearFilterSelctions");
-
         displayObj.filterTitlesArray = [];
         displayObj.dataFilters.agency = "All";
         displayObj.dataFilters.levels = null;
@@ -668,11 +446,9 @@ function initApp(presetMode) {
 
     // ======= ======= ======= activateSelectBox ======= ======= =======
     Display.prototype.activateSelectBox = function(windowId) {
-        console.log("activateSelectBox");
 
-        // ======= onchange =======
+        var self = this;
         $("#school-select").on('change',function(e){
-            console.log("\nschool-select");
 
             // == clear previously hilited marker
             if (schoolsCollectionObj.selectedMarker) {
@@ -685,7 +461,7 @@ function initApp(presetMode) {
             $("#searchWindow").val("");
             if ($('#profile-container').find('#profile').length) {
                 $("#profile-container").fadeIn( "fast", function() {
-                    console.log("*** FADEIN profile-container ***");
+                    // console.log("*** FADEIN profile-container ***");
                 });
             } else {
                 clearProfileChart();
@@ -700,7 +476,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= findSearchSchool ======= ======= =======
     function findSearchSchool() {
-        console.log("findSearchSchool");
 
         // == clear previous selection
         var searchSchoolName = null;
@@ -725,9 +500,7 @@ function initApp(presetMode) {
 
     // ======= ======= ======= buildSearchArray ======= ======= =======
     function buildSearchArray(jsonData, searchSchoolName) {
-        console.log("buildSearchArray");
-
-        var nextSchool, schoolName, checkSchool;
+        var nextSchool, schoolName;
         var schoolNamesArray = [];
 
         // ======= search school data by name =======
@@ -735,8 +508,7 @@ function initApp(presetMode) {
             nextSchool = jsonData[i];
             schoolName = nextSchool.School;
             if (schoolName) {
-                checkSchool = schoolName.indexOf(searchSchoolName);
-                // if (checkSchool === schoolName) {
+                var checkSchool = schoolName.indexOf(searchSchoolName);
                 if (checkSchool > -1) {
                     schoolNamesArray.push([schoolName, nextSchool]);
                 }
@@ -747,10 +519,9 @@ function initApp(presetMode) {
 
     // ======= ======= ======= displayFoundSchool ======= ======= =======
     function displayFoundSchool(schoolNamesArray) {
-        console.log("displayFoundSchool");
 
         var filterTitleContainer = $("#filters-selections").children("h2");
-        var schoolText, hoverText, schoolName;
+        var schoolText, hoverText, nextSchool, nextSchoolName;
 
         // == at least one school matches search
         if (schoolNamesArray.length > 0) {
@@ -762,7 +533,7 @@ function initApp(presetMode) {
                 hoverText = "<span class='filterLabel'>Multiple schools found. </span>Re-enter choice from options above map.";
                 updateHoverText(hoverText);
                 schoolNamesArray.forEach(function(school, index) {
-                    schoolName = school[0];
+                    var schoolName = school[0];
                     if (index == (schoolNamesArray.length - 1)) {
                         schoolText += schoolName;
                     } else {
@@ -781,59 +552,15 @@ function initApp(presetMode) {
                 $("#profile-container").css("display", "table");
             }
         }
-        console.log("  schoolText: ", schoolText);
         return schoolText;
     }
 
-
     // ======= ======= ======= ======= ======= AJAX DATA ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= AJAX DATA ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= AJAX DATA ======= ======= ======= ======= =======
-
-    // ======= ======= ======= importSchoolData ======= ======= =======
-    SchoolsCollection.prototype.importSchoolData = function() {
-        console.log("\n----- importSchoolData -----");
-
-        var self = this;
-        var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_412.csv";
-
-        // ======= get selected data =======
-        $.ajax({
-            url: url,
-            method: "GET",
-            dataType: "text"
-        }).done(function(textData) {
-            console.log("*** ajax success ***");
-            var jsonData = CSV2JSON(textData);
-            console.dir(jsonData);
-            self.jsonData = jsonData;
-            displayObj.makeSelectBox(jsonData);
-            displayObj.makeSearchAndHoverDisplay();
-
-            // == get school names
-            var nextSchool;
-            displayObj.schoolNamesArray = [];
-            for (var i = 0; i < jsonData.length - 1; i++) {
-                nextSchool = jsonData[i];
-                if (nextSchool) {
-                    displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
-                }
-            }
-            initAutoComplete(displayObj);
-            zonesCollectionObj.importZoneDataA();
-
-        // == errors/fails
-        }).fail(function(){
-            console.log("*** ajax fail ***");
-        }).error(function() {
-            console.log("*** ajax error ***");
-        });
-    }
 
     // ======= ======= ======= importZoneDataA ======= ======= =======
     ZonesCollection.prototype.importZoneDataA = function() {
-        console.log("\n----- importZoneDataA -----");
-
         var self = this;
         var selectedZonesArray = getZoneUrls(displayObj, zonesCollectionObj);
         var urlA = selectedZonesArray[0];
@@ -868,8 +595,7 @@ function initApp(presetMode) {
 
     // ======= ======= ======= importZoneDataB ======= ======= =======
     ZonesCollection.prototype.importZoneDataB = function(urlB) {
-        console.log("\n----- importZoneDataB -----");
-
+        var featuresA, featuresB, featuresAll;
         var self = this;
 
         $.ajax({
@@ -878,10 +604,10 @@ function initApp(presetMode) {
         }).done(function(geoJsonData, featureArray){
             console.log("*** ajax success ***");
             self.zoneGeojson_B = geoJsonData;
-            var featuresA = self.zoneGeojson_A.features;
-            var featuresB = self.zoneGeojson_B.features;
-            var featuresAll = featuresB.concat(featuresA);
-            var mergedGeojsonData = {
+            featuresA = self.zoneGeojson_A.features;
+            featuresB = self.zoneGeojson_B.features;
+            featuresAll = featuresB.concat(featuresA);
+            mergedGeojsonData = {
                 "type": "FeatureCollection",
                 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                 "features": featuresAll
@@ -901,6 +627,43 @@ function initApp(presetMode) {
         });
     }
 
+    // ======= ======= ======= importSchoolData ======= ======= =======
+    SchoolsCollection.prototype.importSchoolData = function() {
+        var self = this;
+        var url = "https://rawgit.com/codefordc/school-modernization/master/Output%20Data/DCSchools_FY1415_Master_412.csv";
+
+        // ======= get selected data =======
+        $.ajax({
+            url: url,
+            method: "GET",
+            dataType: "text"
+        }).done(function(textData) {
+            console.log("*** ajax success ***");
+            var jsonData = CSV2JSON(textData);
+            console.dir(jsonData);
+            self.jsonData = jsonData;
+            displayObj.makeSelectBox(jsonData);
+            displayObj.makeSearchAndHoverDisplay();
+
+            // == get school names
+            displayObj.schoolNamesArray = [];
+            for (var i = 0; i < jsonData.length - 1; i++) {
+                var nextSchool = jsonData[i];
+                if (nextSchool) {
+                    displayObj.schoolNamesArray.push(processSchoolName(nextSchool.School))
+                }
+            }
+            initAutoComplete(displayObj);
+            zonesCollectionObj.importZoneDataA();
+
+        // == errors/fails
+        }).fail(function(){
+            console.log("*** ajax fail ***");
+        }).error(function() {
+            console.log("*** ajax error ***");
+        });
+    }
+
 
 
     // ======= ======= ======= ======= ======= ZONE LAYER ======= ======= ======= ======= =======
@@ -908,13 +671,11 @@ function initApp(presetMode) {
     // ======= ======= ======= ======= ======= ZONE LAYER ======= ======= ======= ======= =======
 
     ZonesCollection.prototype.makeZoneLayer = function() {
-        console.log("\n----- makeZoneLayer -----");
-
         var self = this;
         var itemOpacity = 0.5;
         var strokeColor = "purple";
         var strokeWeight = 2;
-        var zoneName;
+        var itemColor, itemOpacity, centerLatLng, zoneName;
 
         // ======= ======= ======= cleanup ======= ======= =======
         map.data.forEach(function(feature) {
@@ -936,9 +697,6 @@ function initApp(presetMode) {
             map.data.addGeoJson(this.zoneGeojson_A);
             var zoneBcount = 0;
         }
-        console.log("  zoneAcount: ", zoneAcount);
-        console.log("  zoneBcount: ", zoneBcount);
-        console.log("  zoneABcount: ", zoneABcount);
 
         // ======= ======= ======= ZONE AGGREGATOR ======= ======= =======
         // ======= ======= ======= ZONE AGGREGATOR ======= ======= =======
@@ -983,8 +741,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= makeZoneFeatures ======= ======= =======
     function makeZoneFeatures() {
-        console.log("makeZoneFeatures");
-        var zoneName, centerLatLng;
         var featureIndex = -1;
         var zoneFeaturesArray = [];
         map.data.forEach(function(feature) {
@@ -1000,8 +756,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= makeZonePartitions ======= ======= =======
     function makeZonePartitions() {
-        console.log("makeZonePartitions");
-        var zoneName;
         var zones = {};
         var featureIndex = -1;
         if (zonesCollectionObj.zoneGeojson_AB) {
@@ -1023,7 +777,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= addZonePartitions ======= ======= =======
     function addZonePartitions(zoneSchools) {
-        console.log("addZonePartitions");
         if (displayObj.dataFilters.zones == "FeederHS") {
             zoneSchools.CityWide = [];
         }
@@ -1031,10 +784,8 @@ function initApp(presetMode) {
 
     // ======= ======= ======= selectAgencyLevel ======= ======= =======
     function selectAgencyLevel() {
-        console.log("selectAgencyLevel");
         var selectedSchoolsArray = [];
         var jsonData = schoolsCollectionObj.jsonData;
-        var schoolIndex, nextSchool, selectedSchool, schoolData;
         for (var i = 0; i < (jsonData.length - 1); i++) {
             schoolIndex = i;
             nextSchool = jsonData[i];
@@ -1051,8 +802,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= agencyLevelFilters ======= ======= =======
     function agencyLevelFilters(nextSchool) {
-        // console.log("agencyLevelFilters");
-
         var checkAgency = false;
         var agencyMatch, levelsMatch;
 
@@ -1080,21 +829,18 @@ function initApp(presetMode) {
         if (displayObj.dataFilters.levels) {
             if (displayObj.dataFilters.levels == "HS") {
                 levelFilter = ["HS", "ADULT", "MS/HS", "ALT"];
-                // levelFilter = ["HS"];
                 var checkLevel = levelFilter.indexOf(nextSchool.Level);
                 if (checkLevel > -1) {
                     levelsMatch = true;
                 }
             } else if (displayObj.dataFilters.levels == "MS") {
                 levelFilter = ["MS", "SPED"];
-                // levelFilter = ["MS"];
                 var checkLevel = levelFilter.indexOf(nextSchool.Level);
                 if (checkLevel > -1) {
                     levelsMatch = true;
                 }
             } else if (displayObj.dataFilters.levels == "ES") {
                 levelFilter = ["ES", "ES/MS", "PK3-K"];
-                // levelFilter = ["ES"];
                 var checkLevel = levelFilter.indexOf(nextSchool.Level);
                 if (checkLevel > -1) {
                     levelsMatch = true;
@@ -1118,13 +864,11 @@ function initApp(presetMode) {
 
     // ======= ======= ======= buildPartitionSchoolArrays ======= ======= =======
     function buildPartitionSchoolArrays(zoneSchools) {
-        console.log("buildPartitionSchoolArrays");
         var partitionKey = displayObj.dataFilters.zones;
         var schoolCount = 0;
-        var zone, zoneName;
         schoolsCollectionObj.selectedSchoolsArray.forEach(function(school) {
-            zone = school[partitionKey];
-            zoneName = standardizeZoneName(zone);
+            var zone = school[partitionKey];
+            var zoneName = standardizeZoneName(zone);
             if ((zoneName) && (zoneName != "NA")) {
                 schoolCount++;
                 zoneSchools[zoneName].push(school);
@@ -1134,7 +878,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= aggregateAllZones ======= ======= =======
     function aggregateAllZones(zoneSchoolsObject) {
-        console.log("aggregateAllZones");
         var featureIndex = -1;
         var zoneTotals = {};
 
@@ -1182,7 +925,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= aggregateEachZone ======= ======= =======
     function aggregateEachZone(schoolsInZone, zoneDataObject, zoneTotals) {
-        // console.log("aggregateEachZone");
         var zoneSchoolNamesArray = [];
         var amountNAarray = [];
         var zeroAmountArray = [];
@@ -1225,10 +967,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= printZoneData ======= ======= =======
     function printZoneData() {
-        console.log("printZoneData");
-        console.log("  zonesCollectionObj.zoneFeaturesArray: ", zonesCollectionObj.zoneFeaturesArray);
-        console.log("  zonesCollectionObj.aggregatorArray: ", zonesCollectionObj.aggregatorArray);
-
         var zoneDataString = "";
         if ((displayObj.dataFilters.math == "spendEnroll") || (displayObj.dataFilters.math == "spendSqft")) {
             zoneDataString += makeDataString("zoneAmount");
@@ -1255,7 +993,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= zoneObjectToArray ======= ======= =======
     function zoneObjectToArray(zoneTotalsObject) {
-        console.log("zoneObjectToArray");
         var zoneDataObject;
 
         // == create array and calculate average, perEnroll and perSqft values
@@ -1302,7 +1039,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= setDataIncrement ======= ======= =======
     function setDataIncrement(schoolsInZone, zoneDataObject, zoneTotals) {
-        // console.log("setDataIncrement");
         if (displayObj.dataFilters.expend) {
             zonesCollectionObj.dataIncrement = calcDataIncrement(zonesCollectionObj, displayObj);
         }
@@ -1310,7 +1046,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= formatZoneFeatures ======= ======= =======
     function formatZoneFeatures(zoneBcount) {
-        console.log("formatZoneFeatures");
 
         // == format zone "layers" independently
         if (zoneBcount > 0) {
@@ -1346,9 +1081,8 @@ function initApp(presetMode) {
 
     // ======= ======= ======= setZoneProperties ======= ======= =======
     function setZoneProperties(whichLayer, featureIndex, zoneBcount) {
-        // console.log("setZoneProperties");
-        var feature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
-        var nextName = feature.getProperty('zoneName');
+        feature = zonesCollectionObj.zoneFeaturesArray[featureIndex];
+        nextName = feature.getProperty('zoneName');
         if (zoneBcount > 0) {
             var zoneAIndex = featureIndex - zoneBcount;
         } else {
@@ -1356,7 +1090,7 @@ function initApp(presetMode) {
         }
 
         // [itemColor, strokeColor, strokeWeight, itemOpacity];
-        var zoneFormatArray = getZoneFormat(zonesCollectionObj, displayObj, zoneAIndex, nextName, whichLayer);
+        zoneFormatArray = getZoneFormat(zonesCollectionObj, displayObj, zoneAIndex, nextName, whichLayer);
         feature.setProperty('itemColor', zoneFormatArray[0]);
         feature.setProperty('strokeColor', zoneFormatArray[1]);
         feature.setProperty('strokeWeight', zoneFormatArray[2]);
@@ -1366,7 +1100,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= setFeatureStyle ======= ======= =======
     function setFeatureStyle(feature) {
-        // console.log("setFeatureStyle");
 
         // ======= colorize each feature based on colorList =======
         map.data.setStyle(function(feature) {
@@ -1385,7 +1118,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= standardizeZoneName ======= ======= =======
     function standardizeZoneName(zone) {
-        // console.log("standardizeZoneName");
         if (displayObj.dataFilters.zones == "Ward") {
             var zoneName = "Ward " + zone;
         } else if (displayObj.dataFilters.zones == "FeederHS") {
@@ -1408,16 +1140,16 @@ function initApp(presetMode) {
 
     // ======= ======= ======= makeSchoolLayer ======= ======= =======
     SchoolsCollection.prototype.makeSchoolLayer = function(closedSchoolsArray) {
-        console.log("\n----- makeSchoolLayer -----");
+
+        var self = this;
 
         // ======= clear existing listeners if any =======
         removeMarkers(this);
 
         // == get data to load on markers
-        var nextSchoolData, schoolMarker;
         for (var i = 0; i < this.selectedSchoolsArray.length; i++) {
             nextSchoolData = this.selectedSchoolsArray[i];
-            schoolMarker = this.setSchoolMarker(nextSchoolData, i);
+            var schoolMarker = this.setSchoolMarker(nextSchoolData, i);
 
             // == store marker on chart object
             this.schoolMarkersArray.push(schoolMarker);
@@ -1429,18 +1161,16 @@ function initApp(presetMode) {
 
     // ======= ======= ======= setSchoolMarker ======= ======= =======
     SchoolsCollection.prototype.setSchoolMarker = function(nextSchoolData, index) {
-        console.log("setSchoolMarker");
-        var fillColor, strokeColor;
-        var schoolMarker = null;
-        var nextSchool = nextSchoolData.schoolName;
-        var nextSchoolCode = nextSchoolData.schoolCode;
-        var nextSchoolType = nextSchoolData.schoolAgency;
-        var nextSchoolLevel = nextSchoolData.schoolLevel;
-        var nextSchoolIndex = index;
-        var nextSchoolAddress = nextSchoolData.schoolAddress;
-        var nextLat = nextSchoolData.schoolLAT;
-        var nextLng = nextSchoolData.schoolLON;
-        var schoolLoc = new google.maps.LatLng(nextLat, nextLng);
+        schoolMarker = null;
+        nextSchool = nextSchoolData.schoolName;
+        nextSchoolCode = nextSchoolData.schoolCode;
+        nextSchoolType = nextSchoolData.schoolAgency;
+        nextSchoolLevel = nextSchoolData.schoolLevel;
+        nextSchoolIndex = index;
+        nextSchoolAddress = nextSchoolData.schoolAddress;
+        nextLat = nextSchoolData.schoolLAT;
+        nextLng = nextSchoolData.schoolLON;
+        schoolLoc = new google.maps.LatLng(nextLat, nextLng);
 
         // == set color of school circle
         if (nextSchoolType == "DCPS") {
@@ -1486,18 +1216,14 @@ function initApp(presetMode) {
 
     // ======= ======= ======= activateSchoolMarker ======= ======= =======
     SchoolsCollection.prototype.activateSchoolMarker = function(schoolMarker, mouseClick) {
-        // console.log("activateSchoolMarker");
 
         // ======= mouseover event listener =======
         google.maps.event.addListener(schoolMarker, 'mouseover', function (event) {
-            // console.log("--- mouseover ---");
-            // updateHoverText(this.schoolName, this.schoolType, this.schoolCode);
             updateHoverText(this.schoolName, this.schoolType);
         });
 
         // ======= mouseout event listener =======
         google.maps.event.addListener(schoolMarker, 'mouseout', function (event) {
-            // console.log("--- mouseout ---");
             updateHoverText(null);
         });
 
@@ -1505,7 +1231,6 @@ function initApp(presetMode) {
         if (mouseClick == true) {
             google.maps.event.addListener(schoolMarker, 'click', function (event) {
                 console.log("--- click ---");
-                // console.log("  schoolMarker.schoolIndex: ", schoolMarker.schoolIndex);
                 makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, null, this);
             });
         }
@@ -1513,7 +1238,6 @@ function initApp(presetMode) {
 
     // ======= ======= ======= setFilterSelections ======= ======= =======
     function setFilterSelections(agency, levels, expend, zones, math, presetMode) {
-        console.log("******* setFilterSelections *******");
 
         // == pre-defined filter settings for introductory map displays
         displayObj.displayMode = presetMode;
@@ -1526,7 +1250,6 @@ function initApp(presetMode) {
             displayObj.dataFilters.agency = agency;
             if (zonesCollectionObj.aggregatorArray.length > 0) {
                 zonesCollectionObj.aggregatorArray = [];
-                // clearZoneAggregator();
             }
         }
 
@@ -1562,7 +1285,6 @@ function initApp(presetMode) {
 
         // == math
         if (math) {
-            console.log("math filter");
             displayObj.dataFilters.math = math;
         }
 
@@ -1570,8 +1292,6 @@ function initApp(presetMode) {
         checkFilterSelection();
         zonesCollectionObj.importZoneDataA();
     }
-
-
 
     // ======= ======= ======= ======= ======= INIT ======= ======= ======= ======= =======
     // ======= ======= ======= ======= ======= INIT ======= ======= ======= ======= =======

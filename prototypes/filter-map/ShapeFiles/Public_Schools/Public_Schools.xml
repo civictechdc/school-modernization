@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<origin/>
+<pubdate>20061016</pubdate>
+<title>School Grounds (SchoolGroundPly)</title>
+<geoform>vector digital data</geoform>
+<pubinfo>
+<publish>DC GIS</publish>
+</pubinfo>
+<onlink>http://dcatlas.dcgis.dc.gov/catalog/download.asp?downloadName=SchoolGroundPly&amp;downloadTYPE=ESRI</onlink>
+<onlink>http://dcatlas.dcgis.dc.gov/catalog/download.asp?downloadName=SchoolGroundPly&amp;downloadTYPE=KMZ</onlink>
+<lworkcit>
+<citeinfo>
+<title>DC Geographic Information System</title>
+</citeinfo>
+</lworkcit>
+</citeinfo>
+</citation>
+<descript>
+<abstract>School Ground locations. The dataset contains locations and attributes of schopol grounda, created as part of the DC Geographic Information System (DC GIS) for the D.C. Office of the Chief Technology Officer (OCTO) and participating D.C. government agencies. Originally created by Baker, DCPS enhanced and corrected this file to approximate school ground locations. All DC GIS data is stored and exported in Maryland State Plane coordinates NAD 83 meters. METADATA CONTENT IS IN PROCESS OF VALIDATION AND SUBJECT TO CHANGE.</abstract>
+<purpose>This data is used for the planning and management of Washington, D.C. by local government agencies.</purpose>
+</descript>
+<timeperd>
+<timeinfo>
+<sngdate>
+<caldate>20061016</caldate>
+</sngdate>
+</timeinfo>
+<current>publication date</current>
+</timeperd>
+<status>
+<progress>Complete</progress>
+<update>As needed</update>
+</status>
+<spdom>
+<bounding>
+<westbc>-180</westbc>
+<eastbc>180</eastbc>
+<northbc>90</northbc>
+<southbc>-90</southbc>
+</bounding>
+</spdom>
+<keywords>
+<theme>
+<themekt>None</themekt>
+<themekey>society</themekey>
+<themekey>Property</themekey>
+<themekey>education</themekey>
+<themekey>Ground</themekey>
+<themekey>School</themekey>
+</theme>
+<theme>
+<themekt>ISO 19115 Topic Categories</themekt>
+<themekey>society</themekey>
+</theme>
+<place>
+<placekt>None</placekt>
+<placekey>District of Columbia</placekey>
+<placekey>Washington</placekey>
+<placekey>D.C.</placekey>
+<placekey>DC</placekey>
+<placekey>DC GIS</placekey>
+<placekey>DCGIS</placekey>
+</place>
+</keywords>
+<accconst>None</accconst>
+<useconst>http://dc.gov/page/terms-and-conditions-use-district-data</useconst>
+<ptcontac>
+<cntinfo>
+<cntorgp>
+<cntorg>DC Public Schools</cntorg>
+<cntper>Robin OHara</cntper>
+</cntorgp>
+<cntpos>Facilities Planner</cntpos>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>&lt;The mailing address of the Contact Person. Ensure that the address type is set to the appropriate choice - mailing or physical address, or both.&gt;</address>
+<city>&lt;The city of the Point of Contact Person.&gt;</city>
+<state>&lt;The state or province of the Point of Contact Person.&gt;</state>
+<postal>&lt;The zip code of the Point of Contact Person.&gt;</postal>
+<country>&lt;The country of the Point of Contact Person.&gt;</country>
+</cntaddr>
+<cntvoice>(202) 576-7718</cntvoice>
+<cntemail>robin.ohara@k12.dc.us</cntemail>
+<hours>9:00am - 5:00pm</hours>
+</cntinfo>
+</ptcontac>
+<datacred>DC Public Schools</datacred>
+<native>Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; ESRI ArcCatalog 9.1.0.780</native>
+</idinfo>
+<dataqual>
+<attracc>
+<attraccr>In process of validation by source and/or responsible agency.</attraccr>
+</attracc>
+<logic>In process of validation by source and/or responsible agency.</logic>
+<complete>In process of validation by source and/or responsible agency.</complete>
+<posacc>
+<horizpa>
+<horizpar>Approximation of school grounds digitized off of the 2002 orthophotos and school records.</horizpar>
+</horizpa>
+<vertacc>
+<vertaccr>N/A</vertaccr>
+</vertacc>
+</posacc>
+<lineage>
+<srcinfo>
+<srccite>
+<citeinfo>
+<pubdate>20040101</pubdate>
+<title>School properties</title>
+</citeinfo>
+</srccite>
+<typesrc>None</typesrc>
+<srccitea>School properties</srccitea>
+<srccontr>location and attribution</srccontr>
+</srcinfo>
+<procstep>
+<procdesc>Originally digitzed off of 2002 orthos, DCPS refined and enhanced the layer using updated orthos and school records.</procdesc>
+<proccont>
+<cntinfo>
+<cntorgp>
+<cntorg>DC Public Schools</cntorg>
+<cntper>Robin OHara</cntper>
+</cntorgp>
+<cntpos>Facilities Planner</cntpos>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>&lt;the mailing address of the process Contact Person. Ensure that the address type is set to the appropriate choice - mailing or physical address, or both.&gt;</address>
+<city>&lt;The city of the process Contact Person.&gt;</city>
+<state>&lt;The state or province of the process Contact Person.&gt;</state>
+<postal>&lt;The ZIP or other postal code of the process Contact Person.&gt;</postal>
+<country>&lt;The country of the process Contact Person.&gt;</country>
+</cntaddr>
+<cntvoice>(202) 576-7718</cntvoice>
+<cntemail>robin.ohara@k12.dc.us</cntemail>
+<hours>&lt;The hours of service of the process point of contact.&gt;</hours>
+</cntinfo>
+</proccont>
+</procstep>
+</lineage>
+</dataqual>
+<spdoinfo>
+<direct>Vector</direct>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>173</ptvctcnt>
+</sdtsterm>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>173</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>DCGIS.SchoolGroundPly</enttypl>
+</enttyp>
+<attr>
+<attrlabl>SHAPE</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>Shape</attrlabl>
+<attrdef>Feature geometry</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>SHAPE.LEN</attrlabl>
+</attr>
+<attr>
+<attrlabl>GIS_ID</attrlabl>
+<attrdef>Sequential OCTO GIS identifier</attrdef>
+</attr>
+<attr>
+<attrlabl>SQR_NUM</attrlabl>
+<attrdef>Square Number</attrdef>
+</attr>
+<attr>
+<attrlabl>SHAPE.AREA</attrlabl>
+</attr>
+</detailed>
+</eainfo>
+<distinfo>
+<distrib>
+<cntinfo>
+<cntorgp>
+<cntorg>DC Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5:30 pm</hours>
+</cntinfo>
+</distrib>
+<distliab>Acknowledgment of the DC Geographic Information Systems Program (DC GIS). The District of Columbia Government makes no claims as to the completeness, accuracy or content of any data contained hereon, and makes no representation of any kind, including, but not limited to, the warranty of the accuracy or fitness for a particular use, nor are any such warranties to be implied or inferred with respect to the information or data furnished herein.</distliab>
+<custom>Most DC GIS datasets can be downloaded from "http://dcgis.dc.gov" on the data center page. Orders can also be made by contacting OCTO GIS at "dcgis@dc.gov", especially for datasets not available for download.</custom>
+</distinfo>
+<metainfo>
+<metd>20071214</metd>
+<metrd>10/16/06</metrd>
+<metc>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5 pm</hours>
+</cntinfo>
+</metc>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>

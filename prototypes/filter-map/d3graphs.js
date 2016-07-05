@@ -47,15 +47,15 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     });
 
     // ======= ======= ======= formatting variables ======= ======= =======
-    var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber, circleValue, nextDataObject, yAxisTranslate;
+    var chartW, chartH, shortName, scaleFactor, scaleLabel, formattedNumber, barValue, nextDataObject, yAxisTranslate;
     var barW = 20;
     var mathText = null;
     var barIncrement = null;
-    var schoolCircleX = 50;
-    var schoolCircleR = 6;
+    var graphElementX = 50;
+    var graphElementR = 6;
     var barScaleArray = [];
     var labelTitleArray = [];
-    var circleValuesArray = [];
+    var barValuesArray = [];
     var labelSubtitleArray = [];
     var barTicks = zonesCollectionObj.dataBins;
 
@@ -125,7 +125,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
     // console.log("  displayObj.dataFilters.expend: ", displayObj.dataFilters.expend);
     // console.log("  displayObj.dataFilters.math: ", displayObj.dataFilters.math);
     // console.log("  aggregatorArray: ", aggregatorArray);
-    // console.log("  circleValuesArray: ", circleValuesArray);
+    // console.log("  barValuesArray: ", barValuesArray);
     console.log("  barScaleArray: ", barScaleArray);
     // console.log("  barIncrement: ", parseInt(barIncrement));
     // console.log("  ...yScale(barIncrement): ", parseInt(yScale(barIncrement)));
@@ -205,7 +205,7 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
             }))
             .attr("class", "dataChartValue")
             .attr("x", function(d, i) {
-                return schoolCircleX + (i * 25);
+                return graphElementX + (i * 25);
             })
             .attr("y", function(d, i) {
                 var nextZoneValue;
@@ -285,10 +285,11 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     return labelString;
                 })
                 .attr("x", function(d, i) {
-                    var labelOffsetX = schoolCircleX  + (i * 25) + 10;
+                    var labelOffsetX = graphElementX  + (i * 25) + 10;
                     return labelOffsetX;
                 })
                 .attr("y", function(d, i) {
+                    // == position t bar top
                     // var nextZoneValue;
                     // if (displayObj.dataFilters.math == "spendAmount") {
                     //     nextZoneValue = d.zoneAmount;
@@ -298,6 +299,8 @@ function makeRankChart(zonesCollectionObj, schoolsCollectionObj, displayObj, zon
                     //     nextZoneValue = d.expendPerEnroll;
                     // }
                     // return yScale(nextZoneValue) - 20;
+
+                    // == position at chart top
                     return yScale(dataMax) - 20;
                 })
                 .attr("font-family", "sans-serif")

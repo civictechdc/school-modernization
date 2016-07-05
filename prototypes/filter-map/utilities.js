@@ -2,9 +2,9 @@
 // ======= ======= ======= getZoneUrls ======= ======= =======
 function getZoneUrls(displayObj, zonesCollectionObj) {
     console.log("getZoneUrls");
-    console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
 
     var feederFlag = false;
+    var urlA, urlB;
 
     if (displayObj.dataFilters.zones) {
         if (displayObj.dataFilters.zones == "Ward") {
@@ -47,7 +47,6 @@ function getZoneUrls(displayObj, zonesCollectionObj) {
         }
         urlB = null;
     }
-    // console.log("  [urlA, urlB, feederFlag]: ", [urlA, urlB, feederFlag]);
     return [urlA, urlB, feederFlag];
 }
 
@@ -68,12 +67,12 @@ Number.isInteger = Number.isInteger || function(value) {
 function calcDataIncrement(zonesCollectionObj, displayObj) {
     console.log("calcDataIncrement");
 
-    var nextSpendAmount, nextZoneValue, nextZoneSqft, nextZoneEnroll;
+    var nextZoneValue;
     var zoneValuesArray = [];
 
     // == gather selected expenditure (past/future/total) and sqft/enrollment values from aggregator array
     for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
-        var nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
+        nextZoneValue = filterExpendData(displayObj, zonesCollectionObj, i);
         zoneValuesArray.push(nextZoneValue);
     }
 
@@ -103,13 +102,13 @@ function calcMinMedMax(zonesCollectionObj, zoneDataObject, schoolsInZone) {
 
     // == min/max
     if (filteredAmount > zoneDataObject.amountMax) {
-        amountMax = filteredAmount;
+        var amountMax = filteredAmount;
     }
     if (index == 0) {
-        amountMin = filteredAmount;
+        var amountMin = filteredAmount;
     } else {
         if (filteredAmount <= zoneDataObject.amountMin) {
-            amountMin = filteredAmount;
+            var amountMin = filteredAmount;
         }
     }
     return [amountMin, amountMed, amountMax];
@@ -146,7 +145,7 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
         // ======= ======= ======= UPPER LAYER (HS Feeder boundaries) ======= ======= =======
         } else if (whichLayer == "upper") {
             if (displayObj.dataFilters.expend) {
-                colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
+                var colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
                 if (colorIndex >= 0) {
                     itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                 } else {
@@ -167,7 +166,7 @@ function getZoneFormat(zonesCollectionObj, displayObj, featureIndex, zoneName, w
         } else if (whichLayer == "single") {
             if ((displayObj.dataFilters.levels) || (displayObj.dataFilters.zones)) {
                 if (displayObj.dataFilters.expend) {
-                    colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
+                    var colorIndex = assignDataColors(zonesCollectionObj, displayObj, featureIndex);
                     itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
                     if (colorIndex >= 0) {
                         itemColor = zonesCollectionObj.dataColorsArray[colorIndex];
@@ -199,8 +198,9 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
     // console.log("  featureIndex: ", featureIndex, nextExpendValue);
 
     if (nextExpendValue < 0) {
-        colorIndex = -1;
+        var colorIndex = -1;
     } else {
+        var binMin, binMax;
         for (var i = 0; i < zonesCollectionObj.dataBins; i++) {
             binMin = (zonesCollectionObj.dataIncrement * i);
             binMax = (zonesCollectionObj.dataIncrement * (i + 1));
@@ -225,14 +225,14 @@ function assignDataColors(zonesCollectionObj, displayObj, featureIndex) {
 function getScaleFactor(dataMax) {
     console.log("getScaleFactor");
     if (dataMax > 1000000) {
-        scaleFactor = 1000000;
-        scaleLabel = "$M ";
+        var scaleFactor = 1000000;
+        var scaleLabel = "$M ";
     } else if ((dataMax < 1000000) && (dataMax > 1000)) {
-        scaleFactor = 1000;
-        scaleLabel = "$K ";
+        var scaleFactor = 1000;
+        var scaleLabel = "$K ";
     } else {
-        scaleFactor = 1;
-        scaleLabel = "$";
+        var scaleFactor = 1;
+        var scaleLabel = "$";
     }
     return [scaleFactor, scaleLabel];
 }
@@ -317,7 +317,6 @@ function clearProfileChart() {
 function removeMarkers(schoolsCollectionObj) {
     // console.log("removeMarkers");
 
-    // console.log("  markers_before: ", mapDataObject.schoolMarkersArray.length);
     var schoolMarkersArray = schoolsCollectionObj.schoolMarkersArray;
     if (schoolMarkersArray) {
         for(i = 0; i < schoolMarkersArray.length; i++){
@@ -354,12 +353,15 @@ function de_activateZoneListeners(zonesCollectionObj) {
 function getDataDetails(nextSchool, nextIndex) {
     // console.log("getDataDetails");
 
+    var cleanSchoolName = cleanupSchoolName(nextSchool);
+
     var tempSchoolData = {
 
         // ======= ok =======
         "schoolIndex": nextIndex,
         "schoolCode": nextSchool.School_ID,
-        "schoolName": nextSchool.School,
+        "schoolName": cleanSchoolName,
+        // "schoolName": nextSchool.School,
         "Ward": nextSchool.Ward,
         "FeederMS": nextSchool.FeederMS,
         "FeederHS": nextSchool.FeederHS,
@@ -805,7 +807,7 @@ function activateMultiSchoolLink(schoolsCollectionObj, zonesCollectionObj, displ
     $("#" + schoolId).off("click").on("click", function(event){
         console.log("\n======= click =======");
         console.log("  this.id: ", this.id);
-        schoolData = schoolsCollectionObj.selectedSchoolsArray[this.id];
+        var schoolData = schoolsCollectionObj.selectedSchoolsArray[this.id];
         makeSchoolProfile(schoolsCollectionObj, zonesCollectionObj, displayObj, schoolData, this.id);
     });
 }
@@ -817,9 +819,7 @@ function activateProfileSubmenu(displayObj, zonesCollectionObj, schoolsCollectio
     $('#expendMathP').on({
         change: function() {
             console.log("\n------- setSubMenu -------");
-            nextMath = $("select[name='expendMath'] option:selected").val()
-            console.log("  event: ", event);
-            console.log("  nextMath: ", nextMath);
+            var nextMath = $("select[name='expendMath'] option:selected").val()
             displayObj.dataFilters.math = nextMath;
             checkFilterSelection(displayObj, zonesCollectionObj, "math");
             getSubProfileData(schoolsCollectionObj, nextMath);
@@ -835,7 +835,7 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     console.dir(cleanedSchoolData);
 
     // == lifetime spending
-    spendLifetime = cleanedSchoolData.spendLifetime;
+    var spendLifetime = cleanedSchoolData.spendLifetime;
     if (spendLifetime == "") {
         spendLifetime = "<span class='value-label'>No data for lifetime spending</span>";
     } else {
@@ -843,7 +843,7 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     }
 
     // == lifetime spending
-    SpentPerMaxOccupancy = cleanedSchoolData.SpentPerMaxOccupancy;
+    var SpentPerMaxOccupancy = cleanedSchoolData.SpentPerMaxOccupancy;
     if (SpentPerMaxOccupancy == "") {
         SpentPerMaxOccupancy = "<span class='value-label'>No data for lifetime spending</span>";
     } else {
@@ -851,7 +851,7 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     }
 
     // == future spending
-    spendPlanned = cleanedSchoolData.spendPlanned;
+    var spendPlanned = cleanedSchoolData.spendPlanned;
     if (spendPlanned == "") {
         spendPlanned = "<span class='value-label'>No data for future spending</span>";
     } else {
@@ -859,7 +859,7 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     }
 
     // == past spending
-    MajorExp9815 = cleanedSchoolData.MajorExp9815;
+    var MajorExp9815 = cleanedSchoolData.MajorExp9815;
     if (MajorExp9815 == "") {
         MajorExp9815 = "<span class='value-label'>No data for past spending</span>";
     } else {
@@ -867,7 +867,8 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     }
 
     // == spending per student
-    spendEnroll = cleanedSchoolData.spendEnroll;
+    var spendEnrollSpan;
+    var spendEnroll = cleanedSchoolData.spendEnroll;
     if ((spendEnroll == "") || (spendEnroll == 0)) {
         spendEnroll = "<span class='value-label'>No spending per student data</span>";
         spendEnrollSpan = "";
@@ -877,7 +878,8 @@ function getSubProfileData(schoolsCollectionObj, nextMath) {
     }
 
     // == spending per sqft
-    spendSqFt = parseInt(cleanedSchoolData.spendSqFt);
+    var spendSqFtSpan;
+    var spendSqFt = parseInt(cleanedSchoolData.spendSqFt);
     if ((spendSqFt == "") || (spendSqFt == 0)) {
         spendSqFt = "<span class='value-label'>No spending per sqft data</span>";
         spendSqFtSpan = "";
@@ -918,6 +920,7 @@ function checkSchoolData(zonesCollectionObj, schoolsCollectionObj, selectedSchoo
     var sqftTotal = 0;
 
     // ======= min/max/avg/med for each individual zone =======
+    var nextZoneObject;
     for (var i = 0; i < zonesCollectionObj.aggregatorArray.length; i++) {
         nextZoneObject = zonesCollectionObj.aggregatorArray[i];
         zoneAmountArray.push(nextZoneObject.zoneAmount);
