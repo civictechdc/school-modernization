@@ -2,6 +2,8 @@
 // ======= ======= ======= getZoneUrls ======= ======= =======
 function getZoneUrls(displayObj, zonesCollectionObj) {
     console.log("getZoneUrls");
+    console.log("  displayObj.dataFilters.zones: ", displayObj.dataFilters.zones);
+    console.log("  displayObj.dataFilters.levels: ", displayObj.dataFilters.levels);
 
     var feederFlag = false;
     var urlA, urlB;

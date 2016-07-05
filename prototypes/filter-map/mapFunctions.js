@@ -273,16 +273,20 @@ function resetMarker(schoolMarker) {
 
 // ======= ======= ======= makeZoneGeometry ======= ======= =======
 function makeZoneGeometry(feature) {
-    // console.log("makeZoneGeometry");
+    console.log("makeZoneGeometry");
+    console.log("  feature: ", feature);
 
     var polyCount = 0;
     var multiPolyCount = 0;
     var polygonArray = [];
+    var featureType, featureBounds;
 
     // ======= traverse geometry paths for each feature =======
     feature.getGeometry().getArray().forEach(function(path) {
+        console.log("  path: ", path);
         featureType = feature.getGeometry().getType();
         featureBounds = new google.maps.LatLngBounds();
+        console.log("  featureType: ", featureType);
         if (featureType == "Polygon") {
             polyCount++;
             polygonArray.push(path);
@@ -292,6 +296,7 @@ function makeZoneGeometry(feature) {
             });
         } else {
             multiPolyCount++;
+            console.log("  path.j: ", path.j);
             polygonArray.push(path.j[0]);
 
             path.j[0].getArray().forEach(function(latLng) {

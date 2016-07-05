@@ -839,6 +839,7 @@ function initApp(presetMode) {
         var urlA = selectedZonesArray[0];
         var urlB = selectedZonesArray[1];
         var feederFlag = selectedZonesArray[2];
+        console.log("  feederFlag: ", feederFlag);
 
         // ======= get map geojson data =======
         $.ajax({
@@ -990,8 +991,8 @@ function initApp(presetMode) {
         map.data.forEach(function(feature) {
             featureIndex++;
             zoneName = removeAbbreviations(feature.getProperty('NAME'))
-            centerLatLng = makeZoneGeometry(feature);
-            feature.setProperty('center', centerLatLng);
+            // centerLatLng = makeZoneGeometry(feature);
+            // feature.setProperty('center', centerLatLng);
             feature.setProperty('zoneName', zoneName);
             zoneFeaturesArray.push(feature);
         });
@@ -1076,7 +1077,7 @@ function initApp(presetMode) {
             agencyMatch = true;
         }
 
-        // == check levels match (HS, ADULT, MS/HS, ALT; MS, SPED; ES, ES/MS; CLOSED)
+        // == check levels match (HS: HS, ADULT, MS/HS, ALT; MS: MS, SPED; ES: ES, ES/MS, PK3-K; CLOSED)
         if (displayObj.dataFilters.levels) {
             if (displayObj.dataFilters.levels == "HS") {
                 levelFilter = ["HS", "ADULT", "MS/HS", "ALT"];
