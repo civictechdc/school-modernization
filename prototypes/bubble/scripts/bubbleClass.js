@@ -239,7 +239,7 @@ Bubble.prototype.calcMaxOccupancySums = function () {
     var maxOccupancySums = {}, data = this.data;
     // These are the CSV columns we want to iterate through, and a mapping to what we want to access them 
     // as in the returned maxOccupancySums object
-    var columns = ['FeederHS', 'Ward', 'Level'], columnMap = { FeederHS: 'feeder', Ward: 'ward', Level: 'level' };
+    var columns = ['FeederHS', 'Ward', 'Level'], columnMap = { FeederHS: 'feederhs', Ward: 'ward', Level: 'level' };
     columns.forEach(function (column) {
         var items = _this.getUnique(_this.nodes, column), lenItems = items.length, columnSums = [];
         var _loop_2 = function(index) {
@@ -259,7 +259,35 @@ Bubble.prototype.calcMaxOccupancySums = function () {
         ;
         maxOccupancySums[columnMap[column]] = columnSums;
     });
+    console.log(maxOccupancySums);
     return maxOccupancySums;
+};
+Bubble.prototype.calcTotalSQFT = function () {
+    var _this = this;
+    var totalSQFT = {}, data = this.data;
+    // These are the CSV columns we want to iterate through, and a mapping to what we want to access them 
+    // as in the returned maxOccupancySums object
+    var columns = ['FeederHS', 'Ward', 'Level'], columnMap = { FeederHS: 'feederhs', Ward: 'ward', Level: 'level' };
+    columns.forEach(function (column) {
+        var items = _this.getUnique(_this.nodes, column), lenItems = items.length, columnSums = [];
+        var _loop_3 = function(index) {
+            var sumForThisColumn = 0;
+            data.forEach(function (node) {
+                if (items[index] === node[column]) {
+                    if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
+                        sumForThisColumn += parseInt(node['maxOccupancy']);
+                    }
+                }
+            });
+            columnSums.push(sumForThisColumn);
+        };
+        for (var index = 0; index < lenItems; index++) {
+            _loop_3(index);
+        }
+        ;
+        totalSQFT[columnMap[column]] = columnSums;
+    });
+    return totalSQFT;
 };
 Bubble.prototype.getUnique = function (data, column) {
     var items = _.uniq(_.pluck(data, column)).sort();
@@ -289,6 +317,7 @@ Bubble.prototype.move_towards_centers = function (alpha, column) {
             return a + parseInt(b[_this.budget]);
         }, 0);
         var col = _this.column.toLowerCase();
+        console.log(col);
         if (_this.per === 'perstudent' && ['ward', 'feederhs', 'level'].indexOf(col) !== -1) {
             console.log(_this.column + ": " + maxOccupancySums[col]);
             return sum / parseInt(maxOccupancySums[col][index]);
