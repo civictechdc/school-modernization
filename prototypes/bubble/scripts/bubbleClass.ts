@@ -268,7 +268,7 @@ Bubble.prototype.calcMaxOccupancySums = function() {
             data.forEach(function(node: Object){
                 if (items[index] === node[column]){
                     if (node['maxOccupancy'] !== 'NA' && node['Open_Now'] !== '0') {
-                        sumForThisColumn += parseInt(node['maxOccupancy']);                
+                        sumForThisColumn += parseInt(node['maxOccupancy']);
                     }
                 }
             });
@@ -284,7 +284,7 @@ Bubble.prototype.calcTotalSqFtSums = function() {
         data = this.data;
 
     // These are the CSV columns we want to iterate through, and a mapping to what we want to access them 
-    // as in the returned maxOccupancySums object
+    // as in the returned totalSqFtSums object
     let columns: string[] = [ 'FeederHS', 'Ward', 'Level' ],
         columnMap: Object = { FeederHS: 'feederhs', Ward: 'ward', Level: 'level' };
 
@@ -321,7 +321,6 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         unique = [],
         totalSqFtSums: Object = this.calcTotalSqFtSums(),
         maxOccupancySums: Object = this.calcMaxOccupancySums();
-        
     items.forEach(function(item){
         unique.push({name: item});
     });
@@ -405,7 +404,15 @@ Bubble.prototype.move_towards_centers = function(alpha, column) {
         .attr('class', 'splitValue')
         .attr('dx', '10')
         .text(function(d,i){
-            let amount = that.round(itemSums[i]);
+
+            let amount: any;
+            
+            if (itemSums[i] === Infinity || isNaN(itemSums[i])){
+                amount = '$0';
+            } else {
+                amount = that.round(itemSums[i]);
+            }
+            
             if (that.budget === 'SpentPerSqFt'){
                 return amount + ' per Sq. Ft.'
             }

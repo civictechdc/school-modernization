@@ -265,7 +265,7 @@ Bubble.prototype.calcTotalSqFtSums = function () {
     var _this = this;
     var totalSqFtSums = {}, data = this.data;
     // These are the CSV columns we want to iterate through, and a mapping to what we want to access them 
-    // as in the returned maxOccupancySums object
+    // as in the returned totalSqFtSums object
     var columns = ['FeederHS', 'Ward', 'Level'], columnMap = { FeederHS: 'feederhs', Ward: 'ward', Level: 'level' };
     columns.forEach(function (column) {
         var items = _this.getUnique(_this.nodes, column), lenItems = items.length, columnSums = [];
@@ -362,7 +362,13 @@ Bubble.prototype.move_towards_centers = function (alpha, column) {
         .attr('class', 'splitValue')
         .attr('dx', '10')
         .text(function (d, i) {
-        var amount = that.round(itemSums[i]);
+        var amount;
+        if (itemSums[i] === Infinity || isNaN(itemSums[i])) {
+            amount = '$0';
+        }
+        else {
+            amount = that.round(itemSums[i]);
+        }
         if (that.budget === 'SpentPerSqFt') {
             return amount + ' per Sq. Ft.';
         }
