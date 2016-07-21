@@ -1,9 +1,0 @@
-√ 1. Add 'Clear' button functionality
-√ 2. Remove 'Category: None' button
-√ 3. Make default status bar things
-√ 4. District vs Charter => default to All School
-√ 5. Make select bar lil bigger
-
-√ 6. Add values at the bottom of the splits
-√ 7. Adjust spacing in the Legend
-8. ADJUST LABELS
