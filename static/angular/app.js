@@ -12,8 +12,8 @@ angular.module("PostModern", ['ngRoute'])
           templateUrl: 'static/angular/views/progress.html',
       })
       .when('/bubble-chart', {
-        // templateUrl: 'static/angular/views/bubble.html'
-        templateUrl: 'static/angular/views/working.html',
+        templateUrl: 'static/angular/views/bubble.html'
+        // templateUrl: 'static/angular/views/working.html',
       })
       .when('/school-map', {
         templateUrl: 'static/angular/views/map.html'
